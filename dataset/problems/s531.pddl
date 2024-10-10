@@ -36,7 +36,6 @@
          (= (walls) (set-index walls true 3 9))
          (= (walls) (set-index walls true 3 10))
          (= (walls) (set-index walls true 3 11))
-         (= (walls) (set-index walls true 4 11))
          (= (walls) (set-index walls true 5 1))
          (= (walls) (set-index walls true 5 2))
          (= (walls) (set-index walls true 5 3))
