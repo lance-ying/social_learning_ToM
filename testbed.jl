@@ -2,7 +2,7 @@ using PDDL, SymbolicPlanners
 using Gen, GenParticleFilters
 using GenGPT3
 using InversePlanning
-# using PDDLViz, GLMakie
+using PDDLViz, GLMakie
 
 # Register PDDL array theory
 PDDL.Arrays.register!()
@@ -12,12 +12,11 @@ include("src/utils.jl")
 include("src/heuristics.jl")
 include("src/beliefs.jl")
 include("src/translate.jl")
-# include("src/render.jl")
-
+include("src/render.jl")
+# include("paths_new.jl")
 # Define directory paths
 PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems")
 PLAN_DIR = joinpath(@__DIR__, "dataset", "plans")
-STATEMENT_DIR = joinpath(@__DIR__, "dataset", "statements")
 
 #--- Initial Setup ---#
 
@@ -25,38 +24,50 @@ STATEMENT_DIR = joinpath(@__DIR__, "dataset", "statements")
 domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
 
 # Load problem
-p_id = "1_1"
-problem = load_problem(joinpath(PROBLEM_DIR, "$(p_id).pddl"))
-
+p_id = "s221_blue_exp"
+map_id = p_id[1:4]
+problem = load_problem(joinpath(PROBLEM_DIR, "$(map_id).pddl"))
+# plan = paths[p_id]
 # Load plan
 plan, _, splitpoints = load_plan(joinpath(PLAN_DIR, "$(p_id).pddl"))
 
 # Load belief statements
-statements = load_statements(joinpath(STATEMENT_DIR, "$(p_id).txt"))
+# statements = load_statements(joinpath(STATEMENT_DIR, "$(p_id).txt"))
 
 # Initialize and compile reference state
 state = initstate(domain, problem)
+
+heuristic = GoalManhattan()
+planner = AStarPlanner(heuristic)
+
+
+# w_loc = get_obj_loc(state, pddl"wizard2")
+# x_loc = w_loc[1]
+# y_loc = w_loc[2]
+# goal = pddl"(and (= (xloc agent1) $x_loc) (= (yloc agent1) $y_loc))"
+
+# plan = planner(domain, state, goal)
+
+# canvas
+
+# canvas = PDDLViz.new_canvas(RENDERER)
+# anim = anim_plan!(canvas, RENDERER, domain, state, collect(plan); trail_length = 15, show_inventory=false)
+
+
 domain, state = PDDL.compiled(domain, problem)
 
 # Render initial state
-# canvas = RENDERER(domain, state)
 
 #--- Goal Inference Setup ---#
 
-# Translate belief statements to (extended) PDDL
-pddl_statements = map(statements) do stmt
-    translate_statement(stmt, verbose = true)
-end
-
 # Specify possible goals
 goals = @pddl(
-    "(has human gem1)",
-    "(has human gem2)",
-    "(has human gem3)",
-    "(has human gem4)"
+    "(has agent2 gem1)",
+    "(has agent2 gem2)",
+    "(has agent2 gem3)"
 )
 
-goal_names = ["tri", "square", "hex", "circle"]
+goal_names = ["A", "B", "C"]
 # goal_colors = gem_colors
 
 # Define uniform prior over possible goals
@@ -66,14 +77,10 @@ goal_names = ["tri", "square", "hex", "circle"]
 end
 
 # Enumerate over possible initial states
-initial_states, belief_probs = enumerate_beliefs(
-    state,
-    min_keys = 1,
-    max_keys = min(2, length(PDDL.get_objects(state, :box))),
-    max_color_keys = [2 for _ in PDDL.get_objects(state, :color)],
-    discount = 1.0
+initial_states, belief_probs, state_names = enumerate_beliefs(
+    state
 )
-state_names = map(box_contents_str, initial_states)
+
 
 # Define uniform prior over possible initial states
 
@@ -95,9 +102,9 @@ heuristic = GoalManhattan()
 planner = RTHS(heuristic, n_iters=1, max_nodes=2^15)
 
 # Define action noise model
-temperatures = 2 .^ collect(-2:0.55:5)
-act_config = HierarchicalBoltzmannActConfig(temperatures,
-                                            Gen.inv_gamma, (0.5, 1.0))
+temperatures =0.01
+
+act_config = BoltzmannActConfig(temperatures)
 
 # Define agent configuration
 agent_config = AgentConfig(
@@ -124,33 +131,23 @@ world_config = WorldConfig(
 ## Run goal and belief inference ##
 
 # Whether or not to normalize the statement prior to 50/50
-NORMALIZE_STATEMENT_PRIOR = true
+# NORMALIZE_STATEMENT_PRIOR = true
 
 # Construct iterator over observation timesteps and choicemaps 
-t_obs_iter = act_choicemap_pairs(plan)
+t_obs_iter = act_choicemap_pairs(collect(plan))
 
 # Set up logging callback
 n_goals = length(goals)
 n_init_states = length(initial_states)
-# logger_cb = DataLoggerCallback(
-#     t = (t, pf) -> t::Int,
-#     goal_probs = pf -> probvec(pf, goal_addr, 1:4)::Vector{Float64},
-#     state_probs = pf -> probvec(pf, init_state_addr, 1:n_init_states)::Vector{Float64},
-#     statement_probs = (t, pf) -> begin
-#         map(pddl_statements) do stmt
-#             get_formula_probs(
-#                 pf, domain, stmt, t;
-#                 normalize_prior = NORMALIZE_STATEMENT_PRIOR,
-#                 belief_probs = belief_probs
-#             )
-#         end::Vector{Float64}
-#     end,
-#     lml_est = pf -> log_ml_estimate(pf)::Float64,
-# )
+logger_cb = DataLoggerCallback(
+    t = (t, pf) -> t::Int,
+    goal_probs = pf -> probvec(pf, goal_addr, 1:3)::Vector{Float64},
+    state_probs = pf -> probvec(pf, init_state_addr, 1:n_init_states)::Vector{Float64},
+    lml_est = pf -> log_ml_estimate(pf)::Float64,
+)
 print_cb = PrintStatsCallback(
     (goal_addr, 1:length(goals)),
     (init_state_addr, 1:length(initial_states)),
-    (belief_addr, 1:length(beliefs)),;
     header=("t\t" * join(goal_names, "\t") * "\t" *
             join(state_names, "\t") * "\t")
 )
@@ -164,7 +161,7 @@ n_samples = length(init_strata)
 pf_state = sips(
     n_samples,  t_obs_iter;
     init_args = (init_strata=init_strata,),
-    callback = print_cb
+    callback = callback
 );
 
 # Extract goal probabilities
@@ -174,4 +171,140 @@ goal_probs = reduce(hcat, callback.logger.data[:goal_probs])
 state_probs = reduce(hcat, callback.logger.data[:state_probs])
 
 # Extract statement probabilities
-statement_probs = reduce(hcat, callback.logger.data[:statement_probs])
+# statement_probs = reduce(hcat, callback.logger.data[:statement_probs])
+
+# Estimate the reward for not observing
+
+function calculate_plan_cost(plan:: Vector{<:Term}, action_cost::Dict{Symbol, Real})
+
+    cost = 0
+
+    for act in plan
+        if act.name == :interact
+            cost += action_cost[:interact]
+        else
+            cost += action_cost[:move]
+        end
+    end
+    return cost
+    
+end
+
+function estimate_self_exploration_cost(state:: State, agent_goal::Any, wizards::Any, action_cost::Dict{Symbol, Real})
+
+    new_state = copy(state)
+
+    planner = AStarPlanner(GoalManhattan())
+    # Extract wizard locations
+    # print(state[pddl"(iscolor wizard1 blue)"])
+    wizard_locs = [get_obj_loc(new_state, w) for w in wizards if state[pddl"(iscolor $w blue)"]]
+
+    # Compute self-exploration cost
+    cost = 0
+    total_cost = 0
+
+    for i in 1:length(wizards)-1
+        cost = Inf
+        min_distance_loc = wizard_locs[1]
+        for w_loc in wizard_locs
+
+            x_loc = w_loc[1]
+            y_loc = w_loc[2]
+            goal = pddl"(and (= (xloc agent1) $x_loc) (= (yloc agent1) $y_loc))"
+            plan = planner(domain, new_state, goal)
+
+            plan_cost = calculate_plan_cost(collect(plan), action_cost)
+
+            if plan_cost < cost
+                cost = plan_cost
+                min_distance_loc = w_loc
+            end
+        end
+
+        # print(min_distance_loc)
+
+        # if min_distance_loc in wizard_locs
+        wizard_locs = filter!(loc -> (loc[1] != min_distance_loc[1] && loc[2] != min_distance_loc[2]), wizard_locs)
+
+        total_cost += cost
+        total_cost += action_cost[:interact]
+        # total_cost -= 2*action_cost[:move]
+
+        new_state[pddl"(xloc agent1)"] = min_distance_loc[1]
+        new_state[pddl"(yloc agent1)"] = min_distance_loc[2]
+
+        # counter+=1
+        # new_state[]
+    end
+
+    goal_loc = get_obj_loc(new_state, agent_goal.args[2])
+
+    x_loc = goal_loc[1]
+    y_loc = goal_loc[2]
+
+    goal = pddl"(and (= (xloc agent1) $x_loc) (= (yloc agent1) $y_loc))"
+
+    plan = planner(domain, new_state, goal)
+
+    plan_cost = calculate_plan_cost(collect(plan), action_cost)
+
+    # print(agent_goal)
+    # final_plan = planner(domain, new_state, agent_goal)
+    # print(collect(final_plan))
+    # print(calculate_plan_cost(collect(final_plan), action_cost))
+    total_cost += plan_cost
+    total_cost -= action_cost[:move] *(2* length(wizards)-1)
+
+
+    return total_cost
+    
+end
+
+
+
+action_cost = Dict(:move => 2, :interact => 5, :observe => 0.5)
+
+plan_cost = calculate_plan_cost(plan, action_cost)
+
+estimate_self_exploration_cost(state, problem.goal,PDDL.get_objects(state, :wizard), action_cost)
+
+
+new_state = copy(state)
+t= 0
+
+while !PDDL.satisfy(domain, new_state, goal)
+
+    Q_observe = 0
+
+    for g in 1:length(goals)
+
+        if goal_probs[g, t] < 0.2
+            continues
+        end
+
+        plan = collect(planner(domain, new_state, goals[g]))
+
+        Q_T_best = Inf
+        T_best = 0
+
+        for i in 1:length(plan)
+            new_state = copy(state)
+            for j in 1:i
+                new_state = PDDL.apply(domain, new_state, plan[j])
+            end
+
+            Q_T = estimate_self_exploration_cost(new_state, problem.goal, PDDL.get_objects(new_state, :wizard), action_cost)
+
+            if Q_T < Q_T_best
+                Q_T_best = Q_T
+                T_best = i
+            end
+        end
+
+
+
+        Q_observe += goal_probs[g, t] * estimate_self_exploration_cost(new_state, problem.goal, PDDL.get_objects(new_state, :wizard), action_cost)
+    end 
+
+    Q_not_observe = estimate_self_exploration_cost(new_state, problem.goal, PDDL.get_objects(new_state, :wizard), action_cost)
+end

@@ -52,14 +52,18 @@ function set_color!(state::State, obj::Const, color::Const)
 end
 
 "Empties a box of all keys."
-function empty_box!(state::State, box::Const)
+function assign!(state::State, wizard::Const)
     for key in PDDL.get_objects(state, :key)
-        state[pddl"(inside $key $box)"] || continue
-        state[pddl"(inside $key $box)"] = false
-        state[pddl"(hidden $key)"] = false
-        state[pddl"(offgrid $key)"] = true
-        set_obj_loc!(state, key, (-1, -1))
-        remove_color!(state, key)
+        if state[pddl"(iscolor $key blue)"]
+            wizard_loc = get_obj_loc(state, wizard)
+            for w in PDDL.get_objects(state, :wizard)
+                if w != wizard
+                    state[pddl"(hold $w $key)"] = false
+                end
+            end
+            state[pddl"(hold $wizard $key)"] = true
+            set_obj_loc!(state, key, wizard_loc)
+        end
     end
     return state
 end

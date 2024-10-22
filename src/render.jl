@@ -27,11 +27,11 @@ RENDERER = PDDLViz.GridworldRenderer(
     has_agent = false,
     obj_renderers = Dict(
         :agent => (d, s, o) -> o.name ==:agent1 ? HumanGraphic(color = :red) : HumanGraphic(color = :blue),
-        :key => (d, s, o) -> PDDLViz.WizGraphic(
+        :wizard => (d, s, o) -> PDDLViz.WizGraphic(
             color=color_dict[get_obj_color(s, o).name]
         ),
         :door => (d, s, o) -> LockedDoorGraphic(
-            visible=s[Compound(:locked, [o])],
+            # visible=s[Compound(:locked, [o])],
             color=color_dict[get_obj_color(s, o).name]
         ),
         :gem => (d, s, o) -> begin
@@ -52,33 +52,33 @@ RENDERER = PDDLViz.GridworldRenderer(
             # gem = gem_shifts[idx] != (0.0, 0.0) ?
             #     PDDLViz.translate(gem, gem_shifts[idx]...) : gem
         end,
-        :box => (d, s, o) -> begin
-            color = PDDLViz.to_color(:burlywood3)
-            text_color = PDDLViz.to_color(:black)
-            return MultiGraphic(
-                BoxGraphic(
-                    is_open=!s[Compound(:closed, [o])],
-                    color=s[Compound(:closed, [o])] ?
-                        color : PDDLViz.lighten(color, 0.6)
-                ),
-                TextGraphic(
-                    string(o.name)[end:end], 0.0, -0.05, 0.4;
-                    color=s[Compound(:closed, [o])] ?
-                        text_color : :black,                        
-                    font=:bold
-                )
-            )
-        end
+        # :wizard => (d, s, o) -> begin
+        #     color = PDDLViz.to_color(:burlywood3)
+        #     text_color = PDDLViz.to_color(:black)
+        #     return MultiGraphic(
+        #         BoxGraphic(
+        #             is_open=!s[Compound(:closed, [o])],
+        #             color=s[Compound(:closed, [o])] ?
+        #                 color : PDDLViz.lighten(color, 0.6)
+        #         ),
+        #         TextGraphic(
+        #             string(o.name)[end:end], 0.0, -0.05, 0.4;
+        #             color=s[Compound(:closed, [o])] ?
+        #                 text_color : :black,                        
+        #             font=:bold
+        #         )
+        #     )
+        # end
     ),
-    obj_type_z_order = [:door, :box, :key, :gem, :agent],
+    obj_type_z_order = [:door, :wizard, :gem, :agent],
     show_inventory = false,
-    inventory_fns = [
-        (d, s, o) -> s[Compound(:has, [Const(:human), o])]
-    ],
+    # inventory_fns = [
+    #     (d, s, o) -> s[Compound(:has, [Const(:human), o])]
+    # ],
     inventory_types = [:item],
     inventory_labels = ["Inventory"],
     trajectory_options = Dict(
-        :tracked_objects => [Const(:human)],
+        # :tracked_objects => [Const(:human)],
         :tracked_types => Const[],
         :object_colors => [:black]
     )
