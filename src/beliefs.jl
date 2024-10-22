@@ -6,73 +6,28 @@ include("utils.jl")
 "Enumerate all possible beliefs about key locations in the initial state."
 function enumerate_beliefs(
     state::State;
-    boxes = PDDL.get_objects(state, :box),
-    colors = PDDL.get_objects(state, :color),
-    min_keys = 1,
-    max_keys = min(2, length(boxes)),
-    max_color_keys = ones(Int, length(colors)),
-    discount = 1.0,
+    wizards = PDDL.get_objects(state, :wizard),
+    # colors = PDDL.get_objects(state, :color),
 )
     belief_states = Vector{typeof(state)}()
     belief_probs = Float64[]
-    n_colors, n_boxes = length(colors), length(boxes)
-    max_keys = min(max_keys, sum(max_color_keys))
-    # Extract keys that correspond to boxes
-    keys = [k for k in PDDL.get_objects(state, :key)
-            if state[pddl"(offgrid $k)"] || state[pddl"(hidden $k)"]]
-    if length(keys) < length(boxes)
-        error("Not enough keys to fill boxes.")
-    elseif length(keys) > length(boxes)
-        resize!(keys, length(boxes))
-    end
+    belief_names = String[]
     # Create base state with no boxes
-    base_state = copy(state)
-    for box in boxes
-        empty_box!(base_state, box)
-    end
-    # Enumerate over number of keys
-    for n_keys in min_keys:max_keys
-        color_iter = Iterators.product((colors for _ in 1:n_keys)...)
-        weight = discount ^ n_keys
-        # Enumerate over subsets of n keys
-        for key_idxs in IterTools.subsets(1:n_boxes, n_keys)
-            # Enumerate over color assignments to keys within subset
-            for key_colors in color_iter
-                # Skip if too many of any one color
-                color_counts = [sum(==(c), key_colors) for c in colors]
-                if any(c > m for (c, m) in zip(color_counts, max_color_keys))
-                    continue
-                end
-                # Create new state and set key colors and locations
-                s = copy(base_state)
-                for (idx, color) in zip(key_idxs, key_colors)
-                    key = keys[idx]
-                    set_color!(s, key, color)
-                    place_key_in_box!(s, key, boxes[idx])
-                end
-                push!(belief_states, s)
-                push!(belief_probs, weight)
-            end
+    belief_cnt = length(wizards)-1
+
+    for wizard in wizards
+        if state[pddl"(iscolor $wizard blue)"]
+            push!(belief_names, string(wizard))
+            base_state = copy(state)
+            assign!(base_state, wizard)
+            push!(belief_states, base_state)
+            push!(belief_probs, 1.0 / belief_cnt)
+            
         end
     end
-    belief_probs = belief_probs ./ sum(belief_probs)
-    return belief_states, belief_probs
+    return belief_states, belief_probs, belief_names
 end
 
-"Returns a string representation of the box contents in the state."
-function box_contents_str(state::State)
-    keys = PDDL.get_objects(state, :key)
-    boxes = sort(collect(PDDL.get_objects(state, :box)), by=string)
-    str = map(boxes) do box
-        for k in keys
-            state[pddl"(inside $k $box)"] || continue
-            color = get_obj_color(state, k)
-            return first(string(color))
-        end
-        return '_'
-    end |> join
-    return str
-end
 
 """
     get_formula_probs(pf, domain, formula, t = 0;

@@ -5,11 +5,12 @@ using Random
 
 PDDLViz.WizGraphic
 
+
 include("src/render.jl")
 include("src/plan_io.jl")
 include("src/utils.jl")
 include("src/heuristics.jl")
-include("paths.jl")
+include("paths_new.jl")
 
 PDDL.Arrays.register!()
 
@@ -179,205 +180,55 @@ STATEMENT_DIR = joinpath(@__DIR__, "dataset", "statements")
 STIMULI_DIR = joinpath(@__DIR__, "dataset", "stimuli")
 
 # Load domain
-domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
+domain = load_domain(joinpath(@__DIR__, "dataset", "domain_render.pddl"))
 
 ## Generate animations for single plan / stimulus
 
 # Load problem
-problem_path = joinpath(PROBLEM_DIR, "demo.pddl")
+problem_path = joinpath(PROBLEM_DIR, "s341.pddl")
+plan = paths["s221_blue_exp"]
 problem = load_problem(problem_path)
 state = initstate(domain, problem)
 # Load plan
 plan_path = joinpath(PLAN_DIR, "demo.pddl")
 
 plan = @pddl("(down agent2)","(down agent2)","(down agent2)","(down agent2)","(down agent2)")
-plan, _, splitpoints = load_plan(plan_path) 
+plan, _, splitpoints = load_plan(plan_path)
 p_id = splitext(basename(plan_path))[1]
 
 canvas = PDDLViz.new_canvas(RENDERER)
 anim_initialize!(canvas, RENDERER, domain, state)
-anim = anim_plan!(canvas, RENDERER, domain, state, plan; trail_length = 15, show_inventory=true)
-save("/Users/lance/Documents/GitHub/ToMProjects.jl/watch_explore/dataset/stimuli/full/demo.gif", anim)
-
-pid = "s2_1_1"
-
-pid[1:2]*pid[4]*pid[6]
-
-for i in 1:length(paths)
-    pid = paths[i][:]
-    println("Generating stimuli for $(p_id) ...")
-    # Load statements
-    statements = readlines(joinpath(STATEMENT_DIR, "$(p_id).txt"))
-    # Generate stimulus animation
-    path = joinpath(STIMULI_DIR, "full", "p$p_id.gif")
-    generate_stim_anim(path, domain, problem, plan)
-    # Generate plan completion
-    state = initstate(domain, problem)
-    plan_end_state = PDDL.simulate(EndStateSimulator(), domain, state, plan)
-    sol = planner(domain, plan_end_state, problem.goal)
-    completion = collect(sol)
-    full_plan = [plan; completion]
-    # Extract relevant keys and boxes
-    key_colors, _, plan_boxes =
-        extract_relevant_keys_and_boxes(domain, plan_end_state, completion)
-    # Generate stimulus animation segments
-    basepath = joinpath(STIMULI_DIR, "segments", "p$p_id")
-    generate_stim_anim_segments(basepath, domain, problem,
-                                full_plan, splitpoints)
-    # Generate stimuli JSON metadata
-    json = generate_stim_json(p_id, problem, splitpoints, statements,
-                              key_colors, plan_boxes)
-    push!(all_metadata, json)
-    # Sleep for 0.5 seconds
-    sleep(0.5)
-end
-
-# Generate stimulus animation
-mkpath(joinpath(STIMULI_DIR, "full"))
-path = joinpath(STIMULI_DIR, "full", p_id == "demo" ? "demo.gif" : "p$p_id.gif")
-anim = generate_stim_anim("demo.gif", domain, state, plan;
-                          format="gif", framerate=3)
-
-# Generate completion of plan
-planner = AStarPlanner(GoalManhattan())
-state = initstate(domain, problem)
-plan_end_state = PDDL.simulate(EndStateSimulator(), domain, state, plan)
-sol = planner(domain, plan_end_state, problem.goal)
-completion = collect(sol)
-full_plan = [plan; completion]
-
-# Generate stimulus animation segments
-mkpath(joinpath(STIMULI_DIR, "segments"))
-basepath = joinpath(STIMULI_DIR, "segments", p_id == "demo" ? "demo" : "p$p_id")
-anims = generate_stim_anim_segments(
-    basepath, domain, problem, full_plan, splitpoints;
-    format="gif", framerate=3
-)
-
-## Generate all animations (except demo)
-
-mkpath(STIMULI_DIR)
-mkpath(joinpath(STIMULI_DIR, "full"))
-mkpath(joinpath(STIMULI_DIR, "segments"))
-
-problem_paths = readdir(PROBLEM_DIR, join=true)
-filter!(p -> !startswith(basename(p), "demo") && endswith(p, ".pddl"), problem_paths)
-
-plan_paths = readdir(PLAN_DIR, join=true)
-filter!(p -> !startswith(basename(p), "demo") && endswith(p, ".pddl"), plan_paths)
-
-all_metadata = []
-
-planner = AStarPlanner(GoalManhattan())
-
-for (problem_path, plan_path) in collect(zip(problem_paths, plan_paths))
-    # Load problem
-    problem = load_problem(problem_path)
-    # Load plan
-    plan, _, splitpoints = load_plan(plan_path) 
-    p_id = splitext(basename(plan_path))[1]
-    println("Generating stimuli for $(p_id) ...")
-    # Load statements
-    statements = readlines(joinpath(STATEMENT_DIR, "$(p_id).txt"))
-    # Generate stimulus animation
-    path = joinpath(STIMULI_DIR, "full", "p$p_id.gif")
-    generate_stim_anim(path, domain, problem, plan)
-    # Generate plan completion
-    state = initstate(domain, problem)
-    plan_end_state = PDDL.simulate(EndStateSimulator(), domain, state, plan)
-    sol = planner(domain, plan_end_state, problem.goal)
-    completion = collect(sol)
-    full_plan = [plan; completion]
-    # Extract relevant keys and boxes
-    key_colors, _, plan_boxes =
-        extract_relevant_keys_and_boxes(domain, plan_end_state, completion)
-    # Generate stimulus animation segments
-    basepath = joinpath(STIMULI_DIR, "segments", "p$p_id")
-    generate_stim_anim_segments(basepath, domain, problem,
-                                full_plan, splitpoints)
-    # Generate stimuli JSON metadata
-    json = generate_stim_json(p_id, problem, splitpoints, statements,
-                              key_colors, plan_boxes)
-    push!(all_metadata, json)
-    # Sleep for 0.5 seconds
-    sleep(0.5)
-end
-
-# Save JSON metadata
-metadata_path = joinpath(STIMULI_DIR, "stimuli.json")
-open(metadata_path, "w") do io
-    JSON3.pretty(io, all_metadata, JSON3.AlignmentContext(indent=2))
-end
-
-## Generate stimuli ordering ##
-
-Random.seed!(0)
-
-mutexes = [[1, 2], [3, 6], [4, 5], [7, 8], [9, 10], [11, 12], [13, 14], [15, 16]]
-mutex_choices_1 =
-    [[fill(1, n); fill(2, length(mutexes)-n)] for n in 1:length(mutexes)]
-mutex_choices_2 =
-    [[fill(2, n); fill(1, length(mutexes)-n)] for n in 1:length(mutexes)]
-mutex_choices =
-    reduce(vcat, [[c1, c2] for (c1, c2) in zip(mutex_choices_1, mutex_choices_2)])
-
-stimuli_orders = map(mutex_choices) do choices
-    idxs = [m[is] for (m, is) in zip(mutexes, choices)]
-    return shuffle!(reduce(vcat, idxs))
-end
-
-for (i, order) in enumerate(stimuli_orders)
-    idx = rand(2:6)
-    control_idx = mod(i, 2) == 0 ? 17 : 18
-    insert!(order, idx, control_idx)
-end
-
-stimuli_orders_str = replace(string(stimuli_orders), "], [" => "],\n [")
-println(stimuli_orders_str)
+anim = anim_plan!(canvas, RENDERER, domain, state, plan[1:25]; trail_length = 15, show_inventory=true)
+save("/Users/lance/Documents/GitHub/ObserveMove/dataset/stimuli/full/demo.gif", anim)
 
 
-PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems")
-PLAN_DIR = joinpath(@__DIR__, "dataset", "plans")
-STATEMENT_DIR = joinpath(@__DIR__, "dataset", "statements")
-STIMULI_DIR = joinpath(@__DIR__, "dataset", "stimuli")
-
-# Load domain
-domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
-
-## Generate animations for single plan / stimulus
-
-p_id = "s2_1_1"
-# Load problem
-problem_path = joinpath(PROBLEM_DIR, "$p_id.pddl")
-problem = load_problem(problem_path)
-
-state = initstate(domain, problem)
-canvas = RENDERER(domain, state,show_inventory = false )
-
-ACTION_HISTORY = Term[]
-function store_action_callback(canvas, domain, state, act, next_state)
-    push!(ACTION_HISTORY, act)
-end
-
-controller = KeyboardController(
-    Keyboard.up => pddl"(up human)",
-    Keyboard.down => pddl"(down human)",
-    Keyboard.left => pddl"(left human)",
-    Keyboard.right => pddl"(right human)",
-    Keyboard.z, Keyboard.x, Keyboard.c, Keyboard.v;
-    callback = store_action_callback
-)
-
-add_controller!(canvas, controller, domain, state; show_controls=true)
-
-filename = "/Users/lance/Documents/GitHub/InversePlanningProjects.jl/watch_explore/dataset/plans/$(p_id)_1.pddl"
+for k in collect(keys(paths))[4:end]
 
 
-open(filename, "w") do file
-    plan_str = write_pddl.(ACTION_HISTORY)
-    for i in 1: length(plan_str)
-        print(plan_str[i])
-        write(file, plan_str[i])
-        write(file, "\n")
+    if endswith(k,"other_naive")
+        continue
     end
+
+    # if !startswith(k,"s53")
+    #     continue
+    # end
+
+    name = k
+    pid = name[1:4]
+    println("Generating stimuli for $(name) ...")
+
+    problem_path = joinpath(PROBLEM_DIR, "$(pid).pddl")
+    problem = load_problem(problem_path)
+    state = initstate(domain, problem)
+
+    canvas = PDDLViz.new_canvas(RENDERER)
+
+    plan = paths[name]
+
+    canvas = PDDLViz.new_canvas(RENDERER)
+    anim_initialize!(canvas, RENDERER, domain, state)
+    print(plan)
+    anim = anim_plan!(canvas, RENDERER, domain, state, plan; trail_length = 15, framerate = 3, format = "gif",loop = -1)
+    save("/Users/lance/Documents/GitHub/ObserveMove/dataset/stimuli/$(name).gif", anim)
+
 end

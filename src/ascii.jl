@@ -20,7 +20,7 @@ function ascii_to_pddl(
 )
     objects = Dict(
         :door => Const[], :key => Const[], :gem => Const[],
-        :box => Const[], :color => Const[], :agent => Const[pddl"(agent1)", pddl"(agent2)"]
+        :wizard => Const[], :color => Const[], :agent => Const[pddl"(agent1)", pddl"(agent2)"]
     )
 
     # Parse width and height of grid
@@ -40,29 +40,44 @@ function ascii_to_pddl(
             elseif char == 'W' # Wall
                 wall = parse_pddl("(= walls (set-index walls true $y $x))")
                 push!(init, wall)
-            elseif char == 'C' # Box
-                n = length(objects[:box]) + 1
-                b = Const(Symbol("box$n"))
-                push!(objects[:box], b)
-                append!(init, parse_pddl("(= (xloc $b) $x)", "(= (yloc $b) $y)"))
-                push!(init, parse_pddl("(closed $b)"))
+            elseif haskey(key_dict, char) # Box
+                n = length(objects[:wizard]) + 1
+                w = Const(Symbol("wizard$n"))
+                push!(objects[:wizard], w)
+                append!(init, parse_pddl("(= (xloc $w) $x)", "(= (yloc $w) $y)"))
+                # push!(init, parse_pddl("(closed $b)"))
                 n = length(objects[:key]) + 1
                 k = Const(Symbol("key$n"))
                 # Check if key set is provided
-                isnothing(key_set) && continue
+                # isnothing(key_set) && continue
                 # Add key associated with box
-                push!(objects[:key], k)
-                n_boxes = length(objects[:box])
-                if key_set[n_boxes] == 'C' # Box is empty
-                    append!(init, parse_pddl("(= (xloc $k) -1)", "(= (yloc $k) -1)"))
-                    push!(init, parse_pddl("(offgrid $k)"))
-                else # Box has key
-                    color = key_dict[key_set[n_boxes]]
+                
+                
+                n_wizards = length(objects[:wizard])
+            
+                if char == 'e' # Box is empty
+
+                    color = key_dict[char]
+                    # append!(init, parse_pddl("(= (xloc $k) -1)", "(= (yloc $k) -1)"))
+                    # push!(init, parse_pddl("(offgrid $k)"))
+                    push!(init, parse_pddl("(iscolor $w $color)"))
+                elseif char == 'b' # Box is occupied
+                    push!(objects[:key], k)
+                    color = key_dict[char]
                     push!(objects[:color], color)
                     append!(init, parse_pddl("(= (xloc $k) $x)", "(= (yloc $k) $y)"))
                     push!(init, parse_pddl("(iscolor $k $color)"))
-                    push!(init, parse_pddl("(hidden $k)"))
-                    push!(init, parse_pddl("(inside $k $b)"))
+                    push!(init, parse_pddl("(iscolor $w $color)"))
+                    push!(init, parse_pddl("(hold $w $k)"))
+
+                elseif char == 'r' # Box is occupied
+                    push!(objects[:key], k)
+                    color = key_dict[char]
+                    push!(objects[:color], color)
+                    append!(init, parse_pddl("(= (xloc $k) $x)", "(= (yloc $k) $y)"))
+                    push!(init, parse_pddl("(iscolor $k $color)"))
+                    push!(init, parse_pddl("(iscolor $w $color)"))
+                    push!(init, parse_pddl("(hold $w $k)"))
                 end
             elseif haskey(door_dict, char) # Door
                 n = length(objects[:door]) + 1
@@ -72,7 +87,7 @@ function ascii_to_pddl(
                 push!(objects[:color], color)
                 append!(init, parse_pddl("(= (xloc $d) $x)", "(= (yloc $d) $y)"))
                 push!(init, parse_pddl("(iscolor $d $color)"))
-                push!(init, parse_pddl("(locked $d)"))
+                # push!(init, parse_pddl("(locked $d)"))
             elseif haskey(key_dict, char) # Key
                 n = length(objects[:key]) + 1
                 k = Const(Symbol("key$n"))
@@ -135,25 +150,25 @@ function convert_ascii_problem(path::String)
 end
 
 function get_filenames()
-    path = "/Users/lance/Documents/GitHub/TomProjects.jl/watch_explore/dataset/problems/"
+    path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems/"
     filenames = readdir(path)
     return filenames
 end
 
 filenames = get_filenames()
 
-for filename in filenames
-    if endswith(filename, ".txt") and startswith(filename, "s")
-        new_filename = filename[1:2]*filename[4]*filename[6:end]
-        mv("/Users/lance/Documents/GitHub/TomProjects.jl/watch_explore/dataset/problems/" * filename,
-           "/Users/lance/Documents/GitHub/TomProjects.jl/watch_explore/dataset/problems/" * new_filename)
-    end
-end
+# for filename in filenames
+#     if endswith(filename, ".pddl") && startswith(filename, "s")
+#         new_filename = filename[1:2]*filename[4]*filename[6:end]
+#         mv("/Users/lance/Documents/GitHub/TomProjects.jl/watch_explore/dataset/problems/" * filename,
+#            "/Users/lance/Documents/GitHub/TomProjects.jl/watch_explore/dataset/problems/" * new_filename)
+#     end
+# end
 
 for filename in filenames
     if endswith(filename, ".txt")
         print(filename[1:end-4])
         print("\n")
-        convert_ascii_problem("/Users/lance/Documents/GitHub/TomProjects.jl/watch_explore/dataset/problems/"*filename)
+        convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems/"*filename)
     end
 end
