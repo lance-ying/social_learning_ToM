@@ -105,3 +105,94 @@ function extract_relevant_keys_and_boxes(
     plan = collect(sol)
     return extract_relevant_keys_and_boxes(domain, state, plan)
 end
+
+
+
+function calculate_plan_cost(plan:: Vector{<:Term}, action_cost::Dict{Symbol, Real})
+
+    cost = 0
+
+    for act in plan
+        if act.name == :interact
+            cost += action_cost[:interact]
+        else
+            cost += action_cost[:move]
+        end
+    end
+    return cost
+    
+end
+
+function estimate_self_exploration_cost(state:: State, agent_goal::Any, wizards::Any, action_cost::Dict{Symbol, Real})
+
+    new_state = copy(state)
+
+    planner = AStarPlanner(GoalManhattan())
+    # Extract wizard locations
+    # print(state[pddl"(iscolor wizard1 blue)"])
+    wizard_locs = [get_obj_loc(new_state, w) for w in wizards if state[pddl"(iscolor $w blue)"]]
+
+    # Compute self-exploration cost
+    cost = 0
+    total_cost = 0
+
+    # print(wizard_locs)
+
+    for i in 1:length(wizards)-1
+        cost = Inf
+        # print(wizard_locs)
+        min_distance_loc = wizard_locs[1]
+        for w_loc in wizard_locs
+
+            x_loc = w_loc[1]
+            y_loc = w_loc[2]
+            goal = pddl"(and (= (xloc agent1) $x_loc) (= (yloc agent1) $y_loc))"
+            plan = planner(domain, new_state, goal)
+
+            plan_cost = calculate_plan_cost(collect(plan), action_cost)
+
+            if plan_cost < cost
+                cost = plan_cost
+                min_distance_loc = w_loc
+            end
+        end
+
+        # print(min_distance_loc)
+
+        # if min_distance_loc in wizard_locs
+        wizard_locs = filter!(loc -> ((loc[1] != min_distance_loc[1]) || (loc[2] != min_distance_loc[2])), wizard_locs)
+
+        total_cost += cost
+        total_cost += action_cost[:interact]
+        # total_cost -= 2*action_cost[:move]
+
+        new_state[pddl"(xloc agent1)"] = min_distance_loc[1]
+        new_state[pddl"(yloc agent1)"] = min_distance_loc[2]
+
+        # counter+=1
+        # new_state[]
+    end
+
+    goal_loc = get_obj_loc(new_state, agent_goal.args[2])
+
+    x_loc = goal_loc[1]
+    y_loc = goal_loc[2]
+
+    goal = pddl"(and (= (xloc agent1) $x_loc) (= (yloc agent1) $y_loc))"
+
+    plan = planner(domain, new_state, goal)
+
+    plan_cost = calculate_plan_cost(collect(plan), action_cost)
+
+    # print(agent_goal)
+    # final_plan = planner(domain, new_state, agent_goal)
+    # print(collect(final_plan))
+    # print(calculate_plan_cost(collect(final_plan), action_cost))
+    total_cost += plan_cost
+    total_cost -= action_cost[:move] *(2* length(wizards)-1)
+
+
+    return total_cost
+    
+end
+
