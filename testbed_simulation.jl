@@ -25,7 +25,7 @@ PLAN_DIR = joinpath(@__DIR__, "dataset", "plans")
 domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
 
 # Load problem
-p_id = "s521_blue_exp"
+p_id = "s362_blue_exp"
 map_id = p_id[1:4]
 problem = load_problem(joinpath(PROBLEM_DIR, "$(map_id).pddl"))
 # plan = paths[p_id]
@@ -168,55 +168,59 @@ wizard_candicates = blue_wizards
 goal_probs_conditioned_dict = Dict()
 state_probs_conditioned_dict = Dict()
 
+
 for g in 1:length(goals)
-    planner = AStarPlanner(GoalManhattan())
-    plan =planner(domain, new_state, goals[g])
 
-    t_obs_iter = act_choicemap_pairs(collect(plan))
+    for state in initial_states
+        planner = AStarPlanner(GoalManhattan())
+        plan =planner(domain, state, goals[g])
 
-    # Set up logging callback
-    n_goals = length(goals)
-    n_init_states = length(initial_states)
-    logger_cb = DataLoggerCallback(
-        t = (t, pf) -> t::Int,
-        goal_probs = pf -> probvec(pf, goal_addr, 1:3)::Vector{Float64},
-        state_probs = pf -> probvec(pf, init_state_addr, 1:n_init_states)::Vector{Float64},
-        lml_est = pf -> log_ml_estimate(pf)::Float64,
-    )
-    print_cb = PrintStatsCallback(
-        (goal_addr, 1:length(goals)),
-        (init_state_addr, 1:length(initial_states)),
-        header=("t\t" * join(goal_names, "\t") * "\t" *
-                join(state_names, "\t") * "\t")
-    )
-    callback = CombinedCallback(logger=logger_cb, print=print_cb)
+        t_obs_iter = act_choicemap_pairs(collect(plan))
 
-    # Configure SIPS particle filter
-    sips = SIPS(world_config, resample_cond=:none, rejuv_cond=:none)
+        # Set up logging callback
+        n_goals = length(goals)
+        n_init_states = length(initial_states)
+        logger_cb = DataLoggerCallback(
+            t = (t, pf) -> t::Int,
+            goal_probs = pf -> probvec(pf, goal_addr, 1:3)::Vector{Float64},
+            state_probs = pf -> probvec(pf, init_state_addr, 1:n_init_states)::Vector{Float64},
+            lml_est = pf -> log_ml_estimate(pf)::Float64,
+        )
+        print_cb = PrintStatsCallback(
+            (goal_addr, 1:length(goals)),
+            (init_state_addr, 1:length(initial_states)),
+            header=("t\t" * join(goal_names, "\t") * "\t" *
+                    join(state_names, "\t") * "\t")
+        )
+        callback = CombinedCallback(logger=logger_cb, print=print_cb)
 
-    # Run particle filter
-    n_samples = length(init_strata)
-    pf_state = sips(
-        n_samples,  t_obs_iter;
-        init_args = (init_strata=init_strata,),
-        callback = callback
-    );
+        # Configure SIPS particle filter
+        sips = SIPS(world_config, resample_cond=:none, rejuv_cond=:none)
 
-    # Extract goal probabilities
-    goal_probs_conditioned = reduce(hcat, callback.logger.data[:goal_probs])
+        # Run particle filter
+        n_samples = length(init_strata)
+        pf_state = sips(
+            n_samples,  t_obs_iter;
+            init_args = (init_strata=init_strata,),
+            callback = callback
+        );
 
-    # Extract initial state probabilities
-    state_probs_conditioned = reduce(hcat, callback.logger.data[:state_probs])
+        # Extract goal probabilities
+        goal_probs_conditioned = reduce(hcat, callback.logger.data[:goal_probs])
 
-    goal_probs_conditioned_dict[g] = goal_probs_conditioned
-    state_probs_conditioned_dict[g] = state_probs_conditioned
+        # Extract initial state probabilities
+        state_probs_conditioned = reduce(hcat, callback.logger.data[:state_probs])
 
+        goal_probs_conditioned_dict[g] = goal_probs_conditioned
+        state_probs_conditioned_dict[g] = state_probs_conditioned
+    end
 end
 
 
 blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
 wizard_candicates = blue_wizards
 t=0
+
 while !PDDL.satisfy(domain, new_state, problem.goal)
 
     Q_observe = 0
@@ -228,29 +232,41 @@ while !PDDL.satisfy(domain, new_state, problem.goal)
             continue
         end
 
-        Q_T_best = Inf
-        T_best = 0
+        # Q_T_best = Inf
+        # T_best = 0
 
 
-        for i in 1:5
+        for w in wizard_candicates
+            loc = get_obj_loc(new_state, w)
+            loc_x = loc[1]
+            loc_y = loc[2]
+            goal = pddl"(and (= (xloc agent1) $x_loc) (= (yloc agent1) $y_loc))"
+            plan = planner(domain, new_state, goal)
 
-            new_wizard_candicates = []
 
-            for j in 1:length(blue_wizards)
-                if state_probs_conditioned_dict[g][j, t+i+1] > 0.1
-                    push!(new_wizard_candicates, blue_wizards[j])
-                end
-            end
 
-            # print("checkpt1",new_wizard_candicates )
 
-            Q_T = estimate_self_exploration_cost(new_state, problem.goal, new_wizard_candicates, action_cost)
-
-            if Q_T < Q_T_best
-                Q_T_best = Q_T
-                T_best = i
-            end
         end
+
+        # for i in 1:5
+
+        #     new_wizard_candicates = []
+
+        #     for j in 1:length(blue_wizards)
+        #         if state_probs_conditioned_dict[g][j, t+i+1] > 0.1
+        #             push!(new_wizard_candicates, blue_wizards[j])
+        #         end
+        #     end
+
+        #     # print("checkpt1",new_wizard_candicates )
+
+        #     Q_T = estimate_self_exploration_cost(new_state, problem.goal, new_wizard_candicates, action_cost)
+
+        #     if Q_T < Q_T_best
+        #         Q_T_best = Q_T
+        #         T_best = i
+        #     end
+        # end
 
         Q_observe += goal_probs[g, t+1] * (Q_T_best + action_cost[:observe] * T_best)
     end 
