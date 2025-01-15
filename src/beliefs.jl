@@ -6,16 +6,19 @@ include("utils.jl")
 "Enumerate all possible beliefs about key locations in the initial state."
 function enumerate_beliefs(
     state::State;
-    wizards = PDDL.get_objects(state, :wizard),
+    wizards = collect(PDDL.get_objects(state, :wizard)),
     # colors = PDDL.get_objects(state, :color),
 )
+    print(wizards)
     belief_states = Vector{typeof(state)}()
     belief_probs = Float64[]
     belief_names = String[]
     # Create base state with no boxes
     belief_cnt = length(wizards)-1
+    # wizard_str = [string(w) for w in wizards]
 
-    for wizard in wizards
+    for wizard in sort!(wizards, by = x -> string(x))
+        # print(wizard)
         if state[pddl"(iscolor $wizard blue)"]
             push!(belief_names, string(wizard))
             base_state = copy(state)

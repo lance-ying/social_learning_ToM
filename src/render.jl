@@ -43,32 +43,10 @@ RENDERER = PDDLViz.GridworldRenderer(
             ),
             TextGraphic(
                 labels[string(o.name)[end:end]], 0.0, -0.05, 0.4;
-                color=s[Compound(:closed, [o])] ?
-                    text_color : :black,                        
+                color= :black,                        
                 font=:bold
             ))
-            # gem = gem_angles[idx] != 0 ?
-            #     PDDLViz.rotate(gem, gem_angles[idx]) : gem
-            # gem = gem_shifts[idx] != (0.0, 0.0) ?
-            #     PDDLViz.translate(gem, gem_shifts[idx]...) : gem
         end,
-        # :wizard => (d, s, o) -> begin
-        #     color = PDDLViz.to_color(:burlywood3)
-        #     text_color = PDDLViz.to_color(:black)
-        #     return MultiGraphic(
-        #         BoxGraphic(
-        #             is_open=!s[Compound(:closed, [o])],
-        #             color=s[Compound(:closed, [o])] ?
-        #                 color : PDDLViz.lighten(color, 0.6)
-        #         ),
-        #         TextGraphic(
-        #             string(o.name)[end:end], 0.0, -0.05, 0.4;
-        #             color=s[Compound(:closed, [o])] ?
-        #                 text_color : :black,                        
-        #             font=:bold
-        #         )
-        #     )
-        # end
     ),
     obj_type_z_order = [:door, :wizard, :gem, :agent],
     show_inventory = false,
@@ -78,7 +56,7 @@ RENDERER = PDDLViz.GridworldRenderer(
     inventory_types = [:item],
     inventory_labels = ["Inventory"],
     trajectory_options = Dict(
-        # :tracked_objects => [Const(:human)],
+        :tracked_objects => [Const(:agent2)],
         :tracked_types => Const[],
         :object_colors => [:black]
     )
