@@ -1,5 +1,6 @@
 using PDDL, SymbolicPlanners
 using PDDLViz, GLMakie
+
 using JSON3
 using Random
 
@@ -174,48 +175,29 @@ function generate_stim_json(
 end
 
 # Define directory paths
-PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems")
+PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_new")
 PLAN_DIR = joinpath(@__DIR__, "dataset", "plans")
 STATEMENT_DIR = joinpath(@__DIR__, "dataset", "statements")
 STIMULI_DIR = joinpath(@__DIR__, "dataset", "stimuli")
 
 # Load domain
-domain = load_domain(joinpath(@__DIR__, "dataset", "domain_render.pddl"))
+
 
 ## Generate animations for single plan / stimulus
 
-# Load problem
-problem_path = joinpath(PROBLEM_DIR, "s341.pddl")
-plan = paths["s221_blue_exp"]
-problem = load_problem(problem_path)
-state = initstate(domain, problem)
-# Load plan
-plan_path = joinpath(PLAN_DIR, "demo.pddl")
 
-plan = @pddl("(down agent2)","(down agent2)","(down agent2)","(down agent2)","(down agent2)")
-plan, _, splitpoints = load_plan(plan_path)
-p_id = splitext(basename(plan_path))[1]
-
-canvas = PDDLViz.new_canvas(RENDERER)
-anim_initialize!(canvas, RENDERER, domain, state)
-anim = anim_plan!(canvas, RENDERER, domain, state, plan[1:25]; trail_length = 15, show_inventory=true)
-save("/Users/lance/Documents/GitHub/ObserveMove/dataset/stimuli/full/demo.gif", anim)
+for k in collect(keys(paths))[5:end]
 
 
-for k in collect(keys(paths))[4:end]
-
-
-    if endswith(k,"other_naive")
+    if endswith(k,"naive")
         continue
     end
-
-    # if !startswith(k,"s53")
-    #     continue
-    # end
 
     name = k
     pid = name[1:4]
     println("Generating stimuli for $(name) ...")
+
+    domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
 
     problem_path = joinpath(PROBLEM_DIR, "$(pid).pddl")
     problem = load_problem(problem_path)
@@ -223,12 +205,12 @@ for k in collect(keys(paths))[4:end]
 
     canvas = PDDLViz.new_canvas(RENDERER)
 
-    plan = paths[name]
+    plan, _, _ = load_plan(joinpath(PLAN_DIR, "$(name).pddl"))
 
     canvas = PDDLViz.new_canvas(RENDERER)
-    anim_initialize!(canvas, RENDERER, domain, state)
+    # anim_initialize!(canvas, RENDERER, domain, state)
     print(plan)
-    anim = anim_plan!(canvas, RENDERER, domain, state, plan; trail_length = 15, framerate = 3, format = "gif",loop = -1)
+    anim = anim_plan!(canvas, RENDERER, domain, state, plan; trail_length = 15, framerate = 3, format = "gif")
     save("/Users/lance/Documents/GitHub/ObserveMove/dataset/stimuli/$(name).gif", anim)
 
 end

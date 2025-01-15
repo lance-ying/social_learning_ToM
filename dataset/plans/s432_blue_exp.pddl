@@ -1,6 +1,3 @@
-(left agent2)
-(up agent2)
-(up agent2)
 (up agent2)
 (up agent2)
 (left agent2)

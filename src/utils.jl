@@ -1,5 +1,6 @@
 using PDDL, SymbolicPlanners
 using IterTools
+using Distances
 
 "Returns the color of an object."
 function get_obj_color(state::State, obj::Const)
@@ -115,6 +116,8 @@ function calculate_plan_cost(plan:: Vector{<:Term}, action_cost::Dict{Symbol, Re
     for act in plan
         if act.name == :interact
             cost += action_cost[:interact]
+        elseif act.name == :observe
+            cost += action_cost[:observe]
         else
             cost += action_cost[:move]
         end
@@ -123,11 +126,13 @@ function calculate_plan_cost(plan:: Vector{<:Term}, action_cost::Dict{Symbol, Re
     
 end
 
-function estimate_self_exploration_cost(state:: State, agent_goal::Any, wizards::Any, action_cost::Dict{Symbol, Real})
+function estimate_self_exploration_cost(domain:: Any, state:: State, agent_goal::Any, wizards::Any, action_cost::Dict{Symbol, Real})
 
     new_state = copy(state)
 
     planner = AStarPlanner(GoalManhattan())
+
+
     # Extract wizard locations
     # print(state[pddl"(iscolor wizard1 blue)"])
     wizard_locs = [get_obj_loc(new_state, w) for w in wizards if state[pddl"(iscolor $w blue)"]]
@@ -138,7 +143,7 @@ function estimate_self_exploration_cost(state:: State, agent_goal::Any, wizards:
 
     # print(wizard_locs)
 
-    for i in 1:length(wizards)-1
+    for i in 1:length(wizards)
         cost = Inf
         # print(wizard_locs)
         min_distance_loc = wizard_locs[1]
@@ -149,6 +154,8 @@ function estimate_self_exploration_cost(state:: State, agent_goal::Any, wizards:
             goal = pddl"(and (= (xloc agent1) $x_loc) (= (yloc agent1) $y_loc))"
             plan = planner(domain, new_state, goal)
 
+            # print(collect(plan))
+
             plan_cost = calculate_plan_cost(collect(plan), action_cost)
 
             if plan_cost < cost
@@ -156,6 +163,8 @@ function estimate_self_exploration_cost(state:: State, agent_goal::Any, wizards:
                 min_distance_loc = w_loc
             end
         end
+
+        # print(wizard_locs)
 
         # print(min_distance_loc)
 
@@ -169,6 +178,10 @@ function estimate_self_exploration_cost(state:: State, agent_goal::Any, wizards:
         new_state[pddl"(xloc agent1)"] = min_distance_loc[1]
         new_state[pddl"(yloc agent1)"] = min_distance_loc[2]
 
+        # print(new_state[pddl"(xloc agent1)"], " ")
+        # print(new_state[pddl"(yloc agent1)"])
+        # print("\n")
+
         # counter+=1
         # new_state[]
     end
@@ -181,6 +194,8 @@ function estimate_self_exploration_cost(state:: State, agent_goal::Any, wizards:
     goal = pddl"(and (= (xloc agent1) $x_loc) (= (yloc agent1) $y_loc))"
 
     plan = planner(domain, new_state, goal)
+
+    # print(collect(plan))
 
     plan_cost = calculate_plan_cost(collect(plan), action_cost)
 
@@ -196,3 +211,20 @@ function estimate_self_exploration_cost(state:: State, agent_goal::Any, wizards:
     
 end
 
+function check_equal_state(state1::State, state2::State)
+    for wizard in PDDL.get_objects(state1, :wizard)
+        for key in PDDL.get_objects(state1, :key)
+            if state1[pddl"(hold $wizard $key)"]!= state2[pddl"(hold $wizard $key)"]
+                return false
+            end
+        end
+    end
+    return true
+end
+
+function eval_state_dist(dist1, dist2)
+    if euclidean(dist1, dist2) < 0.1
+        return false
+    end
+    return true
+end

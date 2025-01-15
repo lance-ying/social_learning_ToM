@@ -1,5 +1,3 @@
-(down agent2)
-(down agent2)
 (left agent2)
 (interact agent2 wizard5)
 (right agent2)

@@ -1,3 +1,5 @@
+(up agent2)
+(up agent2)
 (right agent2)
 (right agent2)
 (right agent2)
