@@ -17,16 +17,16 @@ include("paths_new.jl")
 
 # include("paths_new.jl")
 # Define directory paths
-PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_new")
+PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_exp1")
 PLAN_DIR = joinpath(@__DIR__, "dataset", "plans")
 
 
-#--- Initial Setup ---#
+# #--- Initial Setup ---#
 
 
-goal_probs_conditioned_dict = load("inference_data_temp_new.jld2", "goal")
-state_probs_conditioned_dict = load("inference_data_temp_new.jld2", "state")
-possible_worlds = load("inference_data_temp_new.jld2", "worlds")
+# goal_probs_conditioned_dict = load("inference_data_temp_new.jld2", "goal")
+# state_probs_conditioned_dict = load("inference_data_temp_new.jld2", "state")
+# possible_worlds = load("inference_data_temp_new.jld2", "worlds")
 
 goal_probs_conditioned_dict = Dict()
 state_probs_conditioned_dict = Dict()
@@ -34,25 +34,15 @@ possible_worlds = Dict()
 
 # possible_worlds_render = Dict()
 
+problem_files = filter(f -> endswith(f, "ascii.pddl"), readdir(joinpath(@__DIR__, "dataset","problems_exp1")))
 
 
-map_ids = Set([p_id[1:4] for p_id in keys(paths)])
+map_ids = Set([splitext(problem_name)[1] for problem_name in problem_files])
 
 
 
-# for map_id in map_ids,
-for map_id in ["s371","s543","s544"]
-
-    # if !occursin("21",map_id) && !occursin("11",map_id) && !occursin("54",map_id) && !occursin("34",map_id) && !occursin("33",map_id)
-    #     continue
-    # end
-
-    # if (map_id in ["s532","s531"])
-    #     continue
-    # end
-
-    print(map_id)
-
+for map_id in map_ids
+    println("Now processing: ", map_id)
 
     goal_probs_conditioned_dict[map_id] = Dict()
     state_probs_conditioned_dict[map_id] = Dict()
@@ -73,20 +63,22 @@ for map_id in ["s371","s543","s544"]
     heuristic = GoalManhattan()
     planner = AStarPlanner(heuristic)
 
-    domain, state = PDDL.compiled(domain, problem)
+    # domain, state = PDDL.compiled(domain, problem)
 
     # Render initial state
 
     #--- Goal Inference Setup ---#
 
     # Specify possible goals
-    goals = @pddl(
-        "(has agent2 gem1)",
-        "(has agent2 gem2)",
-        "(has agent2 gem3)"
-    )
+    goals, goal_names = initialize_goals(state)
+    
+    # @pddl(
+    #     "(has agent2 gem1)",
+    #     "(has agent2 gem2)",
+    #     "(has agent2 gem3)"
+    # )
 
-    goal_names = ["A", "B", "C"]
+    # goal_names = ["A", "B", "C"]
     # goal_colors = gem_colors
 
     # Define uniform prior over possible goals
