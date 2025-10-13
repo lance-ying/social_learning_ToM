@@ -107,7 +107,7 @@ function ascii_to_pddl(
             elseif char == 'M' # Agent
                 append!(init_agent1, parse_pddl("(= (xloc agent1) $x)", "(= (yloc agent1) $y)"))
 
-            elseif char == 'O' # Agent
+            elseif char == 'Z' # Agent
                 append!(init_agent2, parse_pddl("(= (xloc agent2) $x)", "(= (yloc agent2) $y)"))
             end
         end
@@ -150,7 +150,7 @@ function convert_ascii_problem(path::String)
 end
 
 function get_filenames()
-    path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_new/"
+    path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_new_9_29/"
     filenames = readdir(path)
     return filenames
 end
@@ -169,6 +169,6 @@ for filename in filenames
     if endswith(filename, ".txt")
         print(filename[1:end-4])
         print("\n")
-        convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_new/"*filename)
+        convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_new_9_29/"*filename)
     end
 end

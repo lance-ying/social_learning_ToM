@@ -5,7 +5,6 @@ using InversePlanning
 using PDDLViz, GLMakie
 using JSON
 using FileIO, JLD2
-using JSON
 # Register PDDL array theory
 PDDL.Arrays.register!()
 
@@ -16,44 +15,44 @@ include("src/beliefs.jl")
 include("src/translate.jl")
 include("src/render.jl")
 
-include("paths_new.jl")
+# include("paths_new.jl")
 # Define directory paths
-PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_new")
-PLAN_DIR = joinpath(@__DIR__, "dataset", "plans")
+PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_exp1")
+# PLAN_DIR = joinpath(@__DIR__, "dataset", "plans")
 
 #--- Initial Setup ---#
-exp_pids = [p_id for p_id in keys(paths) if !occursin("naive",p_id)]
+problem_files = filter(f -> endswith(f, "ascii.pddl"), readdir(joinpath(@__DIR__, "dataset","problems_exp1")))
+
+
+map_ids = Set([splitext(problem_name)[1] for problem_name in problem_files])
+
+
 
 steps_dict = Dict()
 
-steps_dict = JSON.parsefile("/Users/lance/Documents/GitHub/ObserveMove/step_dict.json") 
+# steps_dict = JSON.parsefile("/Users/lance/Documents/GitHub/ObserveMove/step_dict.json") 
 
-goal_probs_conditioned_dict = load("inference_data_temp.jld2", "goal")
-state_probs_conditioned_dict = load("inference_data_temp.jld2", "state")
-possible_worlds = load("inference_data_temp.jld2", "worlds")
+goal_probs_conditioned_dict = load("inference_data_exp1.jld2", "goal")
+state_probs_conditioned_dict = load("inference_data_exp1.jld2", "state")
+possible_worlds = load("inference_data_exp1.jld2", "worlds")
 
 
 domain_render = load_domain(joinpath(@__DIR__, "dataset", "domain_render.pddl"))
 
-action_cost = Dict(:move => 2, :interact => 5, :observe => 0.5)
+action_cost = Dict(:move => 2, :interact => 5, :observe => 1.0)
 
-for p_id in exp_pids
+using ProgressBars
 
-    if occursin("naive",p_id)
-        continue
-    end
+progress = ProgressBar(map_ids)
+for map_id in map_ids
 
-    println(p_id)
+    println(map_id)
 
     domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
 
     # Load problem
     # p_id = "s521_blue_exp"
-    map_id = p_id[1:4]
-
-    if !(map_id in ["s541"])
-        continue
-    end
+    # map_id = p_id[1:4]
 
     problem = load_problem(joinpath(PROBLEM_DIR, "$(map_id).pddl"))
     # plan = paths[p_id]
@@ -75,11 +74,7 @@ for p_id in exp_pids
     #--- Goal Inference Setup ---#
 
     # Specify possible goals
-    goals = @pddl(
-        "(has agent2 gem1)",
-        "(has agent2 gem2)",
-        "(has agent2 gem3)"
-    )
+    goals, goal_names = initialize_goals(state)
 
     # goal_names = ["A", "B", "C"]
     # goal_colors = gem_colors
@@ -98,7 +93,7 @@ for p_id in exp_pids
     wizard_candicates = blue_wizards
 
 
-    g_id = other_agent_goal[p_id]
+    g_id = 1
     s_id = -1
 
 
@@ -120,7 +115,7 @@ for p_id in exp_pids
 
     if !any(x-> x.name == :interact && x.args[end] in blue_wizards, plan)
         print("t=", 0)
-        steps_dict[p_id] = 0
+        steps_dict[map_id] = 0
         continue
     end
 
@@ -209,14 +204,13 @@ for p_id in exp_pids
             end
         else
             print("t = ", t)
-            steps_dict[p_id] = t
+            steps_dict[map_id] = t
             break
         end
     end
 end
 
-# using JSON
-open("step_dict.json","w") do f
-    JSON.print(f, steps_dict)
-end
 
+open("steps_dict.json", "w") do io
+    JSON.print(io, steps_dict)
+end

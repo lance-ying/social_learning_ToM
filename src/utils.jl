@@ -228,3 +228,15 @@ function eval_state_dist(dist1, dist2)
     end
     return true
 end
+
+function initialize_goals(state::State)
+    goals = []
+    goal_names = []
+
+    gems = PDDL.get_objects(state, :gem)
+    for (i, gem) in enumerate(gems)
+        push!(goals, pddl"(has agent2 $gem)")
+        push!(goal_names, string(Char('A' + i - 1)))
+    end
+    return goals, goal_names
+end
