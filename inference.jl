@@ -17,7 +17,7 @@ include("paths_new.jl")
 
 # include("paths_new.jl")
 # Define directory paths
-PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_exp1")
+PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_exp2")
 PLAN_DIR = joinpath(@__DIR__, "dataset", "plans")
 
 
@@ -34,7 +34,7 @@ possible_worlds = Dict()
 
 # possible_worlds_render = Dict()
 
-problem_files = filter(f -> endswith(f, "ascii.pddl"), readdir(joinpath(@__DIR__, "dataset","problems_exp1")))
+problem_files = filter(f -> endswith(f, ".pddl"), readdir(joinpath(@__DIR__, "dataset","problems_exp1")))
 
 
 map_ids = Set([splitext(problem_name)[1] for problem_name in problem_files])
@@ -199,7 +199,7 @@ end
 
 data = Dict("goal" => goal_probs_conditioned_dict, "state" => state_probs_conditioned_dict, "worlds" => possible_worlds)
 
-save("inference_data_temp_new.jld2", data)
+save("inference_data_exp1.jld2", data)
 
 
 files = load("inference_data_temp_0.5.jld2")
