@@ -3,6 +3,7 @@ using Gen, GenParticleFilters
 using GenGPT3
 using InversePlanning
 using PDDLViz, GLMakie
+using JSON
 
 # Register PDDL array theory
 PDDL.Arrays.register!()
@@ -12,7 +13,7 @@ include("src/utils.jl")
 include("src/heuristics.jl")
 # include("paths_new.jl")
 # Define directory paths
-PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_exp1")
+PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_exp2")
 # PLAN_DIR = joinpath(@__DIR__, "dataset", "plans")
 # STATEMENT_DIR = joinpath(@__DIR__, "dataset", "statements")
 
@@ -22,9 +23,41 @@ PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_exp1")
 # domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
 action_cost = Dict(:move => 2, :interact => 4, :observe => 1.0)
 
-problem_files = filter(f -> endswith(f, ".pddl"), readdir(joinpath(@__DIR__, "dataset","problems_exp1")))
+problem_files = filter(f -> endswith(f, ".pddl"), readdir(joinpath(@__DIR__, "dataset","problems_exp2")))
 
-goal = PDDL.parse_pddl("(has agent2 gem1)")
+
+
+metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
+metadata = JSON.parsefile(metadata_path)
+for (k, v) in metadata
+    for (i, goal_str) in enumerate(v)
+        filename = "$(k)_$(i)_plan.pddl"
+        goal = PDDL.parse_pddl("(has agent2 gem$(goal_str))")
+        println(filename, ": ", goal)
+
+        problem_name = "$(k).pddl"
+
+
+        domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
+
+        problem = load_problem(joinpath(PROBLEM_DIR, problem_name))
+        state = initstate(domain, problem)
+
+        # domain, state = PDDL.compiled(domain, problem)
+        
+        heuristic = GoalManhattan()
+        planner = AStarPlanner(heuristic)
+        plan = planner(domain, state, goal)
+        open(PROBLEM_DIR*filename, "w") do file
+            for action in plan
+                println(file, PDDL.write_pddl(action))
+            end
+        end
+
+
+        # You can add code here to use `filename` and `goal` as needed
+    end
+end
 
 for problem_name in problem_files
     println("Now processing: ", problem_name)

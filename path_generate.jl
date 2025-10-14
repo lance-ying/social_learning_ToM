@@ -10,9 +10,9 @@ PDDL.Arrays.register!()
 include("src/plan_io.jl")
 include("src/utils.jl")
 include("src/heuristics.jl")
-include("paths_new.jl")
+# include("paths_new.jl")
 # Define directory paths
-PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_new")
+PROBLEM_DIR = joinpath(@__DIR__, "dataset", "problems_exp2")
 # PLAN_DIR = joinpath(@__DIR__, "dataset", "plans")
 # STATEMENT_DIR = joinpath(@__DIR__, "dataset", "statements")
 
