@@ -44,14 +44,14 @@ domain_render = load_domain(joinpath(@__DIR__, "dataset", "domain_render.pddl"))
 
 action_cost = Dict(:move => 2, :interact => 5, :observe => 1.0)
 
-using ProgressBars
-
-progress = ProgressBar(map_ids)
-
 for (map_id, v) in metadata
+
+    println(steps_dict)
     for (i, goal_str) in enumerate(v)
         filename = "$(map_id)_$(i)_plan.pddl"
         println(filename)
+
+        map_key = "$(map_id)_$(i)"
 
         # println(map_id)
 
@@ -101,7 +101,7 @@ for (map_id, v) in metadata
         wizard_candicates = blue_wizards
 
 
-        g_id = 1
+        g_id = metadata[map_id][i]
         s_id = -1
 
 
@@ -123,7 +123,7 @@ for (map_id, v) in metadata
 
         if !any(x-> x.name == :interact && x.args[end] in blue_wizards, plan)
             print("t=", 0)
-            steps_dict[map_id] = 0
+            steps_dict[map_key] = 0
             continue
         end
 
@@ -140,12 +140,14 @@ for (map_id, v) in metadata
             #     steps_dict[p_id] = 0
             #     break
             # end
+
+            total_probs = 0
         
         
             for g in 1:length(goals)
         
         
-                if goal_probs[g, t+1] < 0.01
+                if goal_probs[g, t+1] < 0.1
                     continue
                 end
         
@@ -176,9 +178,7 @@ for (map_id, v) in metadata
                         end
                     end
         
-        
                     new_wizard_candicates = []
-        
         
                     for j in 1:length(blue_wizards)
 
@@ -190,10 +190,13 @@ for (map_id, v) in metadata
                     Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
         
                     Q_observe += goal_probs[g, t+1] * state_probs[i, t+1] * (Q_T + action_cost[:observe] * max(T,1))
-        
+
+                    total_probs += goal_probs[g, t+1] * state_probs[i, t+1]
                 end
 
             end 
+
+            Q_observe /= total_probs
         
             Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizard_candicates, action_cost)
         
@@ -212,7 +215,7 @@ for (map_id, v) in metadata
                 end
             else
                 print("t = ", t)
-                steps_dict[map_id] = t
+                steps_dict[map_key] = t
                 break
             end
         end
@@ -220,6 +223,6 @@ for (map_id, v) in metadata
 end
 
 
-open("steps_dict.json", "w") do io
+open("steps_dict_$experiment_id.json", "w") do io
     JSON.print(io, steps_dict)
 end

@@ -150,7 +150,7 @@ function convert_ascii_problem(path::String)
 end
 
 function get_filenames()
-    path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_new_9_29/"
+    path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp2/"
     filenames = readdir(path)
     return filenames
 end
@@ -169,6 +169,6 @@ for filename in filenames
     if endswith(filename, ".txt")
         print(filename[1:end-4])
         print("\n")
-        convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_new_9_29/"*filename)
+        convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp2/"*filename)
     end
 end
