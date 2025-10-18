@@ -1,3 +1,6 @@
+(left agent2)
+(left agent2)
+(left agent2)
 (up agent2)
 (up agent2)
 (interact agent2 wizard1)

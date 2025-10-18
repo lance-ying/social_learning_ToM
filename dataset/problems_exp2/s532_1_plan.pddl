@@ -18,7 +18,6 @@
 (down agent2)
 (down agent2)
 (down agent2)
-(down agent2)
 (right agent2)
 (right agent2)
 (right agent2)
