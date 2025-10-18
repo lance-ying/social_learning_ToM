@@ -20,7 +20,6 @@
 (down agent2)
 (down agent2)
 (down agent2)
-(down agent2)
 (pass agent2 key1 door3)
 (down agent2)
 (pickup agent2 gem3)

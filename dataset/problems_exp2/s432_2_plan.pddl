@@ -1,8 +1,6 @@
 (right agent2)
 (right agent2)
 (right agent2)
-(right agent2)
-(right agent2)
 (interact agent2 wizard4)
 (left agent2)
 (left agent2)

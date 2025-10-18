@@ -6,7 +6,7 @@
             agent1 agent2 - agent
             gem1 gem2 gem3 - gem
             wizard1 wizard2 wizard3 wizard4 wizard5 - wizard)
-  (:init (= (walls) (new-bit-matrix false 12 11))
+  (:init (= (walls) (new-bit-matrix false 13 11))
          (= (xloc wizard1) 1)
          (= (yloc wizard1) 1)
          (iscolor wizard1 blue)
@@ -133,5 +133,5 @@
          (= (yloc agent1) 8)
          (= (xloc agent2) 3)
          (= (yloc agent2) 6))
-  (:goal (has agent1 gem3))
+  (:goal (has agent1 gem2))
 )

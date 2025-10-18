@@ -1,3 +1,4 @@
+(left agent2)
 (down agent2)
 (down agent2)
 (down agent2)
