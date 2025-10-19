@@ -6,7 +6,7 @@
             agent1 agent2 - agent
             gem1 gem2 gem3 - gem
             wizard1 wizard2 wizard3 wizard4 - wizard)
-  (:init (= (walls) (new-bit-matrix false 13 11))
+  (:init (= (walls) (new-bit-matrix false 12 11))
          (= (walls) (set-index walls true 1 1))
          (= (walls) (set-index walls true 1 2))
          (= (walls) (set-index walls true 1 3))

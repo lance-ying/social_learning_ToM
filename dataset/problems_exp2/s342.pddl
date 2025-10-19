@@ -2,11 +2,11 @@
   (:domain doors-keys-gems)
   (:objects blue red - color
             key1 key2 - key
-            door1 door2 door3 - door
+            door1 door2 - door
             agent1 agent2 - agent
             gem1 gem2 gem3 - gem
             wizard1 wizard2 wizard3 - wizard)
-  (:init (= (walls) (new-bit-matrix false 13 11))
+  (:init (= (walls) (new-bit-matrix false 12 11))
          (= (walls) (set-index walls true 1 1))
          (= (walls) (set-index walls true 1 2))
          (= (walls) (set-index walls true 1 3))
@@ -98,9 +98,6 @@
          (= (walls) (set-index walls true 10 3))
          (= (walls) (set-index walls true 10 4))
          (= (walls) (set-index walls true 10 5))
-         (= (xloc door2) 6)
-         (= (yloc door2) 10)
-         (iscolor door2 red)
          (= (walls) (set-index walls true 10 7))
          (= (walls) (set-index walls true 10 8))
          (= (walls) (set-index walls true 10 9))
@@ -110,9 +107,9 @@
          (= (walls) (set-index walls true 11 3))
          (= (walls) (set-index walls true 11 4))
          (= (walls) (set-index walls true 11 5))
-         (= (xloc door3) 6)
-         (= (yloc door3) 11)
-         (iscolor door3 blue)
+         (= (xloc door2) 6)
+         (= (yloc door2) 11)
+         (iscolor door2 blue)
          (= (walls) (set-index walls true 11 7))
          (= (walls) (set-index walls true 11 8))
          (= (walls) (set-index walls true 11 9))
