@@ -38,6 +38,9 @@ metadata = JSON.parsefile(metadata_path)
 
 for (map_id, v) in metadata
     for (i, goal_str) in enumerate(v)
+        if (occursin("442", map_id))
+            continue
+        end
         filename = "$(map_id)_$(i)_plan.pddl"
         goal = PDDL.parse_pddl("(has agent2 gem$(goal_str))")
         println(filename, ": ", goal)
@@ -114,7 +117,7 @@ for (map_id, v) in metadata
         planner = RTHS(heuristic, n_iters=1, max_nodes=2^15)
 
         # Define action noise model
-        temperatures =1.0
+        temperatures =0.5
 
         act_config = BoltzmannActConfig(temperatures)
 
@@ -149,6 +152,8 @@ for (map_id, v) in metadata
                 state = initial_states[i]
                 planner = AStarPlanner(GoalManhattan())
                 plan =planner(domain, state, goals[g])
+
+                println(plan)
 
                 t_obs_iter = act_choicemap_pairs(collect(plan))
 
