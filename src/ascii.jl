@@ -20,11 +20,19 @@ function ascii_to_pddl(
 )
     objects = Dict(
         :door => Const[], :key => Const[], :gem => Const[],
-        :wizard => Const[], :color => Const[], :agent => Const[pddl"(agent1)", pddl"(agent2)"]
+        :wizard => Const[], :color => Const[], :agent => Const[pddl"(agent1)", pddl"(agent2)", pddl"(agent3)"]
     )
 
     # Parse width and height of grid
-    rows = split(str, "\n", keepempty=false)
+    # Stop at empty line (metadata starts after empty line)
+    all_rows = split(str, "\n", keepempty=true)
+    rows = []
+    for row in all_rows
+        if strip(row) == ""
+            break  # Stop at empty line
+        end
+        push!(rows, row)
+    end
     width, height = maximum(length.(strip.(rows))), length(rows)
     walls = parse_pddl("(= walls (new-bit-matrix false $height $width))")
 
@@ -32,6 +40,7 @@ function ascii_to_pddl(
     init = Term[walls]
     init_agent1 = Term[]
     init_agent2 = Term[]
+    init_agent3 = Term[]
     goal = pddl"(true)"
     for (y, row) in enumerate(rows)
         for (x, char) in enumerate(strip(row))
@@ -104,16 +113,20 @@ function ascii_to_pddl(
                 if char == 'G'
                     goal = parse_pddl("(has agent1 $g)")
                 end
-            elseif char == 'M' # Agent
+            elseif char == 'M' # Agent 1 (Observer/Player)
                 append!(init_agent1, parse_pddl("(= (xloc agent1) $x)", "(= (yloc agent1) $y)"))
 
-            elseif char == 'Z' # Agent
+            elseif char == 'Z' # Agent 2 (for inference)
                 append!(init_agent2, parse_pddl("(= (xloc agent2) $x)", "(= (yloc agent2) $y)"))
+                
+            elseif char == 'X' # Agent 3 (for inference)
+                append!(init_agent3, parse_pddl("(= (xloc agent3) $x)", "(= (yloc agent3) $y)"))
             end
         end
     end
     append!(init, init_agent1)
     append!(init, init_agent2)
+    append!(init, init_agent3)
 
     # Create object list
     objlist = Const[]
@@ -149,13 +162,14 @@ function convert_ascii_problem(path::String)
     return new_path
 end
 
-function get_filenames()
-    path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp2/"
-    filenames = readdir(path)
-    return filenames
-end
+# Commented out automatic execution - uncomment if needed for batch conversion
+# function get_filenames()
+#     path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp2/"
+#     filenames = readdir(path)
+#     return filenames
+# end
 
-filenames = get_filenames()
+# filenames = get_filenames()
 
 # for filename in filenames
 #     if endswith(filename, ".pddl") && startswith(filename, "s")
@@ -165,10 +179,10 @@ filenames = get_filenames()
 #     end
 # end
 
-for filename in filenames
-    if endswith(filename, ".txt")
-        print(filename[1:end-4])
-        print("\n")
-        convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp2/"*filename)
-    end
-end
+# for filename in filenames
+#     if endswith(filename, ".txt")
+#         print(filename[1:end-4])
+#         print("\n")
+#         convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp2/"*filename)
+#     end
+# end
