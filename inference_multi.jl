@@ -28,6 +28,27 @@ problem_files = filter(f -> endswith(f, ".pddl") && !occursin("plan", f), readdi
 metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
 metadata = JSON.parsefile(metadata_path)
 
+# Helper function to filter ASCII map to only include specified agent
+function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
+    # Map agent symbols to ASCII characters
+    agent_chars = Dict(
+        :agent1 => 'M',  # Observer (never inferred)
+        :agent2 => 'Z',  # Inferred agent
+        :agent3 => 'X'   # Inferred agent
+    )
+    
+    # Replace unwanted agents with empty space
+    filtered = ascii_content
+    for (agent_sym, char) in agent_chars
+        if agent_sym != keep_agent
+            # Replace this agent's character with '.'
+            filtered = replace(filtered, char => '.')
+        end
+    end
+    
+    return filtered
+end
+
 # Loop over both agents (agent2=Z, agent3=X, agent1=M is not inferred)
 agents_to_infer = ["agent2", "agent3"]
 
@@ -61,18 +82,26 @@ for agent_name in agents_to_infer
             # Load domain
             domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
 
-            # Load problem (convert from txt to PDDL if needed)
+            # Load problem - filter ASCII to only include the agent we're inferring
             problem_path = joinpath(PROBLEM_DIR, "$map_id.pddl")
-            if !isfile(problem_path)
-                # Need to convert from txt first
+            txt_path = joinpath(PROBLEM_DIR, "$map_id.txt")
+            
+            if isfile(txt_path)
+                # Load ASCII, filter to only include target agent, then convert to PDDL
                 include("src/ascii.jl")
-                txt_path = joinpath(PROBLEM_DIR, "$map_id.txt")
-                problem = load_ascii_problem(txt_path)
-            else
+                ascii_content = read(txt_path, String)
+                filtered_ascii = filter_ascii_agents(ascii_content, agent_sym)
+                # Write to temp file for debugging (don't delete)
+                temp_path = joinpath(PROBLEM_DIR, ".temp_$(agent_name)_$(map_id).txt")
+                write(temp_path, filtered_ascii)
+                problem = load_ascii_problem(temp_path)
+            elseif isfile(problem_path)
+                # Fall back to pre-generated PDDL (won't have filtering)
                 problem = load_problem(problem_path)
+            else
+                error("No problem file found for $map_id")
             end
 
-            # Initialize and compile reference state
             state = initstate(domain, problem)
 
             heuristic = GoalManhattan()
