@@ -20,7 +20,7 @@ function ascii_to_pddl(
 )
     objects = Dict(
         :door => Const[], :key => Const[], :gem => Const[],
-        :wizard => Const[], :color => Const[], :agent => Const[pddl"(agent1)", pddl"(agent2)", pddl"(agent3)"]
+        :wizard => Const[], :color => Const[], :agent => Const[]  # Start empty, add dynamically
     )
 
     # Parse width and height of grid
@@ -114,12 +114,21 @@ function ascii_to_pddl(
                     goal = parse_pddl("(has agent1 $g)")
                 end
             elseif char == 'M' # Agent 1 (Observer/Player)
+                if pddl"(agent1)" ∉ objects[:agent]
+                    push!(objects[:agent], pddl"(agent1)")
+                end
                 append!(init_agent1, parse_pddl("(= (xloc agent1) $x)", "(= (yloc agent1) $y)"))
 
             elseif char == 'Z' # Agent 2 (for inference)
+                if pddl"(agent2)" ∉ objects[:agent]
+                    push!(objects[:agent], pddl"(agent2)")
+                end
                 append!(init_agent2, parse_pddl("(= (xloc agent2) $x)", "(= (yloc agent2) $y)"))
-                
+
             elseif char == 'X' # Agent 3 (for inference)
+                if pddl"(agent3)" ∉ objects[:agent]
+                    push!(objects[:agent], pddl"(agent3)")
+                end
                 append!(init_agent3, parse_pddl("(= (xloc agent3) $x)", "(= (yloc agent3) $y)"))
             end
         end
