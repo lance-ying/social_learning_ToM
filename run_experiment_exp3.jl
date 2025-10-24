@@ -401,10 +401,11 @@ println("Fastest map: $(round(minimum(values(map_times)), digits=2))s")
 println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
-open("steps_dict_$experiment_id.json", "w") do io
+output_filename = "steps_dict_$(experiment_id)_optimized.json"
+open(output_filename, "w") do io
     JSON.print(io, steps_dict, 4)
 end
 
 println("\n=== Experiment Complete ===")
-println("Results saved to: steps_dict_$experiment_id.json")
+println("Results saved to: $output_filename")
 
