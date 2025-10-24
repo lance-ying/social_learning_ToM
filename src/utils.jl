@@ -2,6 +2,25 @@ using PDDL, SymbolicPlanners
 using IterTools
 using Distances
 
+# Global cache for planner results
+const PLANNER_CACHE = Dict{Tuple{Int, Int, Int, Int}, Vector{Term}}()
+const CACHE_HITS = Ref(0)
+const CACHE_MISSES = Ref(0)
+
+"Clear the planner cache (call between maps/scenarios)"
+function clear_planner_cache!()
+    empty!(PLANNER_CACHE)
+    CACHE_HITS[] = 0
+    CACHE_MISSES[] = 0
+end
+
+"Get planner cache statistics"
+function get_cache_stats()
+    total = CACHE_HITS[] + CACHE_MISSES[]
+    hit_rate = total > 0 ? CACHE_HITS[] / total : 0.0
+    return (hits=CACHE_HITS[], misses=CACHE_MISSES[], hit_rate=hit_rate)
+end
+
 "Returns the color of an object."
 function get_obj_color(state::State, obj::Const)
     for color in PDDL.get_objects(state, :color)
@@ -132,6 +151,20 @@ function estimate_self_exploration_cost(domain:: Any, state:: State, agent_goal:
 
     planner = AStarPlanner(GoalManhattan())
 
+    # Helper function to get plan with caching
+    function get_cached_plan(agent_x::Int, agent_y::Int, goal_x::Int, goal_y::Int)
+        cache_key = (agent_x, agent_y, goal_x, goal_y)
+        if haskey(PLANNER_CACHE, cache_key)
+            CACHE_HITS[] += 1
+            return PLANNER_CACHE[cache_key]
+        else
+            CACHE_MISSES[] += 1
+            goal = pddl"(and (= (xloc agent1) $goal_x) (= (yloc agent1) $goal_y))"
+            plan = collect(planner(domain, new_state, goal))
+            PLANNER_CACHE[cache_key] = plan
+            return plan
+        end
+    end
 
     # Extract wizard locations
     # print(state[pddl"(iscolor wizard1 blue)"])
@@ -147,16 +180,19 @@ function estimate_self_exploration_cost(domain:: Any, state:: State, agent_goal:
         cost = Inf
         # print(wizard_locs)
         min_distance_loc = wizard_locs[1]
+        
+        agent_x = new_state[pddl"(xloc agent1)"]
+        agent_y = new_state[pddl"(yloc agent1)"]
+        
         for w_loc in wizard_locs
 
             x_loc = w_loc[1]
             y_loc = w_loc[2]
-            goal = pddl"(and (= (xloc agent1) $x_loc) (= (yloc agent1) $y_loc))"
-            plan = planner(domain, new_state, goal)
+            plan = get_cached_plan(agent_x, agent_y, x_loc, y_loc)
 
             # print(collect(plan))
 
-            plan_cost = calculate_plan_cost(collect(plan), action_cost)
+            plan_cost = calculate_plan_cost(plan, action_cost)
 
             if plan_cost < cost
                 cost = plan_cost
@@ -191,13 +227,14 @@ function estimate_self_exploration_cost(domain:: Any, state:: State, agent_goal:
     x_loc = goal_loc[1]
     y_loc = goal_loc[2]
 
-    goal = pddl"(and (= (xloc agent1) $x_loc) (= (yloc agent1) $y_loc))"
-
-    plan = planner(domain, new_state, goal)
+    agent_x = new_state[pddl"(xloc agent1)"]
+    agent_y = new_state[pddl"(yloc agent1)"]
+    
+    plan = get_cached_plan(agent_x, agent_y, x_loc, y_loc)
 
     # print(collect(plan))
 
-    plan_cost = calculate_plan_cost(collect(plan), action_cost)
+    plan_cost = calculate_plan_cost(plan, action_cost)
 
     # print(agent_goal)
     # final_plan = planner(domain, new_state, agent_goal)

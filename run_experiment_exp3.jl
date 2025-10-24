@@ -6,6 +6,8 @@ using PDDLViz, GLMakie
 using JSON
 using FileIO, JLD2
 using ProgressMeter
+using Base.Threads
+using Statistics
 # Register PDDL array theory
 PDDL.Arrays.register!()
 
@@ -41,13 +43,22 @@ action_cost = Dict(:move => 2, :interact => 5, :observe => 1.0)
 total_iterations = length(metadata) * 2  # 25 maps × 2 scenarios
 progress = Progress(total_iterations, desc="Processing exp3: ")
 
+# Track timing
+map_times = Dict()
+total_start_time = time()
+
 for (map_id, agent_goals) in metadata
+    map_start_time = time()
     println("\nProcessing map: $map_id")
     
     # Loop over both scenarios
     for scenario in 1:2
+        scenario_start_time = time()
         map_key = "$(map_id)_scenario$(scenario)"
         println("  Scenario $scenario")
+        
+        # Clear planner cache for each scenario to avoid memory issues
+        clear_planner_cache!()
         
         # Get which gems each agent wants in this scenario
         agent2_gem = agent_goals["agent2"][scenario]  # Z's goal
@@ -113,9 +124,18 @@ for (map_id, agent_goals) in metadata
         initial_states_agent3, belief_probs_agent3, state_names_agent3 = enumerate_beliefs(state_agent3)
 
         t = 0
+        
+        # Track observations
+        observations = []
+        agent2_count = 0
+        agent3_count = 0
 
         blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
         wizard_candicates = blue_wizards
+        
+        # Pre-compute blue wizards for filtered states (used in Q computation)
+        blue_wizards_agent2 = [w for w in PDDL.get_objects(state_agent2, :wizard) if state_agent2[pddl"(iscolor $w blue)"]]
+        blue_wizards_agent3 = [w for w in PDDL.get_objects(state_agent3, :wizard) if state_agent3[pddl"(iscolor $w blue)"]]
 
         # Find current state ID for agent2 (using FILTERED state)
         s_id_agent2 = -1
@@ -142,13 +162,19 @@ for (map_id, agent_goals) in metadata
         goal_probs_agent3 = goal_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
         state_probs_agent3 = state_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
 
+        # Pre-compute state copy and planner (moved outside loop for efficiency)
         new_state = copy(state_render)
         planner = AStarPlanner(GoalManhattan())
         plan = planner(domain, state, problem.goal)
 
         if !any(x-> x.name == :interact && x.args[end] in blue_wizards, plan)
             print("t=", 0)
-            steps_dict[map_key] = Dict("t" => 0, "observed" => "none")
+            steps_dict[map_key] = Dict(
+                "t" => 0, 
+                "observations" => [],
+                "agent2_count" => 0,
+                "agent3_count" => 0
+            )
             next!(progress)
             continue
         end
@@ -156,13 +182,31 @@ for (map_id, agent_goals) in metadata
         while !PDDL.satisfy(domain, state, problem.goal)
             
             println("    [t=$t] Computing Q-values...")
+            q_start_time = time()
             
-            # Compute Q_observe for agent2 (Z)
-            Q_observe_agent2 = 0
-            total_probs_agent2 = 0
+            # Check if we have probability data for timestep t+1
+            max_t_agent2 = size(goal_probs_agent2, 2) - 1  # -1 because we access t+1
+            max_t_agent3 = size(goal_probs_agent3, 2) - 1
             
-            # Loop over ALL possible goals (observer doesn't know which goal agent has)
-            for g in 1:length(goals_agent2)
+            if t >= max_t_agent2 || t >= max_t_agent3
+                println("    -> Reached end of inference data at t=$t")
+                steps_dict[map_key] = Dict(
+                    "t" => t,
+                    "observations" => observations,
+                    "agent2_count" => agent2_count,
+                    "agent3_count" => agent3_count
+                )
+                break
+            end
+            
+            # Parallelize Q computation for both agents
+            task_agent2 = Threads.@spawn begin
+                # Compute Q_observe for agent2 (Z)
+                Q_observe_agent2 = 0.0
+                total_probs_agent2 = 0.0
+                
+                # Loop over ALL possible goals (observer doesn't know which goal agent has)
+                for g in 1:length(goals_agent2)
                 if goal_probs_agent2[g, t+1] < 0.1
                     continue
                 end
@@ -183,20 +227,26 @@ for (map_id, agent_goals) in metadata
                     end
                     
                     if T == -1
-                        for val in 1:length(goal_probs_conditioned_dict["agent2"][map_id][scenario][agent2_gem][i][1,:])
-                            if any(x -> x<0.1, goal_probs_conditioned_dict["agent2"][map_id][scenario][agent2_gem][i][:,val])
+                        for val in 1:length(goal_probs_conditioned_dict["agent2"][map_id][scenario][g][i][1,:])
+                            if any(x -> x<0.1, goal_probs_conditioned_dict["agent2"][map_id][scenario][g][i][:,val])
                                 T = val
                                 break
                             end
                         end
                     end
                     
-                    # Get blue wizards from FILTERED agent2 state
-                    blue_wizards_agent2 = [w for w in PDDL.get_objects(state_agent2, :wizard) if state_agent2[pddl"(iscolor $w blue)"]]
-                    new_wizard_candicates = []
-                    for j in 1:length(blue_wizards_agent2)
-                        if state_probs_conditioned_dict["agent2"][map_id][scenario][g][i][j, T] > 0.1
-                            push!(new_wizard_candicates, blue_wizards_agent2[j])
+                    # Validate T is within bounds for state_probs_conditioned_dict
+                    max_T_state = size(state_probs_conditioned_dict["agent2"][map_id][scenario][g][i], 2)
+                    if T == -1 || T > max_T_state
+                        # If T is invalid, use all wizards as candidates
+                        new_wizard_candicates = copy(blue_wizards_agent2)
+                    else
+                        # Get blue wizards from pre-computed list
+                        new_wizard_candicates = []
+                        for j in 1:length(blue_wizards_agent2)
+                            if state_probs_conditioned_dict["agent2"][map_id][scenario][g][i][j, T] > 0.1
+                                push!(new_wizard_candicates, blue_wizards_agent2[j])
+                            end
                         end
                     end
                     
@@ -206,16 +256,20 @@ for (map_id, agent_goals) in metadata
                     Q_observe_agent2 += goal_probs_agent2[g, t+1] * state_probs_agent2[i, t+1] * (Q_T + action_cost[:observe] * max(T,1))
                     total_probs_agent2 += goal_probs_agent2[g, t+1] * state_probs_agent2[i, t+1]
                 end
+                end
+                
+                Q_observe_agent2 /= total_probs_agent2
+                println("      agent2 Q computed: $Q_observe_agent2")
+                (Q_observe_agent2, total_probs_agent2)
             end
-            Q_observe_agent2 /= total_probs_agent2
-            println("      agent2 Q computed: $Q_observe_agent2")
             
-            # Compute Q_observe for agent3 (X)
-            Q_observe_agent3 = 0
-            total_probs_agent3 = 0
-            
-            # Loop over ALL possible goals (observer doesn't know which goal agent has)
-            for g in 1:length(goals_agent3)
+            task_agent3 = Threads.@spawn begin
+                # Compute Q_observe for agent3 (X)
+                Q_observe_agent3 = 0.0
+                total_probs_agent3 = 0.0
+                
+                # Loop over ALL possible goals (observer doesn't know which goal agent has)
+                for g in 1:length(goals_agent3)
                 if goal_probs_agent3[g, t+1] < 0.1
                     continue
                 end
@@ -236,20 +290,26 @@ for (map_id, agent_goals) in metadata
                     end
                     
                     if T == -1
-                        for val in 1:length(goal_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][i][1,:])
-                            if any(x -> x<0.1, goal_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][i][:,val])
+                        for val in 1:length(goal_probs_conditioned_dict["agent3"][map_id][scenario][g][i][1,:])
+                            if any(x -> x<0.1, goal_probs_conditioned_dict["agent3"][map_id][scenario][g][i][:,val])
                                 T = val
                                 break
                             end
                         end
                     end
                     
-                    # Get blue wizards from FILTERED agent3 state
-                    blue_wizards_agent3 = [w for w in PDDL.get_objects(state_agent3, :wizard) if state_agent3[pddl"(iscolor $w blue)"]]
-                    new_wizard_candicates = []
-                    for j in 1:length(blue_wizards_agent3)
-                        if state_probs_conditioned_dict["agent3"][map_id][scenario][g][i][j, T] > 0.1
-                            push!(new_wizard_candicates, blue_wizards_agent3[j])
+                    # Validate T is within bounds for state_probs_conditioned_dict
+                    max_T_state = size(state_probs_conditioned_dict["agent3"][map_id][scenario][g][i], 2)
+                    if T == -1 || T > max_T_state
+                        # If T is invalid, use all wizards as candidates
+                        new_wizard_candicates = copy(blue_wizards_agent3)
+                    else
+                        # Get blue wizards from pre-computed list
+                        new_wizard_candicates = []
+                        for j in 1:length(blue_wizards_agent3)
+                            if state_probs_conditioned_dict["agent3"][map_id][scenario][g][i][j, T] > 0.1
+                                push!(new_wizard_candicates, blue_wizards_agent3[j])
+                            end
                         end
                     end
                     
@@ -259,9 +319,19 @@ for (map_id, agent_goals) in metadata
                     Q_observe_agent3 += goal_probs_agent3[g, t+1] * state_probs_agent3[i, t+1] * (Q_T + action_cost[:observe] * max(T,1))
                     total_probs_agent3 += goal_probs_agent3[g, t+1] * state_probs_agent3[i, t+1]
                 end
+                end
+                
+                Q_observe_agent3 /= total_probs_agent3
+                println("      agent3 Q computed: $Q_observe_agent3")
+                (Q_observe_agent3, total_probs_agent3)
             end
-            Q_observe_agent3 /= total_probs_agent3
-            println("      agent3 Q computed: $Q_observe_agent3")
+            
+            # Wait for both parallel tasks to complete
+            (Q_observe_agent2, total_probs_agent2) = fetch(task_agent2)
+            (Q_observe_agent3, total_probs_agent3) = fetch(task_agent3)
+            
+            q_elapsed = time() - q_start_time
+            println("      Q-value computation time: $(round(q_elapsed, digits=2))s")
             
             # Compute Q_not_observe
             Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizard_candicates, action_cost)
@@ -273,9 +343,11 @@ for (map_id, agent_goals) in metadata
             q_values = [Q_observe_agent2, Q_observe_agent3, Q_not_observe]
             best_action_idx = argmin(q_values)
             
-            if best_action_idx == 1 && Q_observe_agent2 + 0.3 < Q_not_observe
-                # Observe agent2 (Z)
+            if best_action_idx == 1
+                # Observe agent2 (Z) - it has the lowest Q-value
                 println("    -> Observing agent2 (Z)")
+                push!(observations, "agent2")
+                agent2_count += 1
                 t += 1
                 wizard_candicates = []
                 for j in 1:length(blue_wizards)
@@ -283,9 +355,11 @@ for (map_id, agent_goals) in metadata
                         push!(wizard_candicates, blue_wizards[j])
                     end
                 end
-            elseif best_action_idx == 2 && Q_observe_agent3 + 0.3 < Q_not_observe
-                # Observe agent3 (X)
+            elseif best_action_idx == 2
+                # Observe agent3 (X) - it has the lowest Q-value
                 println("    -> Observing agent3 (X)")
+                push!(observations, "agent3")
+                agent3_count += 1
                 t += 1
                 wizard_candicates = []
                 for j in 1:length(blue_wizards)
@@ -294,18 +368,37 @@ for (map_id, agent_goals) in metadata
                     end
                 end
             else
-                # Don't observe
-                println("    -> Not observing (t=$t)")
-                observed_agent = best_action_idx == 1 ? "agent2" : (best_action_idx == 2 ? "agent3" : "none")
-                steps_dict[map_key] = Dict("t" => t, "observed" => observed_agent)
+                # best_action_idx == 3: Not observing has the lowest Q-value
+                println("    -> Not observing (stopping at t=$t)")
+                steps_dict[map_key] = Dict(
+                    "t" => t,
+                    "observations" => observations,
+                    "agent2_count" => agent2_count,
+                    "agent3_count" => agent3_count
+                )
                 break
             end
         end
         
         # Update progress bar after each scenario
+        scenario_elapsed = time() - scenario_start_time
+        cache_stats = get_cache_stats()
+        println("    Scenario completed in $(round(scenario_elapsed, digits=2))s")
+        println("    Cache stats: $(cache_stats.hits) hits, $(cache_stats.misses) misses, $(round(cache_stats.hit_rate * 100, digits=1))% hit rate")
         next!(progress)
     end
+    
+    map_elapsed = time() - map_start_time
+    map_times[map_id] = map_elapsed
+    println("  Map completed in $(round(map_elapsed, digits=2))s")
 end
+
+total_elapsed = time() - total_start_time
+println("\n=== Timing Summary ===")
+println("Total time: $(round(total_elapsed, digits=2))s")
+println("Average per map: $(round(mean(values(map_times)), digits=2))s")
+println("Fastest map: $(round(minimum(values(map_times)), digits=2))s")
+println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
 open("steps_dict_$experiment_id.json", "w") do io
