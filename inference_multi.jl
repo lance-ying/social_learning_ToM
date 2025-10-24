@@ -30,22 +30,13 @@ metadata = JSON.parsefile(metadata_path)
 
 # Helper function to filter ASCII map to only include specified agent
 function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
-    # Map agent symbols to ASCII characters
-    agent_chars = Dict(
-        :agent1 => 'M',  # Observer (never inferred)
-        :agent2 => 'Z',  # Inferred agent
-        :agent3 => 'X'   # Inferred agent
-    )
-    
-    # Replace unwanted agents with empty space
+    agent_chars = Dict(:agent1 => 'M', :agent2 => 'Z', :agent3 => 'X')
     filtered = ascii_content
     for (agent_sym, char) in agent_chars
         if agent_sym != keep_agent
-            # Replace this agent's character with '.'
             filtered = replace(filtered, char => '.')
         end
     end
-    
     return filtered
 end
 
@@ -82,21 +73,18 @@ for agent_name in agents_to_infer
             # Load domain
             domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
 
-            # Load problem - filter ASCII to only include the agent we're inferring
+            # Load problem with agent filtering for speed
             problem_path = joinpath(PROBLEM_DIR, "$map_id.pddl")
             txt_path = joinpath(PROBLEM_DIR, "$map_id.txt")
             
             if isfile(txt_path)
-                # Load ASCII, filter to only include target agent, then convert to PDDL
                 include("src/ascii.jl")
                 ascii_content = read(txt_path, String)
                 filtered_ascii = filter_ascii_agents(ascii_content, agent_sym)
-                # Write to temp file for debugging (don't delete)
                 temp_path = joinpath(PROBLEM_DIR, ".temp_$(agent_name)_$(map_id).txt")
                 write(temp_path, filtered_ascii)
                 problem = load_ascii_problem(temp_path)
             elseif isfile(problem_path)
-                # Fall back to pre-generated PDDL (won't have filtering)
                 problem = load_problem(problem_path)
             else
                 error("No problem file found for $map_id")
@@ -173,12 +161,12 @@ for agent_name in agents_to_infer
                 env_config = PDDLEnvConfig(domain, state_prior)
             )
 
-            # Run inference only for the specific goal in this scenario
-            g = goal_gem_idx  # Use the specific goal from metadata
-            goal_probs_conditioned_dict[agent_name][map_id][scenario][g] = Dict()
-            state_probs_conditioned_dict[agent_name][map_id][scenario][g] = Dict()
-
-            for i in 1:length(initial_states)
+            # Run inference for ALL goals (observer doesn't know agent's goal)
+            for g in 1:length(goals)
+                goal_probs_conditioned_dict[agent_name][map_id][scenario][g] = Dict()
+                state_probs_conditioned_dict[agent_name][map_id][scenario][g] = Dict()
+                
+                for i in 1:length(initial_states)
                     state_i = initial_states[i]
                     planner_astar = AStarPlanner(GoalManhattan())
                     plan = planner_astar(domain, state_i, goals[g])
@@ -223,6 +211,7 @@ for agent_name in agents_to_infer
 
                     goal_probs_conditioned_dict[agent_name][map_id][scenario][g][i] = goal_probs_conditioned
                     state_probs_conditioned_dict[agent_name][map_id][scenario][g][i] = state_probs_conditioned
+                end
             end
         end
     end
