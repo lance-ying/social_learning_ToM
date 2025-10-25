@@ -28,7 +28,7 @@ metadata = JSON.parsefile(metadata_path)
 
 steps_dict = Dict()
 
-# Load inference data for both agents (agent2=Z, agent3=X)
+# Load inference data for both agents (agent2=X, agent3=Y)
 data = load("inference_data_$experiment_id.jld2")
 goal_probs_conditioned_dict = data["goal"]
 state_probs_conditioned_dict = data["state"]
@@ -36,7 +36,7 @@ possible_worlds = data["worlds"]
 
 domain_render = load_domain(joinpath(@__DIR__, "dataset", "domain_render.pddl"))
 
-action_cost = Dict(:move => 2, :interact => 5, :observe => 1.0)
+action_cost = Dict(:move => 3, :interact => 5, :observe => 1.0)
 
 # Create progress bar for all (map, scenario) combinations
 total_iterations = length(metadata) * 2  # 25 maps × 2 scenarios
@@ -48,9 +48,6 @@ total_start_time = time()
 
 for (map_id, agent_goals) in metadata
 
-    if map_id != "sm541"
-        continue
-    end
     map_start_time = time()
     println("\nProcessing map: $map_id")
     
@@ -64,10 +61,10 @@ for (map_id, agent_goals) in metadata
         clear_planner_cache!()
         
         # Get which gems each agent wants in this scenario
-        agent2_gem = agent_goals["agent2"][scenario]  # Z's goal
-        agent3_gem = agent_goals["agent3"][scenario]  # X's goal
+        agent2_gem = agent_goals["agent2"][scenario]  # X's goal
+        agent3_gem = agent_goals["agent3"][scenario]  # Y's goal
         
-        println("    agent2 (Z) -> gem$agent2_gem, agent3 (X) -> gem$agent3_gem")
+        println("    agent2 (X) -> gem$agent2_gem, agent3 (Y) -> gem$agent3_gem")
 
         domain = load_domain(joinpath(@__DIR__, "dataset", "domain.pddl"))
         problem = load_problem(joinpath(PROBLEM_DIR, "$(map_id).pddl"))
@@ -207,7 +204,7 @@ for (map_id, agent_goals) in metadata
             
             # Parallelize Q computation for both agents
             task_agent2 = Threads.@spawn begin
-                # Compute Q_observe for agent2 (Z)
+                # Compute Q_observe for agent2 (X)
                 Q_observe_agent2 = 0.0
                 total_probs_agent2 = 0.0
                 
@@ -270,7 +267,7 @@ for (map_id, agent_goals) in metadata
             end
             
             task_agent3 = Threads.@spawn begin
-                # Compute Q_observe for agent3 (X)
+                # Compute Q_observe for agent3 (Y)
                 Q_observe_agent3 = 0.0
                 total_probs_agent3 = 0.0
                 
@@ -350,8 +347,8 @@ for (map_id, agent_goals) in metadata
             best_action_idx = argmin(q_values)
             
             if best_action_idx == 1
-                # Observe agent2 (Z) - it has the lowest Q-value
-                println("    -> Observing agent2 (Z)")
+                # Observe agent2 (X) - it has the lowest Q-value
+                println("    -> Observing agent2 (X)")
                 push!(observations, "agent2")
                 agent2_count += 1
                 t += 1
@@ -362,8 +359,8 @@ for (map_id, agent_goals) in metadata
                     end
                 end
             elseif best_action_idx == 2
-                # Observe agent3 (X) - it has the lowest Q-value
-                println("    -> Observing agent3 (X)")
+                # Observe agent3 (Y) - it has the lowest Q-value
+                println("    -> Observing agent3 (Y)")
                 push!(observations, "agent3")
                 agent3_count += 1
                 t += 1
@@ -414,4 +411,3 @@ end
 
 println("\n=== Experiment Complete ===")
 println("Results saved to: $output_filename")
-

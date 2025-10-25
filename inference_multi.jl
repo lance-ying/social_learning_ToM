@@ -30,7 +30,7 @@ metadata = JSON.parsefile(metadata_path)
 
 # Helper function to filter ASCII map to only include specified agent
 function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
-    agent_chars = Dict(:agent1 => 'M', :agent2 => 'Z', :agent3 => 'X')
+    agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
     filtered = ascii_content
     for (agent_sym, char) in agent_chars
         if agent_sym != keep_agent
@@ -40,7 +40,7 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
     return filtered
 end
 
-# Loop over both agents (agent2=Z, agent3=X, agent1=M is not inferred)
+# Loop over both agents (agent2=X, agent3=Y, agent1=M is not inferred)
 agents_to_infer = ["agent2", "agent3"]
 
 for agent_name in agents_to_infer
