@@ -171,13 +171,13 @@ function convert_ascii_problem(path::String)
 end
 
 # Commented out automatic execution - uncomment if needed for batch conversion
-function get_filenames()
-    path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp1/"
-    filenames = readdir(path)
-    return filenames
-end
+# function get_filenames()
+#     path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp1/"
+#     filenames = readdir(path)
+#     return filenames
+# end
 
-filenames = get_filenames()
+# filenames = get_filenames()
 
 # for filename in filenames
 #     if endswith(filename, ".pddl") && startswith(filename, "s")
@@ -187,10 +187,10 @@ filenames = get_filenames()
 #     end
 # end
 
-for filename in filenames
-    if endswith(filename, ".txt")
-        print(filename[1:end-4])
-        print("\n")
-        convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp1/"*filename)
-    end
-end
+# for filename in filenames
+#     if endswith(filename, ".txt")
+#         print(filename[1:end-4])
+#         print("\n")
+#         convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp1/"*filename)
+#     end
+# end
