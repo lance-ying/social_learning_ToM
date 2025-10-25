@@ -1,0 +1,7 @@
+(down agent3)
+(down agent3)
+(left agent3)
+(down agent3)
+(down agent3)
+(down agent3)
+(pickup agent3 gem3)

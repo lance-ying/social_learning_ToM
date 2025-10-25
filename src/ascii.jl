@@ -14,7 +14,6 @@ function ascii_to_pddl(
     door_dict = Dict(
         'R' => pddl"(red)",
         'B' => pddl"(blue)",
-        'Y' => pddl"(yellow)" ,
         'E' => pddl"(green)",
     )
 )
@@ -119,13 +118,13 @@ function ascii_to_pddl(
                 end
                 append!(init_agent1, parse_pddl("(= (xloc agent1) $x)", "(= (yloc agent1) $y)"))
 
-            elseif char == 'Z' # Agent 2 (for inference)
+            elseif char == 'X' # Agent 2 (for inference)
                 if pddl"(agent2)" ∉ objects[:agent]
                     push!(objects[:agent], pddl"(agent2)")
                 end
                 append!(init_agent2, parse_pddl("(= (xloc agent2) $x)", "(= (yloc agent2) $y)"))
 
-            elseif char == 'X' # Agent 3 (for inference)
+            elseif char == 'Y' # Agent 3 (for inference)
                 if pddl"(agent3)" ∉ objects[:agent]
                     push!(objects[:agent], pddl"(agent3)")
                 end
@@ -172,13 +171,13 @@ function convert_ascii_problem(path::String)
 end
 
 # Commented out automatic execution - uncomment if needed for batch conversion
-# function get_filenames()
-#     path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp2/"
-#     filenames = readdir(path)
-#     return filenames
-# end
+function get_filenames()
+    path = "/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp1/"
+    filenames = readdir(path)
+    return filenames
+end
 
-# filenames = get_filenames()
+filenames = get_filenames()
 
 # for filename in filenames
 #     if endswith(filename, ".pddl") && startswith(filename, "s")
@@ -188,10 +187,10 @@ end
 #     end
 # end
 
-# for filename in filenames
-#     if endswith(filename, ".txt")
-#         print(filename[1:end-4])
-#         print("\n")
-#         convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp2/"*filename)
-#     end
-# end
+for filename in filenames
+    if endswith(filename, ".txt")
+        print(filename[1:end-4])
+        print("\n")
+        convert_ascii_problem("/Users/lance/Documents/GitHub/ObserveMove/dataset/problems_exp1/"*filename)
+    end
+end

@@ -15,7 +15,6 @@ include("src/plan_io.jl")
 include("src/utils.jl")
 include("src/heuristics.jl")
 include("src/beliefs.jl")
-include("src/translate.jl")
 include("src/render.jl")
 
 # Define directory paths
@@ -48,6 +47,10 @@ map_times = Dict()
 total_start_time = time()
 
 for (map_id, agent_goals) in metadata
+
+    if map_id != "sm541"
+        continue
+    end
     map_start_time = time()
     println("\nProcessing map: $map_id")
     
@@ -80,7 +83,7 @@ for (map_id, agent_goals) in metadata
         # (Inference was run with agent filtering, so we need to match that)
         include("src/ascii.jl")
         function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
-            agent_chars = Dict(:agent1 => 'M', :agent2 => 'Z', :agent3 => 'X')
+            agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
             filtered = ascii_content
             for (agent_sym, char) in agent_chars
                 if agent_sym != keep_agent
@@ -124,6 +127,8 @@ for (map_id, agent_goals) in metadata
         initial_states_agent3, belief_probs_agent3, state_names_agent3 = enumerate_beliefs(state_agent3)
 
         t = 0
+
+
         
         # Track observations
         observations = []
@@ -161,6 +166,7 @@ for (map_id, agent_goals) in metadata
         
         goal_probs_agent3 = goal_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
         state_probs_agent3 = state_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
+
 
         # Pre-compute state copy and planner (moved outside loop for efficiency)
         new_state = copy(state_render)
