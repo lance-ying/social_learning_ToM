@@ -114,7 +114,8 @@ for (map_id, v) in metadata
 
         # Define planning algorithm
         heuristic = GoalManhattan()
-        planner = RTHS(heuristic, n_iters=1, max_nodes=2^15)
+        # planner = AStarPlanner(heuristic)
+        planner = RTHS(heuristic, n_iters=2, max_nodes=2^18)
 
         # Define action noise model
         temperatures =0.5
@@ -151,7 +152,12 @@ for (map_id, v) in metadata
             for i in 1:length(initial_states)
                 state = initial_states[i]
                 planner = AStarPlanner(GoalManhattan())
-                plan =planner(domain, state, goals[g])
+                # plan =planner(domain, state, goals[g])
+                plan = @pddl(
+                    "(left agent2)",
+                    "(left agent2)",
+                    "(up agent2)",
+                    "(left agent2)")
 
                 println(plan)
 
