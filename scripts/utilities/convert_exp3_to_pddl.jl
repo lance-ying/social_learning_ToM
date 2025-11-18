@@ -2,7 +2,7 @@ using PDDL
 # Register PDDL array theory
 PDDL.Arrays.register!()
 
-include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl")
+include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))  
 
 # Define directory path
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp3")

@@ -11,12 +11,12 @@ using Statistics
 # Register PDDL array theory
 PDDL.Arrays.register!()
 
-include(joinpath(@__DIR__, "..", "..", "src", "plan_io.jl")
-include(joinpath(@__DIR__, "..", "..", "src", "utils.jl")
-include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl")
-include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl")
-include(joinpath(@__DIR__, "..", "..", "src", "translate.jl")
-include(joinpath(@__DIR__, "..", "..", "src", "render.jl")
+include(joinpath(@__DIR__, "..", "..", "src", "plan_io.jl"))
+include(joinpath(@__DIR__, "..", "..", "src", "utils.jl"))
+include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
+include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
+include(joinpath(@__DIR__, "..", "..", "src", "translate.jl"))
+include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
 
 # Define directory paths
 experiment_id = "exp2"
