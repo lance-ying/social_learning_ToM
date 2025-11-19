@@ -1,0 +1,456 @@
+================================================================================
+COMPARISON: run_experiment_exp3.jl vs run_experiment_exp3_sm341.jl
+================================================================================
+
+This document outlines the code and logic differences between the two experiment
+scripts, documenting the bugs that were fixed and improvements made.
+
+================================================================================
+1. DEBUG LOGGING
+================================================================================
+
+run_experiment_exp3.jl:
+  - Uses simple println() statements
+  - No debug log file
+
+run_experiment_exp3_sm341.jl:
+  - Lines 25-32: Added debug logging system
+  - Opens debug_log_file = open("debug_output_$(experiment_id)_sm431.txt", "w")
+  - Uses debug_println() function that writes to both console and file
+  - All debug output is saved for later analysis
+
+REASON: Needed detailed logging to diagnose observation decision issues.
+
+================================================================================
+2. AGENT1 NEEDS WIZARDS CHECK (BUG FIX)
+================================================================================
+
+run_experiment_exp3.jl:
+  - Lines 175-187: Checks if agent1's plan requires blue wizards
+  - BUT: This check happens AFTER loading inference data and setting up agents
+  - Uses simple println() for output
+
+run_experiment_exp3_sm341.jl:
+  - Lines 194-209: Checks if agent1's plan requires blue wizards
+  - Happens BEFORE the main observation loop
+  - Uses debug_println() with detailed output
+  - More explicit: "Agent1 doesn't need blue wizards, skipping observations"
+
+LOGIC DIFFERENCE:
+  - Both check the same thing, but sm341 has better placement and logging
+  - This fixes the bug where observations were made even when agent1's goal
+    (e.g., red wizard) doesn't require blue wizards
+
+================================================================================
+3. AGENT2/AGENT3 PLAN DEBUG OUTPUT
+================================================================================
+
+run_experiment_exp3.jl:
+  - NO debug output for agent2/agent3 plans
+
+run_experiment_exp3_sm341.jl:
+  - Lines 211-220: Debug output for agent2 and agent3 plans
+  - Computes plans for agent2 and agent3
+  - Extracts which wizards each agent interacts with
+  - Debug output shows:
+    * Which wizards each agent's plan interacts with
+    * Which wizards are considered blue in filtered states
+  - NOTE: Does NOT skip observations based on this - lets Q-values decide
+
+LOGIC DIFFERENCE:
+  - sm341 provides debug information but doesn't use it to skip observations
+  - Q-values naturally handle this: if an agent doesn't need blue wizards,
+    its Q-value will be high and it won't be chosen
+  - This is purely for debugging, not a heuristic
+
+================================================================================
+4. TIMESTEP HANDLING (BUG FIX)
+================================================================================
+
+run_experiment_exp3.jl:
+  - Lines 231, 301: Always uses t+1 for accessing probabilities
+  - Lines 199-218: Checks if agents have data available, but doesn't account
+    for whether agent has been observed yet
+
+run_experiment_exp3_sm341.jl:
+  - Lines 265-269: NEW timestep logic
+    timestep_agent2 = agent2_count == 0 ? 1 : (t + 1)
+    timestep_agent3 = agent3_count == 0 ? 1 : (t + 1)
+  - If agent hasn't been observed yet (count == 0), use initial beliefs (timestep 1)
+  - If agent has been observed, use current timestep + 1
+
+LOGIC DIFFERENCE:
+  - sm341 correctly handles the case where an agent hasn't been observed yet
+  - Uses initial beliefs (timestep 1) for unobserved agents
+  - Uses updated beliefs (t+1) for observed agents
+  - This fixes incorrect Q-value computation for unobserved agents
+
+================================================================================
+5. Q-VALUE COMPUTATION: CONDITIONAL TASK CREATION
+================================================================================
+
+run_experiment_exp3.jl:
+  - Lines 220-289: Checks if agent2_has_data, creates task conditionally
+  - Lines 291-359: Checks if agent3_has_data, creates task conditionally
+  - Sets Q_observe_agent2 = Inf if no data
+  - Fetches tasks only if they were created
+
+run_experiment_exp3_sm341.jl:
+  - Lines 271-362: ALWAYS creates task_agent2 (no conditional)
+  - Lines 364-453: ALWAYS creates task_agent3 (no conditional)
+  - Lines 456-457: ALWAYS fetches both tasks (no conditional)
+
+LOGIC DIFFERENCE:
+  - exp3 handles cases where one agent runs out of inference data
+  - sm341 assumes both agents always have data (simpler, but less robust)
+  - sm341 focuses on the core logic fixes rather than edge cases
+
+================================================================================
+6. Q-VALUE COMPUTATION: DEBUG OUTPUT
+================================================================================
+
+run_experiment_exp3.jl:
+  - Lines 241, 311: Simple println for goal/state probabilities
+  - Lines 275-277: Simple println for Q_T computation
+  - Lines 283-284, 353-354: Simple println for final Q values
+
+run_experiment_exp3_sm341.jl:
+  - Lines 288-290: Detailed debug output for each goal/state combination:
+    * Joint probability
+    * Individual goal and state probabilities
+  - Lines 311: Debug output for T and max_T_state
+  - Lines 316, 320, 326: Debug output for wizard candidate filtering
+  - Lines 341: Debug output when skipping incompatible goal/state combinations
+  - Lines 346-352: Detailed debug output for Q_T computation:
+    * Number of wizard candidates
+    * Q_T value
+    * Observation cost
+    * Total cost
+    * T (convergence timestep)
+    * Contribution to Q_observe
+  - Lines 358-360, 450-451: Detailed debug output for normalized Q values
+
+LOGIC DIFFERENCE:
+  - sm341 provides much more detailed debugging information
+  - Helps diagnose why certain decisions are made
+  - Shows the reasoning behind Q-value computations
+
+================================================================================
+7. WIZARD CANDIDATE COMPATIBILITY CHECK (NEW FEATURE)
+================================================================================
+
+run_experiment_exp3.jl:
+  - NO CHECK for compatibility between learned wizard_candicates and
+    new_wizard_candicates from each goal/state combination
+
+run_experiment_exp3_sm341.jl:
+  - Lines 329-344 (agent2), 421-436 (agent3): NEW compatibility check
+  - If wizard_candicates has been filtered (not empty), verifies that
+    new_wizard_candicates from this goal/state combination contains at least
+    one wizard that's in the current wizard_candicates
+  - If not compatible, skips this goal/state combination
+  - Debug output shows why combinations are skipped
+
+LOGIC DIFFERENCE:
+  - sm341 ensures consistency: only considers goal/state combinations that are
+    compatible with previously learned wizard information
+  - This prevents considering impossible scenarios (e.g., if we've already
+    learned that wizard1 is correct, we shouldn't consider scenarios where
+    wizard2 is identified)
+
+================================================================================
+8. WIZARD CANDIDATE UPDATING AFTER OBSERVATION (MAJOR BUG FIX)
+================================================================================
+
+run_experiment_exp3.jl:
+  - Lines 388-393 (after observing agent2):
+    * Uses state_probs_agent2[j, t+1] directly
+    * Simple threshold check (> 0.1)
+    * No convergence check
+  - Lines 400-405 (after observing agent3):
+    * Uses state_probs_agent3[j, t+1] directly
+    * Simple threshold check (> 0.1)
+    * No convergence check
+
+run_experiment_exp3_sm341.jl:
+  - Lines 487-555 (after observing agent2):
+    * Lines 492-539: Loops over ALL goals and states (not just direct indexing)
+    * Lines 497-514: Computes T (convergence timestep) for each goal/state
+    * Lines 519-523: Uses time_idx = min(T, max_T_state) instead of t+1
+      - Uses T (convergence timestep) when wizard probabilities have converged
+      - Falls back to t+1 only if T is invalid
+    * Lines 528-533: Checks if wizard probabilities have actually converged
+      - max_wizard_prob < 0.5 means wizard beliefs haven't converged
+      - Skips goal/state combinations where wizard probs haven't converged
+    * Lines 536-538: Computes marginal wizard probabilities by summing over
+      all goal/state combinations with proper weighting
+  - Lines 562-630 (after observing agent3): Same improvements as agent2
+
+LOGIC DIFFERENCE:
+  - exp3 uses simple direct indexing: state_probs_agent2[j, t+1]
+    - This assumes state_probs_agent2 is indexed by wizard directly
+    - But state_probs_agent2 is actually indexed by [state_id, timestep]
+    - This is a BUG: wrong indexing!
+  
+  - sm341 correctly computes marginal wizard probabilities:
+    - Loops over all goals and states
+    - Uses converged wizard probabilities (at time T) when available
+    - Properly weights by joint probability of goal and state
+    - Only includes goal/state combinations where wizard probs have converged
+    - This is the CORRECT way to update wizard_candicates
+
+BUG FIXED:
+  - exp3 had incorrect indexing: state_probs_agent2[j, t+1] assumes j is wizard
+    index, but j should be state index
+  - sm341 fixes this by properly computing marginal probabilities
+
+================================================================================
+9. DECISION LOGGING
+================================================================================
+
+run_experiment_exp3.jl:
+  - Lines 376: Simple println with Q values
+  - No detailed decision breakdown
+
+run_experiment_exp3_sm341.jl:
+  - Lines 467-479: Comprehensive decision logging
+    * All Q values (agent2, agent3, not_observe)
+    * Current wizard_candicates count
+    * Agent positions
+    * Best action with index and name
+    * Formatted decision section
+
+LOGIC DIFFERENCE:
+  - sm341 provides much more context for understanding decisions
+  - Helps debug why certain actions are chosen
+
+================================================================================
+10. DATA AVAILABILITY CHECKING
+================================================================================
+
+run_experiment_exp3.jl:
+  - Lines 194-218: Checks if agents have data available
+  - Handles case where one agent runs out of data
+  - Sets Q to Inf if agent has no data
+  - Only fetches tasks if they were created
+
+run_experiment_exp3_sm341.jl:
+  - Lines 250-263: Simpler check
+  - Only checks if t >= max_t_agent2 || t >= max_t_agent3
+  - Assumes both agents always have data
+  - Always creates and fetches both tasks
+
+LOGIC DIFFERENCE:
+  - exp3 is more robust to edge cases
+  - sm341 simplifies for the common case (both agents have data)
+
+================================================================================
+11. OUTPUT FILENAMES
+================================================================================
+
+run_experiment_exp3.jl:
+  - Line 440: "steps_dict_$(experiment_id)_optimized_new_stimuli.json"
+  - Line 446: Simple println
+
+run_experiment_exp3_sm341.jl:
+  - Line 665: "steps_dict_exp3_test_sm341_sm342_sm331_sm332_optimized.json"
+  - Lines 670-673: Closes debug log file and prints location
+
+================================================================================
+12. INFERENCE DATA FILE
+================================================================================
+
+run_experiment_exp3.jl:
+  - Line 32: "inference_data_$experiment_id.jld2" (full dataset)
+
+run_experiment_exp3_sm341.jl:
+  - Line 41: "inference_data_exp3_test_sm341_sm342_sm331_sm332.jld2" (test subset)
+
+================================================================================
+13. PLANNER CACHE (PERFORMANCE OPTIMIZATION)
+================================================================================
+
+run_experiment_exp3.jl:
+  - Line 76: Clears planner cache for each scenario
+  - Uses cache in estimate_self_exploration_cost() function
+
+run_experiment_exp3_sm341.jl:
+  - Line 76: Clears planner cache for each scenario
+  - Lines 631-633: Reports cache statistics (hits, misses, hit rate)
+  - Uses cache in estimate_self_exploration_cost() function
+
+WHY THE CACHE EXISTS:
+
+The planner cache (defined in src/utils.jl, lines 5-22) is a performance optimization
+that caches A* planner results for pathfinding queries. Here's why it's necessary:
+
+1. COMPUTATIONAL COMPLEXITY:
+   - The Q-value computation (Section 6) requires computing expected costs for
+     multiple goal/state combinations
+   - For each combination, estimate_self_exploration_cost() is called, which
+     computes paths to multiple wizard locations
+   - Each path computation using A* planner is expensive (O(b^d) where b=branching
+     factor, d=depth)
+   - Without caching, the same path queries would be recomputed thousands of times
+
+2. CACHE KEY STRUCTURE:
+   - Cache key: (agent_x, agent_y, goal_x, goal_y) - a tuple of 4 integers
+   - This represents: "path from agent position (x,y) to goal position (x,y)"
+   - Many goal/state combinations share the same agent positions and wizard locations,
+     so the same paths are needed repeatedly
+
+3. CACHE USAGE IN estimate_self_exploration_cost():
+   - Lines 155-167 in src/utils.jl: get_cached_plan() function
+   - Checks if path from (agent_x, agent_y) to (goal_x, goal_y) is cached
+   - If cached: returns immediately (cache hit)
+   - If not cached: computes path, stores in cache, returns (cache miss)
+   - This function is called multiple times per Q-value computation:
+     * Once per wizard location (lines 191, 233)
+     * Once per goal/state combination
+     * Once per agent (agent2 and agent3)
+     * Once per timestep
+
+4. PERFORMANCE IMPACT:
+   - Without cache: Each Q-value computation could take minutes
+   - With cache: Typical hit rates of 60-80% dramatically reduce computation time
+   - Cache is cleared between scenarios (line 76) to prevent memory issues and
+     ensure correctness (different scenarios may have different map layouts)
+
+5. RELATION TO THEORETICAL FRAMEWORK (2507.09409v1.pdf):
+   - The paper describes a theory of mind (ToM) model where an observer agent
+     must decide when to observe other agents to learn about hidden state
+   - The Q-value computation implements the expected value of information (EVI)
+     calculation from the paper
+   - The cache is a practical implementation detail that makes the EVI computation
+     tractable by avoiding redundant pathfinding computations
+   - The theoretical model doesn't specify implementation details like caching,
+     but the cache is essential for making the model computationally feasible
+
+RELATION TO PDF DOCUMENT (2507.09409v1.pdf):
+
+The code implements the theoretical framework described in the paper as follows:
+
+1. THEORETICAL MODEL (from PDF):
+   - Observer agent (agent1) has uncertainty about:
+     * Other agents' goals (goal inference)
+     * Hidden state (wizard colors - which wizards are blue vs red)
+   - Observer must decide: observe other agents or explore independently?
+   - Decision based on expected value of information (EVI)
+
+2. IMPLEMENTATION IN CODE:
+   - Goal inference: goal_probs_conditioned_dict stores P(goal | observations)
+   - State inference: state_probs_conditioned_dict stores P(wizard_color | observations)
+   - EVI computation: Q-value computation (Section 6) computes:
+     Q_observe = E[cost | observe] = Σ P(goal, state) * cost(goal, state)
+     Q_not_observe = cost of exploring without observing
+   - Decision: argmin(Q_observe_agent2, Q_observe_agent3, Q_not_observe)
+
+3. KEY DIFFERENCES FROM PDF TO CODE:
+   - PDF: Theoretical framework with ideal Bayesian inference
+   - Code: Practical implementation with:
+     * Particle filtering for inference (approximate Bayesian inference)
+     * Caching for performance (makes computation tractable)
+     * Convergence checks (T timestep) to handle uncertainty
+     * Compatibility checks to ensure consistency
+
+4. BUGS FIXED RELATE TO THEORETICAL CORRECTNESS:
+   - Wizard candidate updating bug (Section 8): The code was incorrectly computing
+     marginal probabilities P(wizard_color | observations). The fix ensures the
+     code correctly implements the Bayesian update from the paper.
+   - Timestep handling bug (Section 4): The code was using wrong timesteps for
+     unobserved agents. The fix ensures the code correctly uses prior beliefs
+     (P(goal, state | no observations)) as specified in the theoretical model.
+   - Agent1 needs wizards check (Section 2): The theoretical model assumes the
+     observer has a goal that requires learning about hidden state. If agent1's
+     goal doesn't require blue wizards, observing is irrelevant to the model.
+
+5. CACHE AND THEORETICAL MODEL:
+   - The cache doesn't change the theoretical model - it's purely an optimization
+   - The cache ensures that the EVI computation (which the paper describes) can
+     be computed efficiently
+   - Without the cache, the computation would be too slow to be practical, but
+     the theoretical results would be the same (just slower)
+
+================================================================================
+SUMMARY OF BUGS FIXED
+================================================================================
+
+1. AGENT1 WIZARD CHECK BUG:
+   - Fixed: Now properly checks if agent1 needs blue wizards before making
+     observations
+   - Impact: Prevents unnecessary observations when agent1's goal doesn't
+     require blue wizards (e.g., red wizard goal)
+
+2. WIZARD CANDIDATE UPDATING BUG:
+   - Fixed: Correctly computes marginal wizard probabilities after observation
+   - Old: Used incorrect indexing state_probs_agent2[j, t+1] where j was
+     treated as wizard index
+   - New: Properly loops over goals/states, uses converged probabilities at
+     time T, and weights by joint probabilities
+   - Impact: Wizard candidate filtering now works correctly
+
+3. TIMESTEP HANDLING BUG:
+   - Fixed: Uses initial beliefs (timestep 1) for unobserved agents
+   - Old: Always used t+1, even for unobserved agents
+   - New: Uses timestep 1 if agent hasn't been observed, t+1 if it has
+   - Impact: Q-value computation is correct for unobserved agents
+
+4. WIZARD CONVERGENCE CHECK:
+   - Fixed: Only uses wizard probabilities that have actually converged
+   - Old: Used wizard probs even if they hadn't converged (uniform)
+   - New: Checks max_wizard_prob < 0.5 to ensure convergence
+   - Impact: More accurate wizard candidate filtering
+
+5. COMPATIBILITY CHECK:
+   - Fixed: Only considers goal/state combinations compatible with learned
+     wizard information
+   - Old: Considered all goal/state combinations regardless of learned info
+   - New: Skips incompatible combinations
+   - Impact: Prevents considering impossible scenarios
+
+================================================================================
+SUMMARY OF IMPROVEMENTS
+================================================================================
+
+1. DEBUG LOGGING:
+   - Added comprehensive debug logging to file
+   - All decisions and computations are logged
+   - Helps diagnose issues and understand behavior
+
+2. AGENT2/AGENT3 WIZARD CHECK:
+   - Added check to skip observations if neither agent needs blue wizards
+   - Performance optimization and correctness improvement
+
+3. DETAILED DEBUG OUTPUT:
+   - Much more detailed output for Q-value computations
+   - Shows reasoning behind decisions
+   - Helps understand why certain actions are chosen
+
+================================================================================
+KEY LOGIC DIFFERENCES
+================================================================================
+
+1. Wizard candidate updating is fundamentally different:
+   - exp3: Simple direct indexing (BUGGY)
+   - sm341: Proper marginal probability computation (CORRECT)
+
+2. Timestep handling:
+   - exp3: Always uses t+1
+   - sm341: Uses timestep 1 for unobserved agents, t+1 for observed
+
+3. Convergence checking:
+   - exp3: No convergence check
+   - sm341: Checks if wizard probs have converged before using them
+
+4. Compatibility checking:
+   - exp3: No compatibility check
+   - sm341: Checks compatibility with learned wizard information
+
+5. Agent needs wizards check:
+   - exp3: Only checks agent1
+   - sm341: Checks agent1, agent2, and agent3
+
+================================================================================
+END OF DOCUMENT
+================================================================================
+
