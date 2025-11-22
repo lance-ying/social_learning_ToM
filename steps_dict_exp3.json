@@ -71,13 +71,11 @@
         "observations": [
             "agent2",
             "agent2",
-            "agent2",
-            "agent2",
             "agent2"
         ],
         "agent3_count": 0,
-        "t": 5,
-        "agent2_count": 5
+        "t": 3,
+        "agent2_count": 3
     },
     "sm221_scenario2": {
         "observations": [
@@ -370,10 +368,16 @@
     },
     "sm331_scenario1": {
         "observations": [
-            "agent2"
+            "agent2",
+            "agent3",
+            "agent3",
+            "agent3",
+            "agent3",
+            "agent3",
+            "agent3"
         ],
-        "agent3_count": 0,
-        "t": 1,
+        "agent3_count": 6,
+        "t": 7,
         "agent2_count": 1
     },
     "sm221_scenario1": {
@@ -424,11 +428,15 @@
     },
     "sm341_scenario2": {
         "observations": [
-            "agent3"
+            "agent3",
+            "agent2",
+            "agent2",
+            "agent2",
+            "agent2"
         ],
         "agent3_count": 1,
-        "t": 1,
-        "agent2_count": 0
+        "t": 5,
+        "agent2_count": 4
     },
     "sm111_scenario1": {
         "observations": [

@@ -41,27 +41,6 @@ LOGIC DIFFERENCE:
   - This fixes the bug where observations were made even when agent1's goal
     (e.g., red wizard) doesn't require blue wizards
 
-================================================================================
-3. AGENT2/AGENT3 PLAN DEBUG OUTPUT
-================================================================================
-
-run_experiment_exp3.jl:
-  - NO debug output for agent2/agent3 plans
-
-run_experiment_exp3_sm341.jl:
-  - Lines 211-220: Debug output for agent2 and agent3 plans
-  - Computes plans for agent2 and agent3
-  - Extracts which wizards each agent interacts with
-  - Debug output shows:
-    * Which wizards each agent's plan interacts with
-    * Which wizards are considered blue in filtered states
-  - NOTE: Does NOT skip observations based on this - lets Q-values decide
-
-LOGIC DIFFERENCE:
-  - sm341 provides debug information but doesn't use it to skip observations
-  - Q-values naturally handle this: if an agent doesn't need blue wizards,
-    its Q-value will be high and it won't be chosen
-  - This is purely for debugging, not a heuristic
 
 ================================================================================
 4. TIMESTEP HANDLING (BUG FIX)
