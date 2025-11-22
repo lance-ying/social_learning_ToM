@@ -303,7 +303,7 @@ if __name__ == "__main__":
     if len(sys.argv) > 1:
         csv_dir = Path(sys.argv[1])
     else:
-        csv_dir = Path("test_output")
+        csv_dir = Path("../archive/test_output")
     
     print("\n" + "="*60)
     print(f"PROCESSING AGENT OBSERVES: {csv_dir}")
@@ -318,14 +318,16 @@ if __name__ == "__main__":
         print(f"  {level}: {data['t']} total observations ({data['agent2_count']} agent2, {data['agent3_count']} agent3)")
     
     # Save to JSON file for comparison
-    output_file = Path("agent_observes_results.json")
+    output_file = Path("../data_raw/agent_observes_results.json")
+    output_file.parent.mkdir(parents=True, exist_ok=True)
     with open(output_file, "w") as f:
         json.dump(agent_observe_dict, f, indent=2)
     
     print(f"\n✓ Saved results to: {output_file}")
     
     # Also save as Python dict
-    output_py = Path("agent_observes_results.py")
+    output_py = Path("../results/agent_observes_results.py")
+    output_py.parent.mkdir(parents=True, exist_ok=True)
     with open(output_py, "w") as f:
         f.write("# Generated agent observation statistics\n")
         f.write(f"agent_observes_dict = {repr(agent_observe_dict)}\n")

@@ -10,11 +10,11 @@ from pathlib import Path
 import re
 
 # Load model predictions
-with open('steps_dict_exp3_optimized_good.json', 'r') as f:
+with open('../results/dictionaries/steps_dict_exp3_optimized_good.json', 'r') as f:
     model_dict = json.load(f)
 
 # Load human data from agent_observes_results
-with open('agent_observes_results.json', 'r') as f:
+with open('../data_raw/agent_observes_results.json', 'r') as f:
     human_dict = json.load(f)
 
 print("=" * 80)
