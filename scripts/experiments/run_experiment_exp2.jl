@@ -21,6 +21,8 @@ experiment_id = "exp2"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
 # PLAN_DIR = joinpath(@__DIR__, "..", "..", "dataset", "plans")
+OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
+mkpath(OUTPUT_DIR)  # Create output directory if it doesn't exist
 
 #--- Initial Setup ---#
 problem_files = filter(f -> endswith(f, "ascii.pddl"), readdir(joinpath(@__DIR__, "..", "..", "dataset","problems_$experiment_id")))
@@ -52,6 +54,9 @@ for (map_id, v) in metadata
         println(filename)
 
         map_key = "$(map_id)_$(i)"
+        
+        # Clear planner cache for each scenario to avoid memory issues
+        clear_planner_cache!()
 
         # println(map_id)
 
@@ -223,6 +228,8 @@ for (map_id, v) in metadata
 end
 
 
-open("steps_dict_$experiment_id.json", "w") do io
+output_path = joinpath(OUTPUT_DIR, "steps_dict_$experiment_id.json")
+open(output_path, "w") do io
     JSON.print(io, steps_dict)
 end
+println("Results saved to: $output_path")

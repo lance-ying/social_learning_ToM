@@ -24,16 +24,6 @@ PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id
 OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
 mkpath(OUTPUT_DIR)  # Create output directory if it doesn't exist
 
-# Open debug log file
-debug_log_path = joinpath(OUTPUT_DIR, "debug_output_$(experiment_id).txt")
-debug_log_file = open(debug_log_path, "w")
-function debug_println(args...)
-    msg = join(string.(args), " ")
-    println(msg)
-    println(debug_log_file, msg)
-    flush(debug_log_file)
-end
-
 #--- Initial Setup ---#
 metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
 metadata = JSON.parsefile(metadata_path)
@@ -64,7 +54,6 @@ for (map_id, agent_goals) in metadata
     #   end
 
     map_start_time = time()
-    debug_println("\nProcessing map: $map_id")
     
     # Loop over both scenarios
     for scenario in 1:2
@@ -73,7 +62,6 @@ for (map_id, agent_goals) in metadata
         # end
         scenario_start_time = time()
         map_key = "$(map_id)_scenario$(scenario)"
-        debug_println("  Scenario $scenario")
         
         # Clear planner cache for each scenario to avoid memory issues
         clear_planner_cache!()
@@ -81,8 +69,6 @@ for (map_id, agent_goals) in metadata
         # Get which gems each agent wants in this scenario
         agent2_gem = agent_goals["agent2"][scenario]  # X's goal
         agent3_gem = agent_goals["agent3"][scenario]  # Y's goal
-        
-        debug_println("    agent2 (X) -> gem$agent2_gem, agent3 (Y) -> gem$agent3_gem")
 
         domain = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
         include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
@@ -143,8 +129,6 @@ for (map_id, agent_goals) in metadata
         initial_states_agent3, belief_probs_agent3, state_names_agent3 = enumerate_beliefs(state_agent3)
 
         t = 0
-
-
         
         # Track observations
         observations = []
@@ -202,13 +186,18 @@ for (map_id, agent_goals) in metadata
             continue
         end
         
+        # Pre-compute plans for agent2 and agent3 for debug output
+        agent2_goal = goals_agent2[agent2_gem]
+        agent3_goal = goals_agent3[agent3_gem]
+        
+        plan_agent2 = planner(domain_agent2, state_agent2, agent2_goal)
+        plan_agent3 = planner(domain_agent3, state_agent3, agent3_goal)
+        
         # Note: We don't skip observations here - let Q-values determine if observing
         # is worthwhile. If agents don't need blue wizards, their Q-values will be
         # high and they won't be chosen.
 
         while !PDDL.satisfy(domain, state, problem.goal)
-            q_start_time = time()
-            
             # Check if we have probability data for timestep t+1
             max_t_agent2 = size(goal_probs_agent2, 2) - 1  # -1 because we access t+1
             max_t_agent3 = size(goal_probs_agent3, 2) - 1
@@ -235,6 +224,10 @@ for (map_id, agent_goals) in metadata
                 Q_observe_agent2 = 0.0
                 total_probs_agent2 = 0.0
                 
+                # Pre-cache the nested dictionary access for agent2 to avoid repeated lookups
+                agent2_dict = state_probs_conditioned_dict["agent2"][map_id][scenario]
+                agent2_goal_dict = goal_probs_conditioned_dict["agent2"][map_id][scenario]
+                
                 # Loop over ALL possible goals (observer doesn't know which goal agent has)
                 for g in 1:length(goals_agent2)
                 if goal_probs_agent2[g, timestep_agent2] < 0.1
@@ -248,25 +241,29 @@ for (map_id, agent_goals) in metadata
                     
                     joint_prob = goal_probs_agent2[g, timestep_agent2] * state_probs_agent2[i, timestep_agent2]
                     
+                    # Cache the (g,i) dictionary access
+                    state_probs_gi = agent2_dict[g][i]
+                    goal_probs_gi = agent2_goal_dict[g][i]
+                    
                     T = -1
-                    for val in 1:length(state_probs_conditioned_dict["agent2"][map_id][scenario][g][i][1,:])
-                        if any(x -> x>0.95, state_probs_conditioned_dict["agent2"][map_id][scenario][g][i][:,val])
+                    for val in 1:size(state_probs_gi, 2)
+                        if any(x -> x>0.95, state_probs_gi[:,val])
                             T = val
                             break
                         end
                     end
                     
                     if T == -1
-                        for val in 1:length(goal_probs_conditioned_dict["agent2"][map_id][scenario][g][i][1,:])
-                            if any(x -> x<0.1, goal_probs_conditioned_dict["agent2"][map_id][scenario][g][i][:,val])
+                        for val in 1:size(goal_probs_gi, 2)
+                            if any(x -> x<0.1, goal_probs_gi[:,val])
                                 T = val
                                 break
                             end
                         end
                     end
                     
-                    # Validate T is within bounds for state_probs_conditioned_dict
-                    max_T_state = size(state_probs_conditioned_dict["agent2"][map_id][scenario][g][i], 2)
+                    # Validate T is within bounds
+                    max_T_state = size(state_probs_gi, 2)
                     
                     if T == -1 || T > max_T_state
                         # If T is invalid, use all wizards as candidates
@@ -275,25 +272,9 @@ for (map_id, agent_goals) in metadata
                         # Get blue wizards from pre-computed list
                         new_wizard_candicates = []
                         for j in 1:length(blue_wizards_agent2)
-                            if state_probs_conditioned_dict["agent2"][map_id][scenario][g][i][j, T] > 0.1
+                            if state_probs_gi[j, T] > 0.1
                                 push!(new_wizard_candicates, blue_wizards_agent2[j])
                             end
-                        end
-                    end
-                    
-                    # Check if this goal/state combination is consistent with learned wizard_candicates
-                    # If wizard_candicates has been filtered (not empty), verify compatibility
-                    if !isempty(wizard_candicates)
-                        is_compatible = false
-                        for wiz in new_wizard_candicates
-                            if wiz in wizard_candicates
-                                is_compatible = true
-                                break
-                            end
-                        end
-                        
-                        if !is_compatible
-                            continue
                         end
                     end
                     
@@ -315,6 +296,10 @@ for (map_id, agent_goals) in metadata
                 Q_observe_agent3 = 0.0
                 total_probs_agent3 = 0.0
                 
+                # Pre-cache the nested dictionary access for agent3 to avoid repeated lookups
+                agent3_dict = state_probs_conditioned_dict["agent3"][map_id][scenario]
+                agent3_goal_dict = goal_probs_conditioned_dict["agent3"][map_id][scenario]
+                
                 # Loop over ALL possible goals (observer doesn't know which goal agent has)
                 for g in 1:length(goals_agent3)
                 if goal_probs_agent3[g, timestep_agent3] < 0.1
@@ -328,25 +313,29 @@ for (map_id, agent_goals) in metadata
                     
                     joint_prob = goal_probs_agent3[g, timestep_agent3] * state_probs_agent3[i, timestep_agent3]
                     
+                    # Cache the (g,i) dictionary access
+                    state_probs_gi = agent3_dict[g][i]
+                    goal_probs_gi = agent3_goal_dict[g][i]
+                    
                     T = -1
-                    for val in 1:length(state_probs_conditioned_dict["agent3"][map_id][scenario][g][i][1,:])
-                        if any(x -> x>0.95, state_probs_conditioned_dict["agent3"][map_id][scenario][g][i][:,val])
+                    for val in 1:size(state_probs_gi, 2)
+                        if any(x -> x>0.95, state_probs_gi[:,val])
                             T = val
                             break
                         end
                     end
                     
                     if T == -1
-                        for val in 1:length(goal_probs_conditioned_dict["agent3"][map_id][scenario][g][i][1,:])
-                            if any(x -> x<0.1, goal_probs_conditioned_dict["agent3"][map_id][scenario][g][i][:,val])
+                        for val in 1:size(goal_probs_gi, 2)
+                            if any(x -> x<0.1, goal_probs_gi[:,val])
                                 T = val
                                 break
                             end
                         end
                     end
                     
-                    # Validate T is within bounds for state_probs_conditioned_dict
-                    max_T_state = size(state_probs_conditioned_dict["agent3"][map_id][scenario][g][i], 2)
+                    # Validate T is within bounds
+                    max_T_state = size(state_probs_gi, 2)
                     
                     if T == -1 || T > max_T_state
                         # If T is invalid, use all wizards as candidates
@@ -355,25 +344,9 @@ for (map_id, agent_goals) in metadata
                         # Get blue wizards from pre-computed list
                         new_wizard_candicates = []
                         for j in 1:length(blue_wizards_agent3)
-                            if state_probs_conditioned_dict["agent3"][map_id][scenario][g][i][j, T] > 0.1
+                            if state_probs_gi[j, T] > 0.1
                                 push!(new_wizard_candicates, blue_wizards_agent3[j])
                             end
-                        end
-                    end
-                    
-                    # Check if this goal/state combination is consistent with learned wizard_candicates
-                    # If wizard_candicates has been filtered (not empty), verify compatibility
-                    if !isempty(wizard_candicates)
-                        is_compatible = false
-                        for wiz in new_wizard_candicates
-                            if wiz in wizard_candicates
-                                is_compatible = true
-                                break
-                            end
-                        end
-                        
-                        if !is_compatible
-                            continue
                         end
                     end
                     
@@ -400,8 +373,6 @@ for (map_id, agent_goals) in metadata
             # Take argmin to decide which action
             q_values = [Q_observe_agent2, Q_observe_agent3, Q_not_observe]
             best_action_idx = argmin(q_values)
-            action_names = ["observe_agent2", "observe_agent3", "stop"]
-            debug_println("    [t=$t] Decision: $(action_names[best_action_idx]) (Q_agent2=$Q_observe_agent2, Q_agent3=$Q_observe_agent3, Q_stop=$Q_not_observe)")
             
             if best_action_idx == 1
                 # Observe agent2 (X) - it has the lowest Q-value
@@ -409,66 +380,12 @@ for (map_id, agent_goals) in metadata
                 agent2_count += 1
                 t += 1
                 wizard_candicates = []
-                # Compute marginal wizard probabilities by summing over goals and states
-                # Use t+1 to match Q-value computation (beliefs have updated after observation)
-                wizard_probs_agent2 = zeros(length(blue_wizards))
-                if t+1 <= size(state_probs_agent2, 2)
-                    for g in 1:length(goals_agent2)
-                        for i in 1:length(initial_states_agent2)
-                            joint_prob = goal_probs_agent2[g, t+1] * state_probs_agent2[i, t+1]
-                            if joint_prob > 0.01
-                                # Compute T (convergence timestep) for this goal/state combination
-                                T = -1
-                                max_T_state = size(state_probs_conditioned_dict["agent2"][map_id][scenario][g][i], 2)
-                                for val in 1:max_T_state
-                                    if any(x -> x>0.95, state_probs_conditioned_dict["agent2"][map_id][scenario][g][i][:,val])
-                                        T = val
-                                        break
-                                    end
-                                end
-                                
-                                if T == -1
-                                    for val in 1:size(goal_probs_conditioned_dict["agent2"][map_id][scenario][g][i], 2)
-                                        if any(x -> x<0.1, goal_probs_conditioned_dict["agent2"][map_id][scenario][g][i][:,val])
-                                            T = val
-                                            break
-                                        end
-                                    end
-                                end
-                                
-                                # Use wizard probabilities at T (convergence timestep)
-                                # T represents when wizard probabilities have converged for this goal/state
-                                # We use T directly to get the converged probabilities, not the current t
-                                time_idx = if T == -1 || T > max_T_state
-                                    min(t+1, max_T_state)  # Fallback to t+1 if T is invalid (match Q-value computation)
-                                else
-                                    min(T, max_T_state)  # Use T (convergence timestep), not t
-                                end
-                                
-                                # Check if wizard probabilities have actually converged
-                                # If T was found via goal convergence (not wizard convergence), 
-                                # wizard probs might still be uniform
-                                max_wizard_prob = maximum(state_probs_conditioned_dict["agent2"][map_id][scenario][g][i][:, time_idx])
-                                if max_wizard_prob < 0.5  # Wizard beliefs haven't converged
-                                    # Don't add to wizard probabilities for this goal/state
-                                    continue
-                                end
-                                
-                                for j in 1:length(blue_wizards)
-                                    wizard_probs_agent2[j] += joint_prob * state_probs_conditioned_dict["agent2"][map_id][scenario][g][i][j, time_idx]
-                                end
-                            end
-                        end
+                
+                # Simple wizard update: use state_probs directly (matching exp2 approach)
+                for j in 1:length(blue_wizards)
+                    if state_probs_agent2[j, t+1] > 0.1
+                        push!(wizard_candicates, blue_wizards[j])
                     end
-                    for j in 1:length(blue_wizards)
-                        if wizard_probs_agent2[j] > 0.1
-                            push!(wizard_candicates, blue_wizards[j])
-                        end
-                    end
-                end
-                # If no wizards passed the filter, fall back to all wizards
-                if isempty(wizard_candicates)
-                    wizard_candicates = copy(blue_wizards)
                 end
             elseif best_action_idx == 2
                 # Observe agent3 (Y) - it has the lowest Q-value
@@ -476,66 +393,12 @@ for (map_id, agent_goals) in metadata
                 agent3_count += 1
                 t += 1
                 wizard_candicates = []
-                # Compute marginal wizard probabilities by summing over goals and states
-                # Use t+1 to match Q-value computation (beliefs have updated after observation)
-                wizard_probs_agent3 = zeros(length(blue_wizards))
-                if t+1 <= size(state_probs_agent3, 2)
-                    for g in 1:length(goals_agent3)
-                        for i in 1:length(initial_states_agent3)
-                            joint_prob = goal_probs_agent3[g, t+1] * state_probs_agent3[i, t+1]
-                            if joint_prob > 0.01
-                                # Compute T (convergence timestep) for this goal/state combination
-                                T = -1
-                                max_T_state = size(state_probs_conditioned_dict["agent3"][map_id][scenario][g][i], 2)
-                                for val in 1:max_T_state
-                                    if any(x -> x>0.95, state_probs_conditioned_dict["agent3"][map_id][scenario][g][i][:,val])
-                                        T = val
-                                        break
-                                    end
-                                end
-                                
-                                if T == -1
-                                    for val in 1:size(goal_probs_conditioned_dict["agent3"][map_id][scenario][g][i], 2)
-                                        if any(x -> x<0.1, goal_probs_conditioned_dict["agent3"][map_id][scenario][g][i][:,val])
-                                            T = val
-                                            break
-                                        end
-                                    end
-                                end
-                                
-                                # Use wizard probabilities at T (convergence timestep)
-                                # T represents when wizard probabilities have converged for this goal/state
-                                # We use T directly to get the converged probabilities, not the current t
-                                time_idx = if T == -1 || T > max_T_state
-                                    min(t+1, max_T_state)  # Fallback to t+1 if T is invalid (match Q-value computation)
-                                else
-                                    min(T, max_T_state)  # Use T (convergence timestep), not t
-                                end
-                                
-                                # Check if wizard probabilities have actually converged
-                                # If T was found via goal convergence (not wizard convergence), 
-                                # wizard probs might still be uniform
-                                max_wizard_prob = maximum(state_probs_conditioned_dict["agent3"][map_id][scenario][g][i][:, time_idx])
-                                if max_wizard_prob < 0.5  # Wizard beliefs haven't converged
-                                    # Don't add to wizard probabilities for this goal/state
-                                    continue
-                                end
-                                
-                                for j in 1:length(blue_wizards)
-                                    wizard_probs_agent3[j] += joint_prob * state_probs_conditioned_dict["agent3"][map_id][scenario][g][i][j, time_idx]
-                                end
-                            end
-                        end
+                
+                # Simple wizard update: use state_probs directly (matching exp2 approach)
+                for j in 1:length(blue_wizards)
+                    if state_probs_agent3[j, t+1] > 0.1
+                        push!(wizard_candicates, blue_wizards[j])
                     end
-                    for j in 1:length(blue_wizards)
-                        if wizard_probs_agent3[j] > 0.1
-                            push!(wizard_candicates, blue_wizards[j])
-                        end
-                    end
-                end
-                # If no wizards passed the filter, fall back to all wizards
-                if isempty(wizard_candicates)
-                    wizard_candicates = copy(blue_wizards)
                 end
             else
                 # best_action_idx == 3: Not observing has the lowest Q-value
@@ -576,8 +439,4 @@ open(output_path, "w") do io
     JSON.print(io, steps_dict, 4)
 end
 
-debug_println("\n=== Experiment Complete ===")
-debug_println("Results saved to: $output_path")
-close(debug_log_file)
 println("\nResults saved to: $output_path")
-println("Debug output saved to: $debug_log_path")
