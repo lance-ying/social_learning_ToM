@@ -1,0 +1,36 @@
+\documentclass{article}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage[margin=1in]{geometry}
+
+\begin{document}
+
+Gershman, Horvitz, and Tenenbaum make a compelling case that intelligence involves trading off accuracy against computational costs. However, their framework treats perception as a ``base-level'' process that simply delivers probability distributions for higher-level reasoning, leaving the representational geometry that makes inference tractable unexplored.
+
+Recent work explores this. Gershman et al.'s hierarchical motion perception annual review work shows the visual system infers latent motion trees by decomposing complex scenes into additive motion sources (global, object-level, relative) that follow simple dynamics. Meanwhile, Hénaff, Goris, and Simoncelli demonstrate that natural video sequences, which appear highly curved in pixel space, become dramatically straighter when mapped into perceptual space (recovered from human discrimination judgments). Conversely, artificial linear sequences appear more curved perceptually. This suggests vision nonlinearly warps the sensory manifold to make natural dynamics smoother and easier to extrapolate.
+
+Through a computational rationality lens, this warping is not incidental but rational: perceptual straightening reduces the cost of downstream motion-tree inference. But since probabilistic inference is NP-hard and systems must rely on costly approximate algorithms, the visual system faces a meta-level optimization problem: choose a mapping $\phi$ from raw inputs to representations that minimizes both distortion of task-relevant structure and computational costs of subsequent inference. Perceptual straightening changes trajectories so that latent velocities become locally linear and more easily captured by simple priors, reducing the samples and hypotheses needed for accurate prediction in natural scenes. This is basically the same as choosing how many posterior samples to draw, aligning representations with prior assumptions to reduce the hypothesis space.
+
+This reframes apparent perceptual failures as rational ``overfitting'' to natural statistics. Just as utility-weighted sampling can explain probability judgment biases, geometric distortions (perceiving natural motion as straighter, or linear artificial sequences as curved) reflect a representational policy optimized for typical scenes, occasionally generating illusions in unusual cases.
+
+In a controlled, task-relative sense of ``naturalness,'' we can test this proposal by augmenting the Bill et al.\ circular-motion framework with a learned perceptual transformation. Here, ``natural'' refers not to photorealistic movies (as in Hénaff et al.) but to trajectories that are congruent with the hierarchical motion-tree prior (e.g., global and clustered rotations), while adversarial trajectories explicitly violate that prior. The architecture has two stages: (i) a parametric encoder $\phi_\theta$ that maps raw dot positions (angles on a circle) into a latent ``perceptual'' space, and (ii) a hierarchical motion model that operates in this latent space, where an online EM algorithm infers motion-tree structure, estimates OU velocity parameters, and predicts future positions, which are decoded back to the circle. The system is trained end-to-end on the four canonical Bill et al.\ structures (independent, clustered, global, hierarchical), treated as prior-congruent, plus adversarial patterns (e.g., cluster switching, non-hierarchical dependencies). The total loss
+%
+\begin{equation}
+L_{\text{total}} = L_{\text{pred}} + \lambda_1 L_{\text{struct}} + \lambda_2 L_{\text{cost}}
+\end{equation}
+%
+combines prediction error, structure-classification accuracy, and a cost-of-computation term (e.g., EM iterations, tree complexity, or assignment entropy).
+
+We compare three variants:
+
+\begin{itemize}
+    \item \textbf{Baseline:} $\phi_\theta$ learned freely ($\lambda_2 = 0$), with no pressure to economize computation.
+    
+    \item \textbf{Cost-only:} adds resource penalties ($\lambda_2 > 0$) but no geometric constraints, allowing $\phi_\theta$ to reduce inference complexity in any way.
+    
+    \item \textbf{Resource-rational straightening:} includes both resource costs and a curvature regularizer $L_{\text{curv}}$ that penalizes angular deviations between successive velocity vectors in latent space, encouraging straighter trajectories for prior-congruent motion but not for adversarial patterns.
+\end{itemize}
+
+If straightening is genuinely resource-rational in this task-relative sense, the straightening model should achieve the best tradeoff between performance and cost on ``natural'' motion structures, selectively straighten prior-congruent trajectories, and degrade least under tighter resource constraints (e.g., fewer EM iterations). Fit to human trial-by-trial data, it should also capture characteristic errors in ambiguous displays, demonstrating that even in simplified stimuli, visual geometry, motion structure, and computational costs can be jointly optimized within the computational rationality framework.
+
+\end{document}

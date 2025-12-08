@@ -8,6 +8,20 @@ using FileIO, JLD2
 using ProgressMeter
 using Statistics
 
+# KL divergence function: KL(P||Q) = sum_i P(i) * log(P(i) / Q(i))
+function kl_divergence(P, Q)
+    # Add small epsilon to avoid log(0)
+    epsilon = 1e-10
+    P_safe = P .+ epsilon
+    Q_safe = Q .+ epsilon
+    # Normalize
+    P_safe = P_safe / sum(P_safe)
+    Q_safe = Q_safe / sum(Q_safe)
+    # Compute KL divergence
+    kl = sum(P_safe .* log.(P_safe ./ Q_safe))
+    return kl
+end
+
 # Register PDDL array theory
 PDDL.Arrays.register!()
 
@@ -35,7 +49,7 @@ println("Maps in inference data: ", sort(collect(keys(goal_probs_conditioned_dic
 
 domain_render = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain_render.pddl"))
 
-action_cost = Dict(:move => 2, :interact => 5, :observe => 1)
+action_cost = Dict(:move => 3, :interact => 5, :observe => 1)
 
 # Get all map files
 map_files = filter(f -> endswith(f, ".pddl") && !occursin("_plan", f), readdir(PROBLEM_DIR))
@@ -101,39 +115,86 @@ for map_id in map_ids
         planner = AStarPlanner(GoalManhattan())
         plan = planner(domain, state, problem.goal)
 
-        T = 1
+        T = 1  # Start with T=1 like original baseline
 
-        # Find when state distributions diverge
-        for t in 1:length(goal_probs[1,:]) - 1  # Check all timesteps (removed 50 limit)
-
-            curr_state_dist = state_probs[:, t]
-            flag = true
-
+        # Social Mentalizing Observer: Find when state distributions diverge
+        # Check if current distribution is similar to any future distribution
+        # Stop when all future distributions have diverged (min_kl >= threshold)
+        
+        max_timesteps = min(length(goal_probs[1,:]) - 1, 50)  # Limit search to prevent long loops
+        
+        for t in 1:max_timesteps
+            # Compute P(bm_t) - current belief about environment state at time t
+            if t <= size(state_probs, 2)
+                P_bm_t = state_probs[:, t]
+                # Normalize to ensure it's a valid probability distribution
+                if sum(P_bm_t) > 0
+                    P_bm_t = P_bm_t / sum(P_bm_t)
+                else
+                    P_bm_t = ones(length(initial_states)) / length(initial_states)
+                end
+            else
+                P_bm_t = ones(length(initial_states)) / length(initial_states)
+            end
+            
+            # Find min_T KL[P(bm_t)||P(bm_t|ao_{t:t+T})]
+            # Check if current state distribution is similar to ANY future distribution
+            # If min_kl is small, there's a similar distribution (continue observing)
+            # If min_kl is large, all distributions have diverged (stop)
+            min_kl = 0.01  # Start with infinity to find minimum
+            found_any_future = false
+            
+            # Check all goal/state combinations that have significant probability at time t+1
             for g in 1:3
-                if goal_probs[g, t+1] > 0.1
+                if t+1 <= size(goal_probs, 2) && goal_probs[g, t+1] > 0.1
                     for s in 1:length(initial_states)
-                        if state_probs[s, t+1] > 0.1
-                            max_t_available = size(state_probs_conditioned_dict[inference_map_id][g][s], 2)
-                            for val in t:max_t_available  # Check all future timesteps (removed t+10 lookahead limit)
-                                if eval_state_dist(curr_state_dist, state_probs_conditioned_dict[inference_map_id][g][s][:, val])
-                                    flag = false
-                                    break
+                        if t+1 <= size(state_probs, 2) && state_probs[s, t+1] > 0.1
+                            # Check if this goal/state combination's future distribution exists
+                            if haskey(state_probs_conditioned_dict[inference_map_id], g) && 
+                               haskey(state_probs_conditioned_dict[inference_map_id][g], s)
+                                max_t_available = size(state_probs_conditioned_dict[inference_map_id][g][s], 2)
+                                # Check future distributions for this goal/state combination
+                                for val in t:min(t+10, max_t_available)
+                                    if val <= max_t_available
+                                        found_any_future = true
+                                        P_bm_t_future = state_probs_conditioned_dict[inference_map_id][g][s][:, val]
+                                        # Normalize
+                                        if sum(P_bm_t_future) > 0
+                                            P_bm_t_future = P_bm_t_future / sum(P_bm_t_future)
+                                        else
+                                            P_bm_t_future = ones(length(initial_states)) / length(initial_states)
+                                        end
+                                        
+                                        # Compute KL divergence
+                                        kl = kl_divergence(P_bm_t, P_bm_t_future)
+                                        
+                                        if kl < min_kl
+                                            min_kl = kl
+                                        end
+                                    end
                                 end
                             end
                         end
-                        if !flag
-                            break
-                        end
                     end
                 end
-                if !flag
-                    break
-                end
             end
-
-            if flag
+            
+            # If no future distributions found, stop
+            if !found_any_future
                 T = t
                 break
+            end
+            
+            # Stop when all distributions have diverged (min_kl >= threshold)
+            # Threshold of 0.1 matches the original baseline's euclidean distance threshold
+            if min_kl >= 0.1  # All future distributions have diverged
+                T = t
+                break
+            end
+            
+            # If we've reached the end, set T to current t
+            if t == max_timesteps
+                T = t
             end
         end
 

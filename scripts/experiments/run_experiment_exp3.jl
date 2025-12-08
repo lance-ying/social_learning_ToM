@@ -570,7 +570,7 @@ println("Fastest map: $(round(minimum(values(map_times)), digits=2))s")
 println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
-output_filename = "steps_dict_exp3_test_sm341_sm342_sm331_sm332_optimized.json"
+output_filename = "steps_dict_exp3_test_sm341_sm342_sm331_sm332_optimized_120525.json"
 output_path = joinpath(OUTPUT_DIR, output_filename)
 open(output_path, "w") do io
     JSON.print(io, steps_dict, 4)

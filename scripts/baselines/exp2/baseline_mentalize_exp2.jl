@@ -11,17 +11,17 @@ using Statistics
 # Register PDDL array theory
 PDDL.Arrays.register!()
 
-include(joinpath(@__DIR__, "..", "..", "src", "plan_io.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "utils.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "translate.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "plan_io.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "utils.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "heuristics.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "beliefs.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "translate.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "render.jl"))
 
 # Define directory paths
 experiment_id = "exp2"
 
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
+PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_$experiment_id")
 
 #--- Initial Setup ---#
 metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
@@ -29,11 +29,11 @@ metadata = JSON.parsefile(metadata_path)
 
 steps_dict = Dict()
 
-goal_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "goal")
-state_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "state")
-possible_worlds = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "worlds")
+goal_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "goal")
+state_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "state")
+possible_worlds = load(joinpath(@__DIR__, "..", "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "worlds")
 
-domain_render = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain_render.pddl"))
+domain_render = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain_render.pddl"))
 
 action_cost = Dict(:move => 2, :interact => 5, :observe => 1)
 
@@ -58,7 +58,7 @@ for (map_id, goal_list) in metadata
         
         println("  Scenario $i (goal=$goal_str)")
 
-        domain = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+        domain = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl"))
         problem = load_problem(joinpath(PROBLEM_DIR, "$(map_id).pddl"))
         
         # Initialize and compile reference state
@@ -93,7 +93,7 @@ for (map_id, goal_list) in metadata
         T = 1
 
         # Find when state distributions diverge
-        for t in 1:min(length(goal_probs[1,:]) - 1, 50)  # Limit search to prevent long loops
+        for t in 1:length(goal_probs[1,:]) - 1  # Check all timesteps (removed 50 limit)
 
             curr_state_dist = state_probs[:, t]
             flag = true
@@ -103,7 +103,7 @@ for (map_id, goal_list) in metadata
                     for s in 1:length(initial_states)
                         if state_probs[s, t+1] > 0.1
                             max_t_available = size(state_probs_conditioned_dict[map_id][g][s], 2)
-                            for val in t:min(t+10, max_t_available)  # Limit lookahead
+                            for val in t:max_t_available  # Check all future timesteps (removed t+10 lookahead limit)
                                 if eval_state_dist(curr_state_dist, state_probs_conditioned_dict[map_id][g][s][:, val])
                                     flag = false
                                     break
