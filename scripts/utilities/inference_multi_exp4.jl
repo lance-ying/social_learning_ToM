@@ -13,6 +13,7 @@ include(joinpath(@__DIR__, "..", "..", "src", "utils.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
+include(joinpath(@__DIR__, "..", "..", "src", "planners.jl"))
 
 # Define directory paths
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4")
@@ -22,6 +23,7 @@ PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4")
 goal_probs_conditioned_dict = Dict()
 state_probs_conditioned_dict = Dict()
 possible_worlds = Dict()
+agent_types_dict = Dict()  # NEW: stores agent type per (agent, map, scenario)
 
 problem_files = filter(f -> endswith(f, ".pddl") && !occursin("plan", f), readdir(PROBLEM_DIR))
 
@@ -170,6 +172,7 @@ for agent_name in agents_to_infer
     goal_probs_conditioned_dict[agent_name] = Dict()
     state_probs_conditioned_dict[agent_name] = Dict()
     possible_worlds[agent_name] = Dict()
+    agent_types_dict[agent_name] = Dict()  # NEW: track agent types
     
     println("\n=== Running inference for $agent_name ===\n")
     
@@ -181,6 +184,7 @@ for agent_name in agents_to_infer
         
         goal_probs_conditioned_dict[agent_name][map_id] = Dict()
         state_probs_conditioned_dict[agent_name][map_id] = Dict()
+        agent_types_dict[agent_name][map_id] = Dict()  # NEW: track types per scenario
         
         # Loop over both scenarios
         for scenario in 1:2
@@ -194,6 +198,7 @@ for agent_name in agents_to_infer
             
             goal_probs_conditioned_dict[agent_name][map_id][scenario] = Dict()
             state_probs_conditioned_dict[agent_name][map_id][scenario] = Dict()
+            agent_types_dict[agent_name][map_id][scenario] = goal_type  # NEW: store agent type
 
             # Load domain
             domain = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
@@ -255,9 +260,23 @@ for agent_name in agents_to_infer
                 (init_state_addr, 1:length(initial_states))
             )
 
-            # Define planning algorithm (RTHS uses optimal planning - observer doesn't know agent is naive)
+            # Get blue wizards (needed for NaivePlanner and ground truth plan generation)
+            blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
+
+            # Define planning algorithm - TYPE-AWARE
+            # If agent is naive, observer uses NaivePlanner (expects naive behavior)
+            # If agent is actual, observer uses RTHS (expects optimal behavior)
             heuristic = GoalManhattan()
-            planner = RTHS(heuristic, n_iters=1, max_nodes=2^15)
+            if goal_type == "naive"
+                # Observer knows agent is naive - use NaivePlanner
+                # Pass domain for dynamic action computation during inference
+                planner = NaivePlanner(blue_wizards, agent_sym, AStarPlanner(heuristic), domain)
+                println("    Using NaivePlanner for naive agent")
+            else
+                # Observer knows agent is actual/optimal - use RTHS
+                planner = RTHS(heuristic, n_iters=1, max_nodes=2^15)
+                println("    Using RTHS for actual agent")
+            end
 
             # Define action noise model
             temperatures = 0.5
@@ -285,9 +304,6 @@ for agent_name in agents_to_infer
                 agent_config = agent_config,
                 env_config = PDDLEnvConfig(domain, state_prior)
             )
-
-            # Get blue wizards for naive planning check
-            blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
 
             # Run inference for ALL goals (observer doesn't know agent's goal)
             for g in 1:length(goals)
@@ -359,11 +375,18 @@ end
 
 
 
-data = Dict("goal" => goal_probs_conditioned_dict, "state" => state_probs_conditioned_dict, "worlds" => possible_worlds)
+data = Dict(
+    "goal" => goal_probs_conditioned_dict, 
+    "state" => state_probs_conditioned_dict, 
+    "worlds" => possible_worlds,
+    "agent_types" => agent_types_dict  # NEW: stores type per (agent, map, scenario)
+)
 
-save("inference_data_exp4.jld2", data)
+output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4.jld2")
+save(output_path, data)
 
 println("\n=== Inference Complete ===")
-println("Saved to: inference_data_exp4.jld2")
+println("Saved to: $output_path")
 println("Data structure: data[agent_name][map_id][scenario][goal_id][state_id]")
+println("Agent types: data[\"agent_types\"][agent_name][map_id][scenario]")
 
