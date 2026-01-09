@@ -177,6 +177,9 @@ for agent_name in agents_to_infer
     println("\n=== Running inference for $agent_name ===\n")
     
     for (map_id, agent_goals) in metadata
+        if map_id != "sm431"
+            continue
+        end
         println("Processing map: $map_id for $agent_name")
         
         # Get goals for this agent: [{"gem": 1, "type": "naive"}, {"gem": 3, "type": "naive"}]
@@ -270,6 +273,7 @@ for agent_name in agents_to_infer
             if goal_type == "naive"
                 # Observer knows agent is naive - use NaivePlanner
                 # Pass domain for dynamic action computation during inference
+                # Constructor order: blue_wizards, agent_name, fallback_planner, domain
                 planner = NaivePlanner(blue_wizards, agent_sym, AStarPlanner(heuristic), domain)
                 println("    Using NaivePlanner for naive agent")
             else

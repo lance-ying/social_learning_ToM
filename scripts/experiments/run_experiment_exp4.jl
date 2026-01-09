@@ -242,6 +242,9 @@ for (map_id, agent_goals) in metadata
                 agent2_dict = state_probs_conditioned_dict["agent2"][map_id][scenario]
                 agent2_goal_dict = goal_probs_conditioned_dict["agent2"][map_id][scenario]
                 
+                # Debug: track T values and wizard candidates for each (g,i) pair
+                debug_entries_agent2 = []
+                
                 # Loop over ALL possible goals (observer doesn't know which goal agent has)
                 for g in 1:length(goals_agent2)
                 if goal_probs_agent2[g, timestep_agent2] < 0.1
@@ -315,6 +318,9 @@ for (map_id, agent_goals) in metadata
                     contribution = goal_probs_agent2[g, timestep_agent2] * state_probs_agent2[i, timestep_agent2] * total_cost
                     Q_observe_agent2 += contribution
                     total_probs_agent2 += goal_probs_agent2[g, timestep_agent2] * state_probs_agent2[i, timestep_agent2]
+                    
+                    # Store debug info
+                    push!(debug_entries_agent2, (g=g, i=i, T=T, n_wiz=length(new_wizard_candicates), Q_T=Q_T, obs_cost=obs_cost, prob=joint_prob))
                 end
                 end
                 
@@ -324,7 +330,7 @@ for (map_id, agent_goals) in metadata
                     Q_observe_agent2 = Inf  # If no valid probabilities, set to infinity
                     debug_println("    WARNING: total_probs_agent2 = 0 at t=$t")
                 end
-                (Q_observe_agent2, total_probs_agent2)
+                (Q_observe_agent2, total_probs_agent2, debug_entries_agent2)
             end
             
             task_agent3 = Threads.@spawn begin
@@ -335,6 +341,9 @@ for (map_id, agent_goals) in metadata
                 # Pre-cache the nested dictionary access for agent3 to avoid repeated lookups
                 agent3_dict = state_probs_conditioned_dict["agent3"][map_id][scenario]
                 agent3_goal_dict = goal_probs_conditioned_dict["agent3"][map_id][scenario]
+                
+                # Debug: track T values and wizard candidates for each (g,i) pair
+                debug_entries_agent3 = []
                 
                 # Debug: Check initial probabilities for agent3
                 if t == 0 && agent3_count == 0
@@ -415,6 +424,9 @@ for (map_id, agent_goals) in metadata
                     contribution = goal_probs_agent3[g, timestep_agent3] * state_probs_agent3[i, timestep_agent3] * total_cost
                     Q_observe_agent3 += contribution
                     total_probs_agent3 += goal_probs_agent3[g, timestep_agent3] * state_probs_agent3[i, timestep_agent3]
+                    
+                    # Store debug info
+                    push!(debug_entries_agent3, (g=g, i=i, T=T, n_wiz=length(new_wizard_candicates), Q_T=Q_T, obs_cost=obs_cost, prob=joint_prob))
                 end
                 end
                 
@@ -424,12 +436,12 @@ for (map_id, agent_goals) in metadata
                     Q_observe_agent3 = Inf  # If no valid probabilities, set to infinity
                     debug_println("    WARNING: total_probs_agent3 = 0 at t=$t")
                 end
-                (Q_observe_agent3, total_probs_agent3)
+                (Q_observe_agent3, total_probs_agent3, debug_entries_agent3)
             end
             
             # Wait for both parallel tasks to complete
-            (Q_observe_agent2, total_probs_agent2) = fetch(task_agent2)
-            (Q_observe_agent3, total_probs_agent3) = fetch(task_agent3)
+            (Q_observe_agent2, total_probs_agent2, debug_entries_agent2) = fetch(task_agent2)
+            (Q_observe_agent3, total_probs_agent3, debug_entries_agent3) = fetch(task_agent3)
             
             # Compute Q_not_observe
             Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizard_candicates, action_cost)
@@ -439,6 +451,16 @@ for (map_id, agent_goals) in metadata
             debug_println("    wizard_candidates: $(length(wizard_candicates))")
             debug_println("    agent2_count=$agent2_count, agent3_count=$agent3_count")
             debug_println("    timestep_agent2=$timestep_agent2, timestep_agent3=$timestep_agent3")
+            
+            # Detailed debug: show breakdown for each agent
+            debug_println("    === agent2 ($(agent2_type)) breakdown ===")
+            for entry in debug_entries_agent2
+                debug_println("      g=$(entry.g), i=$(entry.i): T=$(entry.T), n_wiz=$(entry.n_wiz), Q_T=$(round(entry.Q_T, digits=1)), obs_cost=$(round(entry.obs_cost, digits=1)), prob=$(round(entry.prob, digits=3))")
+            end
+            debug_println("    === agent3 ($(agent3_type)) breakdown ===")
+            for entry in debug_entries_agent3
+                debug_println("      g=$(entry.g), i=$(entry.i): T=$(entry.T), n_wiz=$(entry.n_wiz), Q_T=$(round(entry.Q_T, digits=1)), obs_cost=$(round(entry.obs_cost, digits=1)), prob=$(round(entry.prob, digits=3))")
+            end
             
             # Take argmin to decide which action
             q_values = [Q_observe_agent2, Q_observe_agent3, Q_not_observe]
