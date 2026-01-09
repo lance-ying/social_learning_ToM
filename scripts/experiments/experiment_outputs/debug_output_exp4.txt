@@ -1,0 +1,17 @@
+
+Processing map: sm431
+  Scenario 1
+    agent2 (X) -> gem2 (naive), agent3 (Y) -> gem1 (actual)
+    agent3 initial goal_probs: [0.333, 0.333, 0.333]
+    agent3 initial state_probs: [0.25, 0.25, 0.25, 0.25]
+    t=0: Q_observe_agent2=133.25, Q_observe_agent3=143.17, Q_not_observe=182.0
+    wizard_candidates: 4
+    agent2_count=0, agent3_count=0
+    timestep_agent2=1, timestep_agent3=1
+    t=1: Q_observe_agent2=98.0, Q_observe_agent3=157.0, Q_not_observe=95.0
+    wizard_candidates: 1
+    agent2_count=1, agent3_count=0
+    timestep_agent2=2, timestep_agent3=1
+
+=== Experiment Complete ===
+Results saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/experiments/experiment_outputs/steps_dict_exp4.json
