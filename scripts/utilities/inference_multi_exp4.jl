@@ -177,9 +177,6 @@ for agent_name in agents_to_infer
     println("\n=== Running inference for $agent_name ===\n")
     
     for (map_id, agent_goals) in metadata
-        if map_id != "sm431"
-            continue
-        end
         println("Processing map: $map_id for $agent_name")
         
         # Get goals for this agent: [{"gem": 1, "type": "naive"}, {"gem": 3, "type": "naive"}]
@@ -189,8 +186,8 @@ for agent_name in agents_to_infer
         state_probs_conditioned_dict[agent_name][map_id] = Dict()
         agent_types_dict[agent_name][map_id] = Dict()  # NEW: track types per scenario
         
-        # Loop over both scenarios
-        for scenario in 1:2
+        # Loop over all three scenarios
+        for scenario in 1:3
             # Extract gem and type from metadata
             goal_info = goal_info_list[scenario]
             goal_gem_idx = goal_info["gem"]
@@ -386,7 +383,7 @@ data = Dict(
     "agent_types" => agent_types_dict  # NEW: stores type per (agent, map, scenario)
 )
 
-output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4.jld2")
+output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_3scenarios.jld2")
 save(output_path, data)
 
 println("\n=== Inference Complete ===")

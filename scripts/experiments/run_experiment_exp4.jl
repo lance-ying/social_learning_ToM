@@ -41,7 +41,7 @@ metadata = JSON.parsefile(metadata_path)
 steps_dict = Dict()
 
 # Load inference data for both agents (agent2=X, agent3=Y)
-data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4.jld2"))
+data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_011025_01.jld2"))
 goal_probs_conditioned_dict = data["goal"]
 state_probs_conditioned_dict = data["state"]
 possible_worlds = data["worlds"]
@@ -51,7 +51,7 @@ domain_render = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain_re
 action_cost = Dict(:move => 3, :interact => 5, :observe => 1.0)
 
 # Create progress bar for all (map, scenario) combinations
-total_iterations = length(metadata) * 2  # maps × 2 scenarios
+total_iterations = length(metadata) * 3  # maps × 3 scenarios
 progress = Progress(total_iterations, desc="Processing exp4: ")
 
 # Track timing
@@ -59,17 +59,11 @@ map_times = Dict()
 total_start_time = time()
 
 for (map_id, agent_goals) in metadata
-    if map_id != "sm431"
-        continue
-    end
     map_start_time = time()
     debug_println("\nProcessing map: $map_id")
     
-    # Loop over both scenarios
-    for scenario in 1:2
-        if scenario != 1
-            continue
-        end
+    # Loop over all three scenarios
+    for scenario in 1:3
         scenario_start_time = time()
         map_key = "$(map_id)_scenario$(scenario)"
         debug_println("  Scenario $scenario")
