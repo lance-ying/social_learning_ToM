@@ -17,6 +17,18 @@ include(joinpath(@__DIR__, "..", "..", "src", "planners.jl"))
 
 # Define directory paths
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4")
+OUTPUT_DIR = joinpath(@__DIR__, "..", "..", "scripts", "experiments", "experiment_outputs")
+mkpath(OUTPUT_DIR)
+
+# Open debug log file
+debug_log_path = joinpath(OUTPUT_DIR, "debug_output_inference_exp4.txt")
+debug_log_file = open(debug_log_path, "w")
+function debug_println(args...)
+    msg = join(string.(args), " ")
+    println(msg)
+    println(debug_log_file, msg)
+    flush(debug_log_file)
+end
 
 # #--- Initial Setup ---#
 
@@ -42,42 +54,39 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
     return filtered
 end
 
-# Helper function to plan to a wizard location (to or adjacent)
+# Helper function to plan to an adjacent position of a wizard (never on top)
 function plan_to_wizard_location(
-    domain::Domain, state::State, wizard_loc::Tuple{Int,Int}, 
+    domain::Domain, state::State, wizard_loc::Tuple{Int,Int},
     agent_name::Symbol, planner
 )
     agent_loc = get_obj_loc(state, Const(agent_name))
-    
-    # Check if already at or adjacent
-    agent_at = (agent_loc[1] == wizard_loc[1] && agent_loc[2] == wizard_loc[2])
+
+    # Check if already adjacent (Manhattan distance = 1)
     agent_adjacent = (abs(agent_loc[1] - wizard_loc[1]) + abs(agent_loc[2] - wizard_loc[2]) == 1)
-    
-    if agent_at || agent_adjacent
-        return Term[]
+
+    if agent_adjacent
+        return Term[]  # Already adjacent, no movement needed
     end
-    
-    # Try to get to wizard location
-    wizard_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(wizard_loc[1])) (= (yloc $agent_name) $(wizard_loc[2])))")
-    plan = collect(planner(domain, state, wizard_goal))
-    
-    # If that doesn't work, try adjacent positions
-    if isempty(plan)
-        for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]  # up, down, left, right
-            adj_pos = (wizard_loc[1] + dx, wizard_loc[2] + dy)
-            adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
-            try
-                plan = collect(planner(domain, state, adj_goal))
-                if !isempty(plan)
-                    return plan
-                end
-            catch
-                continue
+
+    # Try to plan to each adjacent position, pick the shortest path
+    best_plan = Term[]
+    best_len = Inf
+
+    for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]  # up, down, left, right
+        adj_pos = (wizard_loc[1] + dx, wizard_loc[2] + dy)
+        adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
+        try
+            plan = collect(planner(domain, state, adj_goal))
+            if !isempty(plan) && length(plan) < best_len
+                best_plan = plan
+                best_len = length(plan)
             end
+        catch
+            continue
         end
     end
-    
-    return plan
+
+    return best_plan
 end
 
 # Helper function to generate naive plan if needed
@@ -168,16 +177,20 @@ agents_to_infer = ["agent2", "agent3"]
 
 for agent_name in agents_to_infer
     agent_sym = Symbol(agent_name)
-    
+
     goal_probs_conditioned_dict[agent_name] = Dict()
     state_probs_conditioned_dict[agent_name] = Dict()
     possible_worlds[agent_name] = Dict()
     agent_types_dict[agent_name] = Dict()  # NEW: track agent types
-    
-    println("\n=== Running inference for $agent_name ===\n")
-    
+
+    debug_println("\n=== Starting inference for $agent_name ===\n")
+    agent_start_time = time()
+
     for (map_id, agent_goals) in metadata
-        println("Processing map: $map_id for $agent_name")
+        # if map_id != "sm331"
+        #     continue
+        # end
+        debug_println("Processing map: $map_id for $agent_name")
         
         # Get goals for this agent: [{"gem": 1, "type": "naive"}, {"gem": 3, "type": "naive"}]
         goal_info_list = agent_goals[agent_name]
@@ -188,13 +201,17 @@ for agent_name in agents_to_infer
         
         # Loop over all three scenarios
         for scenario in 1:3
+            # if scenario != 3
+            #     continue
+            # end
             # Extract gem and type from metadata
             goal_info = goal_info_list[scenario]
             goal_gem_idx = goal_info["gem"]
             goal_type = goal_info["type"]  # "naive" or "actual"
-            
+
             goal = PDDL.parse_pddl("(has $agent_sym gem$(goal_gem_idx))")
-            println("  Scenario $scenario: $(agent_name) -> gem$(goal_gem_idx) ($(goal_type))")
+            debug_println("[DEBUG] Processing: agent=$agent_name, map=$map_id, scenario=$scenario, gem=$goal_gem_idx, type=$goal_type")
+            debug_println("  Scenario $scenario: $(agent_name) -> gem$(goal_gem_idx) ($(goal_type))")
             
             goal_probs_conditioned_dict[agent_name][map_id][scenario] = Dict()
             state_probs_conditioned_dict[agent_name][map_id][scenario] = Dict()
@@ -328,18 +345,81 @@ for agent_name in agents_to_infer
                         plan = collect(planner_astar(domain, state_i, goals[g]))
                     end
 
-                    println("    Goal $g, State $i: $(length(collect(plan))) steps")
+                    debug_println("    Goal $g, State $i: $(length(collect(plan))) steps")
 
                     t_obs_iter = act_choicemap_pairs(collect(plan))
+
+                    # DEBUG: Print the plan being observed
+                    debug_println("      Plan actions:")
+                    for (step, act) in enumerate(plan)
+                        debug_println("        Step $step: $act")
+                    end
 
                     # Set up logging callback
                     n_goals = length(goals)
                     n_init_states = length(initial_states)
+
+                    # DEBUG: Custom callback to inspect particle states
+                    # Only print detailed debug for ground truth (g, i) pair
+                    is_ground_truth = (g == goal_gem_idx)
+                    plan_actions = collect(plan)  # Store for reference in callback
+                    function debug_particle_states(t, pf)
+                        if !is_ground_truth
+                            return nothing  # Skip non-ground-truth scenarios
+                        end
+                        if t > 10
+                            return nothing  # Limit output to first 10 timesteps
+                        end
+                        observed_act = t > 0 ? plan_actions[t] : "none"
+                        println("      === Timestep $t (observed: $observed_act) ===")
+                        traces = Gen.get_traces(pf)
+                        for (idx, trace) in enumerate(traces)
+                            # Get particle's goal and initial state
+                            goal_id = trace[:init => :agent => :goal => :goal_id]
+                            state_id = trace[:init => :env => :state_id]
+
+                            # Get current state at this timestep
+                            if t == 0
+                                curr_state = trace[:init => :env]
+                            else
+                                curr_state = trace[:timestep => t => :env]
+                            end
+
+                            # Check if agent has key in this particle's current state
+                            blue_keys = [k for k in PDDL.get_objects(curr_state, :key) if curr_state[pddl"(iscolor $k blue)"]]
+                            has_key = false
+                            if !isempty(blue_keys)
+                                blue_key = blue_keys[1]
+                                has_key = curr_state[pddl"(has $agent_sym $blue_key)"]
+                            end
+
+                            # Get agent location
+                            agent_loc = (curr_state[pddl"(xloc $agent_sym)"], curr_state[pddl"(yloc $agent_sym)"])
+
+                            # Get what action NaivePlanner would predict
+                            if goal_type == "naive"
+                                predicted_action = compute_naive_action(
+                                    domain, curr_state, goals[goal_id],
+                                    blue_wizards, agent_sym, AStarPlanner(GoalManhattan())
+                                )
+                            else
+                                predicted_action = "N/A (not naive)"
+                            end
+
+                            # Get particle weight
+                            weight = exp(Gen.get_score(trace))
+
+                            println("        Particle $idx: goal=$goal_id, init_state=$state_id, has_key=$has_key, loc=$agent_loc, predicted=$predicted_action")
+                        end
+                        return nothing
+                    end
+
                     logger_cb = DataLoggerCallback(
                         t = (t, pf) -> t::Int,
                         goal_probs = pf -> probvec(pf, goal_addr, 1:n_goals)::Vector{Float64},
                         state_probs = pf -> probvec(pf, init_state_addr, 1:n_init_states)::Vector{Float64},
                         lml_est = pf -> log_ml_estimate(pf)::Float64,
+                        debug = (t, pf) -> debug_particle_states(t, pf),
                     )
                     print_cb = PrintStatsCallback(
                         (goal_addr, 1:length(goals)),
@@ -368,26 +448,59 @@ for agent_name in agents_to_infer
 
                     goal_probs_conditioned_dict[agent_name][map_id][scenario][g][i] = goal_probs_conditioned
                     state_probs_conditioned_dict[agent_name][map_id][scenario][g][i] = state_probs_conditioned
+
+                    # DEBUG: Show sample probabilities being saved
+                    if i == 1 && g <= 2
+                        debug_println("      [DEBUG] Saved probs for (agent=$agent_name, map=$map_id, scenario=$scenario, g=$g, i=$i)")
+                        debug_println("        goal_probs shape: $(size(goal_probs_conditioned))")
+                        debug_println("        state_probs shape: $(size(state_probs_conditioned))")
+                        if size(goal_probs_conditioned, 2) > 0
+                            debug_println("        goal_probs[:, 1] = $(round.(goal_probs_conditioned[:, 1], digits=3))")
+                        end
+                        if size(state_probs_conditioned, 2) > 0
+                            debug_println("        state_probs[:, 1] = $(round.(state_probs_conditioned[:, 1], digits=3))")
+                        end
+                    end
                 end
             end
+            debug_println("  [DEBUG] Completed scenario $scenario")
         end
     end
+
+    agent_elapsed = time() - agent_start_time
+    debug_println("\n[DEBUG] Completed inference for $agent_name in $(round(agent_elapsed, digits=2))s\n")
 end
 
 
 
 data = Dict(
-    "goal" => goal_probs_conditioned_dict, 
-    "state" => state_probs_conditioned_dict, 
+    "goal" => goal_probs_conditioned_dict,
+    "state" => state_probs_conditioned_dict,
     "worlds" => possible_worlds,
     "agent_types" => agent_types_dict  # NEW: stores type per (agent, map, scenario)
 )
 
-output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_3scenarios.jld2")
-save(output_path, data)
+# DEBUG: Print keys being saved
+debug_println("\n[DEBUG] Data structure being saved:")
+debug_println("  Keys: $(keys(data))")
+debug_println("  goal_probs_conditioned_dict keys: $(keys(goal_probs_conditioned_dict))")
+for agent in keys(goal_probs_conditioned_dict)
+    debug_println("    $agent -> maps: $(keys(goal_probs_conditioned_dict[agent]))")
+    for map_id in keys(goal_probs_conditioned_dict[agent])
+        debug_println("      $map_id -> scenarios: $(keys(goal_probs_conditioned_dict[agent][map_id]))")
+    end
+end
 
-println("\n=== Inference Complete ===")
-println("Saved to: $output_path")
-println("Data structure: data[agent_name][map_id][scenario][goal_id][state_id]")
-println("Agent types: data[\"agent_types\"][agent_name][map_id][scenario]")
+output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_point5.jld2")
+save(output_path, data)
+debug_println("[DEBUG] Saved to: $output_path")
+debug_println("[DEBUG] File size: $(round(filesize(output_path) / 1024, digits=2)) KB")
+
+debug_println("\n=== Inference Complete ===")
+debug_println("Saved to: $output_path")
+debug_println("Data structure: data[agent_name][map_id][scenario][goal_id][state_id]")
+debug_println("Agent types: data[\"agent_types\"][agent_name][map_id][scenario]")
+
+close(debug_log_file)
+println("\nDebug output saved to: $debug_log_path")
 

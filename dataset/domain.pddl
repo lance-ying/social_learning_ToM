@@ -5,12 +5,13 @@
         item wizard door agent - physical
         physical color - object
     )
-    (:predicates 
+    (:predicates
         (has ?a - agent ?i - item)
         (iscolor ?o - physical ?c - color)
         (offgrid ?i - item)
         (hidden ?i - item)
         (hold ?w - wizard ?k - key)
+        (visited ?a - agent ?w - wizard)
     )
     (:functions 
         (xloc ?o - physical) (yloc ?o - physical) - integer
@@ -35,9 +36,11 @@
                 (and (= (- (xloc ?a) 1) (xloc ?w)) (= (yloc ?a) (yloc ?w)))
                 (and (= (+ (xloc ?a) 1) (xloc ?w)) (= (yloc ?a) (yloc ?w))))
      :effect
+        (and
+            (visited ?a ?w)
             (forall (?k - key)
                 (when (hold ?w ?k)
-                    (has ?a ?k)))
+                    (has ?a ?k))))
     )
 
     (:action pass

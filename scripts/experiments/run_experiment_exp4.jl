@@ -41,7 +41,7 @@ metadata = JSON.parsefile(metadata_path)
 steps_dict = Dict()
 
 # Load inference data for both agents (agent2=X, agent3=Y)
-data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_011025_01.jld2"))
+data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_sm331_3scenarios_test_point5noise.jld2"))
 goal_probs_conditioned_dict = data["goal"]
 state_probs_conditioned_dict = data["state"]
 possible_worlds = data["worlds"]
@@ -59,11 +59,17 @@ map_times = Dict()
 total_start_time = time()
 
 for (map_id, agent_goals) in metadata
+    if map_id != "sm331"
+        continue
+    end
     map_start_time = time()
     debug_println("\nProcessing map: $map_id")
     
     # Loop over all three scenarios
     for scenario in 1:3
+        if scenario != 3
+            continue
+        end
         scenario_start_time = time()
         map_key = "$(map_id)_scenario$(scenario)"
         debug_println("  Scenario $scenario")
@@ -519,7 +525,7 @@ println("Fastest map: $(round(minimum(values(map_times)), digits=2))s")
 println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
-output_filename = "steps_dict_exp4.json"
+output_filename = "steps_dict_exp4_3scenarios_sm331_scenario3_test_point5noise.json"
 output_path = joinpath(OUTPUT_DIR, output_filename)
 open(output_path, "w") do io
     JSON.print(io, steps_dict, 4)

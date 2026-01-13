@@ -86,14 +86,12 @@ function compute_naive_action(
     end
     
     agent_loc = get_obj_loc(state, Const(agent_name))
-    
-    # Find wizards we're currently adjacent to - these have been "visited" already
-    # (since naive agent always interacts when adjacent, and we don't have the key)
+    agent_const = Const(agent_name)
+
+    # Find wizards that have been visited using the (visited ?a ?w) predicate
     visited_wizards = Set{Const}()
     for wizard in blue_wizards
-        wizard_loc = get_obj_loc(state, wizard)
-        dist = sum(abs.(agent_loc .- wizard_loc))
-        if dist <= 1  # At or adjacent = already interacted (since we don't have key)
+        if state[Compound(:visited, [agent_const, wizard])]
             push!(visited_wizards, wizard)
         end
     end
@@ -121,37 +119,32 @@ function compute_naive_action(
         return isempty(plan_optimal) ? missing : plan_optimal[1]
     end
     
-    # Check if we're adjacent to the target wizard
+    # Check if we're adjacent to the target wizard (must be exactly distance 1)
     is_adjacent = min_dist == 1
-    is_at = min_dist == 0
-    
-    if is_adjacent || is_at
+
+    if is_adjacent
         # Interact with the wizard
         return PDDL.parse_pddl("(interact $agent_name $closest_wizard)")
     else
-        # Move toward the wizard - try to get adjacent to it
+        # Move toward the wizard - try to get adjacent to it (pick shortest path)
+        best_plan = Term[]
+        best_len = Inf
+
         for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]
             adj_pos = (closest_wizard_loc[1] + dx, closest_wizard_loc[2] + dy)
             adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
             try
                 plan_to_adj = collect(fallback_planner(domain, state, adj_goal))
-                if !isempty(plan_to_adj)
-                    return plan_to_adj[1]
+                if !isempty(plan_to_adj) && length(plan_to_adj) < best_len
+                    best_plan = plan_to_adj
+                    best_len = length(plan_to_adj)
                 end
             catch
                 continue
             end
         end
-        
-        # If can't get adjacent, try going directly to wizard location
-        wizard_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(closest_wizard_loc[1])) (= (yloc $agent_name) $(closest_wizard_loc[2])))")
-        plan_to_wizard = try
-            collect(fallback_planner(domain, state, wizard_goal))
-        catch
-            Term[]
-        end
-        
-        return isempty(plan_to_wizard) ? missing : plan_to_wizard[1]
+
+        return isempty(best_plan) ? missing : best_plan[1]
     end
 end
 
@@ -250,39 +243,39 @@ end
 InversePlanning.get_action(sol::NaivePlannerSolution, t::Int, state::State) = 
     SymbolicPlanners.get_action(sol, state)
 
-# Helper function to plan to a wizard location
+# Helper function to plan to an adjacent position of a wizard (never on top)
 function plan_to_wizard_location_naive(
-    domain::Domain, state::State, wizard_loc::Tuple{Int,Int}, 
+    domain::Domain, state::State, wizard_loc::Tuple{Int,Int},
     agent_name::Symbol, planner
 )
     agent_loc = get_obj_loc(state, Const(agent_name))
-    
-    agent_at = (agent_loc[1] == wizard_loc[1] && agent_loc[2] == wizard_loc[2])
+
+    # Check if already adjacent (Manhattan distance = 1)
     agent_adjacent = (abs(agent_loc[1] - wizard_loc[1]) + abs(agent_loc[2] - wizard_loc[2]) == 1)
-    
-    if agent_at || agent_adjacent
-        return Term[]
+
+    if agent_adjacent
+        return Term[]  # Already adjacent, no movement needed
     end
-    
-    wizard_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(wizard_loc[1])) (= (yloc $agent_name) $(wizard_loc[2])))")
-    plan = collect(planner(domain, state, wizard_goal))
-    
-    if isempty(plan)
-        for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]
-            adj_pos = (wizard_loc[1] + dx, wizard_loc[2] + dy)
-            adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
-            try
-                plan = collect(planner(domain, state, adj_goal))
-                if !isempty(plan)
-                    return plan
-                end
-            catch
-                continue
+
+    # Try to plan to each adjacent position, pick the shortest path
+    best_plan = Term[]
+    best_len = Inf
+
+    for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]
+        adj_pos = (wizard_loc[1] + dx, wizard_loc[2] + dy)
+        adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
+        try
+            plan = collect(planner(domain, state, adj_goal))
+            if !isempty(plan) && length(plan) < best_len
+                best_plan = plan
+                best_len = length(plan)
             end
+        catch
+            continue
         end
     end
-    
-    return plan
+
+    return best_plan
 end
 
 """
@@ -304,8 +297,16 @@ function generate_naive_plan(
         
         current_state = copy(state)
         full_naive_plan = Term[]
+        agent_const = Const(agent_name)
+
+        # Initialize visited_wizards from state's (visited) predicates
         visited_wizards = Set{Const}()
-        
+        for wizard in blue_wizards
+            if current_state[Compound(:visited, [agent_const, wizard])]
+                push!(visited_wizards, wizard)
+            end
+        end
+
         while !current_state[pddl"(has $agent_name $blue_key)"] && length(visited_wizards) < length(blue_wizards)
             agent_loc = get_obj_loc(current_state, Const(agent_name))
             closest_wizard = nothing
