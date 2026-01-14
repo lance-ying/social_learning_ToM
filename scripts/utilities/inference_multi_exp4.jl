@@ -69,25 +69,21 @@ function plan_to_wizard_location(
         return Term[]  # Already adjacent, no movement needed
     end
 
-    # Try to plan to each adjacent position, pick the shortest path
-    best_plan = Term[]
-    best_len = Inf
-
+    # Try to plan to each adjacent position, return on first success (fast)
     for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]  # up, down, left, right
         adj_pos = (wizard_loc[1] + dx, wizard_loc[2] + dy)
         adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
         try
             plan = collect(planner(domain, state, adj_goal))
-            if !isempty(plan) && length(plan) < best_len
-                best_plan = plan
-                best_len = length(plan)
+            if !isempty(plan)
+                return plan  # Return immediately on first success
             end
         catch
             continue
         end
     end
 
-    return best_plan
+    return Term[]
 end
 
 # Helper function to generate naive plan if needed

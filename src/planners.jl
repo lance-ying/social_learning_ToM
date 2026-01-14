@@ -131,25 +131,21 @@ function compute_naive_action(
         # Interact with the wizard
         return PDDL.parse_pddl("(interact $agent_name $closest_wizard)")
     else
-        # Move toward the wizard - try to get adjacent to it (pick shortest path)
-        best_plan = Term[]
-        best_len = Inf
-
+        # Move toward the wizard - return on first successful path (fast)
         for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]
             adj_pos = (closest_wizard_loc[1] + dx, closest_wizard_loc[2] + dy)
             adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
             try
                 plan_to_adj = collect(fallback_planner(domain, state, adj_goal))
-                if !isempty(plan_to_adj) && length(plan_to_adj) < best_len
-                    best_plan = plan_to_adj
-                    best_len = length(plan_to_adj)
+                if !isempty(plan_to_adj)
+                    return plan_to_adj[1]  # Return immediately on first success
                 end
             catch
                 continue
             end
         end
 
-        return isempty(best_plan) ? missing : best_plan[1]
+        return missing
     end
 end
 
@@ -274,25 +270,21 @@ function plan_to_wizard_location_naive(
         return Term[]  # Already adjacent, no movement needed
     end
 
-    # Try to plan to each adjacent position, pick the shortest path
-    best_plan = Term[]
-    best_len = Inf
-
+    # Try to plan to each adjacent position, return on first success (fast)
     for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]
         adj_pos = (wizard_loc[1] + dx, wizard_loc[2] + dy)
         adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
         try
             plan = collect(planner(domain, state, adj_goal))
-            if !isempty(plan) && length(plan) < best_len
-                best_plan = plan
-                best_len = length(plan)
+            if !isempty(plan)
+                return plan  # Return immediately on first success
             end
         catch
             continue
         end
     end
 
-    return best_plan
+    return Term[]
 end
 
 """
