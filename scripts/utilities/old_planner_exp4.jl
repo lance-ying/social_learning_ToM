@@ -35,10 +35,6 @@ mutable struct NaivePlannerSolution <: SymbolicPlanners.Solution
     planner::NaivePlanner
     domain::Any
     spec::Any  # Goal specification
-    # Cache: state hash -> action index for O(1) lookup
-    state_action_cache::Dict{UInt64, Int}
-    # Cache: state hash -> action values dict for O(1) get_action_values
-    action_values_cache::Dict{UInt64, Dict{Term, Float64}}
 end
 
 Base.iterate(sol::NaivePlannerSolution) = iterate(sol.plan)
@@ -47,8 +43,7 @@ Base.length(sol::NaivePlannerSolution) = length(sol.plan)
 Base.collect(sol::NaivePlannerSolution) = sol.plan
 Base.copy(sol::NaivePlannerSolution) = NaivePlannerSolution(
     sol.status, copy(sol.plan), copy(sol.trajectory),
-    sol.planner, sol.domain, sol.spec, copy(sol.state_action_cache),
-    copy(sol.action_values_cache)
+    sol.planner, sol.domain, sol.spec
 )
 
 # Helper: compute the next naive action from a given state
@@ -91,12 +86,14 @@ function compute_naive_action(
     end
     
     agent_loc = get_obj_loc(state, Const(agent_name))
-    agent_const = Const(agent_name)
-
-    # Find wizards that have been visited using the (visited ?a ?w) predicate
+    
+    # Find wizards we're currently adjacent to - these have been "visited" already
+    # (since naive agent always interacts when adjacent, and we don't have the key)
     visited_wizards = Set{Const}()
     for wizard in blue_wizards
-        if state[Compound(:visited, [agent_const, wizard])]
+        wizard_loc = get_obj_loc(state, wizard)
+        dist = sum(abs.(agent_loc .- wizard_loc))
+        if dist <= 1  # At or adjacent = already interacted (since we don't have key)
             push!(visited_wizards, wizard)
         end
     end
@@ -124,55 +121,57 @@ function compute_naive_action(
         return isempty(plan_optimal) ? missing : plan_optimal[1]
     end
     
-    # Check if we're adjacent to the target wizard (must be exactly distance 1)
+    # Check if we're adjacent to the target wizard
     is_adjacent = min_dist == 1
-
-    if is_adjacent
+    is_at = min_dist == 0
+    
+    if is_adjacent || is_at
         # Interact with the wizard
         return PDDL.parse_pddl("(interact $agent_name $closest_wizard)")
     else
-        # Move toward the wizard - try to get adjacent to it (pick shortest path)
-        best_plan = Term[]
-        best_len = Inf
-
+        # Move toward the wizard - try to get adjacent to it
         for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]
             adj_pos = (closest_wizard_loc[1] + dx, closest_wizard_loc[2] + dy)
             adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
             try
                 plan_to_adj = collect(fallback_planner(domain, state, adj_goal))
-                if !isempty(plan_to_adj) && length(plan_to_adj) < best_len
-                    best_plan = plan_to_adj
-                    best_len = length(plan_to_adj)
+                if !isempty(plan_to_adj)
+                    return plan_to_adj[1]
                 end
             catch
                 continue
             end
         end
-
-        return isempty(best_plan) ? missing : best_plan[1]
+        
+        # If can't get adjacent, try going directly to wizard location
+        wizard_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(closest_wizard_loc[1])) (= (yloc $agent_name) $(closest_wizard_loc[2])))")
+        plan_to_wizard = try
+            collect(fallback_planner(domain, state, wizard_goal))
+        catch
+            Term[]
+        end
+        
+        return isempty(plan_to_wizard) ? missing : plan_to_wizard[1]
     end
 end
 
 # State-based get_action - compute naive action dynamically
 function SymbolicPlanners.get_action(sol::NaivePlannerSolution, state::State)
-    # FIRST: Try hash cache lookup (O(1))
-    state_hash = hash(state)
-    if haskey(sol.state_action_cache, state_hash)
-        idx = sol.state_action_cache[state_hash]
-        if idx <= length(sol.plan)
-            return sol.plan[idx]
+    if sol.domain === nothing
+        # Fallback: try trajectory lookup
+        for (i, traj_state) in enumerate(sol.trajectory)
+            if traj_state == state && i <= length(sol.plan)
+                return sol.plan[i]
+            end
         end
+        return missing
     end
-
-    # SECOND: If state not in cache and we have domain, compute dynamically (slow path)
-    if sol.domain !== nothing
-        return compute_naive_action(
-            sol.domain, state, sol.spec,
-            sol.planner.blue_wizards, sol.planner.agent_name, sol.planner.fallback_planner
-        )
-    end
-
-    return missing
+    
+    # Compute action dynamically for this state
+    return compute_naive_action(
+        sol.domain, state, sol.spec,
+        sol.planner.blue_wizards, sol.planner.agent_name, sol.planner.fallback_planner
+    )
 end
 
 # Time-based get_action
@@ -208,12 +207,6 @@ end
 # get_action_values - return Q-values for ALL available actions
 # This is critical for Boltzmann action selection to work properly
 function SymbolicPlanners.get_action_values(sol::NaivePlannerSolution, state::State)
-    # FIRST: Check cache for O(1) lookup
-    state_hash = hash(state)
-    if haskey(sol.action_values_cache, state_hash)
-        return sol.action_values_cache[state_hash]
-    end
-
     if sol.domain === nothing
         # Fallback if no domain
         action = SymbolicPlanners.get_action(sol, state)
@@ -222,13 +215,13 @@ function SymbolicPlanners.get_action_values(sol::NaivePlannerSolution, state::St
         end
         return Dict{Term, Float64}(action => 0.0)
     end
-
+    
     # Get the naive action (best action according to naive strategy)
     naive_action = SymbolicPlanners.get_action(sol, state)
-
+    
     # Get all available actions in this state
     available_actions = PDDL.available(sol.domain, state)
-
+    
     # Assign Q-values: naive action gets 0.0 (best), others get -1.0 (worse)
     # This way Boltzmann softmax gives highest prob to naive action
     # but non-zero prob to other actions
@@ -240,10 +233,7 @@ function SymbolicPlanners.get_action_values(sol::NaivePlannerSolution, state::St
             values[act] = -1.0  # Suboptimal action
         end
     end
-
-    # Cache the result
-    sol.action_values_cache[state_hash] = values
-
+    
     return values
 end
 
@@ -260,39 +250,39 @@ end
 InversePlanning.get_action(sol::NaivePlannerSolution, t::Int, state::State) = 
     SymbolicPlanners.get_action(sol, state)
 
-# Helper function to plan to an adjacent position of a wizard (never on top)
+# Helper function to plan to a wizard location
 function plan_to_wizard_location_naive(
-    domain::Domain, state::State, wizard_loc::Tuple{Int,Int},
+    domain::Domain, state::State, wizard_loc::Tuple{Int,Int}, 
     agent_name::Symbol, planner
 )
     agent_loc = get_obj_loc(state, Const(agent_name))
-
-    # Check if already adjacent (Manhattan distance = 1)
+    
+    agent_at = (agent_loc[1] == wizard_loc[1] && agent_loc[2] == wizard_loc[2])
     agent_adjacent = (abs(agent_loc[1] - wizard_loc[1]) + abs(agent_loc[2] - wizard_loc[2]) == 1)
-
-    if agent_adjacent
-        return Term[]  # Already adjacent, no movement needed
+    
+    if agent_at || agent_adjacent
+        return Term[]
     end
-
-    # Try to plan to each adjacent position, pick the shortest path
-    best_plan = Term[]
-    best_len = Inf
-
-    for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]
-        adj_pos = (wizard_loc[1] + dx, wizard_loc[2] + dy)
-        adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
-        try
-            plan = collect(planner(domain, state, adj_goal))
-            if !isempty(plan) && length(plan) < best_len
-                best_plan = plan
-                best_len = length(plan)
+    
+    wizard_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(wizard_loc[1])) (= (yloc $agent_name) $(wizard_loc[2])))")
+    plan = collect(planner(domain, state, wizard_goal))
+    
+    if isempty(plan)
+        for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]
+            adj_pos = (wizard_loc[1] + dx, wizard_loc[2] + dy)
+            adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
+            try
+                plan = collect(planner(domain, state, adj_goal))
+                if !isempty(plan)
+                    return plan
+                end
+            catch
+                continue
             end
-        catch
-            continue
         end
     end
-
-    return best_plan
+    
+    return plan
 end
 
 """
@@ -314,16 +304,8 @@ function generate_naive_plan(
         
         current_state = copy(state)
         full_naive_plan = Term[]
-        agent_const = Const(agent_name)
-
-        # Initialize visited_wizards from state's (visited) predicates
         visited_wizards = Set{Const}()
-        for wizard in blue_wizards
-            if current_state[Compound(:visited, [agent_const, wizard])]
-                push!(visited_wizards, wizard)
-            end
-        end
-
+        
         while !current_state[pddl"(has $agent_name $blue_key)"] && length(visited_wizards) < length(blue_wizards)
             agent_loc = get_obj_loc(current_state, Const(agent_name))
             closest_wizard = nothing
@@ -379,65 +361,46 @@ Execute the naive planner - returns a solution that can compute actions dynamica
 """
 function (planner::NaivePlanner)(domain::Domain, state::State, goal)
     plan = generate_naive_plan(
-        domain, state, goal,
+        domain, state, goal, 
         planner.blue_wizards, planner.agent_name, planner.fallback_planner
     )
-
-    # Build trajectory and hash cache for O(1) action lookup
+    
+    # Build trajectory
     trajectory = [state]
-    state_action_cache = Dict{UInt64, Int}()
-    state_action_cache[hash(state)] = 1  # First state maps to first action
-
     current_state = copy(state)
-    for (i, action) in enumerate(plan)
+    for action in plan
         current_state = PDDL.execute(domain, current_state, action)
         push!(trajectory, current_state)
-        # Map this state to the next action (i+1)
-        if i < length(plan)
-            state_action_cache[hash(current_state)] = i + 1
-        end
     end
-
+    
     # Create solution with domain reference for dynamic action computation
-    # Initialize empty action_values_cache (populated on demand)
-    action_values_cache = Dict{UInt64, Dict{Term, Float64}}()
-    return NaivePlannerSolution(:success, plan, trajectory, planner, domain, goal, state_action_cache, action_values_cache)
+    return NaivePlannerSolution(:success, plan, trajectory, planner, domain, goal)
 end
 
 # refine! - regenerate plan from current state
 function SymbolicPlanners.refine!(
-    sol::NaivePlannerSolution, planner::NaivePlanner,
+    sol::NaivePlannerSolution, planner::NaivePlanner, 
     domain::Domain, state::State, spec::SymbolicPlanners.Specification
 )
     new_plan = generate_naive_plan(
         domain, state, spec,
         planner.blue_wizards, planner.agent_name, planner.fallback_planner
     )
-
+    
     empty!(sol.plan)
     append!(sol.plan, new_plan)
-
+    
     empty!(sol.trajectory)
     push!(sol.trajectory, state)
-
-    # Rebuild hash caches
-    empty!(sol.state_action_cache)
-    empty!(sol.action_values_cache)
-    sol.state_action_cache[hash(state)] = 1
-
     current_state = copy(state)
-    for (i, action) in enumerate(new_plan)
+    for action in new_plan
         current_state = PDDL.execute(domain, current_state, action)
         push!(sol.trajectory, current_state)
-        if i < length(new_plan)
-            sol.state_action_cache[hash(current_state)] = i + 1
-        end
     end
-
+    
     # Update stored references
     sol.domain = domain
     sol.spec = spec
-
+    
     return sol
 end
-
