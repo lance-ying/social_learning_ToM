@@ -193,7 +193,7 @@ for agent_name in agents_to_infer
     agent_start_time = time()
 
     for (map_id, agent_goals) in metadata
-        # if map_id != "sm331"
+        # if map_id != "sm221"
         #     continue
         # end
         debug_println("Processing map: $map_id for $agent_name")
@@ -330,28 +330,31 @@ for agent_name in agents_to_infer
             )
 
             # Run inference for ALL goals (observer doesn't know agent's goal)
+            # For each hypothesis (g, i), generate a plan using the agent's planning style
+            # The observer knows the agent's TYPE (naive/actual) but not their goal
             for g in 1:length(goals)
                 goal_probs_conditioned_dict[agent_name][map_id][scenario][g] = Dict()
                 state_probs_conditioned_dict[agent_name][map_id][scenario][g] = Dict()
-                
+
                 for i in 1:length(initial_states)
                     state_i = initial_states[i]
-                    
-                    # Generate ground truth plan
-                    # If this goal (g) matches the agent's actual goal (goal_gem_idx) and goal type is naive,
-                    # use naive planning. Otherwise use optimal planning.
-                    if g == goal_gem_idx && goal_type == "naive"
-                        # Use naive planning for the actual goal when agent is naive
+
+                    # Generate plan for hypothesis (g, i) using the agent's known planning style
+                    # - If agent is naive: use naive planning for hypothesis goal g
+                    # - If agent is actual: use optimal planning for hypothesis goal g
+                    # This matches inference_multi.jl but with type-aware planning
+                    if goal_type == "naive"
+                        # Agent is naive - use naive planning for hypothesis goal g
                         plan = generate_naive_plan_if_needed(
                             domain, state_i, goals[g], blue_wizards, goal_type, agent_sym
                         )
                     else
-                        # Use optimal planning for all other cases
+                        # Agent is actual/optimal - use optimal planning for hypothesis goal g
                         planner_astar = AStarPlanner(GoalManhattan())
                         plan = collect(planner_astar(domain, state_i, goals[g]))
                     end
 
-                    debug_println("    Goal $g, State $i: $(length(collect(plan))) steps")
+                    debug_println("    Goal $g, State $i (type=$goal_type): $(length(collect(plan))) steps")
 
                     t_obs_iter = act_choicemap_pairs(collect(plan))
 
@@ -501,7 +504,7 @@ for agent in keys(goal_probs_conditioned_dict)
     end
 end
 
-output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_point5.jld2")
+output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_point5_fixed.jld2")
 save(output_path, data)
 debug_println("[DEBUG] Saved to: $output_path")
 debug_println("[DEBUG] File size: $(round(filesize(output_path) / 1024, digits=2)) KB")

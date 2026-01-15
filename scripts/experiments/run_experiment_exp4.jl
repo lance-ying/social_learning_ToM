@@ -41,7 +41,7 @@ metadata = JSON.parsefile(metadata_path)
 steps_dict = Dict()
 
 # Load inference data for both agents (agent2=X, agent3=Y)
-data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_sm331_3scenarios_test_point5noise.jld2"))
+data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_sm221_point5.jld2"))
 goal_probs_conditioned_dict = data["goal"]
 state_probs_conditioned_dict = data["state"]
 possible_worlds = data["worlds"]
@@ -59,7 +59,7 @@ map_times = Dict()
 total_start_time = time()
 
 for (map_id, agent_goals) in metadata
-    if map_id != "sm331"
+    if map_id != "sm221"
         continue
     end
     map_start_time = time()
@@ -262,14 +262,17 @@ for (map_id, agent_goals) in metadata
                     state_probs_gi = agent2_dict[g][i]
                     goal_probs_gi = agent2_goal_dict[g][i]
                     
+                    # Find T = timestep when state_probs converge
                     T = -1
+                    T_from_state = false
                     for val in 1:size(state_probs_gi, 2)
                         if any(x -> x>0.95, state_probs_gi[:,val])
                             T = val
+                            T_from_state = true
                             break
                         end
                     end
-                    
+
                     if T == -1
                         for val in 1:size(goal_probs_gi, 2)
                             if any(x -> x<0.1, goal_probs_gi[:,val])
@@ -278,15 +281,16 @@ for (map_id, agent_goals) in metadata
                             end
                         end
                     end
-                    
+
                     # Validate T is within bounds
                     max_T_state = size(state_probs_gi, 2)
-                    
-                    if T == -1 || T > max_T_state
-                        # If T is invalid, use all wizards as candidates
+
+                    if T == -1 || T > max_T_state || !T_from_state
+                        # If T is invalid or came from goal_probs (not state_probs),
+                        # observing this agent won't help identify the wizard
                         new_wizard_candicates = copy(blue_wizards_agent2)
                     else
-                        # Get blue wizards from pre-computed list
+                        # Get blue wizards from pre-computed list at convergence time
                         new_wizard_candicates = []
                         for j in 1:length(blue_wizards_agent2)
                             if state_probs_gi[j, T] > 0.1
@@ -313,12 +317,15 @@ for (map_id, agent_goals) in metadata
                     
                     # Use problem.goal (agent1's goal) for cost estimation, matching exp3_debug pattern
                     Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
-                    obs_cost = action_cost[:observe] * max(T, 1)
+                    # Use REMAINING time to convergence, not total time
+                    # This encourages continuing with an agent we've already started observing
+                    remaining_T = T_from_state ? max(T - timestep_agent2 + 1, 1) : max(T, 1)
+                    obs_cost = action_cost[:observe] * remaining_T
                     total_cost = Q_T + obs_cost
                     contribution = goal_probs_agent2[g, timestep_agent2] * state_probs_agent2[i, timestep_agent2] * total_cost
                     Q_observe_agent2 += contribution
                     total_probs_agent2 += goal_probs_agent2[g, timestep_agent2] * state_probs_agent2[i, timestep_agent2]
-                    
+
                     # Store debug info
                     push!(debug_entries_agent2, (g=g, i=i, T=T, n_wiz=length(new_wizard_candicates), Q_T=Q_T, obs_cost=obs_cost, prob=joint_prob))
                 end
@@ -368,14 +375,17 @@ for (map_id, agent_goals) in metadata
                     state_probs_gi = agent3_dict[g][i]
                     goal_probs_gi = agent3_goal_dict[g][i]
                     
+                    # Find T = timestep when state_probs converge
                     T = -1
+                    T_from_state = false
                     for val in 1:size(state_probs_gi, 2)
                         if any(x -> x>0.95, state_probs_gi[:,val])
                             T = val
+                            T_from_state = true
                             break
                         end
                     end
-                    
+
                     if T == -1
                         for val in 1:size(goal_probs_gi, 2)
                             if any(x -> x<0.1, goal_probs_gi[:,val])
@@ -384,15 +394,16 @@ for (map_id, agent_goals) in metadata
                             end
                         end
                     end
-                    
+
                     # Validate T is within bounds
                     max_T_state = size(state_probs_gi, 2)
-                    
-                    if T == -1 || T > max_T_state
-                        # If T is invalid, use all wizards as candidates
+
+                    if T == -1 || T > max_T_state || !T_from_state
+                        # If T is invalid or came from goal_probs (not state_probs),
+                        # observing this agent won't help identify the wizard
                         new_wizard_candicates = copy(blue_wizards_agent3)
                     else
-                        # Get blue wizards from pre-computed list
+                        # Get blue wizards from pre-computed list at convergence time
                         new_wizard_candicates = []
                         for j in 1:length(blue_wizards_agent3)
                             if state_probs_gi[j, T] > 0.1
@@ -400,7 +411,7 @@ for (map_id, agent_goals) in metadata
                             end
                         end
                     end
-                    
+
                     # Check if this goal/state combination is consistent with learned wizard_candicates
                     # If wizard_candicates has been filtered (not empty), verify compatibility
                     if !isempty(wizard_candicates)
@@ -419,12 +430,15 @@ for (map_id, agent_goals) in metadata
                     
                     # Use problem.goal (agent1's goal) for cost estimation, matching exp3_debug pattern
                     Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
-                    obs_cost = action_cost[:observe] * max(T, 1)
+                    # Use REMAINING time to convergence, not total time
+                    # This encourages continuing with an agent we've already started observing
+                    remaining_T = T_from_state ? max(T - timestep_agent3 + 1, 1) : max(T, 1)
+                    obs_cost = action_cost[:observe] * remaining_T
                     total_cost = Q_T + obs_cost
                     contribution = goal_probs_agent3[g, timestep_agent3] * state_probs_agent3[i, timestep_agent3] * total_cost
                     Q_observe_agent3 += contribution
                     total_probs_agent3 += goal_probs_agent3[g, timestep_agent3] * state_probs_agent3[i, timestep_agent3]
-                    
+
                     # Store debug info
                     push!(debug_entries_agent3, (g=g, i=i, T=T, n_wiz=length(new_wizard_candicates), Q_T=Q_T, obs_cost=obs_cost, prob=joint_prob))
                 end
@@ -525,7 +539,7 @@ println("Fastest map: $(round(minimum(values(map_times)), digits=2))s")
 println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
-output_filename = "steps_dict_exp4_3scenarios_sm331_scenario3_test_point5noise.json"
+output_filename = "steps_dict_exp4_sm221_point5.json"
 output_path = joinpath(OUTPUT_DIR, output_filename)
 open(output_path, "w") do io
     JSON.print(io, steps_dict, 4)
