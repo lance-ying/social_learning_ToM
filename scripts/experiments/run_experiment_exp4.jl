@@ -41,7 +41,7 @@ metadata = JSON.parsefile(metadata_path)
 steps_dict = Dict()
 
 # Load inference data for both agents (agent2=X, agent3=Y)
-data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_sm221_point5.jld2"))
+data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_point5_fixed.jld2"))
 goal_probs_conditioned_dict = data["goal"]
 state_probs_conditioned_dict = data["state"]
 possible_worlds = data["worlds"]
@@ -59,46 +59,40 @@ map_times = Dict()
 total_start_time = time()
 
 for (map_id, agent_goals) in metadata
-    if map_id != "sm221"
-        continue
-    end
     map_start_time = time()
     debug_println("\nProcessing map: $map_id")
-    
+
     # Loop over all three scenarios
     for scenario in 1:3
-        if scenario != 3
-            continue
-        end
         scenario_start_time = time()
         map_key = "$(map_id)_scenario$(scenario)"
         debug_println("  Scenario $scenario")
-        
+
         # Clear planner cache for each scenario to avoid memory issues
         clear_planner_cache!()
-        
+
         # Get which gems each agent wants in this scenario (with type: naive/actual)
         agent2_goal_info = agent_goals["agent2"][scenario]  # X's goal: Dict("gem" => 1, "type" => "naive")
         agent3_goal_info = agent_goals["agent3"][scenario]  # Y's goal: Dict("gem" => 2, "type" => "actual")
-        
+
         agent2_gem = agent2_goal_info["gem"]
         agent2_type = agent2_goal_info["type"]
         agent3_gem = agent3_goal_info["gem"]
         agent3_type = agent3_goal_info["type"]
-        
+
         debug_println("    agent2 (X) -> gem$(agent2_gem) ($(agent2_type)), agent3 (Y) -> gem$(agent3_gem) ($(agent3_type))")
 
         domain = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
         include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
         problem = load_ascii_problem(joinpath(PROBLEM_DIR, "$(map_id).txt"))
-        
+
         # Initialize and compile reference state for the FULL problem
         state = initstate(domain, problem)
         state_render = copy(state)
         domain, state = PDDL.compiled(domain, problem)
 
         #--- Goal Inference Setup ---#
-        
+
         # Load FILTERED problem for agent2 to match inference belief states
         # (Inference was run with agent filtering, so we need to match that)
         include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
@@ -112,10 +106,10 @@ for (map_id, agent_goals) in metadata
             end
             return filtered
         end
-        
+
         txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
         ascii_content = read(txt_path, String)
-        
+
         # Load filtered problem for agent2 (use existing temp file if it exists)
         domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
         temp_path_agent2 = joinpath(PROBLEM_DIR, ".temp_agent2_$(map_id).txt")
@@ -126,7 +120,7 @@ for (map_id, agent_goals) in metadata
         problem_agent2 = load_ascii_problem(temp_path_agent2)
         state_agent2 = initstate(domain_agent2, problem_agent2)
         domain_agent2, state_agent2 = PDDL.compiled(domain_agent2, problem_agent2)
-        
+
         # Load filtered problem for agent3 (use existing temp file if it exists)
         domain_agent3 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
         temp_path_agent3 = joinpath(PROBLEM_DIR, ".temp_agent3_$(map_id).txt")
@@ -137,7 +131,7 @@ for (map_id, agent_goals) in metadata
         problem_agent3 = load_ascii_problem(temp_path_agent3)
         state_agent3 = initstate(domain_agent3, problem_agent3)
         domain_agent3, state_agent3 = PDDL.compiled(domain_agent3, problem_agent3)
-        
+
         # Specify possible goals for each agent (from FILTERED states)
         goals_agent2, goal_names_agent2 = initialize_goals(state_agent2, :agent2)
         goals_agent3, goal_names_agent3 = initialize_goals(state_agent3, :agent3)
@@ -148,7 +142,7 @@ for (map_id, agent_goals) in metadata
 
         t = 0
 
-        
+
         # Track observations
         observations = []
         agent2_count = 0
@@ -156,7 +150,7 @@ for (map_id, agent_goals) in metadata
 
         blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
         wizard_candicates = blue_wizards
-        
+
         # Pre-compute blue wizards for filtered states (used in Q computation)
         blue_wizards_agent2 = [w for w in PDDL.get_objects(state_agent2, :wizard) if state_agent2[pddl"(iscolor $w blue)"]]
         blue_wizards_agent3 = [w for w in PDDL.get_objects(state_agent3, :wizard) if state_agent3[pddl"(iscolor $w blue)"]]
@@ -169,7 +163,7 @@ for (map_id, agent_goals) in metadata
                 break
             end
         end
-        
+
         # Find current state ID for agent3 (using FILTERED state)
         s_id_agent3 = -1
         for s in 1:length(initial_states_agent3)
@@ -182,21 +176,21 @@ for (map_id, agent_goals) in metadata
         # Load initial probabilities from scenario-specific goals
         goal_probs_agent2 = goal_probs_conditioned_dict["agent2"][map_id][scenario][agent2_gem][s_id_agent2]
         state_probs_agent2 = state_probs_conditioned_dict["agent2"][map_id][scenario][agent2_gem][s_id_agent2]
-        
+
         goal_probs_agent3 = goal_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
         state_probs_agent3 = state_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
 
         # Pre-compute state copy and planner (moved outside loop for efficiency)
         new_state = copy(state_render)
         planner = AStarPlanner(GoalManhattan())
-        
+
         # Check if agent1's plan requires blue wizards
         plan_agent1 = planner(domain, state, problem.goal)
         agent1_needs_wizards = any(x-> x.name == :interact && x.args[end] in blue_wizards, plan_agent1)
         if !agent1_needs_wizards
             print("t=", 0)
             steps_dict[map_key] = Dict(
-                "t" => 0, 
+                "t" => 0,
                 "observations" => [],
                 "agent2_count" => 0,
                 "agent3_count" => 0
@@ -204,18 +198,18 @@ for (map_id, agent_goals) in metadata
             next!(progress)
             continue
         end
-        
+
         # Note: We don't skip observations here - let Q-values determine if observing
         # is worthwhile. If agents don't need blue wizards, their Q-values will be
         # high and they won't be chosen.
 
         while !PDDL.satisfy(domain, state, problem.goal)
             q_start_time = time()
-            
+
             # Check if we have probability data for timestep t+1
             max_t_agent2 = size(goal_probs_agent2, 2) - 1  # -1 because we access t+1
             max_t_agent3 = size(goal_probs_agent3, 2) - 1
-            
+
             if t >= max_t_agent2 || t >= max_t_agent3
                 steps_dict[map_key] = Dict(
                     "t" => t,
@@ -225,43 +219,43 @@ for (map_id, agent_goals) in metadata
                 )
                 break
             end
-            
+
             # Determine correct timestep for each agent
             # If agent hasn't been observed yet, use initial beliefs (timestep 1)
             # Otherwise, use current timestep + 1
             timestep_agent2 = agent2_count == 0 ? 1 : (t + 1)
             timestep_agent3 = agent3_count == 0 ? 1 : (t + 1)
-            
+
             # Parallelize Q computation for both agents
             task_agent2 = Threads.@spawn begin
                 # Compute Q_observe for agent2 (X)
                 Q_observe_agent2 = 0.0
                 total_probs_agent2 = 0.0
-                
+
                 # Pre-cache the nested dictionary access for agent2 to avoid repeated lookups
                 agent2_dict = state_probs_conditioned_dict["agent2"][map_id][scenario]
                 agent2_goal_dict = goal_probs_conditioned_dict["agent2"][map_id][scenario]
-                
+
                 # Debug: track T values and wizard candidates for each (g,i) pair
                 debug_entries_agent2 = []
-                
+
                 # Loop over ALL possible goals (observer doesn't know which goal agent has)
                 for g in 1:length(goals_agent2)
                 if goal_probs_agent2[g, timestep_agent2] < 0.1
                     continue
                 end
-                
+
                 for i in 1:length(initial_states_agent2)
                     if state_probs_agent2[i, timestep_agent2] < 0.1
                         continue
                     end
-                    
+
                     joint_prob = goal_probs_agent2[g, timestep_agent2] * state_probs_agent2[i, timestep_agent2]
-                    
+
                     # Cache the (g,i) dictionary access
                     state_probs_gi = agent2_dict[g][i]
                     goal_probs_gi = agent2_goal_dict[g][i]
-                    
+
                     # Find T = timestep when state_probs converge
                     T = -1
                     T_from_state = false
@@ -298,7 +292,7 @@ for (map_id, agent_goals) in metadata
                             end
                         end
                     end
-                    
+
                     # Check if this goal/state combination is consistent with learned wizard_candicates
                     # If wizard_candicates has been filtered (not empty), verify compatibility
                     if !isempty(wizard_candicates)
@@ -309,12 +303,12 @@ for (map_id, agent_goals) in metadata
                                 break
                             end
                         end
-                        
+
                         if !is_compatible
                             continue
                         end
                     end
-                    
+
                     # Use problem.goal (agent1's goal) for cost estimation, matching exp3_debug pattern
                     Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
                     # Use REMAINING time to convergence, not total time
@@ -330,7 +324,7 @@ for (map_id, agent_goals) in metadata
                     push!(debug_entries_agent2, (g=g, i=i, T=T, n_wiz=length(new_wizard_candicates), Q_T=Q_T, obs_cost=obs_cost, prob=joint_prob))
                 end
                 end
-                
+
                 if total_probs_agent2 > 0
                     Q_observe_agent2 /= total_probs_agent2
                 else
@@ -339,42 +333,42 @@ for (map_id, agent_goals) in metadata
                 end
                 (Q_observe_agent2, total_probs_agent2, debug_entries_agent2)
             end
-            
+
             task_agent3 = Threads.@spawn begin
                 # Compute Q_observe for agent3 (Y)
                 Q_observe_agent3 = 0.0
                 total_probs_agent3 = 0.0
-                
+
                 # Pre-cache the nested dictionary access for agent3 to avoid repeated lookups
                 agent3_dict = state_probs_conditioned_dict["agent3"][map_id][scenario]
                 agent3_goal_dict = goal_probs_conditioned_dict["agent3"][map_id][scenario]
-                
+
                 # Debug: track T values and wizard candidates for each (g,i) pair
                 debug_entries_agent3 = []
-                
+
                 # Debug: Check initial probabilities for agent3
                 if t == 0 && agent3_count == 0
                     debug_println("    agent3 initial goal_probs: $(round.(goal_probs_agent3[:, 1], digits=3))")
                     debug_println("    agent3 initial state_probs: $(round.(state_probs_agent3[:, 1], digits=3))")
                 end
-                
+
                 # Loop over ALL possible goals (observer doesn't know which goal agent has)
                 for g in 1:length(goals_agent3)
                 if goal_probs_agent3[g, timestep_agent3] < 0.1
                     continue
                 end
-                
+
                 for i in 1:length(initial_states_agent3)
                     if state_probs_agent3[i, timestep_agent3] < 0.1
                         continue
                     end
-                    
+
                     joint_prob = goal_probs_agent3[g, timestep_agent3] * state_probs_agent3[i, timestep_agent3]
-                    
+
                     # Cache the (g,i) dictionary access
                     state_probs_gi = agent3_dict[g][i]
                     goal_probs_gi = agent3_goal_dict[g][i]
-                    
+
                     # Find T = timestep when state_probs converge
                     T = -1
                     T_from_state = false
@@ -422,12 +416,12 @@ for (map_id, agent_goals) in metadata
                                 break
                             end
                         end
-                        
+
                         if !is_compatible
                             continue
                         end
                     end
-                    
+
                     # Use problem.goal (agent1's goal) for cost estimation, matching exp3_debug pattern
                     Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
                     # Use REMAINING time to convergence, not total time
@@ -443,7 +437,7 @@ for (map_id, agent_goals) in metadata
                     push!(debug_entries_agent3, (g=g, i=i, T=T, n_wiz=length(new_wizard_candicates), Q_T=Q_T, obs_cost=obs_cost, prob=joint_prob))
                 end
                 end
-                
+
                 if total_probs_agent3 > 0
                     Q_observe_agent3 /= total_probs_agent3
                 else
@@ -452,20 +446,20 @@ for (map_id, agent_goals) in metadata
                 end
                 (Q_observe_agent3, total_probs_agent3, debug_entries_agent3)
             end
-            
+
             # Wait for both parallel tasks to complete
             (Q_observe_agent2, total_probs_agent2, debug_entries_agent2) = fetch(task_agent2)
             (Q_observe_agent3, total_probs_agent3, debug_entries_agent3) = fetch(task_agent3)
-            
+
             # Compute Q_not_observe
             Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizard_candicates, action_cost)
-            
+
             # Debug: Print Q-values for understanding decision
             debug_println("    t=$t: Q_observe_agent2=$(round(Q_observe_agent2, digits=2)), Q_observe_agent3=$(round(Q_observe_agent3, digits=2)), Q_not_observe=$(round(Q_not_observe, digits=2))")
             debug_println("    wizard_candidates: $(length(wizard_candicates))")
             debug_println("    agent2_count=$agent2_count, agent3_count=$agent3_count")
             debug_println("    timestep_agent2=$timestep_agent2, timestep_agent3=$timestep_agent3")
-            
+
             # Detailed debug: show breakdown for each agent
             debug_println("    === agent2 ($(agent2_type)) breakdown ===")
             for entry in debug_entries_agent2
@@ -475,18 +469,18 @@ for (map_id, agent_goals) in metadata
             for entry in debug_entries_agent3
                 debug_println("      g=$(entry.g), i=$(entry.i): T=$(entry.T), n_wiz=$(entry.n_wiz), Q_T=$(round(entry.Q_T, digits=1)), obs_cost=$(round(entry.obs_cost, digits=1)), prob=$(round(entry.prob, digits=3))")
             end
-            
+
             # Take argmin to decide which action
             q_values = [Q_observe_agent2, Q_observe_agent3, Q_not_observe]
             best_action_idx = argmin(q_values)
-            
+
             if best_action_idx == 1
                 # Observe agent2 (X) - it has the lowest Q-value
                 push!(observations, "agent2")
                 agent2_count += 1
                 t += 1
                 wizard_candicates = []
-                
+
                 # Simple wizard update: use state_probs directly (matching exp3_debug approach)
                 for j in 1:length(blue_wizards)
                     if state_probs_agent2[j, t+1] > 0.1
@@ -499,7 +493,7 @@ for (map_id, agent_goals) in metadata
                 agent3_count += 1
                 t += 1
                 wizard_candicates = []
-                
+
                 # Simple wizard update: use state_probs directly (matching exp3_debug approach)
                 for j in 1:length(blue_wizards)
                     if state_probs_agent3[j, t+1] > 0.1
@@ -517,7 +511,7 @@ for (map_id, agent_goals) in metadata
                 break
             end
         end
-        
+
         # Update progress bar after each scenario
         scenario_elapsed = time() - scenario_start_time
         cache_stats = get_cache_stats()
@@ -525,7 +519,7 @@ for (map_id, agent_goals) in metadata
         println("    Cache stats: $(cache_stats.hits) hits, $(cache_stats.misses) misses, $(round(cache_stats.hit_rate * 100, digits=1))% hit rate")
         next!(progress)
     end
-    
+
     map_elapsed = time() - map_start_time
     map_times[map_id] = map_elapsed
     println("  Map completed in $(round(map_elapsed, digits=2))s")
@@ -539,7 +533,7 @@ println("Fastest map: $(round(minimum(values(map_times)), digits=2))s")
 println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
-output_filename = "steps_dict_exp4_sm221_point5.json"
+output_filename = "steps_dict_exp4_point5_updated.json"
 output_path = joinpath(OUTPUT_DIR, output_filename)
 open(output_path, "w") do io
     JSON.print(io, steps_dict, 4)
@@ -550,4 +544,3 @@ debug_println("Results saved to: $output_path")
 close(debug_log_file)
 println("\nResults saved to: $output_path")
 println("Debug output saved to: $debug_log_path")
-
