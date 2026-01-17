@@ -9,7 +9,7 @@ using ProgressMeter
 # Register PDDL array theory
 PDDL.Arrays.register!()
 
-include(joinpath(@__DIR__, "..", "..", "src", "plan_io.jl")) 
+include(joinpath(@__DIR__, "..", "..", "src", "plan_io.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "utils.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
@@ -90,15 +90,15 @@ end
 # If goal type is "naive" and optimal path requires blue wizards, visit blue wizards
 # in order of distance until getting the blue key, then continue to goal
 function generate_naive_plan_if_needed(
-    domain::Domain, state::State, goal::Any, blue_wizards::Vector, 
+    domain::Domain, state::State, goal::Any, blue_wizards::Vector,
     goal_type::String, agent_name::Symbol
 )
     planner_optimal = AStarPlanner(GoalManhattan())
-    
+
     # Check if optimal path requires blue wizards
     plan_optimal = collect(planner_optimal(domain, state, goal))
     needs_wizards = any(x -> x.name == :interact && x.args[end] in blue_wizards, plan_optimal)
-    
+
     if goal_type == "naive" && needs_wizards && !isempty(blue_wizards)
         # Find blue key
         blue_keys = [k for k in PDDL.get_objects(state, :key) if state[pddl"(iscolor $k blue)"]]
@@ -106,19 +106,19 @@ function generate_naive_plan_if_needed(
             return plan_optimal
         end
         blue_key = blue_keys[1]
-        
+
         # Visit blue wizards in order of distance until we get the key
         current_state = copy(state)
         full_naive_plan = Term[]
         visited_wizards = Set()
-        
+
         while !current_state[pddl"(has $agent_name $blue_key)"] && length(visited_wizards) < length(blue_wizards)
             # Find closest unvisited blue wizard
             agent_loc = get_obj_loc(current_state, Const(agent_name))
             closest_wizard = nothing
             closest_wizard_loc = nothing
             min_dist = Inf
-            
+
             for wizard in blue_wizards
                 if wizard in visited_wizards
                     continue
@@ -131,37 +131,37 @@ function generate_naive_plan_if_needed(
                     closest_wizard_loc = wizard_loc
                 end
             end
-            
+
             if closest_wizard === nothing
                 break  # No more wizards to visit
             end
-            
+
             # Plan to wizard and interact
             plan_to_wizard = plan_to_wizard_location(domain, current_state, closest_wizard_loc, agent_name, planner_optimal)
             append!(full_naive_plan, plan_to_wizard)
-            
+
             # Execute plan to wizard
             for action in plan_to_wizard
                 current_state = PDDL.execute(domain, current_state, action)
             end
-            
+
             # Interact with wizard
             interact_action = PDDL.parse_pddl("(interact $agent_name $closest_wizard)")
             push!(full_naive_plan, interact_action)
             current_state = PDDL.execute(domain, current_state, interact_action)
-            
+
             push!(visited_wizards, closest_wizard)
         end
-        
+
         # If we still don't have the key, fall back to optimal
         if !current_state[pddl"(has $agent_name $blue_key)"]
             return plan_optimal
         end
-        
+
         # Plan to goal from current location
         plan_to_goal = collect(planner_optimal(domain, current_state, goal))
         append!(full_naive_plan, plan_to_goal)
-        
+
         return full_naive_plan
     else
         # Use optimal planning
@@ -197,14 +197,14 @@ for agent_name in agents_to_infer
         #     continue
         # end
         debug_println("Processing map: $map_id for $agent_name")
-        
+
         # Get goals for this agent: [{"gem": 1, "type": "naive"}, {"gem": 3, "type": "naive"}]
         goal_info_list = agent_goals[agent_name]
-        
+
         goal_probs_conditioned_dict[agent_name][map_id] = Dict()
         state_probs_conditioned_dict[agent_name][map_id] = Dict()
         agent_types_dict[agent_name][map_id] = Dict()  # NEW: track types per scenario
-        
+
         # Loop over all three scenarios
         for scenario in 1:3
             # if scenario != 3
@@ -218,7 +218,7 @@ for agent_name in agents_to_infer
             goal = PDDL.parse_pddl("(has $agent_sym gem$(goal_gem_idx))")
             debug_println("[DEBUG] Processing: agent=$agent_name, map=$map_id, scenario=$scenario, gem=$goal_gem_idx, type=$goal_type")
             debug_println("  Scenario $scenario: $(agent_name) -> gem$(goal_gem_idx) ($(goal_type))")
-            
+
             goal_probs_conditioned_dict[agent_name][map_id][scenario] = Dict()
             state_probs_conditioned_dict[agent_name][map_id][scenario] = Dict()
             agent_types_dict[agent_name][map_id][scenario] = goal_type  # NEW: store agent type
@@ -229,7 +229,7 @@ for agent_name in agents_to_infer
             # Load problem with agent filtering for speed
             problem_path = joinpath(PROBLEM_DIR, "$map_id.pddl")
             txt_path = joinpath(PROBLEM_DIR, "$map_id.txt")
-            
+
             if isfile(txt_path)
                 include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
                 ascii_content = read(txt_path, String)
@@ -303,7 +303,7 @@ for agent_name in agents_to_infer
             end
 
             # Define action noise model
-            temperatures = 0.5
+            temperatures = 0.4
 
             act_config = BoltzmannActConfig(temperatures)
 
@@ -504,7 +504,7 @@ for agent in keys(goal_probs_conditioned_dict)
     end
 end
 
-output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_point5_fixed.jld2")
+output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_point4_fixed.jld2")
 save(output_path, data)
 debug_println("[DEBUG] Saved to: $output_path")
 debug_println("[DEBUG] File size: $(round(filesize(output_path) / 1024, digits=2)) KB")
@@ -516,4 +516,3 @@ debug_println("Agent types: data[\"agent_types\"][agent_name][map_id][scenario]"
 
 close(debug_log_file)
 println("\nDebug output saved to: $debug_log_path")
-

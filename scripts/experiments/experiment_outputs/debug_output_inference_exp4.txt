@@ -16154,7 +16154,7 @@ Processing map: sm621 for agent2
         Step 24: pickup(agent2, gem3)
   [DEBUG] Completed scenario 3
 
-[DEBUG] Completed inference for agent2 in 8160.82s
+[DEBUG] Completed inference for agent2 in 8116.27s
 
 
 === Starting inference for agent3 ===
@@ -31799,7 +31799,7 @@ Processing map: sm621 for agent3
         Step 20: pickup(agent3, gem3)
   [DEBUG] Completed scenario 3
 
-[DEBUG] Completed inference for agent3 in 6770.76s
+[DEBUG] Completed inference for agent3 in 6724.43s
 
 
 [DEBUG] Data structure being saved:
@@ -31849,10 +31849,10 @@ Processing map: sm621 for agent3
       sm543 -> scenarios: Any[2, 3, 1]
       sm351 -> scenarios: Any[2, 3, 1]
       sm621 -> scenarios: Any[2, 3, 1]
-[DEBUG] Saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/utilities/../../data/inference/inference_data_exp4_point5_fixed.jld2
+[DEBUG] Saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/utilities/../../data/inference/inference_data_exp4_point4_fixed.jld2
 [DEBUG] File size: 2772.71 KB
 
 === Inference Complete ===
-Saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/utilities/../../data/inference/inference_data_exp4_point5_fixed.jld2
+Saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/utilities/../../data/inference/inference_data_exp4_point4_fixed.jld2
 Data structure: data[agent_name][map_id][scenario][goal_id][state_id]
 Agent types: data["agent_types"][agent_name][map_id][scenario]
