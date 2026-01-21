@@ -303,7 +303,7 @@ for agent_name in agents_to_infer
             end
 
             # Define action noise model
-            temperatures = 0.4
+            temperatures = 0.5
 
             act_config = BoltzmannActConfig(temperatures)
 
@@ -329,7 +329,29 @@ for agent_name in agents_to_infer
                 env_config = PDDLEnvConfig(domain, state_prior)
             )
 
-            # Run inference for ALL goals (observer doesn't know agent's goal)
+            # FIRST PASS: Compute max plan length across all (g, i) pairs
+            # This ensures all inference arrays have the same length
+            max_plan_length = 0
+            debug_println("  [DEBUG] Computing max plan length for scenario $scenario...")
+            for g in 1:length(goals)
+                for i in 1:length(initial_states)
+                    state_i = initial_states[i]
+
+                    if goal_type == "naive"
+                        plan_temp = generate_naive_plan_if_needed(
+                            domain, state_i, goals[g], blue_wizards, goal_type, agent_sym
+                        )
+                    else
+                        planner_astar = AStarPlanner(GoalManhattan())
+                        plan_temp = collect(planner_astar(domain, state_i, goals[g]))
+                    end
+
+                    max_plan_length = max(max_plan_length, length(collect(plan_temp)))
+                end
+            end
+            debug_println("  [DEBUG] Max plan length for scenario $scenario: $max_plan_length")
+
+            # SECOND PASS: Run inference for ALL goals (observer doesn't know agent's goal)
             # For each hypothesis (g, i), generate a plan using the agent's planning style
             # The observer knows the agent's TYPE (naive/actual) but not their goal
             for g in 1:length(goals)
@@ -354,7 +376,7 @@ for agent_name in agents_to_infer
                         plan = collect(planner_astar(domain, state_i, goals[g]))
                     end
 
-                    debug_println("    Goal $g, State $i (type=$goal_type): $(length(collect(plan))) steps")
+                    debug_println("    Goal $g, State $i (type=$goal_type): $(length(collect(plan))) steps (max=$max_plan_length)")
 
                     t_obs_iter = act_choicemap_pairs(collect(plan))
 
@@ -365,8 +387,8 @@ for agent_name in agents_to_infer
                     end
 
                     # Set up logging callback
-                    n_goals = length(goals)
-                    n_init_states = length(initial_states)
+                    local n_goals = length(goals)
+                    local n_init_states = length(initial_states)
 
                     # DEBUG: Custom callback to inspect particle states
                     # Only print detailed debug for ground truth (g, i) pair
@@ -455,6 +477,24 @@ for agent_name in agents_to_infer
                     # Extract initial state probabilities
                     state_probs_conditioned = reduce(hcat, callback.logger.data[:state_probs])
 
+                    # PAD arrays to max_plan_length + 1 (timesteps 0 to max_plan_length)
+                    # After the agent finishes their plan, probabilities stay constant
+                    target_length = max_plan_length + 1
+                    current_length = size(goal_probs_conditioned, 2)
+
+                    if current_length < target_length
+                        # Repeat the final column to fill remaining timesteps
+                        final_goal_col = goal_probs_conditioned[:, end]
+                        final_state_col = state_probs_conditioned[:, end]
+
+                        for _ in current_length:(target_length-1)
+                            goal_probs_conditioned = hcat(goal_probs_conditioned, final_goal_col)
+                            state_probs_conditioned = hcat(state_probs_conditioned, final_state_col)
+                        end
+
+                        debug_println("      [DEBUG] Padded from $current_length to $target_length timesteps")
+                    end
+
                     goal_probs_conditioned_dict[agent_name][map_id][scenario][g][i] = goal_probs_conditioned
                     state_probs_conditioned_dict[agent_name][map_id][scenario][g][i] = state_probs_conditioned
 
@@ -504,7 +544,7 @@ for agent in keys(goal_probs_conditioned_dict)
     end
 end
 
-output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_point4_fixed.jld2")
+output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_padded_new_maps.jld2")
 save(output_path, data)
 debug_println("[DEBUG] Saved to: $output_path")
 debug_println("[DEBUG] File size: $(round(filesize(output_path) / 1024, digits=2)) KB")

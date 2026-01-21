@@ -143,6 +143,44 @@ function action_to_string(action::Term)
     end
 end
 
+# Simulate plan execution to track coordinates for each action
+function get_plan_with_coordinates(domain::Domain, state::State, plan::Vector{Term}, agent_name::Symbol)
+    plan_with_coords = []
+    current_state = copy(state)
+    current_loc = get_obj_loc(current_state, Const(agent_name))
+    
+    for action in plan
+        # Get action string
+        action_str = action_to_string(action)
+        
+        # Add current location to action info (location BEFORE action execution)
+        action_info = Dict(
+            "action" => action_str,
+            "x" => current_loc[1],
+            "y" => current_loc[2]
+        )
+        
+        push!(plan_with_coords, action_info)
+        
+        # Execute action to update state for next iteration
+        current_state = PDDL.execute(domain, current_state, action)
+        
+        # Always update agent location after action execution
+        # Move actions will change location, interact actions won't
+        current_loc = get_obj_loc(current_state, Const(agent_name))
+    end
+    
+    # Add final position entry showing where agent ends up after completing the plan
+    final_entry = Dict(
+        "action" => "FINAL_POSITION",
+        "x" => current_loc[1],
+        "y" => current_loc[2]
+    )
+    push!(plan_with_coords, final_entry)
+    
+    return plan_with_coords
+end
+
 # Main script
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4")
 OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
@@ -195,13 +233,13 @@ for (map_id, agent_goals) in metadata
         plan_agent2 = generate_naive_plan_if_needed(
             domain_agent2, state_agent2, goal_agent2, blue_wizards_agent2, agent2_type, :agent2
         )
-        plan_agent2_list = [action_to_string(a) for a in plan_agent2]
+        plan_agent2_coords = get_plan_with_coordinates(domain_agent2, state_agent2, plan_agent2, :agent2)
 
         pathing_dict[map_id][scenario_key]["agent2"] = Dict(
             "gem" => agent2_gem,
             "type" => agent2_type,
             "plan_length" => length(plan_agent2),
-            "plan" => plan_agent2_list,
+            "plan" => plan_agent2_coords,
             "needs_wizards" => any(x -> x.name == :interact && x.args[end] in blue_wizards_agent2, plan_agent2)
         )
 
@@ -222,13 +260,13 @@ for (map_id, agent_goals) in metadata
         plan_agent3 = generate_naive_plan_if_needed(
             domain_agent3, state_agent3, goal_agent3, blue_wizards_agent3, agent3_type, :agent3
         )
-        plan_agent3_list = [action_to_string(a) for a in plan_agent3]
+        plan_agent3_coords = get_plan_with_coordinates(domain_agent3, state_agent3, plan_agent3, :agent3)
 
         pathing_dict[map_id][scenario_key]["agent3"] = Dict(
             "gem" => agent3_gem,
             "type" => agent3_type,
             "plan_length" => length(plan_agent3),
-            "plan" => plan_agent3_list,
+            "plan" => plan_agent3_coords,
             "needs_wizards" => any(x -> x.name == :interact && x.args[end] in blue_wizards_agent3, plan_agent3)
         )
     end
