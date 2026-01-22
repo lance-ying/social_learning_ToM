@@ -1707,7 +1707,7 @@ Processing map: sm531
     agent2 (X) -> gem1 (actual), agent3 (Y) -> gem3 (naive)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.333, 0.333, 0.333]
-    t=0: Q_observe_agent2=100.22, Q_observe_agent3=104.56, Q_not_observe=126.0
+    t=0: Q_observe_agent2=100.22, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
@@ -1725,13 +1725,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=1: Q_observe_agent2=128.0, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=1: Q_observe_agent2=128.0, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=1, agent3_count=0
     timestep_agent2=2, timestep_agent3=1
@@ -1743,13 +1743,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=2: Q_observe_agent2=128.0, Q_observe_agent3=90.33, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=2: Q_observe_agent2=128.0, Q_observe_agent3=88.67, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=1, agent3_count=1
     timestep_agent2=3, timestep_agent3=3
@@ -1758,13 +1758,13 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=10.0, prob=0.165
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.165
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.165
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=10.0, prob=0.165
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.165
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.165
-    t=3: Q_observe_agent2=128.0, Q_observe_agent3=89.33, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=9.0, prob=0.165
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.165
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=15.0, prob=0.165
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=9.0, prob=0.165
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=13.0, prob=0.165
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=15.0, prob=0.165
+    t=3: Q_observe_agent2=128.0, Q_observe_agent3=87.67, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=1, agent3_count=2
     timestep_agent2=4, timestep_agent3=4
@@ -1773,13 +1773,13 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=9.0, prob=0.166
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=16.0, prob=0.166
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=16.0, prob=0.166
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=9.0, prob=0.166
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=14.0, prob=0.166
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=16.0, prob=0.166
-    t=4: Q_observe_agent2=128.0, Q_observe_agent3=88.33, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=8.0, prob=0.165
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=14.0, prob=0.165
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=14.0, prob=0.165
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=8.0, prob=0.165
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=12.0, prob=0.165
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=14.0, prob=0.165
+    t=4: Q_observe_agent2=128.0, Q_observe_agent3=86.67, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=1, agent3_count=3
     timestep_agent2=5, timestep_agent3=5
@@ -1788,13 +1788,13 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=8.0, prob=0.167
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.167
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=8.0, prob=0.167
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=13.0, prob=0.167
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=15.0, prob=0.167
-    t=5: Q_observe_agent2=128.0, Q_observe_agent3=87.33, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=7.0, prob=0.165
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=13.0, prob=0.165
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=13.0, prob=0.165
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=7.0, prob=0.165
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=11.0, prob=0.165
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=13.0, prob=0.165
+    t=5: Q_observe_agent2=128.0, Q_observe_agent3=85.67, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=1, agent3_count=4
     timestep_agent2=6, timestep_agent3=6
@@ -1803,13 +1803,13 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=7.0, prob=0.167
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=14.0, prob=0.167
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=14.0, prob=0.167
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=7.0, prob=0.167
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=12.0, prob=0.167
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=14.0, prob=0.167
-    t=6: Q_observe_agent2=128.0, Q_observe_agent3=86.33, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=6.0, prob=0.165
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=12.0, prob=0.165
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=12.0, prob=0.165
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=6.0, prob=0.165
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=10.0, prob=0.165
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=12.0, prob=0.165
+    t=6: Q_observe_agent2=128.0, Q_observe_agent3=84.67, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=1, agent3_count=5
     timestep_agent2=7, timestep_agent3=7
@@ -1818,13 +1818,13 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=6.0, prob=0.167
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=13.0, prob=0.167
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=13.0, prob=0.167
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=11.0, prob=0.167
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=13.0, prob=0.167
-    t=7: Q_observe_agent2=128.0, Q_observe_agent3=85.33, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=5.0, prob=0.165
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=11.0, prob=0.165
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=11.0, prob=0.165
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=5.0, prob=0.165
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=9.0, prob=0.165
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=11.0, prob=0.165
+    t=7: Q_observe_agent2=128.0, Q_observe_agent3=83.67, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=1, agent3_count=6
     timestep_agent2=8, timestep_agent3=8
@@ -1833,14 +1833,14 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=5.0, prob=0.167
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=12.0, prob=0.167
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=12.0, prob=0.167
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=5.0, prob=0.167
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=10.0, prob=0.167
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=12.0, prob=0.167
-    t=8: Q_observe_agent2=128.0, Q_observe_agent3=84.33, Q_not_observe=126.0
-    wizard_candidates: 3
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=4.0, prob=0.165
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=10.0, prob=0.165
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=10.0, prob=0.165
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=4.0, prob=0.165
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=8.0, prob=0.165
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=10.0, prob=0.165
+    t=8: Q_observe_agent2=128.0, Q_observe_agent3=70.5, Q_not_observe=79.0
+    wizard_candidates: 2
     agent2_count=1, agent3_count=7
     timestep_agent2=9, timestep_agent3=9
     === agent2 (actual) breakdown ===
@@ -1848,14 +1848,12 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=4.0, prob=0.167
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=11.0, prob=0.167
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=11.0, prob=0.167
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=4.0, prob=0.167
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=9.0, prob=0.167
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=11.0, prob=0.167
-    t=9: Q_observe_agent2=128.0, Q_observe_agent3=83.33, Q_not_observe=126.0
-    wizard_candidates: 3
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=9.0, prob=0.234
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=9.0, prob=0.234
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=7.0, prob=0.234
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=9.0, prob=0.234
+    t=9: Q_observe_agent2=128.0, Q_observe_agent3=69.51, Q_not_observe=79.0
+    wizard_candidates: 2
     agent2_count=1, agent3_count=8
     timestep_agent2=10, timestep_agent3=10
     === agent2 (actual) breakdown ===
@@ -1863,13 +1861,11 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=3.0, prob=0.167
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=10.0, prob=0.167
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=10.0, prob=0.167
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=3.0, prob=0.167
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=8.0, prob=0.167
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=10.0, prob=0.167
-    t=10: Q_observe_agent2=128.0, Q_observe_agent3=70.5, Q_not_observe=79.0
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=8.0, prob=0.247
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=8.0, prob=0.247
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=6.0, prob=0.234
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=8.0, prob=0.234
+    t=10: Q_observe_agent2=128.0, Q_observe_agent3=68.5, Q_not_observe=79.0
     wizard_candidates: 2
     agent2_count=1, agent3_count=9
     timestep_agent2=11, timestep_agent3=11
@@ -1878,11 +1874,11 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=9.0, prob=0.234
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=9.0, prob=0.234
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=7.0, prob=0.234
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=9.0, prob=0.234
-    t=11: Q_observe_agent2=128.0, Q_observe_agent3=69.51, Q_not_observe=79.0
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=7.0, prob=0.25
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=7.0, prob=0.25
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=5.0, prob=0.248
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=7.0, prob=0.248
+    t=11: Q_observe_agent2=128.0, Q_observe_agent3=67.5, Q_not_observe=79.0
     wizard_candidates: 2
     agent2_count=1, agent3_count=10
     timestep_agent2=12, timestep_agent3=12
@@ -1891,11 +1887,11 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=8.0, prob=0.248
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=8.0, prob=0.248
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=6.0, prob=0.234
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=8.0, prob=0.234
-    t=12: Q_observe_agent2=128.0, Q_observe_agent3=68.5, Q_not_observe=79.0
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=6.0, prob=0.25
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=6.0, prob=0.25
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=4.0, prob=0.25
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=6.0, prob=0.25
+    t=12: Q_observe_agent2=128.0, Q_observe_agent3=66.5, Q_not_observe=79.0
     wizard_candidates: 2
     agent2_count=1, agent3_count=11
     timestep_agent2=13, timestep_agent3=13
@@ -1904,11 +1900,11 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=7.0, prob=0.25
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=7.0, prob=0.25
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=5.0, prob=0.248
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=7.0, prob=0.248
-    t=13: Q_observe_agent2=128.0, Q_observe_agent3=67.5, Q_not_observe=79.0
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=5.0, prob=0.25
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=5.0, prob=0.25
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=3.0, prob=0.25
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=5.0, prob=0.25
+    t=13: Q_observe_agent2=128.0, Q_observe_agent3=68.39, Q_not_observe=79.0
     wizard_candidates: 2
     agent2_count=1, agent3_count=12
     timestep_agent2=14, timestep_agent3=14
@@ -1917,12 +1913,12 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=6.0, prob=0.25
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=6.0, prob=0.25
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=4.0, prob=0.25
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=6.0, prob=0.25
-    t=14: Q_observe_agent2=128.0, Q_observe_agent3=66.5, Q_not_observe=79.0
-    wizard_candidates: 2
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=4.0, prob=0.155
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=4.0, prob=0.037
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=2.0, prob=0.652
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=4.0, prob=0.155
+    t=14: Q_observe_agent2=128.0, Q_observe_agent3=69.0, Q_not_observe=68.0
+    wizard_candidates: 1
     agent2_count=1, agent3_count=13
     timestep_agent2=15, timestep_agent3=15
     === agent2 (actual) breakdown ===
@@ -1930,38 +1926,12 @@ Processing map: sm531
       g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
       g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
     === agent3 (naive) breakdown ===
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=5.0, prob=0.25
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=5.0, prob=0.25
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=3.0, prob=0.25
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=5.0, prob=0.25
-    t=15: Q_observe_agent2=128.0, Q_observe_agent3=68.39, Q_not_observe=79.0
-    wizard_candidates: 2
-    agent2_count=1, agent3_count=14
-    timestep_agent2=16, timestep_agent3=16
-    === agent2 (actual) breakdown ===
-      g=1, i=1: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
-      g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
-      g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
-    === agent3 (naive) breakdown ===
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=4.0, prob=0.155
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=4.0, prob=0.037
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=2.0, prob=0.652
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=4.0, prob=0.155
-    t=16: Q_observe_agent2=128.0, Q_observe_agent3=69.0, Q_not_observe=68.0
-    wizard_candidates: 1
-    agent2_count=1, agent3_count=15
-    timestep_agent2=17, timestep_agent3=17
-    === agent2 (actual) breakdown ===
-      g=1, i=1: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
-      g=1, i=2: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
-      g=1, i=3: T=2, n_wiz=3, Q_T=126.0, obs_cost=2.0, prob=0.333
-    === agent3 (naive) breakdown ===
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=1.0, prob=0.931
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=1.0, prob=0.931
   Scenario 2
     agent2 (X) -> gem2 (actual), agent3 (Y) -> gem1 (naive)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.333, 0.333, 0.333]
-    t=0: Q_observe_agent2=100.22, Q_observe_agent3=104.56, Q_not_observe=126.0
+    t=0: Q_observe_agent2=100.22, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
@@ -1979,13 +1949,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=1: Q_observe_agent2=85.33, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=1: Q_observe_agent2=85.33, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=1, agent3_count=0
     timestep_agent2=2, timestep_agent3=1
@@ -2000,13 +1970,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=2: Q_observe_agent2=84.33, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=2: Q_observe_agent2=84.33, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=2, agent3_count=0
     timestep_agent2=3, timestep_agent3=1
@@ -2021,13 +1991,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=3: Q_observe_agent2=83.33, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=3: Q_observe_agent2=83.33, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=3, agent3_count=0
     timestep_agent2=4, timestep_agent3=1
@@ -2042,13 +2012,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=4: Q_observe_agent2=82.33, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=4: Q_observe_agent2=82.33, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=4, agent3_count=0
     timestep_agent2=5, timestep_agent3=1
@@ -2063,13 +2033,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=5: Q_observe_agent2=85.8, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=5: Q_observe_agent2=85.8, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=5, agent3_count=0
     timestep_agent2=6, timestep_agent3=1
@@ -2084,13 +2054,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=6: Q_observe_agent2=84.8, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=6: Q_observe_agent2=84.8, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=6, agent3_count=0
     timestep_agent2=7, timestep_agent3=1
@@ -2105,13 +2075,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=7: Q_observe_agent2=84.01, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=7: Q_observe_agent2=84.01, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=7, agent3_count=0
     timestep_agent2=8, timestep_agent3=1
@@ -2126,13 +2096,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=8: Q_observe_agent2=83.21, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=8: Q_observe_agent2=83.21, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=8, agent3_count=0
     timestep_agent2=9, timestep_agent3=1
@@ -2147,13 +2117,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=9: Q_observe_agent2=82.42, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=9: Q_observe_agent2=82.42, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=9, agent3_count=0
     timestep_agent2=10, timestep_agent3=1
@@ -2168,13 +2138,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=10: Q_observe_agent2=66.22, Q_observe_agent3=101.29, Q_not_observe=79.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=10: Q_observe_agent2=66.22, Q_observe_agent3=100.14, Q_not_observe=79.0
     wizard_candidates: 2
     agent2_count=10, agent3_count=0
     timestep_agent2=11, timestep_agent3=1
@@ -2187,11 +2157,11 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=11: Q_observe_agent2=65.56, Q_observe_agent3=101.29, Q_not_observe=79.0
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=11: Q_observe_agent2=65.56, Q_observe_agent3=100.14, Q_not_observe=79.0
     wizard_candidates: 2
     agent2_count=11, agent3_count=0
     timestep_agent2=12, timestep_agent3=1
@@ -2204,11 +2174,11 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=12: Q_observe_agent2=69.0, Q_observe_agent3=111.8, Q_not_observe=68.0
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=12: Q_observe_agent2=69.0, Q_observe_agent3=111.0, Q_not_observe=68.0
     wizard_candidates: 1
     agent2_count=12, agent3_count=0
     timestep_agent2=13, timestep_agent3=1
@@ -2219,13 +2189,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
   Scenario 3
     agent2 (X) -> gem2 (actual), agent3 (Y) -> gem3 (naive)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.333, 0.333, 0.333]
-    t=0: Q_observe_agent2=100.22, Q_observe_agent3=104.56, Q_not_observe=126.0
+    t=0: Q_observe_agent2=100.22, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
@@ -2243,13 +2213,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=1: Q_observe_agent2=85.33, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=1: Q_observe_agent2=85.33, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=1, agent3_count=0
     timestep_agent2=2, timestep_agent3=1
@@ -2264,13 +2234,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=2: Q_observe_agent2=84.33, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=2: Q_observe_agent2=84.33, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=2, agent3_count=0
     timestep_agent2=3, timestep_agent3=1
@@ -2285,13 +2255,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=3: Q_observe_agent2=83.33, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=3: Q_observe_agent2=83.33, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=3, agent3_count=0
     timestep_agent2=4, timestep_agent3=1
@@ -2306,13 +2276,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=4: Q_observe_agent2=82.33, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=4: Q_observe_agent2=82.33, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=4, agent3_count=0
     timestep_agent2=5, timestep_agent3=1
@@ -2327,13 +2297,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=5: Q_observe_agent2=85.8, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=5: Q_observe_agent2=85.8, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=5, agent3_count=0
     timestep_agent2=6, timestep_agent3=1
@@ -2348,13 +2318,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=6: Q_observe_agent2=84.8, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=6: Q_observe_agent2=84.8, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=6, agent3_count=0
     timestep_agent2=7, timestep_agent3=1
@@ -2369,13 +2339,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=7: Q_observe_agent2=84.01, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=7: Q_observe_agent2=84.01, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=7, agent3_count=0
     timestep_agent2=8, timestep_agent3=1
@@ -2390,13 +2360,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=8: Q_observe_agent2=83.21, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=8: Q_observe_agent2=83.21, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=8, agent3_count=0
     timestep_agent2=9, timestep_agent3=1
@@ -2411,13 +2381,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=9: Q_observe_agent2=82.42, Q_observe_agent3=104.56, Q_not_observe=126.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=9: Q_observe_agent2=82.42, Q_observe_agent3=103.44, Q_not_observe=126.0
     wizard_candidates: 3
     agent2_count=9, agent3_count=0
     timestep_agent2=10, timestep_agent3=1
@@ -2432,13 +2402,13 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=1: T=12, n_wiz=1, Q_T=104.0, obs_cost=12.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=10: Q_observe_agent2=66.22, Q_observe_agent3=101.29, Q_not_observe=79.0
+      g=2, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=11, n_wiz=1, Q_T=104.0, obs_cost=11.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=10: Q_observe_agent2=66.22, Q_observe_agent3=100.14, Q_not_observe=79.0
     wizard_candidates: 2
     agent2_count=10, agent3_count=0
     timestep_agent2=11, timestep_agent3=1
@@ -2451,11 +2421,11 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=11: Q_observe_agent2=65.56, Q_observe_agent3=101.29, Q_not_observe=79.0
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=11: Q_observe_agent2=65.56, Q_observe_agent3=100.14, Q_not_observe=79.0
     wizard_candidates: 2
     agent2_count=11, agent3_count=0
     timestep_agent2=12, timestep_agent3=1
@@ -2468,11 +2438,11 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=2, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
-      g=3, i=3: T=19, n_wiz=1, Q_T=56.0, obs_cost=19.0, prob=0.111
-    t=12: Q_observe_agent2=69.0, Q_observe_agent3=111.8, Q_not_observe=68.0
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
+      g=3, i=3: T=17, n_wiz=1, Q_T=56.0, obs_cost=17.0, prob=0.111
+    t=12: Q_observe_agent2=69.0, Q_observe_agent3=111.0, Q_not_observe=68.0
     wizard_candidates: 1
     agent2_count=12, agent3_count=0
     timestep_agent2=13, timestep_agent3=1
@@ -2483,274 +2453,274 @@ Processing map: sm531
       g=1, i=1: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=2: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
       g=1, i=3: T=3, n_wiz=3, Q_T=126.0, obs_cost=3.0, prob=0.111
-      g=2, i=2: T=19, n_wiz=1, Q_T=68.0, obs_cost=19.0, prob=0.111
-      g=3, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=2, i=2: T=17, n_wiz=1, Q_T=68.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=15, n_wiz=1, Q_T=68.0, obs_cost=15.0, prob=0.111
 
 Processing map: sm611
   Scenario 1
     agent2 (X) -> gem1 (naive), agent3 (Y) -> gem2 (actual)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.5, 0.5]
-    t=0: Q_observe_agent2=118.0, Q_observe_agent3=111.67, Q_not_observe=139.0
+    t=0: Q_observe_agent2=127.0, Q_observe_agent3=120.67, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=1, i=2: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
+      g=1, i=1: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=1, i=2: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.167
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.167
-      g=2, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.167
-      g=2, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=2.0, prob=0.167
-      g=3, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.167
-      g=3, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=2.0, prob=0.167
-    t=1: Q_observe_agent2=133.0, Q_observe_agent3=111.0, Q_not_observe=110.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.167
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.167
+      g=2, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=5.0, prob=0.167
+      g=2, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=2.0, prob=0.167
+      g=3, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=5.0, prob=0.167
+      g=3, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=2.0, prob=0.167
+    t=1: Q_observe_agent2=142.0, Q_observe_agent3=120.0, Q_not_observe=119.0
     wizard_candidates: 1
     agent2_count=0, agent3_count=1
     timestep_agent2=1, timestep_agent3=2
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=1, i=2: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
+      g=1, i=1: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=1, i=2: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
     === agent3 (actual) breakdown ===
-      g=2, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.478
-      g=3, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.478
+      g=2, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.478
+      g=3, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.478
   Scenario 2
     agent2 (X) -> gem3 (naive), agent3 (Y) -> gem1 (actual)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.5, 0.5]
-    t=0: Q_observe_agent2=118.0, Q_observe_agent3=111.67, Q_not_observe=139.0
+    t=0: Q_observe_agent2=127.0, Q_observe_agent3=120.67, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=1, i=2: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
+      g=1, i=1: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=1, i=2: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.167
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.167
-      g=2, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.167
-      g=2, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=2.0, prob=0.167
-      g=3, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.167
-      g=3, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=2.0, prob=0.167
-    t=1: Q_observe_agent2=118.0, Q_observe_agent3=114.98, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.167
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.167
+      g=2, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=5.0, prob=0.167
+      g=2, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=2.0, prob=0.167
+      g=3, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=5.0, prob=0.167
+      g=3, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=2.0, prob=0.167
+    t=1: Q_observe_agent2=127.0, Q_observe_agent3=123.98, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=1
     timestep_agent2=1, timestep_agent3=2
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=1, i=2: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
+      g=1, i=1: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=1, i=2: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.368
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.127
-      g=2, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=4.0, prob=0.187
-      g=2, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.065
-      g=3, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=4.0, prob=0.187
-      g=3, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.065
-    t=2: Q_observe_agent2=118.0, Q_observe_agent3=114.75, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.368
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.127
+      g=2, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=4.0, prob=0.187
+      g=2, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.065
+      g=3, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=4.0, prob=0.187
+      g=3, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.065
+    t=2: Q_observe_agent2=127.0, Q_observe_agent3=123.75, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=2
     timestep_agent2=1, timestep_agent3=3
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=1, i=2: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
+      g=1, i=1: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=1, i=2: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.375
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.125
-      g=2, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=3.0, prob=0.187
-      g=2, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.063
-      g=3, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=3.0, prob=0.187
-      g=3, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.063
-    t=3: Q_observe_agent2=118.0, Q_observe_agent3=114.37, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.375
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.125
+      g=2, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=3.0, prob=0.187
+      g=2, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.063
+      g=3, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=3.0, prob=0.187
+      g=3, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.063
+    t=3: Q_observe_agent2=127.0, Q_observe_agent3=123.37, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=3
     timestep_agent2=1, timestep_agent3=4
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=1, i=2: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
+      g=1, i=1: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=1, i=2: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.375
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.125
-      g=2, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=2.0, prob=0.187
-      g=2, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.063
-      g=3, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=2.0, prob=0.187
-      g=3, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.063
-    t=4: Q_observe_agent2=118.0, Q_observe_agent3=144.0, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.375
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.125
+      g=2, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=2.0, prob=0.187
+      g=2, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.063
+      g=3, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=2.0, prob=0.187
+      g=3, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.063
+    t=4: Q_observe_agent2=127.0, Q_observe_agent3=153.0, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=4
     timestep_agent2=1, timestep_agent3=5
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=1, i=2: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
+      g=1, i=1: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=1, i=2: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.482
-    t=5: Q_observe_agent2=101.0, Q_observe_agent3=144.0, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.482
+    t=5: Q_observe_agent2=110.0, Q_observe_agent3=153.0, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=1, agent3_count=4
     timestep_agent2=6, timestep_agent3=6
     === agent2 (naive) breakdown ===
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=9.0, prob=0.25
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=9.0, prob=0.25
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=9.0, prob=0.25
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=9.0, prob=0.25
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=9.0, prob=0.25
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=9.0, prob=0.25
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=9.0, prob=0.25
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=9.0, prob=0.25
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-    t=6: Q_observe_agent2=100.0, Q_observe_agent3=144.0, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+    t=6: Q_observe_agent2=109.0, Q_observe_agent3=153.0, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=2, agent3_count=4
     timestep_agent2=7, timestep_agent3=7
     === agent2 (naive) breakdown ===
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=8.0, prob=0.25
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=8.0, prob=0.25
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=8.0, prob=0.25
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=8.0, prob=0.25
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=8.0, prob=0.25
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=8.0, prob=0.25
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=8.0, prob=0.25
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=8.0, prob=0.25
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-    t=7: Q_observe_agent2=99.0, Q_observe_agent3=144.0, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+    t=7: Q_observe_agent2=108.0, Q_observe_agent3=153.0, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=3, agent3_count=4
     timestep_agent2=8, timestep_agent3=8
     === agent2 (naive) breakdown ===
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=7.0, prob=0.25
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=7.0, prob=0.25
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=7.0, prob=0.25
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=7.0, prob=0.25
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=7.0, prob=0.25
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=7.0, prob=0.25
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=7.0, prob=0.25
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=7.0, prob=0.25
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-    t=8: Q_observe_agent2=98.0, Q_observe_agent3=144.0, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+    t=8: Q_observe_agent2=107.0, Q_observe_agent3=153.0, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=4, agent3_count=4
     timestep_agent2=9, timestep_agent3=9
     === agent2 (naive) breakdown ===
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=6.0, prob=0.25
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=6.0, prob=0.25
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=6.0, prob=0.25
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=6.0, prob=0.25
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=6.0, prob=0.25
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=6.0, prob=0.25
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=6.0, prob=0.25
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=6.0, prob=0.25
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-    t=9: Q_observe_agent2=97.0, Q_observe_agent3=144.0, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+    t=9: Q_observe_agent2=106.0, Q_observe_agent3=153.0, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=5, agent3_count=4
     timestep_agent2=10, timestep_agent3=10
     === agent2 (naive) breakdown ===
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.25
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=5.0, prob=0.25
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.25
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=5.0, prob=0.25
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=5.0, prob=0.25
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=5.0, prob=0.25
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=5.0, prob=0.25
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=5.0, prob=0.25
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-    t=10: Q_observe_agent2=96.0, Q_observe_agent3=144.0, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+    t=10: Q_observe_agent2=105.0, Q_observe_agent3=153.0, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=6, agent3_count=4
     timestep_agent2=11, timestep_agent3=11
     === agent2 (naive) breakdown ===
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=4.0, prob=0.25
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=4.0, prob=0.25
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=4.0, prob=0.25
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=4.0, prob=0.25
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=4.0, prob=0.25
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=4.0, prob=0.25
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=4.0, prob=0.25
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=4.0, prob=0.25
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-    t=11: Q_observe_agent2=95.0, Q_observe_agent3=144.0, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+    t=11: Q_observe_agent2=104.0, Q_observe_agent3=153.0, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=7, agent3_count=4
     timestep_agent2=12, timestep_agent3=12
     === agent2 (naive) breakdown ===
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=3.0, prob=0.25
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=3.0, prob=0.25
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=3.0, prob=0.25
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=3.0, prob=0.25
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=3.0, prob=0.25
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=3.0, prob=0.25
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=3.0, prob=0.25
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=3.0, prob=0.25
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-    t=12: Q_observe_agent2=107.71, Q_observe_agent3=144.0, Q_not_observe=139.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+    t=12: Q_observe_agent2=116.71, Q_observe_agent3=153.0, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=8, agent3_count=4
     timestep_agent2=13, timestep_agent3=13
     === agent2 (naive) breakdown ===
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=2.0, prob=0.06
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=2.0, prob=0.44
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=2.0, prob=0.06
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=2.0, prob=0.44
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=2.0, prob=0.06
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=2.0, prob=0.44
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=2.0, prob=0.06
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=2.0, prob=0.44
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-    t=13: Q_observe_agent2=111.0, Q_observe_agent3=144.0, Q_not_observe=110.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+    t=13: Q_observe_agent2=120.0, Q_observe_agent3=153.0, Q_not_observe=119.0
     wizard_candidates: 1
     agent2_count=9, agent3_count=4
     timestep_agent2=14, timestep_agent3=14
     === agent2 (naive) breakdown ===
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.491
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.491
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.491
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.491
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.5
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.5
   Scenario 3
     agent2 (X) -> gem3 (naive), agent3 (Y) -> gem2 (actual)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.5, 0.5]
-    t=0: Q_observe_agent2=118.0, Q_observe_agent3=111.67, Q_not_observe=139.0
+    t=0: Q_observe_agent2=127.0, Q_observe_agent3=120.67, Q_not_observe=148.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=1, i=2: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=2, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
-      g=3, i=1: T=14, n_wiz=1, Q_T=74.0, obs_cost=14.0, prob=0.167
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
+      g=1, i=1: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=1, i=2: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=2, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
+      g=3, i=1: T=14, n_wiz=1, Q_T=83.0, obs_cost=14.0, prob=0.167
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
     === agent3 (actual) breakdown ===
-      g=1, i=1: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.167
-      g=1, i=2: T=5, n_wiz=2, Q_T=139.0, obs_cost=5.0, prob=0.167
-      g=2, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.167
-      g=2, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=2.0, prob=0.167
-      g=3, i=1: T=5, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.167
-      g=3, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=2.0, prob=0.167
-    t=1: Q_observe_agent2=133.0, Q_observe_agent3=111.0, Q_not_observe=110.0
+      g=1, i=1: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.167
+      g=1, i=2: T=5, n_wiz=2, Q_T=148.0, obs_cost=5.0, prob=0.167
+      g=2, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=5.0, prob=0.167
+      g=2, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=2.0, prob=0.167
+      g=3, i=1: T=5, n_wiz=1, Q_T=83.0, obs_cost=5.0, prob=0.167
+      g=3, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=2.0, prob=0.167
+    t=1: Q_observe_agent2=142.0, Q_observe_agent3=120.0, Q_not_observe=119.0
     wizard_candidates: 1
     agent2_count=0, agent3_count=1
     timestep_agent2=1, timestep_agent3=2
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=1, i=2: T=3, n_wiz=2, Q_T=139.0, obs_cost=3.0, prob=0.167
-      g=2, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
-      g=3, i=2: T=14, n_wiz=1, Q_T=110.0, obs_cost=14.0, prob=0.167
+      g=1, i=1: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=1, i=2: T=3, n_wiz=2, Q_T=148.0, obs_cost=3.0, prob=0.167
+      g=2, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
+      g=3, i=2: T=14, n_wiz=1, Q_T=119.0, obs_cost=14.0, prob=0.167
     === agent3 (actual) breakdown ===
-      g=2, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.478
-      g=3, i=2: T=2, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.478
+      g=2, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.478
+      g=3, i=2: T=2, n_wiz=1, Q_T=119.0, obs_cost=1.0, prob=0.478
 
 Processing map: sm421
   Scenario 1
@@ -6788,15 +6758,15 @@ Processing map: sm541
     agent2 (X) -> gem1 (naive), agent3 (Y) -> gem1 (actual)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.25, 0.25, 0.25, 0.25]
-    t=0: Q_observe_agent2=141.92, Q_observe_agent3=139.17, Q_not_observe=155.0
+    t=0: Q_observe_agent2=141.42, Q_observe_agent3=139.17, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -6818,15 +6788,15 @@ Processing map: sm541
       g=3, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=3, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=3, i=4: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
-    t=1: Q_observe_agent2=141.92, Q_observe_agent3=102.5, Q_not_observe=155.0
+    t=1: Q_observe_agent2=141.42, Q_observe_agent3=102.5, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=1
     timestep_agent2=1, timestep_agent3=2
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -6840,15 +6810,15 @@ Processing map: sm541
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.241
       g=1, i=3: T=9, n_wiz=1, Q_T=92.0, obs_cost=8.0, prob=0.241
       g=1, i=4: T=9, n_wiz=1, Q_T=104.0, obs_cost=8.0, prob=0.241
-    t=2: Q_observe_agent2=141.92, Q_observe_agent3=101.5, Q_not_observe=155.0
+    t=2: Q_observe_agent2=141.42, Q_observe_agent3=101.5, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=2
     timestep_agent2=1, timestep_agent3=3
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -6862,15 +6832,15 @@ Processing map: sm541
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=6.0, prob=0.25
       g=1, i=3: T=9, n_wiz=1, Q_T=92.0, obs_cost=7.0, prob=0.25
       g=1, i=4: T=9, n_wiz=1, Q_T=104.0, obs_cost=7.0, prob=0.25
-    t=3: Q_observe_agent2=141.92, Q_observe_agent3=100.5, Q_not_observe=155.0
+    t=3: Q_observe_agent2=141.42, Q_observe_agent3=100.5, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=3
     timestep_agent2=1, timestep_agent3=4
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -6884,15 +6854,15 @@ Processing map: sm541
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=5.0, prob=0.25
       g=1, i=3: T=9, n_wiz=1, Q_T=92.0, obs_cost=6.0, prob=0.25
       g=1, i=4: T=9, n_wiz=1, Q_T=104.0, obs_cost=6.0, prob=0.25
-    t=4: Q_observe_agent2=141.92, Q_observe_agent3=99.5, Q_not_observe=155.0
+    t=4: Q_observe_agent2=141.42, Q_observe_agent3=99.5, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=4
     timestep_agent2=1, timestep_agent3=5
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -6906,15 +6876,15 @@ Processing map: sm541
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=4.0, prob=0.25
       g=1, i=3: T=9, n_wiz=1, Q_T=92.0, obs_cost=5.0, prob=0.25
       g=1, i=4: T=9, n_wiz=1, Q_T=104.0, obs_cost=5.0, prob=0.25
-    t=5: Q_observe_agent2=141.92, Q_observe_agent3=98.5, Q_not_observe=155.0
+    t=5: Q_observe_agent2=141.42, Q_observe_agent3=98.5, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=5
     timestep_agent2=1, timestep_agent3=6
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -6928,12 +6898,12 @@ Processing map: sm541
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=3.0, prob=0.25
       g=1, i=3: T=9, n_wiz=1, Q_T=92.0, obs_cost=4.0, prob=0.25
       g=1, i=4: T=9, n_wiz=1, Q_T=104.0, obs_cost=4.0, prob=0.25
-    t=6: Q_observe_agent2=146.5, Q_observe_agent3=94.0, Q_not_observe=109.0
+    t=6: Q_observe_agent2=146.3, Q_observe_agent3=94.0, Q_not_observe=109.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=6
     timestep_agent2=1, timestep_agent3=7
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -6946,12 +6916,12 @@ Processing map: sm541
     === agent3 (actual) breakdown ===
       g=1, i=1: T=8, n_wiz=1, Q_T=98.0, obs_cost=2.0, prob=0.491
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=2.0, prob=0.491
-    t=7: Q_observe_agent2=152.22, Q_observe_agent3=99.0, Q_not_observe=98.0
+    t=7: Q_observe_agent2=152.0, Q_observe_agent3=99.0, Q_not_observe=98.0
     wizard_candidates: 1
     agent2_count=0, agent3_count=7
     timestep_agent2=1, timestep_agent3=8
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -6966,15 +6936,15 @@ Processing map: sm541
     agent2 (X) -> gem2 (naive), agent3 (Y) -> gem3 (actual)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.25, 0.25, 0.25, 0.25]
-    t=0: Q_observe_agent2=141.92, Q_observe_agent3=139.17, Q_not_observe=155.0
+    t=0: Q_observe_agent2=141.42, Q_observe_agent3=139.17, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -6996,15 +6966,15 @@ Processing map: sm541
       g=3, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=3, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=3, i=4: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
-    t=1: Q_observe_agent2=141.92, Q_observe_agent3=157.0, Q_not_observe=155.0
+    t=1: Q_observe_agent2=141.42, Q_observe_agent3=157.0, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=1
     timestep_agent2=1, timestep_agent3=2
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -7040,15 +7010,15 @@ Processing map: sm541
     agent2 (X) -> gem1 (naive), agent3 (Y) -> gem1 (actual)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.25, 0.25, 0.25, 0.25]
-    t=0: Q_observe_agent2=141.92, Q_observe_agent3=139.17, Q_not_observe=155.0
+    t=0: Q_observe_agent2=141.42, Q_observe_agent3=139.17, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -7070,15 +7040,15 @@ Processing map: sm541
       g=3, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=3, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=3, i=4: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
-    t=1: Q_observe_agent2=141.92, Q_observe_agent3=102.5, Q_not_observe=155.0
+    t=1: Q_observe_agent2=141.42, Q_observe_agent3=102.5, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=1
     timestep_agent2=1, timestep_agent3=2
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -7092,15 +7062,15 @@ Processing map: sm541
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.241
       g=1, i=3: T=9, n_wiz=1, Q_T=92.0, obs_cost=8.0, prob=0.241
       g=1, i=4: T=9, n_wiz=1, Q_T=104.0, obs_cost=8.0, prob=0.241
-    t=2: Q_observe_agent2=141.92, Q_observe_agent3=101.5, Q_not_observe=155.0
+    t=2: Q_observe_agent2=141.42, Q_observe_agent3=101.5, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=2
     timestep_agent2=1, timestep_agent3=3
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -7114,15 +7084,15 @@ Processing map: sm541
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=6.0, prob=0.25
       g=1, i=3: T=9, n_wiz=1, Q_T=92.0, obs_cost=7.0, prob=0.25
       g=1, i=4: T=9, n_wiz=1, Q_T=104.0, obs_cost=7.0, prob=0.25
-    t=3: Q_observe_agent2=141.92, Q_observe_agent3=100.5, Q_not_observe=155.0
+    t=3: Q_observe_agent2=141.42, Q_observe_agent3=100.5, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=3
     timestep_agent2=1, timestep_agent3=4
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -7136,15 +7106,15 @@ Processing map: sm541
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=5.0, prob=0.25
       g=1, i=3: T=9, n_wiz=1, Q_T=92.0, obs_cost=6.0, prob=0.25
       g=1, i=4: T=9, n_wiz=1, Q_T=104.0, obs_cost=6.0, prob=0.25
-    t=4: Q_observe_agent2=141.92, Q_observe_agent3=99.5, Q_not_observe=155.0
+    t=4: Q_observe_agent2=141.42, Q_observe_agent3=99.5, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=4
     timestep_agent2=1, timestep_agent3=5
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -7158,15 +7128,15 @@ Processing map: sm541
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=4.0, prob=0.25
       g=1, i=3: T=9, n_wiz=1, Q_T=92.0, obs_cost=5.0, prob=0.25
       g=1, i=4: T=9, n_wiz=1, Q_T=104.0, obs_cost=5.0, prob=0.25
-    t=5: Q_observe_agent2=141.92, Q_observe_agent3=98.5, Q_not_observe=155.0
+    t=5: Q_observe_agent2=141.42, Q_observe_agent3=98.5, Q_not_observe=155.0
     wizard_candidates: 4
     agent2_count=0, agent3_count=5
     timestep_agent2=1, timestep_agent3=6
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
-      g=1, i=3: T=21, n_wiz=1, Q_T=92.0, obs_cost=21.0, prob=0.083
-      g=1, i=4: T=21, n_wiz=1, Q_T=104.0, obs_cost=21.0, prob=0.083
+      g=1, i=3: T=19, n_wiz=1, Q_T=92.0, obs_cost=19.0, prob=0.083
+      g=1, i=4: T=19, n_wiz=1, Q_T=104.0, obs_cost=19.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -7180,12 +7150,12 @@ Processing map: sm541
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=3.0, prob=0.25
       g=1, i=3: T=9, n_wiz=1, Q_T=92.0, obs_cost=4.0, prob=0.25
       g=1, i=4: T=9, n_wiz=1, Q_T=104.0, obs_cost=4.0, prob=0.25
-    t=6: Q_observe_agent2=146.5, Q_observe_agent3=94.0, Q_not_observe=109.0
+    t=6: Q_observe_agent2=146.3, Q_observe_agent3=94.0, Q_not_observe=109.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=6
     timestep_agent2=1, timestep_agent3=7
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=1, i=2: T=9, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -7198,12 +7168,12 @@ Processing map: sm541
     === agent3 (actual) breakdown ===
       g=1, i=1: T=8, n_wiz=1, Q_T=98.0, obs_cost=2.0, prob=0.491
       g=1, i=2: T=8, n_wiz=1, Q_T=86.0, obs_cost=2.0, prob=0.491
-    t=7: Q_observe_agent2=152.22, Q_observe_agent3=99.0, Q_not_observe=98.0
+    t=7: Q_observe_agent2=152.0, Q_observe_agent3=99.0, Q_not_observe=98.0
     wizard_candidates: 1
     agent2_count=0, agent3_count=7
     timestep_agent2=1, timestep_agent3=8
     === agent2 (naive) breakdown ===
-      g=1, i=1: T=16, n_wiz=1, Q_T=98.0, obs_cost=16.0, prob=0.083
+      g=1, i=1: T=14, n_wiz=1, Q_T=98.0, obs_cost=14.0, prob=0.083
       g=2, i=1: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=2: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
       g=2, i=3: T=2, n_wiz=4, Q_T=155.0, obs_cost=2.0, prob=0.083
@@ -7220,7 +7190,7 @@ Processing map: sm361
     agent2 (X) -> gem3 (naive), agent3 (Y) -> gem3 (actual)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.333, 0.333, 0.333]
-    t=0: Q_observe_agent2=147.56, Q_observe_agent3=145.67, Q_not_observe=162.0
+    t=0: Q_observe_agent2=146.56, Q_observe_agent3=145.67, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
@@ -7231,9 +7201,9 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=1, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=1, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
@@ -7244,7 +7214,7 @@ Processing map: sm361
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=7.0, prob=0.111
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=10.0, prob=0.111
-    t=1: Q_observe_agent2=147.56, Q_observe_agent3=108.0, Q_not_observe=162.0
+    t=1: Q_observe_agent2=146.56, Q_observe_agent3=108.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=1
     timestep_agent2=1, timestep_agent3=2
@@ -7255,14 +7225,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=6.0, prob=0.322
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.322
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=9.0, prob=0.322
-    t=2: Q_observe_agent2=147.56, Q_observe_agent3=107.0, Q_not_observe=162.0
+    t=2: Q_observe_agent2=146.56, Q_observe_agent3=107.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=2
     timestep_agent2=1, timestep_agent3=3
@@ -7273,14 +7243,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=5.0, prob=0.333
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=8.0, prob=0.333
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=8.0, prob=0.333
-    t=3: Q_observe_agent2=147.56, Q_observe_agent3=106.0, Q_not_observe=162.0
+    t=3: Q_observe_agent2=146.56, Q_observe_agent3=106.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=3
     timestep_agent2=1, timestep_agent3=4
@@ -7291,14 +7261,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=4.0, prob=0.333
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.333
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=7.0, prob=0.333
-    t=4: Q_observe_agent2=147.56, Q_observe_agent3=105.0, Q_not_observe=162.0
+    t=4: Q_observe_agent2=146.56, Q_observe_agent3=105.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=4
     timestep_agent2=1, timestep_agent3=5
@@ -7309,14 +7279,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=3.0, prob=0.333
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=6.0, prob=0.333
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=6.0, prob=0.333
-    t=5: Q_observe_agent2=147.56, Q_observe_agent3=104.0, Q_not_observe=162.0
+    t=5: Q_observe_agent2=146.56, Q_observe_agent3=104.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=5
     timestep_agent2=1, timestep_agent3=6
@@ -7327,14 +7297,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=2.0, prob=0.333
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=5.0, prob=0.333
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=5.0, prob=0.333
-    t=6: Q_observe_agent2=148.62, Q_observe_agent3=93.0, Q_not_observe=109.0
+    t=6: Q_observe_agent2=147.87, Q_observe_agent3=93.0, Q_not_observe=109.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=6
     timestep_agent2=1, timestep_agent3=7
@@ -7345,12 +7315,12 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=4.0, prob=0.495
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=4.0, prob=0.495
-    t=7: Q_observe_agent2=148.62, Q_observe_agent3=92.0, Q_not_observe=109.0
+    t=7: Q_observe_agent2=147.87, Q_observe_agent3=92.0, Q_not_observe=109.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=7
     timestep_agent2=1, timestep_agent3=8
@@ -7361,12 +7331,12 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=3.0, prob=0.5
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=3.0, prob=0.5
-    t=8: Q_observe_agent2=148.62, Q_observe_agent3=91.0, Q_not_observe=109.0
+    t=8: Q_observe_agent2=147.87, Q_observe_agent3=91.0, Q_not_observe=109.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=8
     timestep_agent2=1, timestep_agent3=9
@@ -7377,12 +7347,12 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=2.0, prob=0.5
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=2.0, prob=0.5
-    t=9: Q_observe_agent2=156.14, Q_observe_agent3=93.0, Q_not_observe=92.0
+    t=9: Q_observe_agent2=155.71, Q_observe_agent3=93.0, Q_not_observe=92.0
     wizard_candidates: 1
     agent2_count=0, agent3_count=9
     timestep_agent2=1, timestep_agent3=10
@@ -7393,14 +7363,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=1.0, prob=0.982
   Scenario 2
     agent2 (X) -> gem1 (naive), agent3 (Y) -> gem2 (actual)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.333, 0.333, 0.333]
-    t=0: Q_observe_agent2=147.56, Q_observe_agent3=145.67, Q_not_observe=162.0
+    t=0: Q_observe_agent2=146.56, Q_observe_agent3=145.67, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
@@ -7411,9 +7381,9 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=1, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=1, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
@@ -7424,7 +7394,7 @@ Processing map: sm361
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=7.0, prob=0.111
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=10.0, prob=0.111
-    t=1: Q_observe_agent2=147.56, Q_observe_agent3=164.0, Q_not_observe=162.0
+    t=1: Q_observe_agent2=146.56, Q_observe_agent3=164.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=1
     timestep_agent2=1, timestep_agent3=2
@@ -7435,9 +7405,9 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.322
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.322
@@ -7461,7 +7431,7 @@ Processing map: sm361
     agent2 (X) -> gem3 (naive), agent3 (Y) -> gem3 (actual)
     agent3 initial goal_probs: [0.333, 0.333, 0.333]
     agent3 initial state_probs: [0.333, 0.333, 0.333]
-    t=0: Q_observe_agent2=147.56, Q_observe_agent3=145.67, Q_not_observe=162.0
+    t=0: Q_observe_agent2=146.56, Q_observe_agent3=145.67, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=0
     timestep_agent2=1, timestep_agent3=1
@@ -7472,9 +7442,9 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=1, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=1, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
@@ -7485,7 +7455,7 @@ Processing map: sm361
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=7.0, prob=0.111
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=10.0, prob=0.111
-    t=1: Q_observe_agent2=147.56, Q_observe_agent3=108.0, Q_not_observe=162.0
+    t=1: Q_observe_agent2=146.56, Q_observe_agent3=108.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=1
     timestep_agent2=1, timestep_agent3=2
@@ -7496,14 +7466,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=6.0, prob=0.322
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=9.0, prob=0.322
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=9.0, prob=0.322
-    t=2: Q_observe_agent2=147.56, Q_observe_agent3=107.0, Q_not_observe=162.0
+    t=2: Q_observe_agent2=146.56, Q_observe_agent3=107.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=2
     timestep_agent2=1, timestep_agent3=3
@@ -7514,14 +7484,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=5.0, prob=0.333
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=8.0, prob=0.333
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=8.0, prob=0.333
-    t=3: Q_observe_agent2=147.56, Q_observe_agent3=106.0, Q_not_observe=162.0
+    t=3: Q_observe_agent2=146.56, Q_observe_agent3=106.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=3
     timestep_agent2=1, timestep_agent3=4
@@ -7532,14 +7502,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=4.0, prob=0.333
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.333
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=7.0, prob=0.333
-    t=4: Q_observe_agent2=147.56, Q_observe_agent3=105.0, Q_not_observe=162.0
+    t=4: Q_observe_agent2=146.56, Q_observe_agent3=105.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=4
     timestep_agent2=1, timestep_agent3=5
@@ -7550,14 +7520,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=3.0, prob=0.333
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=6.0, prob=0.333
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=6.0, prob=0.333
-    t=5: Q_observe_agent2=147.56, Q_observe_agent3=104.0, Q_not_observe=162.0
+    t=5: Q_observe_agent2=146.56, Q_observe_agent3=104.0, Q_not_observe=162.0
     wizard_candidates: 3
     agent2_count=0, agent3_count=5
     timestep_agent2=1, timestep_agent3=6
@@ -7568,14 +7538,14 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=1: T=17, n_wiz=1, Q_T=122.0, obs_cost=17.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=1: T=14, n_wiz=1, Q_T=122.0, obs_cost=14.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=1: T=7, n_wiz=1, Q_T=122.0, obs_cost=2.0, prob=0.333
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=5.0, prob=0.333
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=5.0, prob=0.333
-    t=6: Q_observe_agent2=148.62, Q_observe_agent3=93.0, Q_not_observe=109.0
+    t=6: Q_observe_agent2=147.87, Q_observe_agent3=93.0, Q_not_observe=109.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=6
     timestep_agent2=1, timestep_agent3=7
@@ -7586,12 +7556,12 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=4.0, prob=0.495
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=4.0, prob=0.495
-    t=7: Q_observe_agent2=148.62, Q_observe_agent3=92.0, Q_not_observe=109.0
+    t=7: Q_observe_agent2=147.87, Q_observe_agent3=92.0, Q_not_observe=109.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=7
     timestep_agent2=1, timestep_agent3=8
@@ -7602,12 +7572,12 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=3.0, prob=0.5
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=3.0, prob=0.5
-    t=8: Q_observe_agent2=148.62, Q_observe_agent3=91.0, Q_not_observe=109.0
+    t=8: Q_observe_agent2=147.87, Q_observe_agent3=91.0, Q_not_observe=109.0
     wizard_candidates: 2
     agent2_count=0, agent3_count=8
     timestep_agent2=1, timestep_agent3=9
@@ -7618,12 +7588,12 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=10.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=2: T=7, n_wiz=1, Q_T=86.0, obs_cost=7.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=2: T=10, n_wiz=1, Q_T=86.0, obs_cost=2.0, prob=0.5
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=2.0, prob=0.5
-    t=9: Q_observe_agent2=156.14, Q_observe_agent3=93.0, Q_not_observe=92.0
+    t=9: Q_observe_agent2=155.71, Q_observe_agent3=93.0, Q_not_observe=92.0
     wizard_candidates: 1
     agent2_count=0, agent3_count=9
     timestep_agent2=1, timestep_agent3=10
@@ -7634,7 +7604,7 @@ Processing map: sm361
       g=2, i=1: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=2: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
       g=2, i=3: T=2, n_wiz=3, Q_T=162.0, obs_cost=2.0, prob=0.111
-      g=3, i=3: T=17, n_wiz=1, Q_T=92.0, obs_cost=17.0, prob=0.111
+      g=3, i=3: T=14, n_wiz=1, Q_T=92.0, obs_cost=14.0, prob=0.111
     === agent3 (actual) breakdown ===
       g=3, i=3: T=10, n_wiz=1, Q_T=92.0, obs_cost=1.0, prob=0.982
 
@@ -11572,240 +11542,10 @@ Processing map: sm221
 Processing map: sm331
   Scenario 1
     agent2 (X) -> gem3 (naive), agent3 (Y) -> gem1 (actual)
-    agent3 initial goal_probs: [0.333, 0.333, 0.333]
-    agent3 initial state_probs: [0.5, 0.5]
-    t=0: Q_observe_agent2=86.83, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=0, agent3_count=0
-    timestep_agent2=1, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=6.0, prob=0.167
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=6.0, prob=0.167
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=7.0, prob=0.167
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=6.0, prob=0.167
-      g=3, i=1: T=3, n_wiz=2, Q_T=91.0, obs_cost=3.0, prob=0.167
-      g=3, i=2: T=3, n_wiz=2, Q_T=91.0, obs_cost=3.0, prob=0.167
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=1: Q_observe_agent2=91.5, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=1, agent3_count=0
-    timestep_agent2=2, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.053
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=5.0, prob=0.053
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=6.0, prob=0.053
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=5.0, prob=0.053
-      g=3, i=1: T=3, n_wiz=2, Q_T=91.0, obs_cost=3.0, prob=0.393
-      g=3, i=2: T=3, n_wiz=2, Q_T=91.0, obs_cost=3.0, prob=0.393
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
   Scenario 2
     agent2 (X) -> gem2 (naive), agent3 (Y) -> gem3 (actual)
-    agent3 initial goal_probs: [0.333, 0.333, 0.333]
-    agent3 initial state_probs: [0.5, 0.5]
-    t=0: Q_observe_agent2=86.83, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=0, agent3_count=0
-    timestep_agent2=1, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=6.0, prob=0.167
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=6.0, prob=0.167
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=7.0, prob=0.167
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=6.0, prob=0.167
-      g=3, i=1: T=3, n_wiz=2, Q_T=91.0, obs_cost=3.0, prob=0.167
-      g=3, i=2: T=3, n_wiz=2, Q_T=91.0, obs_cost=3.0, prob=0.167
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=1: Q_observe_agent2=82.25, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=1, agent3_count=0
-    timestep_agent2=2, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.234
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=5.0, prob=0.234
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=6.0, prob=0.234
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=5.0, prob=0.234
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=2: Q_observe_agent2=81.25, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=2, agent3_count=0
-    timestep_agent2=3, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=4.0, prob=0.248
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=4.0, prob=0.248
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.248
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=4.0, prob=0.248
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=3: Q_observe_agent2=80.25, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=3, agent3_count=0
-    timestep_agent2=4, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=3.0, prob=0.248
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=3.0, prob=0.248
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=4.0, prob=0.248
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=3.0, prob=0.248
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=4: Q_observe_agent2=81.34, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=4, agent3_count=0
-    timestep_agent2=5, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=2.0, prob=0.06
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=2.0, prob=0.439
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=3.0, prob=0.06
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=2.0, prob=0.439
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=5: Q_observe_agent2=81.0, Q_observe_agent3=96.0, Q_not_observe=80.0
-    wizard_candidates: 1
-    agent2_count=5, agent3_count=0
-    timestep_agent2=6, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=1.0, prob=0.491
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=1.0, prob=0.491
-    === agent3 (actual) breakdown ===
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
   Scenario 3
     agent2 (X) -> gem2 (naive), agent3 (Y) -> gem1 (actual)
-    agent3 initial goal_probs: [0.333, 0.333, 0.333]
-    agent3 initial state_probs: [0.5, 0.5]
-    t=0: Q_observe_agent2=86.83, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=0, agent3_count=0
-    timestep_agent2=1, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=6.0, prob=0.167
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=6.0, prob=0.167
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=7.0, prob=0.167
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=6.0, prob=0.167
-      g=3, i=1: T=3, n_wiz=2, Q_T=91.0, obs_cost=3.0, prob=0.167
-      g=3, i=2: T=3, n_wiz=2, Q_T=91.0, obs_cost=3.0, prob=0.167
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=1: Q_observe_agent2=82.25, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=1, agent3_count=0
-    timestep_agent2=2, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.234
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=5.0, prob=0.234
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=6.0, prob=0.234
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=5.0, prob=0.234
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=2: Q_observe_agent2=81.25, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=2, agent3_count=0
-    timestep_agent2=3, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=4.0, prob=0.248
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=4.0, prob=0.248
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=5.0, prob=0.248
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=4.0, prob=0.248
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=3: Q_observe_agent2=80.25, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=3, agent3_count=0
-    timestep_agent2=4, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=3.0, prob=0.248
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=3.0, prob=0.248
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=4.0, prob=0.248
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=3.0, prob=0.248
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=4: Q_observe_agent2=81.34, Q_observe_agent3=93.67, Q_not_observe=91.0
-    wizard_candidates: 2
-    agent2_count=4, agent3_count=0
-    timestep_agent2=5, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=1: T=6, n_wiz=1, Q_T=74.0, obs_cost=2.0, prob=0.06
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=2.0, prob=0.439
-      g=2, i=1: T=7, n_wiz=1, Q_T=74.0, obs_cost=3.0, prob=0.06
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=2.0, prob=0.439
-    === agent3 (actual) breakdown ===
-      g=1, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=1: T=15, n_wiz=1, Q_T=74.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-    t=5: Q_observe_agent2=81.0, Q_observe_agent3=96.0, Q_not_observe=80.0
-    wizard_candidates: 1
-    agent2_count=5, agent3_count=0
-    timestep_agent2=6, timestep_agent3=1
-    === agent2 (naive) breakdown ===
-      g=1, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=1.0, prob=0.491
-      g=2, i=2: T=6, n_wiz=1, Q_T=80.0, obs_cost=1.0, prob=0.491
-    === agent3 (actual) breakdown ===
-      g=1, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=2, i=2: T=15, n_wiz=1, Q_T=80.0, obs_cost=15.0, prob=0.167
-      g=3, i=1: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
-      g=3, i=2: T=6, n_wiz=2, Q_T=91.0, obs_cost=6.0, prob=0.167
 
 Processing map: sm543
   Scenario 1
@@ -12950,4 +12690,4 @@ Processing map: sm621
       g=2, i=1: T=17, n_wiz=1, Q_T=110.0, obs_cost=1.0, prob=0.491
 
 === Experiment Complete ===
-Results saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/experiments/experiment_outputs/steps_dict_exp4_padded.json
+Results saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/experiments/experiment_outputs/steps_dict_exp4_padded_new_maps.json
