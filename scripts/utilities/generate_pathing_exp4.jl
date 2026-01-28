@@ -148,28 +148,28 @@ function get_plan_with_coordinates(domain::Domain, state::State, plan::Vector{Te
     plan_with_coords = []
     current_state = copy(state)
     current_loc = get_obj_loc(current_state, Const(agent_name))
-    
+
     for action in plan
         # Get action string
         action_str = action_to_string(action)
-        
+
         # Add current location to action info (location BEFORE action execution)
         action_info = Dict(
             "action" => action_str,
             "x" => current_loc[1],
             "y" => current_loc[2]
         )
-        
+
         push!(plan_with_coords, action_info)
-        
+
         # Execute action to update state for next iteration
         current_state = PDDL.execute(domain, current_state, action)
-        
+
         # Always update agent location after action execution
         # Move actions will change location, interact actions won't
         current_loc = get_obj_loc(current_state, Const(agent_name))
     end
-    
+
     # Add final position entry showing where agent ends up after completing the plan
     final_entry = Dict(
         "action" => "FINAL_POSITION",
@@ -177,12 +177,12 @@ function get_plan_with_coordinates(domain::Domain, state::State, plan::Vector{Te
         "y" => current_loc[2]
     )
     push!(plan_with_coords, final_entry)
-    
+
     return plan_with_coords
 end
 
 # Main script
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4")
+PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_new")
 OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
 mkpath(OUTPUT_DIR)
 
@@ -201,7 +201,7 @@ for (map_id, agent_goals) in metadata
     txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
     ascii_content = read(txt_path, String)
 
-    for scenario in 1:3
+    for scenario in 1:2
         scenario_key = "scenario$(scenario)"
         pathing_dict[map_id][scenario_key] = Dict()
 
@@ -273,7 +273,7 @@ for (map_id, agent_goals) in metadata
 end
 
 # Save to JSON
-output_path = joinpath(OUTPUT_DIR, "pathing_exp4.json")
+output_path = joinpath(OUTPUT_DIR, "pathing_exp4_new_maps_again.json")
 open(output_path, "w") do io
     JSON.print(io, pathing_dict, 4)
 end

@@ -17,12 +17,12 @@ include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "planners.jl"))
 
 # Define directory paths
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4")
+PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_012626")
 OUTPUT_DIR = joinpath(@__DIR__, "..", "..", "scripts", "experiments", "experiment_outputs")
 mkpath(OUTPUT_DIR)
 
 # Open debug log file
-debug_log_path = joinpath(OUTPUT_DIR, "debug_output_inference_exp4.txt")
+debug_log_path = joinpath(OUTPUT_DIR, "debug_output_inference_exp4_012626.txt")
 debug_log_file = open(debug_log_path, "w")
 function debug_println(args...)
     msg = join(string.(args), " ")
@@ -193,9 +193,9 @@ for agent_name in agents_to_infer
     agent_start_time = time()
 
     for (map_id, agent_goals) in metadata
-        # if map_id != "sm221"
-        #     continue
-        # end
+        if map_id != "sm221" or "sm311"
+            continue
+        end
         debug_println("Processing map: $map_id for $agent_name")
 
         # Get goals for this agent: [{"gem": 1, "type": "naive"}, {"gem": 3, "type": "naive"}]
@@ -206,7 +206,7 @@ for agent_name in agents_to_infer
         agent_types_dict[agent_name][map_id] = Dict()  # NEW: track types per scenario
 
         # Loop over all three scenarios
-        for scenario in 1:3
+        for scenario in 1:2
             # if scenario != 3
             #     continue
             # end
@@ -544,7 +544,7 @@ for agent in keys(goal_probs_conditioned_dict)
     end
 end
 
-output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_padded_new_maps.jld2")
+output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_exp4_311_221.jld2")
 save(output_path, data)
 debug_println("[DEBUG] Saved to: $output_path")
 debug_println("[DEBUG] File size: $(round(filesize(output_path) / 1024, digits=2)) KB")

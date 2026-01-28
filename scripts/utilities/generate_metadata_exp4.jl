@@ -1,7 +1,7 @@
 using JSON
 
 # Parse all txt files in problems_exp4 to extract agent goals with naive/actual types
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4")
+PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_012626")
 
 metadata = Dict()
 
@@ -9,15 +9,15 @@ txt_files = filter(f -> endswith(f, ".txt"), readdir(PROBLEM_DIR))
 
 for txt_file in txt_files
     map_id = splitext(txt_file)[1]  # e.g., "sm211"
-    
+
     # Read the file
     content = read(joinpath(PROBLEM_DIR, txt_file), String)
     lines = split(content, '\n')
-    
+
     # Find the lines with agent goals (they're at the bottom)
     agent2_goals = nothing
     agent3_goals = nothing
-    
+
     for line in lines
         line = strip(line)
         if startswith(line, "X:")
@@ -62,7 +62,7 @@ for txt_file in txt_files
             end
         end
     end
-    
+
     if agent2_goals !== nothing && agent3_goals !== nothing
         metadata[map_id] = Dict(
             "agent2" => agent2_goals,
@@ -82,5 +82,3 @@ end
 
 println("\nMetadata saved to: $output_path")
 println("Total maps: $(length(metadata))")
-
-

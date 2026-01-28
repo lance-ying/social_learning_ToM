@@ -16,9 +16,22 @@ include(joinpath(@__DIR__, "..", "..", "src", "utils.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
+include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
+
+# Helper function to filter ASCII map to only include specified agent
+function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
+    agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
+    filtered = ascii_content
+    for (agent_sym, char) in agent_chars
+        if agent_sym != keep_agent
+            filtered = replace(filtered, char => '.')
+        end
+    end
+    return filtered
+end
 
 # Define directory paths
-experiment_id = "exp4"
+experiment_id = "exp4_012626"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
 OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
@@ -41,7 +54,7 @@ metadata = JSON.parsefile(metadata_path)
 steps_dict = Dict()
 
 # Load inference data for both agents (agent2=X, agent3=Y)
-data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_padded_new_maps.jld2"))
+data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp4_012626.jld2"))
 goal_probs_conditioned_dict = data["goal"]
 state_probs_conditioned_dict = data["state"]
 possible_worlds = data["worlds"]
@@ -51,7 +64,7 @@ domain_render = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain_re
 action_cost = Dict(:move => 3, :interact => 5, :observe => 1.0)
 
 # Create progress bar for all (map, scenario) combinations
-total_iterations = length(metadata) * 3  # maps × 3 scenarios
+total_iterations = length(metadata) * length(possible_worlds) # maps × 3 scenarios
 progress = Progress(total_iterations, desc="Processing exp4: ")
 
 # Track timing
@@ -62,8 +75,55 @@ for (map_id, agent_goals) in metadata
     map_start_time = time()
     debug_println("\nProcessing map: $map_id")
 
-    # Loop over all three scenarios
-    for scenario in 1:3
+    # === LOAD AND COMPILE DOMAINS ONCE PER MAP (outside scenario loop) ===
+    # This prevents PDDL.compiled() type conflicts between scenarios
+
+    domain = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+    problem = load_ascii_problem(joinpath(PROBLEM_DIR, "$(map_id).txt"))
+
+    # Initialize and compile reference state for the FULL problem
+    state_init = initstate(domain, problem)
+    state_render = copy(state_init)
+    domain, state_init = PDDL.compiled(domain, problem)
+
+    # Load FILTERED problem for agent2
+    txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
+    ascii_content = read(txt_path, String)
+
+    domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+    temp_path_agent2 = joinpath(PROBLEM_DIR, ".temp_agent2_$(map_id).txt")
+    if !isfile(temp_path_agent2)
+        filtered_ascii_agent2 = filter_ascii_agents(ascii_content, :agent2)
+        write(temp_path_agent2, filtered_ascii_agent2)
+    end
+    problem_agent2 = load_ascii_problem(temp_path_agent2)
+    state_agent2_init = initstate(domain_agent2, problem_agent2)
+    domain_agent2, state_agent2_init = PDDL.compiled(domain_agent2, problem_agent2)
+
+    # Load FILTERED problem for agent3
+    domain_agent3 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+    temp_path_agent3 = joinpath(PROBLEM_DIR, ".temp_agent3_$(map_id).txt")
+    if !isfile(temp_path_agent3)
+        filtered_ascii_agent3 = filter_ascii_agents(ascii_content, :agent3)
+        write(temp_path_agent3, filtered_ascii_agent3)
+    end
+    problem_agent3 = load_ascii_problem(temp_path_agent3)
+    state_agent3_init = initstate(domain_agent3, problem_agent3)
+    domain_agent3, state_agent3_init = PDDL.compiled(domain_agent3, problem_agent3)
+
+    # Specify possible goals for each agent (from FILTERED states)
+    goals_agent2, goal_names_agent2 = initialize_goals(state_agent2_init, :agent2)
+    goals_agent3, goal_names_agent3 = initialize_goals(state_agent3_init, :agent3)
+
+    # Enumerate over possible initial states (from FILTERED states)
+    initial_states_agent2, belief_probs_agent2, state_names_agent2 = enumerate_beliefs(state_agent2_init)
+    initial_states_agent3, belief_probs_agent3, state_names_agent3 = enumerate_beliefs(state_agent3_init)
+
+    # === NOW LOOP OVER SCENARIOS (reusing compiled domains) ===
+    for scenario in 1:2
+        if scenario !== 2
+            continue
+        end
         scenario_start_time = time()
         map_key = "$(map_id)_scenario$(scenario)"
         debug_println("  Scenario $scenario")
@@ -72,8 +132,8 @@ for (map_id, agent_goals) in metadata
         clear_planner_cache!()
 
         # Get which gems each agent wants in this scenario (with type: naive/actual)
-        agent2_goal_info = agent_goals["agent2"][scenario]  # X's goal: Dict("gem" => 1, "type" => "naive")
-        agent3_goal_info = agent_goals["agent3"][scenario]  # Y's goal: Dict("gem" => 2, "type" => "actual")
+        agent2_goal_info = agent_goals["agent2"][scenario]
+        agent3_goal_info = agent_goals["agent3"][scenario]
 
         agent2_gem = agent2_goal_info["gem"]
         agent2_type = agent2_goal_info["type"]
@@ -82,63 +142,10 @@ for (map_id, agent_goals) in metadata
 
         debug_println("    agent2 (X) -> gem$(agent2_gem) ($(agent2_type)), agent3 (Y) -> gem$(agent3_gem) ($(agent3_type))")
 
-        domain = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
-        include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
-        problem = load_ascii_problem(joinpath(PROBLEM_DIR, "$(map_id).txt"))
-
-        # Initialize and compile reference state for the FULL problem
-        state = initstate(domain, problem)
-        state_render = copy(state)
-        domain, state = PDDL.compiled(domain, problem)
-
-        #--- Goal Inference Setup ---#
-
-        # Load FILTERED problem for agent2 to match inference belief states
-        # (Inference was run with agent filtering, so we need to match that)
-        include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
-        function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
-            agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
-            filtered = ascii_content
-            for (agent_sym, char) in agent_chars
-                if agent_sym != keep_agent
-                    filtered = replace(filtered, char => '.')
-                end
-            end
-            return filtered
-        end
-
-        txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
-        ascii_content = read(txt_path, String)
-
-        # Load filtered problem for agent2 (use existing temp file if it exists)
-        domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
-        temp_path_agent2 = joinpath(PROBLEM_DIR, ".temp_agent2_$(map_id).txt")
-        if !isfile(temp_path_agent2)
-            filtered_ascii_agent2 = filter_ascii_agents(ascii_content, :agent2)
-            write(temp_path_agent2, filtered_ascii_agent2)
-        end
-        problem_agent2 = load_ascii_problem(temp_path_agent2)
-        state_agent2 = initstate(domain_agent2, problem_agent2)
-        domain_agent2, state_agent2 = PDDL.compiled(domain_agent2, problem_agent2)
-
-        # Load filtered problem for agent3 (use existing temp file if it exists)
-        domain_agent3 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
-        temp_path_agent3 = joinpath(PROBLEM_DIR, ".temp_agent3_$(map_id).txt")
-        if !isfile(temp_path_agent3)
-            filtered_ascii_agent3 = filter_ascii_agents(ascii_content, :agent3)
-            write(temp_path_agent3, filtered_ascii_agent3)
-        end
-        problem_agent3 = load_ascii_problem(temp_path_agent3)
-        state_agent3 = initstate(domain_agent3, problem_agent3)
-        domain_agent3, state_agent3 = PDDL.compiled(domain_agent3, problem_agent3)
-
-        # Specify possible goals for each agent (from FILTERED states)
-        goals_agent2, goal_names_agent2 = initialize_goals(state_agent2, :agent2)
-        goals_agent3, goal_names_agent3 = initialize_goals(state_agent3, :agent3)
-
-        # Enumerate over possible initial states (from FILTERED states)
-        initial_states_agent2, belief_probs_agent2, state_names_agent2 = enumerate_beliefs(state_agent2)
-        initial_states_agent3, belief_probs_agent3, state_names_agent3 = enumerate_beliefs(state_agent3)
+        # Use fresh copies of the compiled states for this scenario
+        state = copy(state_init)
+        state_agent2 = copy(state_agent2_init)
+        state_agent3 = copy(state_agent3_init)
 
         t = 0
 
@@ -174,18 +181,30 @@ for (map_id, agent_goals) in metadata
         end
 
         # Load initial probabilities from scenario-specific goals
+        debug_println("    Loading probability data: s_id_agent2=$s_id_agent2, s_id_agent3=$s_id_agent3")
+        debug_println("    agent2_gem=$agent2_gem, agent3_gem=$agent3_gem")
+
         goal_probs_agent2 = goal_probs_conditioned_dict["agent2"][map_id][scenario][agent2_gem][s_id_agent2]
         state_probs_agent2 = state_probs_conditioned_dict["agent2"][map_id][scenario][agent2_gem][s_id_agent2]
+        debug_println("    Loaded agent2 probs: goal_probs size=$(size(goal_probs_agent2)), state_probs size=$(size(state_probs_agent2))")
 
         goal_probs_agent3 = goal_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
         state_probs_agent3 = state_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
+        debug_println("    Loaded agent3 probs: goal_probs size=$(size(goal_probs_agent3)), state_probs size=$(size(state_probs_agent3))")
 
         # Pre-compute state copy and planner (moved outside loop for efficiency)
         new_state = copy(state_render)
         planner = AStarPlanner(GoalManhattan())
 
         # Check if agent1's plan requires blue wizards
+        debug_println("    Planning for agent1...")
+        debug_println("    problem.goal = $(problem.goal)")
+        debug_println("    agent1 location = ($(state[pddl"(xloc agent1)"]), $(state[pddl"(yloc agent1)"]))")
+        # Note: AStarPlanner is used here because we need the actual plan (list of actions)
+        # to check for wizard interactions. First run in a fresh Julia session may be slow
+        # due to JIT compilation, but subsequent runs are fast.
         plan_agent1 = planner(domain, state, problem.goal)
+        debug_println("    Agent1 plan computed, length=$(length(collect(plan_agent1)))")
         agent1_needs_wizards = any(x-> x.name == :interact && x.args[end] in blue_wizards, plan_agent1)
         if !agent1_needs_wizards
             print("t=", 0)
@@ -533,7 +552,7 @@ println("Fastest map: $(round(minimum(values(map_times)), digits=2))s")
 println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
-output_filename = "steps_dict_exp4_padded_new_maps.json"
+output_filename = "steps_dict_exp4_012626_scene_2.json"
 output_path = joinpath(OUTPUT_DIR, output_filename)
 open(output_path, "w") do io
     JSON.print(io, steps_dict, 4)
