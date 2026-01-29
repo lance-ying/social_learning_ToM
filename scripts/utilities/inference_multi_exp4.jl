@@ -22,7 +22,7 @@ OUTPUT_DIR = joinpath(@__DIR__, "..", "..", "scripts", "experiments", "experimen
 mkpath(OUTPUT_DIR)
 
 # Open debug log file
-debug_log_path = joinpath(OUTPUT_DIR, "debug_output_inference_exp4_012626.txt")
+debug_log_path = joinpath(OUTPUT_DIR, "debug_output_inference_exp4_012626_221_311.txt")
 debug_log_file = open(debug_log_path, "w")
 function debug_println(args...)
     msg = join(string.(args), " ")
@@ -193,7 +193,7 @@ for agent_name in agents_to_infer
     agent_start_time = time()
 
     for (map_id, agent_goals) in metadata
-        if map_id != "sm221" or "sm311"
+        if map_id != "sm221" && map_id != "sm311"
             continue
         end
         debug_println("Processing map: $map_id for $agent_name")

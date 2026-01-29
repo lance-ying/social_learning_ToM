@@ -11,10 +11,10 @@ using JSON
 experiment_id = "exp4_012626"
 
 # Inference data file (relative to project root or absolute path)
-inference_file = "inference_data_exp4_012626.jld2"
+inference_file = "inference_exp4_311_221.jld2"
 
 # Output prefix for results files (will have _scenario1.json, _scenario2.json, .json appended)
-output_prefix = "steps_dict_exp4_012626"
+output_prefix = "steps_dict_exp4_012626_221_311"
 
 #==============================================================================#
 

@@ -182,7 +182,7 @@ function get_plan_with_coordinates(domain::Domain, state::State, plan::Vector{Te
 end
 
 # Main script
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_new")
+PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_012626")
 OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
 mkpath(OUTPUT_DIR)
 

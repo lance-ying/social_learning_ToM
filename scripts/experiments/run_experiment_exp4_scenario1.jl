@@ -82,6 +82,9 @@ map_times = Dict()
 total_start_time = time()
 
 for (map_id, agent_goals) in metadata
+    if map_id != "sm221" && map_id != "sm311"
+        continue
+    end
     map_start_time = time()
     debug_println("\nProcessing map: $map_id")
 
