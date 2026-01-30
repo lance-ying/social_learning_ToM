@@ -1,7 +1,7 @@
 using JSON
 
 # Parse all txt files in problems_exp4 to extract agent goals with naive/actual types
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_012626")
+PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_013026")
 
 metadata = Dict()
 

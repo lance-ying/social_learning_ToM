@@ -182,7 +182,7 @@ function get_plan_with_coordinates(domain::Domain, state::State, plan::Vector{Te
 end
 
 # Main script
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_012626")
+PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_013026")
 OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
 mkpath(OUTPUT_DIR)
 
@@ -273,7 +273,7 @@ for (map_id, agent_goals) in metadata
 end
 
 # Save to JSON
-output_path = joinpath(OUTPUT_DIR, "pathing_exp4_new_maps_again.json")
+output_path = joinpath(OUTPUT_DIR, "pathing_exp4_013026.json")
 open(output_path, "w") do io
     JSON.print(io, pathing_dict, 4)
 end
