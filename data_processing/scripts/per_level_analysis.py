@@ -279,9 +279,12 @@ def per_level_correlation(human_json_path: Path, model_json_path: Path, output_d
         'model_agent2': df['model_agent2'],
         'human_agent2_mean': df['human_agent2_mean'],
         'human_agent2_sd': df['human_agent2_sd'],
+        'error_agent2': df['error_agent2'],
         'model_agent3': df['model_agent3'],
         'human_agent3_mean': df['human_agent3_mean'],
         'human_agent3_sd': df['human_agent3_sd'],
+        'error_agent3': df['error_agent3'],
+        'error_total': df['error_total'],
         'n_participants': df['n_participants']
     })
 

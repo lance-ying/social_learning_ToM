@@ -46,7 +46,7 @@ def filter_participants_by_score(scores_csv: Path, min_score: float = 0):
     return filtered['participant_id'].tolist()
 
 
-def main(analysis_dir: str, min_score: float = 0, output_suffix: str = "filtered"):
+def main(analysis_dir: str, min_score: float = 0, output_suffix: str = "filtered", model_json_path: str = None):
     """
     Run filtered correlation analysis.
 
@@ -54,6 +54,7 @@ def main(analysis_dir: str, min_score: float = 0, output_suffix: str = "filtered
         analysis_dir: Directory containing the full analysis
         min_score: Minimum score threshold for inclusion
         output_suffix: Suffix for output directory
+        model_json_path: Optional path to model predictions JSON
     """
     analysis_dir = Path(analysis_dir)
 
@@ -63,7 +64,10 @@ def main(analysis_dir: str, min_score: float = 0, output_suffix: str = "filtered
 
     script_dir = Path(__file__).parent
     data_processing_dir = script_dir.parent
-    model_json = data_processing_dir / "results/dictionaries/steps_dict_exp4_point5_updated.json"
+    if model_json_path:
+        model_json = Path(model_json_path)
+    else:
+        model_json = data_processing_dir / "results/dictionaries/steps_dict_exp4_point5_updated.json"
 
     output_dir = analysis_dir / f"correlation_{output_suffix}"
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -148,13 +152,15 @@ def main(analysis_dir: str, min_score: float = 0, output_suffix: str = "filtered
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
-        print("Usage: python filtered_correlation.py <analysis_directory> [min_score]")
+        print("Usage: python filtered_correlation.py <analysis_directory> [min_score] [model_json_path]")
         print("\nExample:")
         print("  python filtered_correlation.py analysis_pilot_exp4 0")
         print("  python filtered_correlation.py analysis_pilot_exp4 10")
+        print("  python filtered_correlation.py analysis_pilot_exp4 0 steps_dict_exp4_012926.json")
         sys.exit(1)
 
     analysis_directory = sys.argv[1]
     minimum_score = float(sys.argv[2]) if len(sys.argv) > 2 else 0
+    model_json_path = sys.argv[3] if len(sys.argv) > 3 else None
 
-    main(analysis_directory, minimum_score)
+    main(analysis_directory, minimum_score, model_json_path=model_json_path)

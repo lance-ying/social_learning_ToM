@@ -13,14 +13,14 @@ import pandas as pd
 def calculate_bonus(score: float) -> float:
     """
     Calculate bonus payment:
-    - $0.50 per 25 points
+    - $0.50 per 75 points
     - Capped at $1.00
     - If score <= 0, bonus = $0.00
     """
     if score <= 0:
         return 0.0
 
-    bonus = (score / 25.0) * 0.50
+    bonus = (score / 75.0) * 0.50
     return min(bonus, 1.0)
 
 
