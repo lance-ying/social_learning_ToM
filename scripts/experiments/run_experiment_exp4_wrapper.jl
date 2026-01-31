@@ -8,13 +8,13 @@ using JSON
 #==============================================================================#
 
 # Experiment identifier - used for problem directory and naming
-experiment_id = "exp4_012626"
+experiment_id = "exp4_013026"
 
 # Inference data file (relative to project root or absolute path)
-inference_file = "Inference_exp4_012926.jld2"
+inference_file = "inference_exp4_013026.jld2"
 
 # Output prefix for results files (will have _scenario1.json, _scenario2.json, .json appended)
-output_prefix = "steps_dict_exp4_012926"
+output_prefix = "steps_dict_exp4_013026"
 
 #==============================================================================#
 

@@ -17,12 +17,12 @@ include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "planners.jl"))
 
 # Define directory paths
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_012626")
+PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp4_013026")
 OUTPUT_DIR = joinpath(@__DIR__, "..", "..", "scripts", "experiments", "experiment_outputs")
 mkpath(OUTPUT_DIR)
 
 # Open debug log file
-debug_log_path = joinpath(OUTPUT_DIR, "debug_output_inference_exp4_012926.txt")
+debug_log_path = joinpath(OUTPUT_DIR, "debug_output_inference_exp4_013026.txt")
 debug_log_file = open(debug_log_path, "w")
 function debug_println(args...)
     msg = join(string.(args), " ")
@@ -544,7 +544,7 @@ for agent in keys(goal_probs_conditioned_dict)
     end
 end
 
-output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_exp4_012926.jld2")
+output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_exp4_013026.jld2")
 save(output_path, data)
 debug_println("[DEBUG] Saved to: $output_path")
 debug_println("[DEBUG] File size: $(round(filesize(output_path) / 1024, digits=2)) KB")
