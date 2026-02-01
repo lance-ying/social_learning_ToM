@@ -6,6 +6,7 @@ using PDDLViz, GLMakie
 using JLD2, FileIO
 using JSON
 using ProgressMeter
+using Statistics
 # Register PDDL array theory
 PDDL.Arrays.register!()
 
@@ -42,6 +43,9 @@ problem_files = filter(f -> endswith(f, ".pddl") && !occursin("plan", f), readdi
 
 metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
 metadata = JSON.parsefile(metadata_path)
+
+# Optional map filter: ARGS[1] = comma-separated map IDs, e.g. "sm211,sm221"
+selected_maps = isempty(ARGS) || isempty(ARGS[1]) ? String[] : split(ARGS[1], ",")
 
 # Helper function to filter ASCII map to only include specified agent
 function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
@@ -181,6 +185,10 @@ n_states = 2
 total_iterations = length(agents_to_infer) * n_maps * n_scenarios * n_goals * n_states
 progress = Progress(total_iterations, desc="Inference progress: ", showspeed=true)
 
+# Track timing
+agent_times = Dict()
+total_start_time = time()
+
 for agent_name in agents_to_infer
     agent_sym = Symbol(agent_name)
 
@@ -196,6 +204,9 @@ for agent_name in agents_to_infer
         # if map_id != "sm221" && map_id != "sm311"
         #     continue
         # end
+        if !isempty(selected_maps) && !(map_id in selected_maps)
+            continue
+        end
         debug_println("Processing map: $map_id for $agent_name")
 
         # Get goals for this agent: [{"gem": 1, "type": "naive"}, {"gem": 3, "type": "naive"}]
@@ -520,11 +531,20 @@ for agent_name in agents_to_infer
     end
 
     agent_elapsed = time() - agent_start_time
+    agent_times[agent_name] = agent_elapsed
+    println("  $agent_name completed in $(round(agent_elapsed, digits=2))s")
     debug_println("\n[DEBUG] Completed inference for $agent_name in $(round(agent_elapsed, digits=2))s\n")
 end
 
 # Finish progress bar
 finish!(progress)
+
+total_elapsed = time() - total_start_time
+println("\n=== Timing Summary ===")
+println("Total time: $(round(total_elapsed, digits=2))s")
+println("Average per agent: $(round(mean(values(agent_times)), digits=2))s")
+println("Fastest agent: $(round(minimum(values(agent_times)), digits=2))s")
+println("Slowest agent: $(round(maximum(values(agent_times)), digits=2))s")
 
 data = Dict(
     "goal" => goal_probs_conditioned_dict,
@@ -544,7 +564,8 @@ for agent in keys(goal_probs_conditioned_dict)
     end
 end
 
-output_path = joinpath(@__DIR__, "..", "..", "data", "inference", "inference_exp4_013026.jld2")
+output_filename = length(ARGS) >= 2 && !isempty(ARGS[2]) ? ARGS[2] : "inference_exp4_013026.jld2"
+output_path = joinpath(@__DIR__, "..", "..", "data", "inference", output_filename)
 save(output_path, data)
 debug_println("[DEBUG] Saved to: $output_path")
 debug_println("[DEBUG] File size: $(round(filesize(output_path) / 1024, digits=2)) KB")

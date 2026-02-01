@@ -41,6 +41,7 @@ else
     inference_file = "inference_data_exp4_012626.jld2"
     output_prefix = "steps_dict_exp4_012626"
 end
+selected_maps = length(ARGS) >= 4 && !isempty(ARGS[4]) ? split(ARGS[4], ",") : String[]
 
 # Define directory paths
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
@@ -85,6 +86,9 @@ for (map_id, agent_goals) in metadata
     # if map_id != "sm221" && map_id != "sm311"
     #     continue
     # end
+    if !isempty(selected_maps) && !(map_id in selected_maps)
+        continue
+    end
     map_start_time = time()
     debug_println("\nProcessing map: $map_id")
 
