@@ -3208,20 +3208,10 @@
         "scenario2": {
             "agent2": {
                 "gem": 3,
-                "plan_length": 5,
+                "plan_length": 3,
                 "needs_wizards": false,
                 "type": "actual",
                 "plan": [
-                    {
-                        "action": "right(agent2)",
-                        "x": 7,
-                        "y": 12
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 8,
-                        "y": 12
-                    },
                     {
                         "action": "right(agent2)",
                         "x": 9,
@@ -3491,10 +3481,20 @@
         "scenario1": {
             "agent2": {
                 "gem": 1,
-                "plan_length": 50,
+                "plan_length": 52,
                 "needs_wizards": true,
                 "type": "actual",
                 "plan": [
+                    {
+                        "action": "left(agent2)",
+                        "x": 9,
+                        "y": 12
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 8,
+                        "y": 12
+                    },
                     {
                         "action": "left(agent2)",
                         "x": 7,
@@ -4668,11 +4668,26 @@
     "sm432": {
         "scenario2": {
             "agent2": {
-                "gem": 2,
-                "plan_length": 39,
-                "needs_wizards": true,
+                "gem": 3,
+                "plan_length": 9,
+                "needs_wizards": false,
                 "type": "actual",
                 "plan": [
+                    {
+                        "action": "right(agent2)",
+                        "x": 8,
+                        "y": 10
+                    },
+                    {
+                        "action": "interact(wizard4)",
+                        "x": 9,
+                        "y": 10
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 9,
+                        "y": 10
+                    },
                     {
                         "action": "left(agent2)",
                         "x": 8,
@@ -4689,188 +4704,23 @@
                         "y": 10
                     },
                     {
-                        "action": "left(agent2)",
+                        "action": "pass(agent2, key2, door3)",
                         "x": 5,
                         "y": 10
                     },
                     {
-                        "action": "up(agent2)",
-                        "x": 4,
-                        "y": 10
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 4,
-                        "y": 9
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 4,
-                        "y": 8
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 4,
-                        "y": 7
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 4,
-                        "y": 6
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 3,
-                        "y": 6
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 2,
-                        "y": 6
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 1,
-                        "y": 6
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 1,
-                        "y": 5
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 1,
-                        "y": 4
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 2,
-                        "y": 4
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 3,
-                        "y": 4
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 4,
-                        "y": 4
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 5,
-                        "y": 4
-                    },
-                    {
-                        "action": "interact(wizard3)",
-                        "x": 5,
-                        "y": 3
-                    },
-                    {
                         "action": "down(agent2)",
                         "x": 5,
-                        "y": 3
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 5,
-                        "y": 4
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 4,
-                        "y": 4
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 3,
-                        "y": 4
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 2,
-                        "y": 4
-                    },
-                    {
-                        "action": "down(agent2)",
-                        "x": 1,
-                        "y": 4
-                    },
-                    {
-                        "action": "down(agent2)",
-                        "x": 1,
-                        "y": 5
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 1,
-                        "y": 6
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 2,
-                        "y": 6
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 3,
-                        "y": 6
-                    },
-                    {
-                        "action": "down(agent2)",
-                        "x": 4,
-                        "y": 6
-                    },
-                    {
-                        "action": "down(agent2)",
-                        "x": 4,
-                        "y": 7
-                    },
-                    {
-                        "action": "down(agent2)",
-                        "x": 4,
-                        "y": 8
-                    },
-                    {
-                        "action": "down(agent2)",
-                        "x": 4,
-                        "y": 9
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 4,
-                        "y": 10
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 3,
-                        "y": 10
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 2,
-                        "y": 10
-                    },
-                    {
-                        "action": "pass(agent2, key1, door2)",
-                        "x": 1,
-                        "y": 10
-                    },
-                    {
-                        "action": "down(agent2)",
-                        "x": 1,
                         "y": 11
                     },
                     {
-                        "action": "pickup(agent2, gem2)",
-                        "x": 1,
+                        "action": "pickup(agent2, gem3)",
+                        "x": 5,
                         "y": 12
                     },
                     {
                         "action": "FINAL_POSITION",
-                        "x": 1,
+                        "x": 5,
                         "y": 12
                     }
                 ]
@@ -5915,79 +5765,29 @@
         "scenario2": {
             "agent2": {
                 "gem": 3,
-                "plan_length": 33,
+                "plan_length": 23,
                 "needs_wizards": true,
                 "type": "actual",
                 "plan": [
                     {
                         "action": "right(agent2)",
-                        "x": 2,
-                        "y": 10
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 3,
-                        "y": 10
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 4,
-                        "y": 10
-                    },
-                    {
-                        "action": "right(agent2)",
                         "x": 5,
-                        "y": 10
+                        "y": 3
                     },
                     {
                         "action": "right(agent2)",
                         "x": 6,
-                        "y": 10
+                        "y": 3
                     },
                     {
                         "action": "right(agent2)",
                         "x": 7,
-                        "y": 10
+                        "y": 3
                     },
                     {
                         "action": "right(agent2)",
                         "x": 8,
-                        "y": 10
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 9,
-                        "y": 10
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 9,
-                        "y": 9
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 9,
-                        "y": 8
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 9,
-                        "y": 7
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 9,
-                        "y": 6
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 9,
-                        "y": 5
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 9,
-                        "y": 4
+                        "y": 3
                     },
                     {
                         "action": "right(agent2)",
@@ -6223,24 +6023,44 @@
         "scenario1": {
             "agent2": {
                 "gem": 2,
-                "plan_length": 6,
+                "plan_length": 10,
                 "needs_wizards": false,
                 "type": "actual",
                 "plan": [
                     {
-                        "action": "right(agent2)",
-                        "x": 2,
-                        "y": 10
+                        "action": "down(agent2)",
+                        "x": 5,
+                        "y": 3
                     },
                     {
-                        "action": "right(agent2)",
-                        "x": 3,
-                        "y": 10
+                        "action": "down(agent2)",
+                        "x": 5,
+                        "y": 4
                     },
                     {
-                        "action": "right(agent2)",
-                        "x": 4,
-                        "y": 10
+                        "action": "down(agent2)",
+                        "x": 5,
+                        "y": 5
+                    },
+                    {
+                        "action": "down(agent2)",
+                        "x": 5,
+                        "y": 6
+                    },
+                    {
+                        "action": "down(agent2)",
+                        "x": 5,
+                        "y": 7
+                    },
+                    {
+                        "action": "down(agent2)",
+                        "x": 5,
+                        "y": 8
+                    },
+                    {
+                        "action": "down(agent2)",
+                        "x": 5,
+                        "y": 9
                     },
                     {
                         "action": "down(agent2)",
@@ -7096,10 +6916,40 @@
         "scenario2": {
             "agent2": {
                 "gem": 2,
-                "plan_length": 36,
+                "plan_length": 42,
                 "needs_wizards": true,
                 "type": "actual",
                 "plan": [
+                    {
+                        "action": "up(agent2)",
+                        "x": 7,
+                        "y": 12
+                    },
+                    {
+                        "action": "up(agent2)",
+                        "x": 7,
+                        "y": 11
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 7,
+                        "y": 10
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 6,
+                        "y": 10
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 5,
+                        "y": 10
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 4,
+                        "y": 10
+                    },
                     {
                         "action": "up(agent2)",
                         "x": 3,
@@ -7474,44 +7324,54 @@
         "scenario1": {
             "agent2": {
                 "gem": 1,
-                "plan_length": 12,
+                "plan_length": 14,
                 "needs_wizards": false,
                 "type": "actual",
                 "plan": [
                     {
-                        "action": "down(agent2)",
-                        "x": 3,
-                        "y": 10
+                        "action": "right(agent2)",
+                        "x": 7,
+                        "y": 12
+                    },
+                    {
+                        "action": "right(agent2)",
+                        "x": 8,
+                        "y": 12
+                    },
+                    {
+                        "action": "right(agent2)",
+                        "x": 9,
+                        "y": 12
                     },
                     {
                         "action": "interact(wizard3)",
-                        "x": 3,
-                        "y": 11
+                        "x": 10,
+                        "y": 12
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 10,
+                        "y": 12
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 9,
+                        "y": 12
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 8,
+                        "y": 12
                     },
                     {
                         "action": "up(agent2)",
-                        "x": 3,
+                        "x": 7,
+                        "y": 12
+                    },
+                    {
+                        "action": "up(agent2)",
+                        "x": 7,
                         "y": 11
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 3,
-                        "y": 10
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 4,
-                        "y": 10
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 5,
-                        "y": 10
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 6,
-                        "y": 10
                     },
                     {
                         "action": "right(agent2)",
@@ -7733,96 +7593,11 @@
     "sm431": {
         "scenario2": {
             "agent2": {
-                "gem": 2,
-                "plan_length": 29,
-                "needs_wizards": true,
+                "gem": 3,
+                "plan_length": 19,
+                "needs_wizards": false,
                 "type": "actual",
                 "plan": [
-                    {
-                        "action": "left(agent2)",
-                        "x": 2,
-                        "y": 6
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 1,
-                        "y": 6
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 1,
-                        "y": 5
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 1,
-                        "y": 4
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 2,
-                        "y": 4
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 3,
-                        "y": 4
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 4,
-                        "y": 4
-                    },
-                    {
-                        "action": "up(agent2)",
-                        "x": 5,
-                        "y": 4
-                    },
-                    {
-                        "action": "interact(wizard3)",
-                        "x": 5,
-                        "y": 3
-                    },
-                    {
-                        "action": "down(agent2)",
-                        "x": 5,
-                        "y": 3
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 5,
-                        "y": 4
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 4,
-                        "y": 4
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 3,
-                        "y": 4
-                    },
-                    {
-                        "action": "left(agent2)",
-                        "x": 2,
-                        "y": 4
-                    },
-                    {
-                        "action": "down(agent2)",
-                        "x": 1,
-                        "y": 4
-                    },
-                    {
-                        "action": "down(agent2)",
-                        "x": 1,
-                        "y": 5
-                    },
-                    {
-                        "action": "right(agent2)",
-                        "x": 1,
-                        "y": 6
-                    },
                     {
                         "action": "right(agent2)",
                         "x": 2,
@@ -7854,38 +7629,73 @@
                         "y": 9
                     },
                     {
-                        "action": "left(agent2)",
+                        "action": "right(agent2)",
                         "x": 4,
                         "y": 10
                     },
                     {
-                        "action": "left(agent2)",
-                        "x": 3,
+                        "action": "right(agent2)",
+                        "x": 5,
+                        "y": 10
+                    },
+                    {
+                        "action": "right(agent2)",
+                        "x": 6,
+                        "y": 10
+                    },
+                    {
+                        "action": "right(agent2)",
+                        "x": 7,
+                        "y": 10
+                    },
+                    {
+                        "action": "right(agent2)",
+                        "x": 8,
+                        "y": 10
+                    },
+                    {
+                        "action": "interact(wizard4)",
+                        "x": 9,
                         "y": 10
                     },
                     {
                         "action": "left(agent2)",
-                        "x": 2,
+                        "x": 9,
                         "y": 10
                     },
                     {
-                        "action": "pass(agent2, key1, door2)",
-                        "x": 1,
+                        "action": "left(agent2)",
+                        "x": 8,
+                        "y": 10
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 7,
+                        "y": 10
+                    },
+                    {
+                        "action": "left(agent2)",
+                        "x": 6,
+                        "y": 10
+                    },
+                    {
+                        "action": "pass(agent2, key2, door3)",
+                        "x": 5,
                         "y": 10
                     },
                     {
                         "action": "down(agent2)",
-                        "x": 1,
+                        "x": 5,
                         "y": 11
                     },
                     {
-                        "action": "pickup(agent2, gem2)",
-                        "x": 1,
+                        "action": "pickup(agent2, gem3)",
+                        "x": 5,
                         "y": 12
                     },
                     {
                         "action": "FINAL_POSITION",
-                        "x": 1,
+                        "x": 5,
                         "y": 12
                     }
                 ]
