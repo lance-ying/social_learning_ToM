@@ -1,0 +1,11 @@
+
+Processing map: sm521
+  Scenario 1
+    agent2 (X) -> gem3 (actual), agent3 (Y) -> gem2 (naive)
+    Loading probability data: s_id_agent2=1, s_id_agent3=1
+    agent2_gem=3, agent3_gem=2
+    Loaded agent2 probs: goal_probs size=(3, 44), state_probs size=(5, 44)
+    Loaded agent3 probs: goal_probs size=(3, 53), state_probs size=(5, 53)
+    Planning for agent1...
+    problem.goal = has(agent1, gem2)
+    agent1 location = (1, 10)
