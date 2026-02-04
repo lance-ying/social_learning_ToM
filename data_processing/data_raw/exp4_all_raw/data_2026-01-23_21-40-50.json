@@ -1,0 +1,502 @@
+{
+  "consents": {
+    "-OjgiZMJ8mt3sOmgaLPB": {
+      "doNotRecontact": true,
+      "sessionId": "u1769203185723",
+      "timestamp": "2026-01-23T21:19:49.220Z"
+    },
+    "-OjgivAintZx0tEi4WWW": {
+      "doNotRecontact": true,
+      "sessionId": "u1769203279938",
+      "timestamp": "2026-01-23T21:21:22.689Z"
+    },
+    "-Ojgkt2GR_p16XMuZgof": {
+      "doNotRecontact": true,
+      "sessionId": "u1769203792368",
+      "timestamp": "2026-01-23T21:29:58.243Z"
+    },
+    "-OjglXxgzL1id7DXMi78": {
+      "doNotRecontact": true,
+      "sessionId": "u1769203967177",
+      "timestamp": "2026-01-23T21:32:49.920Z"
+    }
+  },
+  "counters": {
+    "sessionCounter": 4
+  },
+  "users": {
+    "u1769203185723": {
+      "currentLevel": "s111_1",
+      "lastActivity": 1769203215805,
+      "levels": {
+        "s111_1": {
+          "batches": {
+            "batch_1769203215805_qq2e7ftj4": {
+              "batchInfo": {
+                "batchId": "batch_1769203215805_qq2e7ftj4",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1769203215805
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1769203185803
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1769203185803,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1769203185803
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1769203185763,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1769203215805_qq2e7ftj4",
+            "lastEvent": 1769203215805,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1769203185723",
+      "sessionNumber": 1,
+      "startTime": 1769203185723,
+      "status": "active",
+      "totalBatchedEvents": 1,
+      "totalEvents": 0
+    },
+    "u1769203279938": {
+      "currentLevel": "sm111_1",
+      "lastActivity": 1769203310027,
+      "levels": {
+        "s111_1": {
+          "batches": {
+            "batch_1769203310027_3futk96b0": {
+              "batchInfo": {
+                "batchId": "batch_1769203310027_3futk96b0",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1769203310027
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1769203280025
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1769203280025,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1769203280025
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1769203279982,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1769203310027_3futk96b0",
+            "lastEvent": 1769203310027,
+            "totalEvents": 1
+          }
+        },
+        "sm111_1": {
+          "batches": {
+            "batch_1769203310027_fk73g4lqp": {
+              "batchInfo": {
+                "batchId": "batch_1769203310027_fk73g4lqp",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1769203310027
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "sm111_1",
+                    "startTime": 1769203280152
+                  },
+                  "levelId": "sm111_1",
+                  "timestamp": 1769203280152,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1769203280152
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1769203280027,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1769203310027_fk73g4lqp",
+            "lastEvent": 1769203310027,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1769203279938",
+      "sessionNumber": 2,
+      "startTime": 1769203279938,
+      "status": "active",
+      "totalBatchedEvents": 2,
+      "totalEvents": 0
+    },
+    "u1769203792368": {
+      "currentLevel": "sm111_1",
+      "lastActivity": 1769203822449,
+      "levels": {
+        "s111_1": {
+          "batches": {
+            "batch_1769203822449_2kre789hc": {
+              "batchInfo": {
+                "batchId": "batch_1769203822449_2kre789hc",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1769203822449
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1769203792446
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1769203792446,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1769203792446
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1769203792407,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1769203822449_2kre789hc",
+            "lastEvent": 1769203822449,
+            "totalEvents": 1
+          }
+        },
+        "sm111_1": {
+          "batches": {
+            "batch_1769203822449_1e3vzedhl": {
+              "batchInfo": {
+                "batchId": "batch_1769203822449_1e3vzedhl",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1769203822449
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "sm111_1",
+                    "startTime": 1769203792487
+                  },
+                  "levelId": "sm111_1",
+                  "timestamp": 1769203792487,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1769203792487
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1769203792447,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1769203822449_1e3vzedhl",
+            "lastEvent": 1769203822449,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1769203792368",
+      "sessionNumber": 3,
+      "startTime": 1769203792368,
+      "status": "active",
+      "totalBatchedEvents": 2,
+      "totalEvents": 0
+    },
+    "u1769203967177": {
+      "currentLevel": "comprehension_check",
+      "lastActivity": 1769204024239,
+      "levels": {
+        "comprehension_check": {
+          "batches": {
+            "batch_1769204024239_8uo4umnyp": {
+              "batchInfo": {
+                "batchId": "batch_1769204024239_8uo4umnyp",
+                "eventCount": 1,
+                "flushReason": "manual_flush",
+                "flushTime": 1769204024239
+              },
+              "events": [
+                {
+                  "data": {
+                    "allAnswersCorrect": true,
+                    "answers": {
+                      "barrier": "Get the red amulet from the red wizard",
+                      "expert_vs_novice": "Expert agents know which blue wizard has the amulet, Novice agents do not",
+                      "novice_behavior": "Check blue wizards one by one until finding the one with the amulet",
+                      "observe": "You see that the player interacted with a wizard (without details about what they received)",
+                      "players": "The other players stay still"
+                    },
+                    "failedAttempts": 0,
+                    "interactionType": "comprehension_check",
+                    "questions": [
+                      {
+                        "correctAnswer": "Expert agents know which blue wizard has the amulet, Novice agents do not",
+                        "correctness": "correct",
+                        "id": "expert_vs_novice",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Expert agents know which blue wizard has the amulet, Novice agents do not"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Expert agents move faster than Novice agents"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Expert agents can break through barriers without amulets"
+                          }
+                        ],
+                        "question": "What is the key difference between an Expert agent and a Novice agent?",
+                        "userAnswer": "Expert agents know which blue wizard has the amulet, Novice agents do not"
+                      },
+                      {
+                        "correctAnswer": "Check blue wizards one by one until finding the one with the amulet",
+                        "correctness": "correct",
+                        "id": "novice_behavior",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Go directly to the blue wizard that has the amulet"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Check blue wizards one by one until finding the one with the amulet"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Skip getting the amulet and break through the barrier"
+                          }
+                        ],
+                        "question": "If a Novice agent needs a blue amulet to reach their treasure, what will they do?",
+                        "userAnswer": "Check blue wizards one by one until finding the one with the amulet"
+                      },
+                      {
+                        "correctAnswer": "Get the red amulet from the red wizard",
+                        "correctness": "correct",
+                        "id": "barrier",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Get the red amulet from the red wizard"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Get the red amulet from one of the blue wizards"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Try to break through the barrier directly"
+                          }
+                        ],
+                        "question": "If the treasure is behind a barrier that requires a red amulet, what should you do?",
+                        "userAnswer": "Get the red amulet from the red wizard"
+                      },
+                      {
+                        "correctAnswer": "The other players stay still",
+                        "correctness": "correct",
+                        "id": "players",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "The other players stay still"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "The other players continue moving as normal"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "The other players move twice as fast"
+                          }
+                        ],
+                        "question": "What happens to the other players when you perform your own action (instead of observing)?",
+                        "userAnswer": "The other players stay still"
+                      },
+                      {
+                        "correctAnswer": "You see that the player interacted with a wizard (without details about what they received)",
+                        "correctness": "correct",
+                        "id": "observe",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "You see that the player interacted with a wizard (without details about what they received)"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "You see exactly which amulet the player received"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "You see nothing about the player's interactions"
+                          }
+                        ],
+                        "question": "When you observe a player, what do you see in the notifications?",
+                        "userAnswer": "You see that the player interacted with a wizard (without details about what they received)"
+                      }
+                    ],
+                    "result": "passed",
+                    "sessionId": "u1769203967177"
+                  },
+                  "levelId": "comprehension_check",
+                  "timestamp": 1769204024238,
+                  "type": "interaction"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 1,
+                "playerActions": 0,
+                "startTime": 1769204024238
+              }
+            }
+          },
+          "summary": {
+            "lastBatchId": "batch_1769204024239_8uo4umnyp",
+            "lastEvent": 1769204024239,
+            "totalEvents": 1
+          }
+        },
+        "s111_1": {
+          "batches": {
+            "batch_1769203997262_7jh5xadqu": {
+              "batchInfo": {
+                "batchId": "batch_1769203997262_7jh5xadqu",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1769203997262
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1769203967259
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1769203967259,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1769203967259
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1769203967219,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1769203997262_7jh5xadqu",
+            "lastEvent": 1769203997262,
+            "totalEvents": 1
+          }
+        },
+        "sm111_1": {
+          "batches": {
+            "batch_1769203997262_6f6ejfxg2": {
+              "batchInfo": {
+                "batchId": "batch_1769203997262_6f6ejfxg2",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1769203997262
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "sm111_1",
+                    "startTime": 1769203967304
+                  },
+                  "levelId": "sm111_1",
+                  "timestamp": 1769203967304,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1769203967304
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1769203967260,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1769203997262_6f6ejfxg2",
+            "lastEvent": 1769203997262,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1769203967177",
+      "sessionNumber": 4,
+      "startTime": 1769203967177,
+      "status": "active",
+      "totalBatchedEvents": 1,
+      "totalEvents": 0
+    }
+  }
+}

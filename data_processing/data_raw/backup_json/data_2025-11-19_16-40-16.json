@@ -1,0 +1,704 @@
+{
+  "consents": {
+    "-OeRyA5ewtb8R8hZ4tyo": {
+      "doNotRecontact": true,
+      "sessionId": "u1763570132332",
+      "timestamp": "2025-11-19T16:35:35.413Z"
+    }
+  },
+  "counters": {
+    "sessionCounter": 3
+  },
+  "users": {
+    "u1763570132332": {
+      "currentLevel": "sm332_true",
+      "lastActivity": 1763570180368,
+      "levels": {
+        "s111_1": {
+          "batches": {
+            "batch_1763570162430_2pu0rdjkf": {
+              "batchInfo": {
+                "batchId": "batch_1763570162430_2pu0rdjkf",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1763570162430
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1763570132428
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1763570132429,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1763570132429
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1763570132378,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1763570162430_2pu0rdjkf",
+            "lastEvent": 1763570162430,
+            "totalEvents": 1
+          }
+        },
+        "sm111_1": {
+          "endTime": 1763570150948,
+          "status": "completed"
+        },
+        "sm332_true": {
+          "batches": {
+            "batch_1763570162430_ah1xbprnp": {
+              "batchInfo": {
+                "batchId": "batch_1763570162430_ah1xbprnp",
+                "eventCount": 3,
+                "flushReason": "timer_expired",
+                "flushTime": 1763570162430
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "sm332_true",
+                    "startTime": 1763570151051
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570151051,
+                  "type": "level_start"
+                },
+                {
+                  "data": {
+                    "agentId": 2,
+                    "agentPos": {
+                      "x": 4,
+                      "y": 2
+                    },
+                    "pathType": "experienced2",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 11
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570156588,
+                  "type": "agent_observe"
+                },
+                {
+                  "data": {
+                    "agentId": 2,
+                    "agentPos": {
+                      "x": 3,
+                      "y": 2
+                    },
+                    "pathType": "experienced2",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 11
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570159281,
+                  "type": "agent_observe"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 2,
+                "eventCount": 3,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1763570151051
+              }
+            },
+            "batch_1763570180368_lfgrgtd4x": {
+              "batchInfo": {
+                "batchId": "batch_1763570180368_lfgrgtd4x",
+                "eventCount": 41,
+                "flushReason": "level_complete",
+                "flushTime": 1763570180368
+              },
+              "events": [
+                {
+                  "data": {
+                    "agentId": 2,
+                    "agentPos": {
+                      "x": 2,
+                      "y": 2
+                    },
+                    "pathType": "experienced2",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 11
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570162664,
+                  "type": "agent_observe"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 11
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570164810,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 10
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570164976,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 9
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570165117,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 8
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570165264,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570165411,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 6
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570165574,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 5
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570165798,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 4
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570166112,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 3
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570166521,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 2
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570167014,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 2,
+                      "y": 2
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570167203,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 1,
+                      "y": 2
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570167477,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "interactionType": "wizard_interaction",
+                    "item": "blueAmulet",
+                    "px": 1,
+                    "py": 2,
+                    "wx": 0,
+                    "wy": 2
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570167477,
+                  "type": "interaction"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 11
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570174767,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 10
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570174931,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 9
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570175089,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "up",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 8
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570175254,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "right",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570175705,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "right",
+                    "playerPos": {
+                      "x": 4,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570175858,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "right",
+                    "playerPos": {
+                      "x": 5,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570176018,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "right",
+                    "playerPos": {
+                      "x": 6,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570176182,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "right",
+                    "playerPos": {
+                      "x": 7,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570176341,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "right",
+                    "playerPos": {
+                      "x": 8,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570176514,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "right",
+                    "playerPos": {
+                      "x": 9,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570176778,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "interactionType": "wizard_interaction",
+                    "item": "redAmulet",
+                    "px": 9,
+                    "py": 7,
+                    "wx": 10,
+                    "wy": 7
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570176778,
+                  "type": "interaction"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 9,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570177769,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 8,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570177920,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 7,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570178076,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 6,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570178240,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 5,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570178414,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 4,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570178737,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 3,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570178893,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 2,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570179071,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "left",
+                    "playerPos": {
+                      "x": 1,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570179240,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "down",
+                    "playerPos": {
+                      "x": 0,
+                      "y": 7
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570179824,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "down",
+                    "playerPos": {
+                      "x": 0,
+                      "y": 8
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570179994,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "down",
+                    "playerPos": {
+                      "x": 0,
+                      "y": 9
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570180177,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "action": "down",
+                    "playerPos": {
+                      "x": 0,
+                      "y": 10
+                    }
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570180365,
+                  "type": "player_action"
+                },
+                {
+                  "data": {
+                    "correct": true,
+                    "goal": "C",
+                    "interactionType": "treasure_interaction",
+                    "outcome": "won",
+                    "treasure": "C",
+                    "x": 0,
+                    "y": 11
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570180365,
+                  "type": "interaction"
+                },
+                {
+                  "data": {
+                    "duration": 48033,
+                    "stepsUsed": 65,
+                    "success": true
+                  },
+                  "levelId": "sm332_true",
+                  "timestamp": 1763570180365,
+                  "type": "level_complete"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 3,
+                "eventCount": 44,
+                "interactions": 3,
+                "playerActions": 36,
+                "startTime": 1763570151051
+              }
+            }
+          },
+          "endTime": 1763570180424,
+          "eventCount": 0,
+          "finalSteps": 65,
+          "levelId": "sm332_true",
+          "startTime": 1763570151003,
+          "status": "completed",
+          "summary": {
+            "agentObservations": 3,
+            "eventCount": 44,
+            "interactions": 3,
+            "playerActions": 36,
+            "startTime": 1763570151051
+          }
+        }
+      },
+      "sessionId": "u1763570132332",
+      "sessionNumber": 1,
+      "startTime": 1763570132332,
+      "status": "active",
+      "totalBatchedEvents": 41,
+      "totalEvents": 0
+    },
+    "u1763570372749": {
+      "levels": {
+        "s111_1": {
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1763570372820,
+          "status": "active"
+        },
+        "sm111_1": {
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1763570372930,
+          "status": "active"
+        }
+      },
+      "sessionId": "u1763570372749",
+      "sessionNumber": 2,
+      "startTime": 1763570372749,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1763570409335": {
+      "levels": {
+        "s111_1": {
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1763570409381,
+          "status": "active"
+        },
+        "sm111_1": {
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1763570409436,
+          "status": "active"
+        }
+      },
+      "sessionId": "u1763570409335",
+      "sessionNumber": 3,
+      "startTime": 1763570409335,
+      "status": "active",
+      "totalEvents": 0
+    }
+  }
+}

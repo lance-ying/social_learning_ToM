@@ -1,0 +1,139 @@
+{
+  "counters": {
+    "sessionCounter": 1
+  },
+  "users": {
+    "u1760980065594": {
+      "currentLevel": "comprehension_check",
+      "lastActivity": 1760980074233,
+      "levels": {
+        "comprehension_check": {
+          "batches": {
+            "batch_1760980074233_mew7tbgm4": {
+              "batchInfo": {
+                "batchId": "batch_1760980074233_mew7tbgm4",
+                "eventCount": 1,
+                "flushReason": "manual_flush",
+                "flushTime": 1760980074233
+              },
+              "events": [
+                {
+                  "data": {
+                    "allAnswersCorrect": true,
+                    "answers": {
+                      "barrier": "Find a red amulet from the red wizard",
+                      "goal": "Collect one of the treasures, which may be the same or different from yours",
+                      "task": "Collect one of the treasure chests"
+                    },
+                    "failedAttempts": 0,
+                    "interactionType": "comprehension_check",
+                    "questions": [
+                      {
+                        "correctAnswer": "Collect one of the treasure chests",
+                        "correctness": "correct",
+                        "id": "task",
+                        "options": [
+                          "Collect one of the treasure chests",
+                          "Collect all the treasure chests",
+                          "Watch and help the other player collect treasure chests"
+                        ],
+                        "question": "What is the task of this experiment?",
+                        "userAnswer": "Collect one of the treasure chests"
+                      },
+                      {
+                        "correctAnswer": "Find a red amulet from the red wizard",
+                        "correctness": "correct",
+                        "id": "barrier",
+                        "options": [
+                          "Find a red amulet from the red wizard",
+                          "Find a red amulet from one of the blue wizards",
+                          "Try to go through the barrier directly"
+                        ],
+                        "question": "The treasure chest is hidden behind a red barrier, what should you do?",
+                        "userAnswer": "Find a red amulet from the red wizard"
+                      },
+                      {
+                        "correctAnswer": "Collect one of the treasures, which may be the same or different from yours",
+                        "correctness": "correct",
+                        "id": "goal",
+                        "options": [
+                          "Collect the same treasure than yours",
+                          "Collect a different treasure than yours",
+                          "Collect one of the treasures, which may be the same or different from yours"
+                        ],
+                        "question": "What is the goal of the other player?",
+                        "userAnswer": "Collect one of the treasures, which may be the same or different from yours"
+                      }
+                    ],
+                    "result": "passed",
+                    "sessionId": "u1760980065594"
+                  },
+                  "levelId": "comprehension_check",
+                  "timestamp": 1760980074232,
+                  "type": "interaction"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 1,
+                "playerActions": 0,
+                "startTime": 1760980074232
+              }
+            }
+          },
+          "summary": {
+            "lastBatchId": "batch_1760980074233_mew7tbgm4",
+            "lastEvent": 1760980074233,
+            "totalEvents": 1
+          }
+        },
+        "s111_1": {
+          "batches": {
+            "batch_1760980074233_im443okic": {
+              "batchInfo": {
+                "batchId": "batch_1760980074233_im443okic",
+                "eventCount": 1,
+                "flushReason": "manual_flush",
+                "flushTime": 1760980074233
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1760980065676
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1760980065676,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1760980065677
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1760980065635,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1760980074233_im443okic",
+            "lastEvent": 1760980074233,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1760980065594",
+      "sessionNumber": 1,
+      "startTime": 1760980065594,
+      "status": "active",
+      "totalBatchedEvents": 2,
+      "totalEvents": 0
+    }
+  }
+}

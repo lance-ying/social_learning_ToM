@@ -1,0 +1,1394 @@
+{
+  "consents": {
+    "-OkTUx01SkQcziAheIiT": {
+      "doNotRecontact": true,
+      "sessionId": "u1770038217172",
+      "timestamp": "2026-02-02T13:16:58.834Z"
+    },
+    "-OkTWRsoI4tMR-ox7DqL": {
+      "doNotRecontact": true,
+      "sessionId": "u1770038609676",
+      "timestamp": "2026-02-02T13:23:31.521Z"
+    },
+    "-OkTWqgf3BUkLRB3_KIf": {
+      "doNotRecontact": true,
+      "sessionId": "u1770038715832",
+      "timestamp": "2026-02-02T13:25:17.239Z"
+    },
+    "-OkTYEL6h4yzEKESB-M1": {
+      "doNotRecontact": true,
+      "sessionId": "u1770039079085",
+      "timestamp": "2026-02-02T13:31:20.340Z"
+    }
+  },
+  "counters": {
+    "sessionCounter": 15
+  },
+  "users": {
+    "u1770038203310": {
+      "levels": {
+        "s111_1": {
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770038203350,
+          "status": "active"
+        },
+        "sm111_1": {
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770038203392,
+          "status": "active"
+        }
+      },
+      "sessionId": "u1770038203310",
+      "sessionNumber": 2,
+      "startTime": 1770038203310,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1770038203435": {
+      "levels": {
+        "s111_1": {
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770038203476,
+          "status": "active"
+        },
+        "sm111_1": {
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770038203521,
+          "status": "active"
+        }
+      },
+      "sessionId": "u1770038203435",
+      "sessionNumber": 4,
+      "startTime": 1770038203435,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1770038217172": {
+      "currentLevel": "comprehension_check",
+      "lastActivity": 1770038284131,
+      "levels": {
+        "comprehension_check": {
+          "batches": {
+            "batch_1770038284131_bcp98r0ed": {
+              "batchInfo": {
+                "batchId": "batch_1770038284131_bcp98r0ed",
+                "eventCount": 1,
+                "flushReason": "manual_flush",
+                "flushTime": 1770038284131
+              },
+              "events": [
+                {
+                  "data": {
+                    "allAnswersCorrect": false,
+                    "answers": {
+                      "barrier": "Get the red amulet from the red wizard",
+                      "expert_vs_novice": "Expert agents know which blue wizard has the amulet, Novice agents do not",
+                      "novice_behavior": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet",
+                      "novice_inference": "The first wizard did NOT have the amulet they needed",
+                      "observe": "You see that the player interacted with a wizard (without details about what they received)",
+                      "players": "The other players continue moving as normal",
+                      "who_to_observe": "It depends on the map layout, positioning of wizards, and your goal"
+                    },
+                    "failedAttempts": 1,
+                    "interactionType": "comprehension_check",
+                    "questions": [
+                      {
+                        "correctAnswer": "Expert agents know which blue wizard has the amulet, Novice agents do not",
+                        "correctness": "correct",
+                        "id": "expert_vs_novice",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Expert agents know which blue wizard has the amulet, Novice agents do not"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Expert agents move faster than Novice agents"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Expert agents can break through barriers without amulets"
+                          }
+                        ],
+                        "question": "What is the key difference between an Expert agent and a Novice agent?",
+                        "userAnswer": "Expert agents know which blue wizard has the amulet, Novice agents do not"
+                      },
+                      {
+                        "correctAnswer": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet",
+                        "correctness": "correct",
+                        "id": "novice_behavior",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Go directly to the blue wizard that has the amulet"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Skip getting the amulet and break through the barrier"
+                          }
+                        ],
+                        "question": "If a Novice agent needs a blue amulet to reach their treasure, what will they do?",
+                        "userAnswer": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet"
+                      },
+                      {
+                        "correctAnswer": "Get the red amulet from the red wizard",
+                        "correctness": "correct",
+                        "id": "barrier",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Get the red amulet from the red wizard"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Get the red amulet from one of the blue wizards"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Try to break through the barrier directly"
+                          }
+                        ],
+                        "question": "If the treasure is behind a barrier that requires a red amulet, what should you do?",
+                        "userAnswer": "Get the red amulet from the red wizard"
+                      },
+                      {
+                        "correctAnswer": "The other players stay still",
+                        "correctness": "incorrect",
+                        "id": "players",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "The other players stay still"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "The other players continue moving as normal"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "The other players move twice as fast"
+                          }
+                        ],
+                        "question": "What happens to the other players when you perform your own action (instead of observing)?",
+                        "userAnswer": "The other players continue moving as normal"
+                      },
+                      {
+                        "correctAnswer": "You see that the player interacted with a wizard (without details about what they received)",
+                        "correctness": "correct",
+                        "id": "observe",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "You see that the player interacted with a wizard (without details about what they received)"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "You see exactly which amulet the player received"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "You see nothing about the player's interactions"
+                          }
+                        ],
+                        "question": "When you observe a player, what do you see in the notifications?",
+                        "userAnswer": "You see that the player interacted with a wizard (without details about what they received)"
+                      },
+                      {
+                        "correctAnswer": "The first wizard did NOT have the amulet they needed",
+                        "correctness": "correct",
+                        "id": "novice_inference",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "The first wizard had the amulet they needed"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "The first wizard did NOT have the amulet they needed"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "The agent is confused and doesn't know what they are doing"
+                          }
+                        ],
+                        "question": "If a Novice agent interacts with a wizard and then moves toward another wizard, what does that tell you?",
+                        "userAnswer": "The first wizard did NOT have the amulet they needed"
+                      },
+                      {
+                        "correctAnswer": "It depends on the map layout, positioning of wizards, and your goal",
+                        "correctness": "correct",
+                        "id": "who_to_observe",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Always observe the Expert agent"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Always observe the Novice agent"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "It depends on the map layout, positioning of wizards, and your goal"
+                          },
+                          {
+                            "key": "option4",
+                            "text": "Never observe - you should always act on your own"
+                          }
+                        ],
+                        "question": "Who should you observe to help you find the treasure most efficiently?",
+                        "userAnswer": "It depends on the map layout, positioning of wizards, and your goal"
+                      }
+                    ],
+                    "result": "failed",
+                    "sessionId": "u1770038217172"
+                  },
+                  "levelId": "comprehension_check",
+                  "timestamp": 1770038284130,
+                  "type": "interaction"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 1,
+                "playerActions": 0,
+                "startTime": 1770038284130
+              }
+            }
+          },
+          "summary": {
+            "lastBatchId": "batch_1770038284131_bcp98r0ed",
+            "lastEvent": 1770038284131,
+            "totalEvents": 1
+          }
+        },
+        "s111_1": {
+          "batches": {
+            "batch_1770038247278_ugrb49mxh": {
+              "batchInfo": {
+                "batchId": "batch_1770038247278_ugrb49mxh",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1770038247278
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1770038217275
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1770038217276,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1770038217276
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770038217225,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1770038247278_ugrb49mxh",
+            "lastEvent": 1770038247278,
+            "totalEvents": 1
+          }
+        },
+        "sm111_1": {
+          "batches": {
+            "batch_1770038247278_ct9powbou": {
+              "batchInfo": {
+                "batchId": "batch_1770038247278_ct9powbou",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1770038247278
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "sm111_1",
+                    "startTime": 1770038217334
+                  },
+                  "levelId": "sm111_1",
+                  "timestamp": 1770038217334,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1770038217334
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770038217284,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1770038247278_ct9powbou",
+            "lastEvent": 1770038247278,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1770038217172",
+      "sessionNumber": 5,
+      "startTime": 1770038217172,
+      "status": "active",
+      "totalBatchedEvents": 1,
+      "totalEvents": 0
+    },
+    "u1770038483771": {
+      "sessionId": "u1770038483771",
+      "sessionNumber": 6,
+      "startTime": 1770038483771,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1770038483821": {
+      "levels": {
+        "s111_1": {
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770038483863,
+          "status": "active"
+        },
+        "sm111_1": {
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770038483906,
+          "status": "active"
+        }
+      },
+      "sessionId": "u1770038483821",
+      "sessionNumber": 7,
+      "startTime": 1770038483821,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1770038483884": {
+      "levels": {
+        "s111_1": {
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770038483924,
+          "status": "active"
+        },
+        "sm111_1": {
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770038483966,
+          "status": "active"
+        }
+      },
+      "sessionId": "u1770038483884",
+      "sessionNumber": 8,
+      "startTime": 1770038483884,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1770038609676": {
+      "currentLevel": "comprehension_check",
+      "lastActivity": 1770038675824,
+      "levels": {
+        "comprehension_check": {
+          "batches": {
+            "batch_1770038675824_oykbd56hz": {
+              "batchInfo": {
+                "batchId": "batch_1770038675824_oykbd56hz",
+                "eventCount": 1,
+                "flushReason": "manual_flush",
+                "flushTime": 1770038675824
+              },
+              "events": [
+                {
+                  "data": {
+                    "allAnswersCorrect": false,
+                    "answers": {
+                      "barrier": "Get the red amulet from one of the blue wizards",
+                      "expert_vs_novice": "Expert agents move faster than Novice agents",
+                      "novice_behavior": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet",
+                      "novice_inference": "The first wizard did NOT have the amulet they needed",
+                      "observe": "You see exactly which amulet the player received",
+                      "players": "The other players continue moving as normal",
+                      "who_to_observe": "Always observe the Novice agent"
+                    },
+                    "failedAttempts": 1,
+                    "interactionType": "comprehension_check",
+                    "questions": [
+                      {
+                        "correctAnswer": "Expert agents know which blue wizard has the amulet, Novice agents do not",
+                        "correctness": "incorrect",
+                        "id": "expert_vs_novice",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Expert agents know which blue wizard has the amulet, Novice agents do not"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Expert agents move faster than Novice agents"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Expert agents can break through barriers without amulets"
+                          }
+                        ],
+                        "question": "What is the key difference between an Expert agent and a Novice agent?",
+                        "userAnswer": "Expert agents move faster than Novice agents"
+                      },
+                      {
+                        "correctAnswer": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet",
+                        "correctness": "correct",
+                        "id": "novice_behavior",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Go directly to the blue wizard that has the amulet"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Skip getting the amulet and break through the barrier"
+                          }
+                        ],
+                        "question": "If a Novice agent needs a blue amulet to reach their treasure, what will they do?",
+                        "userAnswer": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet"
+                      },
+                      {
+                        "correctAnswer": "Get the red amulet from the red wizard",
+                        "correctness": "incorrect",
+                        "id": "barrier",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Get the red amulet from the red wizard"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Get the red amulet from one of the blue wizards"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Try to break through the barrier directly"
+                          }
+                        ],
+                        "question": "If the treasure is behind a barrier that requires a red amulet, what should you do?",
+                        "userAnswer": "Get the red amulet from one of the blue wizards"
+                      },
+                      {
+                        "correctAnswer": "The other players stay still",
+                        "correctness": "incorrect",
+                        "id": "players",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "The other players stay still"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "The other players continue moving as normal"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "The other players move twice as fast"
+                          }
+                        ],
+                        "question": "What happens to the other players when you perform your own action (instead of observing)?",
+                        "userAnswer": "The other players continue moving as normal"
+                      },
+                      {
+                        "correctAnswer": "You see that the player interacted with a wizard (without details about what they received)",
+                        "correctness": "incorrect",
+                        "id": "observe",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "You see that the player interacted with a wizard (without details about what they received)"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "You see exactly which amulet the player received"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "You see nothing about the player's interactions"
+                          }
+                        ],
+                        "question": "When you observe a player, what do you see in the notifications?",
+                        "userAnswer": "You see exactly which amulet the player received"
+                      },
+                      {
+                        "correctAnswer": "The first wizard did NOT have the amulet they needed",
+                        "correctness": "correct",
+                        "id": "novice_inference",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "The first wizard had the amulet they needed"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "The first wizard did NOT have the amulet they needed"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "The agent is confused and doesn't know what they are doing"
+                          }
+                        ],
+                        "question": "If a Novice agent interacts with a wizard and then moves toward another wizard, what does that tell you?",
+                        "userAnswer": "The first wizard did NOT have the amulet they needed"
+                      },
+                      {
+                        "correctAnswer": "It depends on the map layout, positioning of wizards, and your goal",
+                        "correctness": "incorrect",
+                        "id": "who_to_observe",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Always observe the Expert agent"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Always observe the Novice agent"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "It depends on the map layout, positioning of wizards, and your goal"
+                          },
+                          {
+                            "key": "option4",
+                            "text": "Never observe - you should always act on your own"
+                          }
+                        ],
+                        "question": "Who should you observe to help you find the treasure most efficiently?",
+                        "userAnswer": "Always observe the Novice agent"
+                      }
+                    ],
+                    "result": "failed",
+                    "sessionId": "u1770038609676"
+                  },
+                  "levelId": "comprehension_check",
+                  "timestamp": 1770038675823,
+                  "type": "interaction"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 1,
+                "playerActions": 0,
+                "startTime": 1770038675823
+              }
+            }
+          },
+          "summary": {
+            "lastBatchId": "batch_1770038675824_oykbd56hz",
+            "lastEvent": 1770038675824,
+            "totalEvents": 1
+          }
+        },
+        "s111_1": {
+          "batches": {
+            "batch_1770038639775_c0eb9k482": {
+              "batchInfo": {
+                "batchId": "batch_1770038639775_c0eb9k482",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1770038639775
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1770038609774
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1770038609774,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1770038609774
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770038609730,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1770038639775_c0eb9k482",
+            "lastEvent": 1770038639775,
+            "totalEvents": 1
+          }
+        },
+        "sm111_1": {
+          "batches": {
+            "batch_1770038639775_gds4u7xdd": {
+              "batchInfo": {
+                "batchId": "batch_1770038639775_gds4u7xdd",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1770038639775
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "sm111_1",
+                    "startTime": 1770038609828
+                  },
+                  "levelId": "sm111_1",
+                  "timestamp": 1770038609828,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1770038609828
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770038609783,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1770038639775_gds4u7xdd",
+            "lastEvent": 1770038639775,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1770038609676",
+      "sessionNumber": 9,
+      "startTime": 1770038609676,
+      "status": "active",
+      "totalBatchedEvents": 1,
+      "totalEvents": 0
+    },
+    "u1770038681085": {
+      "currentLevel": "sm111_1",
+      "lastActivity": 1770038711519,
+      "levels": {
+        "s111_1": {
+          "batches": {
+            "batch_1770038711519_t95kmaw9s": {
+              "batchInfo": {
+                "batchId": "batch_1770038711519_t95kmaw9s",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1770038711519
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1770038681182
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1770038681182,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1770038681182
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770038681131,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1770038711519_t95kmaw9s",
+            "lastEvent": 1770038711519,
+            "totalEvents": 1
+          }
+        },
+        "sm111_1": {
+          "batches": {
+            "batch_1770038711519_r70yugqbp": {
+              "batchInfo": {
+                "batchId": "batch_1770038711519_r70yugqbp",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1770038711519
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "sm111_1",
+                    "startTime": 1770038681228
+                  },
+                  "levelId": "sm111_1",
+                  "timestamp": 1770038681228,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1770038681228
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770038681182,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1770038711519_r70yugqbp",
+            "lastEvent": 1770038711519,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1770038681085",
+      "sessionNumber": 10,
+      "startTime": 1770038681085,
+      "status": "active",
+      "totalBatchedEvents": 2,
+      "totalEvents": 0
+    },
+    "u1770038715832": {
+      "currentLevel": "comprehension_check",
+      "lastActivity": 1770038801816,
+      "levels": {
+        "comprehension_check": {
+          "batches": {
+            "batch_1770038801816_fzhu7j7qa": {
+              "batchInfo": {
+                "batchId": "batch_1770038801816_fzhu7j7qa",
+                "eventCount": 1,
+                "flushReason": "manual_flush",
+                "flushTime": 1770038801816
+              },
+              "events": [
+                {
+                  "data": {
+                    "allAnswersCorrect": false,
+                    "answers": {
+                      "barrier": "Try to break through the barrier directly",
+                      "expert_vs_novice": "Expert agents move faster than Novice agents",
+                      "novice_behavior": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet",
+                      "novice_inference": "The first wizard did NOT have the amulet they needed",
+                      "observe": "You see exactly which amulet the player received",
+                      "players": "The other players continue moving as normal",
+                      "who_to_observe": "Never observe - you should always act on your own"
+                    },
+                    "failedAttempts": 1,
+                    "interactionType": "comprehension_check",
+                    "questions": [
+                      {
+                        "correctAnswer": "Expert agents know which blue wizard has the amulet, Novice agents do not",
+                        "correctness": "incorrect",
+                        "id": "expert_vs_novice",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Expert agents know which blue wizard has the amulet, Novice agents do not"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Expert agents move faster than Novice agents"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Expert agents can break through barriers without amulets"
+                          }
+                        ],
+                        "question": "What is the key difference between an Expert agent and a Novice agent?",
+                        "userAnswer": "Expert agents move faster than Novice agents"
+                      },
+                      {
+                        "correctAnswer": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet",
+                        "correctness": "correct",
+                        "id": "novice_behavior",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Go directly to the blue wizard that has the amulet"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Skip getting the amulet and break through the barrier"
+                          }
+                        ],
+                        "question": "If a Novice agent needs a blue amulet to reach their treasure, what will they do?",
+                        "userAnswer": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet"
+                      },
+                      {
+                        "correctAnswer": "Get the red amulet from the red wizard",
+                        "correctness": "incorrect",
+                        "id": "barrier",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Get the red amulet from the red wizard"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Get the red amulet from one of the blue wizards"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Try to break through the barrier directly"
+                          }
+                        ],
+                        "question": "If the treasure is behind a barrier that requires a red amulet, what should you do?",
+                        "userAnswer": "Try to break through the barrier directly"
+                      },
+                      {
+                        "correctAnswer": "The other players stay still",
+                        "correctness": "incorrect",
+                        "id": "players",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "The other players stay still"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "The other players continue moving as normal"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "The other players move twice as fast"
+                          }
+                        ],
+                        "question": "What happens to the other players when you perform your own action (instead of observing)?",
+                        "userAnswer": "The other players continue moving as normal"
+                      },
+                      {
+                        "correctAnswer": "You see that the player interacted with a wizard (without details about what they received)",
+                        "correctness": "incorrect",
+                        "id": "observe",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "You see that the player interacted with a wizard (without details about what they received)"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "You see exactly which amulet the player received"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "You see nothing about the player's interactions"
+                          }
+                        ],
+                        "question": "When you observe a player, what do you see in the notifications?",
+                        "userAnswer": "You see exactly which amulet the player received"
+                      },
+                      {
+                        "correctAnswer": "The first wizard did NOT have the amulet they needed",
+                        "correctness": "correct",
+                        "id": "novice_inference",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "The first wizard had the amulet they needed"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "The first wizard did NOT have the amulet they needed"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "The agent is confused and doesn't know what they are doing"
+                          }
+                        ],
+                        "question": "If a Novice agent interacts with a wizard and then moves toward another wizard, what does that tell you?",
+                        "userAnswer": "The first wizard did NOT have the amulet they needed"
+                      },
+                      {
+                        "correctAnswer": "It depends on the map layout, positioning of wizards, and your goal",
+                        "correctness": "incorrect",
+                        "id": "who_to_observe",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Always observe the Expert agent"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Always observe the Novice agent"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "It depends on the map layout, positioning of wizards, and your goal"
+                          },
+                          {
+                            "key": "option4",
+                            "text": "Never observe - you should always act on your own"
+                          }
+                        ],
+                        "question": "Who should you observe to help you find the treasure most efficiently?",
+                        "userAnswer": "Never observe - you should always act on your own"
+                      }
+                    ],
+                    "result": "failed",
+                    "sessionId": "u1770038715832"
+                  },
+                  "levelId": "comprehension_check",
+                  "timestamp": 1770038801814,
+                  "type": "interaction"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 1,
+                "playerActions": 0,
+                "startTime": 1770038801814
+              }
+            }
+          },
+          "summary": {
+            "lastBatchId": "batch_1770038801816_fzhu7j7qa",
+            "lastEvent": 1770038801816,
+            "totalEvents": 1
+          }
+        },
+        "s111_1": {
+          "batches": {
+            "batch_1770038745935_55tveu555": {
+              "batchInfo": {
+                "batchId": "batch_1770038745935_55tveu555",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1770038745935
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1770038715933
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1770038715933,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1770038715933
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770038715889,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1770038745935_55tveu555",
+            "lastEvent": 1770038745935,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1770038715832",
+      "sessionNumber": 11,
+      "startTime": 1770038715832,
+      "status": "active",
+      "totalBatchedEvents": 1,
+      "totalEvents": 0
+    },
+    "u1770039056079": {
+      "levels": {
+        "s111_1": {
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770039056121,
+          "status": "active"
+        },
+        "sm111_1": {
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770039056164,
+          "status": "active"
+        }
+      },
+      "sessionId": "u1770039056079",
+      "sessionNumber": 12,
+      "startTime": 1770039056079,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1770039056132": {
+      "levels": {
+        "s111_1": {
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770039056174,
+          "status": "active"
+        },
+        "sm111_1": {
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770039056219,
+          "status": "active"
+        }
+      },
+      "sessionId": "u1770039056132",
+      "sessionNumber": 13,
+      "startTime": 1770039056132,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1770039056841": {
+      "levels": {
+        "s111_1": {
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770039056884,
+          "status": "active"
+        },
+        "sm111_1": {
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770039056936,
+          "status": "active"
+        }
+      },
+      "sessionId": "u1770039056841",
+      "sessionNumber": 14,
+      "startTime": 1770039056841,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1770039079085": {
+      "currentLevel": "comprehension_check",
+      "lastActivity": 1770039182823,
+      "levels": {
+        "comprehension_check": {
+          "batches": {
+            "batch_1770039182822_dhp0fay3p": {
+              "batchInfo": {
+                "batchId": "batch_1770039182822_dhp0fay3p",
+                "eventCount": 1,
+                "flushReason": "manual_flush",
+                "flushTime": 1770039182823
+              },
+              "events": [
+                {
+                  "data": {
+                    "allAnswersCorrect": false,
+                    "answers": {
+                      "barrier": "Get the red amulet from one of the blue wizards",
+                      "expert_vs_novice": "Expert agents move faster than Novice agents",
+                      "novice_behavior": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet",
+                      "novice_inference": "The first wizard did NOT have the amulet they needed",
+                      "observe": "You see exactly which amulet the player received",
+                      "players": "The other players move twice as fast",
+                      "who_to_observe": "Always observe the Novice agent"
+                    },
+                    "failedAttempts": 1,
+                    "interactionType": "comprehension_check",
+                    "questions": [
+                      {
+                        "correctAnswer": "Expert agents know which blue wizard has the amulet, Novice agents do not",
+                        "correctness": "incorrect",
+                        "id": "expert_vs_novice",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Expert agents know which blue wizard has the amulet, Novice agents do not"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Expert agents move faster than Novice agents"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Expert agents can break through barriers without amulets"
+                          }
+                        ],
+                        "question": "What is the key difference between an Expert agent and a Novice agent?",
+                        "userAnswer": "Expert agents move faster than Novice agents"
+                      },
+                      {
+                        "correctAnswer": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet",
+                        "correctness": "correct",
+                        "id": "novice_behavior",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Go directly to the blue wizard that has the amulet"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Skip getting the amulet and break through the barrier"
+                          }
+                        ],
+                        "question": "If a Novice agent needs a blue amulet to reach their treasure, what will they do?",
+                        "userAnswer": "Check the closest blue wizard and repeat this loop until obtaining the blue amulet"
+                      },
+                      {
+                        "correctAnswer": "Get the red amulet from the red wizard",
+                        "correctness": "incorrect",
+                        "id": "barrier",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Get the red amulet from the red wizard"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Get the red amulet from one of the blue wizards"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "Try to break through the barrier directly"
+                          }
+                        ],
+                        "question": "If the treasure is behind a barrier that requires a red amulet, what should you do?",
+                        "userAnswer": "Get the red amulet from one of the blue wizards"
+                      },
+                      {
+                        "correctAnswer": "The other players stay still",
+                        "correctness": "incorrect",
+                        "id": "players",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "The other players stay still"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "The other players continue moving as normal"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "The other players move twice as fast"
+                          }
+                        ],
+                        "question": "What happens to the other players when you perform your own action (instead of observing)?",
+                        "userAnswer": "The other players move twice as fast"
+                      },
+                      {
+                        "correctAnswer": "You see that the player interacted with a wizard (without details about what they received)",
+                        "correctness": "incorrect",
+                        "id": "observe",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "You see that the player interacted with a wizard (without details about what they received)"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "You see exactly which amulet the player received"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "You see nothing about the player's interactions"
+                          }
+                        ],
+                        "question": "When you observe a player, what do you see in the notifications?",
+                        "userAnswer": "You see exactly which amulet the player received"
+                      },
+                      {
+                        "correctAnswer": "The first wizard did NOT have the amulet they needed",
+                        "correctness": "correct",
+                        "id": "novice_inference",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "The first wizard had the amulet they needed"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "The first wizard did NOT have the amulet they needed"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "The agent is confused and doesn't know what they are doing"
+                          }
+                        ],
+                        "question": "If a Novice agent interacts with a wizard and then moves toward another wizard, what does that tell you?",
+                        "userAnswer": "The first wizard did NOT have the amulet they needed"
+                      },
+                      {
+                        "correctAnswer": "It depends on the map layout, positioning of wizards, and your goal",
+                        "correctness": "incorrect",
+                        "id": "who_to_observe",
+                        "options": [
+                          {
+                            "key": "option1",
+                            "text": "Always observe the Expert agent"
+                          },
+                          {
+                            "key": "option2",
+                            "text": "Always observe the Novice agent"
+                          },
+                          {
+                            "key": "option3",
+                            "text": "It depends on the map layout, positioning of wizards, and your goal"
+                          },
+                          {
+                            "key": "option4",
+                            "text": "Never observe - you should always act on your own"
+                          }
+                        ],
+                        "question": "Who should you observe to help you find the treasure most efficiently?",
+                        "userAnswer": "Always observe the Novice agent"
+                      }
+                    ],
+                    "result": "failed",
+                    "sessionId": "u1770039079085"
+                  },
+                  "levelId": "comprehension_check",
+                  "timestamp": 1770039182822,
+                  "type": "interaction"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 1,
+                "playerActions": 0,
+                "startTime": 1770039182822
+              }
+            }
+          },
+          "summary": {
+            "lastBatchId": "batch_1770039182822_dhp0fay3p",
+            "lastEvent": 1770039182823,
+            "totalEvents": 1
+          }
+        },
+        "s111_1": {
+          "batches": {
+            "batch_1770039109178_mz9mpy8xl": {
+              "batchInfo": {
+                "batchId": "batch_1770039109178_mz9mpy8xl",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1770039109178
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1770039079177
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1770039079177,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1770039079177
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1770039079131,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1770039109178_mz9mpy8xl",
+            "lastEvent": 1770039109178,
+            "totalEvents": 1
+          }
+        },
+        "sm111_1": {
+          "batches": {
+            "batch_1770039109178_6lfxiwhwx": {
+              "batchInfo": {
+                "batchId": "batch_1770039109178_6lfxiwhwx",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1770039109178
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "sm111_1",
+                    "startTime": 1770039079230
+                  },
+                  "levelId": "sm111_1",
+                  "timestamp": 1770039079230,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1770039079230
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1770039079186,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1770039109178_6lfxiwhwx",
+            "lastEvent": 1770039109178,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1770039079085",
+      "sessionNumber": 15,
+      "startTime": 1770039079085,
+      "status": "active",
+      "totalBatchedEvents": 1,
+      "totalEvents": 0
+    }
+  }
+}

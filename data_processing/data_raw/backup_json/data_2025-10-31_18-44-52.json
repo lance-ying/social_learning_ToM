@@ -1,0 +1,149 @@
+{
+  "consents": {
+    "-OcvZjuMVMz-36HhjaUH": {
+      "doNotRecontact": true,
+      "sessionId": "u1761936077843",
+      "timestamp": "2025-10-31T18:41:20.524Z"
+    },
+    "-Ocv_LwkHIcPWUOwehaq": {
+      "doNotRecontact": true,
+      "sessionId": "u1761936237993",
+      "timestamp": "2025-10-31T18:44:00.424Z"
+    }
+  },
+  "counters": {
+    "sessionCounter": 4
+  },
+  "users": {
+    "u1761936077843": {
+      "currentLevel": "s111_1",
+      "lastActivity": 1761936107967,
+      "levels": {
+        "s111_1": {
+          "batches": {
+            "batch_1761936107967_6rdbxvnc6": {
+              "batchInfo": {
+                "batchId": "batch_1761936107967_6rdbxvnc6",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1761936107967
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1761936077964
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1761936077964,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1761936077964
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1761936077896,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1761936107967_6rdbxvnc6",
+            "lastEvent": 1761936107967,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1761936077843",
+      "sessionNumber": 1,
+      "startTime": 1761936077843,
+      "status": "active",
+      "totalBatchedEvents": 1,
+      "totalEvents": 0
+    },
+    "u1761936232516": {
+      "levels": {
+        "s111_1": {
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1761936232613,
+          "status": "active"
+        },
+        "sm111_1": {
+          "eventCount": 0,
+          "levelId": "sm111_1",
+          "startTime": 1761936232714,
+          "status": "active"
+        }
+      },
+      "sessionId": "u1761936232516",
+      "sessionNumber": 2,
+      "startTime": 1761936232516,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1761936236900": {
+      "sessionId": "u1761936236900",
+      "sessionNumber": 3,
+      "startTime": 1761936236900,
+      "status": "active",
+      "totalEvents": 0
+    },
+    "u1761936237993": {
+      "currentLevel": "s111_1",
+      "lastActivity": 1761936268099,
+      "levels": {
+        "s111_1": {
+          "batches": {
+            "batch_1761936268099_ion8ok6d0": {
+              "batchInfo": {
+                "batchId": "batch_1761936268099_ion8ok6d0",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1761936268099
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1761936238097
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1761936238097,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1761936238097
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1761936238043,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1761936268099_ion8ok6d0",
+            "lastEvent": 1761936268099,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1761936237993",
+      "sessionNumber": 4,
+      "startTime": 1761936237993,
+      "status": "active",
+      "totalBatchedEvents": 1,
+      "totalEvents": 0
+    }
+  }
+}

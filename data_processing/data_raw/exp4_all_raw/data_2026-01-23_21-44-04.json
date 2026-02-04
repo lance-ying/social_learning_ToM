@@ -1,0 +1,58 @@
+{
+  "counters": {
+    "sessionCounter": 1
+  },
+  "users": {
+    "u1769204462977": {
+      "currentLevel": "s111_1",
+      "lastActivity": 1769204494042,
+      "levels": {
+        "s111_1": {
+          "batches": {
+            "batch_1769204494042_5iujq90a3": {
+              "batchInfo": {
+                "batchId": "batch_1769204494042_5iujq90a3",
+                "eventCount": 1,
+                "flushReason": "timer_expired",
+                "flushTime": 1769204494042
+              },
+              "events": [
+                {
+                  "data": {
+                    "level": "s111_1",
+                    "startTime": 1769204463059
+                  },
+                  "levelId": "s111_1",
+                  "timestamp": 1769204463059,
+                  "type": "level_start"
+                }
+              ],
+              "metadata": {
+                "agentObservations": 0,
+                "eventCount": 1,
+                "interactions": 0,
+                "playerActions": 0,
+                "startTime": 1769204463059
+              }
+            }
+          },
+          "eventCount": 0,
+          "levelId": "s111_1",
+          "startTime": 1769204463019,
+          "status": "active",
+          "summary": {
+            "lastBatchId": "batch_1769204494042_5iujq90a3",
+            "lastEvent": 1769204494042,
+            "totalEvents": 1
+          }
+        }
+      },
+      "sessionId": "u1769204462977",
+      "sessionNumber": 1,
+      "startTime": 1769204462977,
+      "status": "active",
+      "totalBatchedEvents": 1,
+      "totalEvents": 0
+    }
+  }
+}
