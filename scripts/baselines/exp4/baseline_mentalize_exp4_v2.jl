@@ -112,23 +112,32 @@ function find_informativeness_horizon(
     return max_t
 end
 
-for (map_id, agent_goals) in metadata
+for (map_id, agent_goals) in sort(collect(metadata), by=x->x[1])
     map_start_time = time()
     println("\nProcessing map: $map_id")
 
     clear_planner_cache!()
 
     #--- Map-level setup (shared across both scenarios) ---#
+    println("  [1] Loading domain and problem...")
+    flush(stdout)
 
-    # Load main domain (uncompiled — planner works fine without compilation, see exp1/exp2)
+    # Load main domain and compile it (compilation is required for fast A* planning)
     domain = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl"))
     problem = load_ascii_problem(joinpath(PROBLEM_DIR, "$(map_id).txt"))
     state = initstate(domain, problem)
+    println("  [2] Compiling domain...")
+    flush(stdout)
+    domain, state = PDDL.compiled(domain, problem)
+    println("  [3] Domain compiled. Running A* planner...")
+    flush(stdout)
 
     # Check if agent1 even needs blue wizards (same answer for both scenarios)
     blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
     planner = AStarPlanner(GoalManhattan())
     plan_agent1 = planner(domain, state, problem.goal)
+    println("  [4] A* planner done.")
+    flush(stdout)
     agent1_needs_wizards = any(x -> x.name == :interact && x.args[end] in blue_wizards, plan_agent1)
 
     if !agent1_needs_wizards
@@ -150,6 +159,8 @@ for (map_id, agent_goals) in metadata
     end
 
     #--- Agent-filtered domains (compile once per map, reuse across scenarios) ---#
+    println("  [5] Loading agent-filtered domains...")
+    flush(stdout)
 
     txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
     ascii_content = read(txt_path, String)
@@ -163,6 +174,8 @@ for (map_id, agent_goals) in metadata
     end
     problem_agent2 = load_ascii_problem(temp_path_agent2)
     state_agent2 = initstate(domain_agent2, problem_agent2)
+    println("  [6] Compiling agent2 domain...")
+    flush(stdout)
     domain_agent2, state_agent2 = PDDL.compiled(domain_agent2, problem_agent2)
 
     # Load and compile filtered problem for agent3
@@ -174,14 +187,20 @@ for (map_id, agent_goals) in metadata
     end
     problem_agent3 = load_ascii_problem(temp_path_agent3)
     state_agent3 = initstate(domain_agent3, problem_agent3)
+    println("  [7] Compiling agent3 domain...")
+    flush(stdout)
     domain_agent3, state_agent3 = PDDL.compiled(domain_agent3, problem_agent3)
 
     # Goals and beliefs (same across scenarios — only depends on map layout)
+    println("  [8] Enumerating beliefs...")
+    flush(stdout)
     goals_agent2, goal_names_agent2 = initialize_goals(state_agent2, :agent2)
     goals_agent3, goal_names_agent3 = initialize_goals(state_agent3, :agent3)
 
     initial_states_agent2, belief_probs_agent2, state_names_agent2 = enumerate_beliefs(state_agent2)
     initial_states_agent3, belief_probs_agent3, state_names_agent3 = enumerate_beliefs(state_agent3)
+    println("  [9] Setup complete, starting scenarios...")
+    flush(stdout)
 
     # Find current state ID for agent2 (using FILTERED state)
     s_id_agent2 = -1
@@ -222,17 +241,23 @@ for (map_id, agent_goals) in metadata
         state_probs_agent3 = state_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
 
         #--- Find informativeness horizon independently for each agent ---#
+        println("    [10] Finding horizon for agent2...")
+        flush(stdout)
         T_agent2 = find_informativeness_horizon(
             goal_probs_agent2, state_probs_agent2,
             state_probs_conditioned_dict["agent2"], goal_probs_conditioned_dict["agent2"],
             map_id, scenario, agent2_gem, s_id_agent2
         )
+        println("    [11] Agent2 horizon: $T_agent2. Finding horizon for agent3...")
+        flush(stdout)
 
         T_agent3 = find_informativeness_horizon(
             goal_probs_agent3, state_probs_agent3,
             state_probs_conditioned_dict["agent3"], goal_probs_conditioned_dict["agent3"],
             map_id, scenario, agent3_gem, s_id_agent3
         )
+        println("    [12] Agent3 horizon: $T_agent3")
+        flush(stdout)
 
         # Each agent's count is independent: observe each agent for as long
         # as their actions remain informative about the environment state
