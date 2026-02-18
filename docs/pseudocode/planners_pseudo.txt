@@ -1,0 +1,31 @@
+TITLE
+Middle-ground pseudocode: src/planners.jl
+
+PURPOSE
+Provide a NaivePlanner compatible with SymbolicPlanners/InversePlanning that models greedy wizard-seeking behavior before goal-directed optimal behavior.
+
+MODEL GROUNDING
+- Behavioral policy is piecewise:
+  if key not acquired and wizard info is relevant -> target nearest unvisited blue wizard,
+  else -> follow fallback optimal planner.
+- Action probabilities are exposed via softmax over planner-provided action values.
+
+ALGORITHM
+1. Define NaivePlanner config: blue-wizard set, agent identity, fallback planner, domain handle.
+2. Define NaivePlannerSolution with plan, trajectory, and caches.
+3. Implement one-step naive action computation:
+4. If key already held, return first action from fallback optimal policy.
+5. Else find nearest unvisited wizard.
+6. If adjacent, return interact action.
+7. If not adjacent, return first move toward a reachable adjacent cell.
+8. If no valid naive action exists, fall back to optimal policy.
+9. Implement full-plan generation by repeatedly applying naive strategy until key acquisition, then append goal-reaching suffix.
+10. Implement planner interface methods: get_action, get_action_values, get_action_prob, rand_action, has_action, refine!.
+11. Use state-hash caches to accelerate repeated action/value queries.
+
+KEY STATE UPDATE IDEA
+- "visited wizard" predicates in state prevent revisiting the same wizard.
+- refine! rebuilds plan and caches from a new current state.
+
+OUTPUT
+- reusable planner module consumed by inference and experiment pipelines

@@ -1,0 +1,33 @@
+TITLE
+Middle-ground pseudocode: run_experiment_exp3_debug.jl
+
+PURPOSE
+For each (map, scenario), choose among: observe agent2, observe agent3, or stop, while tracking observation sequence and counts.
+
+MODEL GROUNDING (from 2507.09409v1)
+- Multi-option extension of utility comparison:
+  choose argmin{Q_obs_agent2, Q_obs_agent3, Q_not_obs}
+- Each Q_obs term approximates expected cost under social learning for one target agent.
+- Q_not_obs approximates nonsocial learning cost.
+
+ALGORITHM
+1. Load exp3 metadata, beliefs, and domains.
+2. For each map and each scenario:
+3. Build full state plus filtered state views for each observed agent.
+4. Initialize observation history h_t and counts (n2, n3).
+5. If agent1 can solve without uncertain wizard evidence, store zero-observation result.
+6. Else repeat until stop condition:
+7. Compute Q_obs_agent2 and Q_obs_agent3 by marginalizing over each target agent's latent goal/state hypotheses.
+8. Compute Q_not_obs from current observer belief.
+9. Select action with minimum expected cost.
+10. If action is observe-agent2 or observe-agent3, append to history, increment t, and update wizard candidate belief.
+11. If action is stop, store summary and end this scenario.
+12. Save all scenario summaries.
+
+KEY STATE UPDATE IDEA
+- Agent-specific belief horizons bound how long observations remain evaluable.
+- Observation history is a discrete policy output, not just scalar t.
+
+OUTPUT
+- per-scenario dict: {t, observations, agent2_count, agent3_count}
+- exp3 debug JSON results

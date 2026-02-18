@@ -1,0 +1,32 @@
+TITLE
+Middle-ground pseudocode: run_experiment_exp2.jl
+
+PURPOSE
+Compute observation depth t for each metadata-conditioned exp2 case using social-vs-nonsocial utility tradeoffs.
+
+MODEL GROUNDING (from 2507.09409v1)
+- Posterior mentalizing target: P(g_i, b_{0:T}^i | a_{1:T}^i)
+- Utility comparison at each step:
+  observe if U(Obs, b_t^m, g_m) > U(Act, b_t^m, g_m)
+
+ALGORITHM
+1. Load exp2 metadata, maps, and inference belief tensors.
+2. For each map and metadata goal entry:
+3. Initialize belief over hidden world states and candidate goals.
+4. Check whether uncertainty about blue-wizard interaction matters for the current task.
+5. If not, set t = 0 and continue.
+6. Else iterate decision rounds:
+7. Aggregate expected social-learning cost over plausible latent hypotheses.
+8. Compute expected self-exploration cost under current belief.
+9. If social-learning value is higher (equivalently lower expected cost with margin), observe and increase t.
+10. Update belief-derived wizard candidate set.
+11. Otherwise stop and store t.
+12. Write case-level outputs to JSON.
+
+KEY STATE UPDATE IDEA
+- Metadata determines the target-goal context per case.
+- Posterior filtering and expected-cost aggregation drive observe/stop behavior.
+
+OUTPUT
+- steps dictionary keyed by (map, goal entry)
+- exp2 JSON results

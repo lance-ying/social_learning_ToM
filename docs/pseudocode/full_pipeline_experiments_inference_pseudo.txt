@@ -1,0 +1,204 @@
+TITLE
+Full pipeline pseudocode (inference + experiments): exp1, exp2, exp3_debug, exp4 wrapper
+
+PURPOSE
+Provide one end-to-end pseudocode specification for:
+1) how inference tensors are produced,
+2) how experiment scripts read/manipulate those tensors,
+3) how costs are computed and compared,
+4) why marginalization appears differently across experiments.
+
+PAPER-LEVEL GROUNDING (2507.09409v1)
+- Inverse planning target:
+  P(g_i, b^i_{0:T} | a^i_{1:T})
+- Action model:
+  P(a_t | b_{t-1}, g) proportional to exp(-beta * Q_hat_g(b_{t-1}, a_t))
+- Social-vs-nonsocial decision:
+  choose observe when U(Obs, b_t^m, g_m) > U(Act, b_t^m, g_m)
+- Code equivalent:
+  compare expected costs Q_observe vs Q_not_observe (lower is better).
+
+================================================================
+A) INFERENCE STAGE (precompute posterior tensors)
+================================================================
+
+A1. Common inference pattern (all inference scripts)
+1. Build candidate goal set G and candidate latent initial-state set S for each map context.
+2. Define priors over goal and latent state.
+3. Build a hypothesis grid over (g, s0) using stratified initialization.
+4. For each hypothesis pair:
+5. Generate or provide an observed action trajectory.
+6. Run SIPS particle filtering with Bayesian inverse planning model.
+7. Log posterior vectors at each time t:
+   - goal_probs[:, t] = P(goal_id | observed actions up to t)
+   - state_probs[:, t] = P(state_id | observed actions up to t)
+8. Store tensors in nested dictionaries keyed by map/scenario/goal/state context.
+
+A2. Tensor storage schemas by script
+- inference.jl (exp2):
+  goal_dict[map_id][g][i] = matrix (#goals x T)
+  state_dict[map_id][g][i] = matrix (#states x T)
+- inference_multi.jl (exp3):
+  goal_dict[agent][map_id][scenario][g][i] = (#goals_agent x T)
+  state_dict[agent][map_id][scenario][g][i] = (#states_agent x T)
+- inference_multi_exp4.jl (exp4):
+  same as exp3 plus:
+  agent_types[agent][map_id][scenario] in {"naive", "actual"}
+  and optional time-alignment padding to shared horizon.
+
+A3. Key exp4 extension (type-aware inference)
+1. Read goal type from metadata per scenario.
+2. If type == naive: use NaivePlanner model.
+3. Else: use near-optimal model (RTHS/A* style).
+4. Compute posterior trajectories under the selected behavior model.
+
+================================================================
+B) COST MODEL USED DURING RUN_EXPERIMENT SCRIPTS
+================================================================
+
+B1. Action-level cost function
+calculate_plan_cost(plan, action_cost):
+- move action -> action_cost[:move]
+- interact action -> action_cost[:interact]
+- observe action -> action_cost[:observe]
+
+B2. Self-exploration cost estimator
+estimate_self_exploration_cost(domain, state, goal, wizard_candidates, action_cost):
+1. Start from current observer state.
+2. Repeatedly pick cheapest next blue-wizard candidate (via planner path cost).
+3. Add travel cost + interact cost each visit.
+4. Update observer location after each chosen wizard.
+5. After wizard phase, add plan cost from final position to goal location.
+6. Apply built-in correction term in implementation:
+   total_cost -= action_cost[:move] * (2 * |wizard_candidates| - 1)
+7. Return total estimated nonsocial completion cost.
+
+Interpretation:
+- Q_not_observe is this function under current uncertainty.
+- Q_T in observe branch is this function under a hypothetical updated wizard set.
+
+================================================================
+C) RUN_EXPERIMENT EXP1
+================================================================
+
+C1. Load tensors
+goal_probs = goal_dict[inference_map_id][g_id][s_id]
+state_probs = state_dict[inference_map_id][g_id][s_id]
+
+C2. Observe-value computation (explicit tensor use)
+For current t, compute:
+Q_observe_num = 0
+mass = 0
+for each candidate goal g:
+  if goal_probs[g, t+1] < threshold: continue
+  for each candidate latent state i:
+    if state_probs[i, t+1] < threshold: continue
+
+    joint = goal_probs[g, t+1] * state_probs[i, t+1]
+
+    # Look up conditioned posterior dynamics for this hypothesis:
+    state_cond = state_dict[inference_map_id][g][i]
+    goal_cond  = goal_dict[inference_map_id][g_id][i]
+
+    # Find convergence step T from posterior dynamics.
+    # Build candidate wizard set from state_cond[:, T].
+
+    Q_T = estimate_self_exploration_cost(..., wizard_set_from_T, ...)
+    Q_observe_num += joint * (Q_T + observe_cost * max(T,1))
+    mass += joint
+
+Q_observe = Q_observe_num / mass
+Q_not_observe = estimate_self_exploration_cost(..., current_wizard_candidates, ...)
+
+Decision:
+if Q_observe + margin < Q_not_observe:
+  observe, increment t, update wizard candidates using state_probs[:, t+1]
+else:
+  stop and record t
+
+C3. Marginalization status
+- exp1 DOES marginalize over latent (g, i) when computing Q_observe.
+- What is "not marginalized" in exp1 is the outer case selection:
+  it runs one map case at a time, not multi-agent choice.
+
+================================================================
+D) RUN_EXPERIMENT EXP2
+================================================================
+
+D1. Same decision mathematics as exp1, different indexing source
+- g_id comes from metadata[map_id][i]
+- tensor keys use map_id directly (not mod_* mapping as in exp1)
+
+D2. Explicit observe-cost equation (same structure)
+Q_observe = sum_{g,i} p_t(g) p_t(i) [Q_T(g,i) + c_obs * T(g,i)] / sum_{g,i} p_t(g) p_t(i)
+Q_not_observe = estimate_self_exploration_cost(current candidates)
+
+D3. Marginalization status
+- exp2 also marginalizes over latent (g, i) in Q_observe.
+- Difference from exp3 is not "marginalize vs not"; difference is single-target vs two-target observation choice.
+
+================================================================
+E) RUN_EXPERIMENT EXP3_DEBUG
+================================================================
+
+E1. What is additionally uncertain here
+At each step, observer must choose one of three actions:
+1) observe agent2
+2) observe agent3
+3) stop observing
+
+E2. Two separate marginalizations + one action-selection layer
+Compute in parallel:
+Q_observe_agent2 = E_{g2,i2}[ Q_T_agent2(g2,i2) + c_obs * T ]
+Q_observe_agent3 = E_{g3,i3}[ Q_T_agent3(g3,i3) + c_obs * T ]
+Q_not_observe    = estimate_self_exploration_cost(current candidates)
+
+Then choose:
+a* = argmin{Q_observe_agent2, Q_observe_agent3, Q_not_observe}
+
+E3. Explicit tensor manipulation
+- agent2 branch uses:
+  goal_dict["agent2"][map_id][scenario][...]
+  state_dict["agent2"][map_id][scenario][...]
+- agent3 branch uses analogous keys under "agent3".
+- Belief timestep is agent-count aware:
+  if never observed agent k -> use timestep 1
+  else use timestep t+1
+
+E4. Why exp3 feels "more marginal" than exp1/exp2
+- exp1/exp2: one observe target, one expected-cost integral over (g,i).
+- exp3: two observe targets, each with its own expected-cost integral,
+  plus a meta-decision over the three action values.
+
+================================================================
+F) RUN_EXPERIMENT EXP4 WRAPPER
+================================================================
+
+1. Run Scenario 1 script in isolated process -> produce *_scenario1.json
+2. Run Scenario 2 script in isolated process -> produce *_scenario2.json
+3. Load both JSONs and merge dictionaries.
+4. Save merged output as final exp4 file.
+
+Reason:
+- process-level isolation avoids cross-scenario compiled-type/cache conflicts.
+
+================================================================
+G) DIRECT ANSWERS TO YOUR QUESTIONS
+================================================================
+
+G1. "How are precomputed posterior tensors used?"
+- They are loaded from JLD2 once.
+- At each decision step t, scripts read columns [:, t+1] as current posterior weights.
+- They then form expectation-weighted costs over latent hypotheses.
+- Conditioned slices [g][i][:, T] are used to derive hypothetical wizard candidate sets.
+
+G2. "Do exp1/exp2 marginalize?"
+- Yes. Both marginalize over latent goal and latent initial state in Q_observe.
+- exp3 adds another marginalization per target agent and a higher-level argmin decision.
+
+G3. "How is cost measured exactly?"
+- Base unit is weighted sum of action costs (move/interact/observe).
+- Q_not_observe = estimated self-exploration completion cost from current belief.
+- Q_observe branch adds observation time cost c_obs * T plus post-observation self-exploration cost Q_T.
+- Decision compares expected costs (with script-specific margin rules).
+

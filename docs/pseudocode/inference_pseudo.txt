@@ -1,0 +1,27 @@
+TITLE
+Middle-ground pseudocode: scripts/utilities/inference.jl
+
+PURPOSE
+Build exp2 posterior lookup tables for latent goals and latent initial states under observed action sequences.
+
+MODEL GROUNDING (from 2507.09409v1)
+- Uses Bayesian inverse planning with latent goal and latent initial-state inference.
+- Core posterior object: P(goal, latent_state | action sequence).
+
+ALGORITHM
+1. Load exp2 metadata and initialize storage containers.
+2. For each map and each metadata goal case:
+3. Enumerate candidate goals and candidate latent initial states.
+4. Define goal/state priors and stratified initialization over hypothesis grid.
+5. Configure world model with planning and stochastic action policy.
+6. For each hypothesis pair:
+7. Provide an action trajectory template.
+8. Run particle-filter inference over timesteps.
+9. Log and store posterior trajectories for goals and states.
+10. Serialize consolidated inference outputs.
+
+KEY STATE UPDATE IDEA
+- The script precomputes belief dynamics so experiment scripts can query posteriors directly.
+
+OUTPUT
+- inference_data_exp2.jld2

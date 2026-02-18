@@ -187,12 +187,11 @@ for (map_id, agent_goals) in metadata
         end
         
         # Pre-compute plans for agent2 and agent3 for debug output
-        agent2_goal = goals_agent2[agent2_gem]
-        agent3_goal = goals_agent3[agent3_gem]
-        
-        plan_agent2 = planner(domain_agent2, state_agent2, agent2_goal)
-        plan_agent3 = planner(domain_agent3, state_agent3, agent3_goal)
-        
+        # agent2_goal = goals_agent2[agent2_gem]
+        # agent3_goal = goals_agent3[agent3_gem]
+        # plan_agent2 = planner(domain_agent2, state_agent2, agent2_goal)
+        # plan_agent3 = planner(domain_agent3, state_agent3, agent3_goal)
+
         # Note: We don't skip observations here - let Q-values determine if observing
         # is worthwhile. If agents don't need blue wizards, their Q-values will be
         # high and they won't be chosen.
@@ -433,7 +432,7 @@ println("Fastest map: $(round(minimum(values(map_times)), digits=2))s")
 println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
-output_filename = "steps_dict_exp3_test_sm341_sm342_sm331_sm332_optimized.json"
+output_filename = "test_comparison.json"
 output_path = joinpath(OUTPUT_DIR, output_filename)
 open(output_path, "w") do io
     JSON.print(io, steps_dict, 4)

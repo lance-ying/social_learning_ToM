@@ -1,0 +1,32 @@
+TITLE
+Middle-ground pseudocode: scripts/utilities/inference_multi_exp4.jl
+
+PURPOSE
+Run type-aware multi-agent inference for exp4, where observed agent behavior may be "naive" or "actual", and export aligned posterior trajectories.
+
+MODEL GROUNDING (from 2507.09409v1 + type-aware extension)
+- Same inverse-planning posterior structure as exp3 inference.
+- Planner model is conditioned on known agent type:
+  naive type -> naive planner assumptions,
+  actual type -> near-optimal planner assumptions.
+
+ALGORITHM
+1. Initialize logging, progress tracking, and output containers.
+2. For each inferred agent and selected map:
+3. For each scenario:
+4. Read scenario goal gem and behavior type from metadata.
+5. Build filtered problem and enumerate hypothesis sets (goals, latent states).
+6. Select planner family based on agent type.
+7. First pass: estimate maximum trajectory length across hypothesis pairs.
+8. Second pass: run inference per hypothesis pair and collect posterior trajectories.
+9. Pad shorter posterior traces to common scenario length by repeating terminal beliefs.
+10. Store posteriors plus agent-type annotations.
+11. Save JLD2 output and debug logs.
+
+KEY STATE UPDATE IDEA
+- Two-pass alignment ensures comparable posterior tensor lengths across hypotheses.
+- Type labels are preserved as explicit metadata for downstream experiments.
+
+OUTPUT
+- exp4 inference JLD2: {goal, state, worlds, agent_types}
+- debug log file

@@ -1,0 +1,32 @@
+TITLE
+Middle-ground pseudocode: run_experiment_exp1.jl
+
+PURPOSE
+Decide how many social observations to take before switching to self-exploration for each exp1 map.
+
+MODEL GROUNDING (from 2507.09409v1)
+- Social utility: U(Obs, b_t^m, g_m) = sum_{g_o} P(g_o) U(Obs, b_t^m, g_m | g_o)
+- Nonsocial utility: U(Act, b_t^m, g_m)
+- Decision rule: observe if U(Obs, b_t^m, g_m) > U(Act, b_t^m, g_m)
+- In code form, this is implemented as expected-cost comparison with a margin.
+
+ALGORITHM
+1. Load exp1 maps, domain assets, and precomputed inference beliefs.
+2. For each map:
+3. Build planning state and hidden-state hypothesis space.
+4. If the optimal route does not depend on uncertain blue-wizard interaction, return t = 0.
+5. Otherwise repeat:
+6. Estimate expected social-learning cost by marginalizing over plausible goal/state hypotheses.
+7. Estimate nonsocial-learning cost under current wizard-candidate belief.
+8. Compare the two with a stopping margin.
+9. If social learning wins, increment observation count t and update wizard candidates.
+10. If nonsocial learning wins, store current t and stop this map.
+11. Save all map-level t values to JSON.
+
+KEY STATE UPDATE IDEA
+- Beliefs are filtered at each step by removing low-probability hypotheses.
+- Observation depth t increases only when expected future savings exceed immediate observe cost.
+
+OUTPUT
+- steps dictionary per map
+- exp1 JSON results

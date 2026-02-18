@@ -1,0 +1,37 @@
+TITLE
+Middle-ground pseudocode: run_experiment_exp4_wrapper.jl
+
+PURPOSE
+Orchestrate exp4 by running Scenario 1 and Scenario 2 as separate jobs, then merging their outputs into one file.
+
+MODEL GROUNDING
+- This script is orchestration, not inference.
+- It enforces scenario-level process isolation to avoid type/cache conflicts in downstream planning code.
+
+ALGORITHM
+1. Read run configuration: experiment id, inference file, output prefix.
+2. Phase 1 (Scenario 1):
+3. Launch `run_experiment_exp4_scenario1.jl` in a fresh Julia process with shared config arguments.
+4. Wait for completion and expect output file `<output_prefix>_scenario1.json`.
+5. Phase 2 (Scenario 2):
+6. Launch `run_experiment_exp4_scenario2.jl` in a separate fresh Julia process with the same config arguments.
+7. Wait for completion and expect output file `<output_prefix>_scenario2.json`.
+8. Phase 3 (Merge):
+9. Load both scenario JSON dictionaries.
+10. Merge by dictionary union (`merged = merge(results1, results2)`), where keys are scenario-specific map entries.
+11. Save merged dictionary as `<output_prefix>.json`.
+12. Print paths for scenario outputs and merged output.
+
+KEY STATE UPDATE IDEA
+- Scenario 1 and Scenario 2 are computed independently and only interact at the final merge step.
+- Wrapper state is minimal: configuration strings plus file-path bookkeeping.
+
+OUTPUT
+- `experiment_outputs/<output_prefix>_scenario1.json`
+- `experiment_outputs/<output_prefix>_scenario2.json`
+- `experiment_outputs/<output_prefix>.json`
+
+FAILURE BEHAVIOR
+- If Scenario 1 process fails, Scenario 2 and merge are not guaranteed to run.
+- If Scenario 2 process fails, merge is skipped.
+- If either scenario output file is missing/unreadable, merge fails immediately.

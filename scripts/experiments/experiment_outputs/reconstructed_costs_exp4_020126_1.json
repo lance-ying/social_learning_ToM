@@ -1,0 +1,33 @@
+{
+  "summary": {
+    "n_cases": 2,
+    "mean_observe_cost": 8.0,
+    "mean_total_cost": 144.0,
+    "mean_planning_cost": 136.0
+  },
+  "exp": "exp4_wrapper",
+  "inference_file": "data/inference/inference_exp4_020126_1.jld2",
+  "per_case": {
+    "sm431_scenario2": {
+      "observe_cost": 10.0,
+      "t_replayed": 10,
+      "planning_cost": 165,
+      "total_cost": 175.0,
+      "observations_count": 10,
+      "t_recorded": 10,
+      "wizard_candidates_count": 3
+    },
+    "sm431_scenario1": {
+      "observe_cost": 6.0,
+      "t_replayed": 6,
+      "planning_cost": 107,
+      "total_cost": 113.0,
+      "observations_count": 6,
+      "t_recorded": 6,
+      "wizard_candidates_count": 1
+    }
+  },
+  "exp_normalized": "exp4",
+  "steps_file": "scripts/experiments/experiment_outputs/steps_dict_exp4_020126_1.json",
+  "problem_dir": "dataset/problems_exp4"
+}

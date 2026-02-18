@@ -1,0 +1,31 @@
+TITLE
+Middle-ground pseudocode: scripts/utilities/inference_multi.jl
+
+PURPOSE
+Infer latent goals and latent initial states for multiple agents in exp3, producing posterior trajectories used by downstream experiments.
+
+MODEL GROUNDING (from 2507.09409v1)
+- Action model (Boltzmann):
+  P(a_t^i | b_{t-1}^i, g_i) proportional to exp(-beta * Q_hat_{g_i}(b_{t-1}^i, a_t^i))
+- Inverse mentalizing target:
+  P(g_i, b_{0:T}^i | a_{1:T}^i) proportional to generative factors over priors, transitions, and actions.
+
+ALGORITHM
+1. For each inferred agent (agent2, agent3):
+2. For each map and scenario:
+3. Build an agent-focused problem instance (filtered view when available).
+4. Enumerate candidate goals G and candidate initial states S0.
+5. Define priors P(g) and P(s0), then construct stratified hypothesis initialization over G x S0.
+6. Configure planner and noisy action model.
+7. For each hypothesis pair (g, s0):
+8. Generate a trajectory under that hypothesis.
+9. Run particle-filter inference conditioned on trajectory actions.
+10. Record posterior trajectories over goals and initial states across timesteps.
+11. Save nested posterior tables and possible-world lists.
+
+KEY STATE UPDATE IDEA
+- Posterior time-series are conditioned on specific trajectory realizations.
+- Results are indexed by agent, map, scenario, goal hypothesis, and state hypothesis.
+
+OUTPUT
+- inference_data_exp3.jld2 with goal/state/world structures

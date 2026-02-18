@@ -1,0 +1,411 @@
+{
+  "summary": {
+    "n_cases": 44,
+    "mean_observe_cost": 3.7954545454545454,
+    "mean_total_cost": 108.5909090909091,
+    "mean_planning_cost": 104.79545454545455
+  },
+  "exp": "exp3_debug",
+  "inference_file": "/Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/utilities/../../data/inference/inference_data_exp3.jld2",
+  "per_case": {
+    "sm541_scenario1": {
+      "observe_cost": 3.0,
+      "t_replayed": 3,
+      "planning_cost": 98,
+      "total_cost": 101.0,
+      "observations_count": 3,
+      "t_recorded": 3,
+      "wizard_candidates_count": 1
+    },
+    "sm531_scenario1": {
+      "observe_cost": 5.0,
+      "t_replayed": 5,
+      "planning_cost": 71,
+      "total_cost": 76.0,
+      "observations_count": 5,
+      "t_recorded": 5,
+      "wizard_candidates_count": 1
+    },
+    "sm321_scenario1": {
+      "observe_cost": 3.0,
+      "t_replayed": 3,
+      "planning_cost": 110,
+      "total_cost": 113.0,
+      "observations_count": 3,
+      "t_recorded": 3,
+      "wizard_candidates_count": 1
+    },
+    "sm361_scenario2": {
+      "observe_cost": 2.0,
+      "t_replayed": 2,
+      "planning_cost": 192,
+      "total_cost": 194.0,
+      "observations_count": 2,
+      "t_recorded": 2,
+      "wizard_candidates_count": 3
+    },
+    "sm351_scenario1": {
+      "observe_cost": 3.0,
+      "t_replayed": 3,
+      "planning_cost": 107,
+      "total_cost": 110.0,
+      "observations_count": 3,
+      "t_recorded": 3,
+      "wizard_candidates_count": 1
+    },
+    "sm361_scenario1": {
+      "observe_cost": 4.0,
+      "t_replayed": 4,
+      "planning_cost": 134,
+      "total_cost": 138.0,
+      "observations_count": 4,
+      "t_recorded": 4,
+      "wizard_candidates_count": 1
+    },
+    "sm543_scenario1": {
+      "observe_cost": 0.0,
+      "t_replayed": 0,
+      "planning_cost": 61,
+      "total_cost": 61.0,
+      "observations_count": 0,
+      "t_recorded": 0,
+      "wizard_candidates_count": 2
+    },
+    "sm331_scenario2": {
+      "observe_cost": 3.0,
+      "t_replayed": 3,
+      "planning_cost": 92,
+      "total_cost": 95.0,
+      "observations_count": 3,
+      "t_recorded": 3,
+      "wizard_candidates_count": 1
+    },
+    "sm221_scenario2": {
+      "observe_cost": 3.0,
+      "t_replayed": 3,
+      "planning_cost": 110,
+      "total_cost": 113.0,
+      "observations_count": 3,
+      "t_recorded": 3,
+      "wizard_candidates_count": 1
+    },
+    "sm342_scenario2": {
+      "observe_cost": 0.0,
+      "t_replayed": 0,
+      "planning_cost": 139,
+      "total_cost": 139.0,
+      "observations_count": 0,
+      "t_recorded": 0,
+      "wizard_candidates_count": 2
+    },
+    "sm541_scenario2": {
+      "observe_cost": 2.0,
+      "t_replayed": 2,
+      "planning_cost": 155,
+      "total_cost": 157.0,
+      "observations_count": 2,
+      "t_recorded": 2,
+      "wizard_candidates_count": 4
+    },
+    "sm112_scenario1": {
+      "observe_cost": 2.0,
+      "t_replayed": 2,
+      "planning_cost": 50,
+      "total_cost": 52.0,
+      "observations_count": 2,
+      "t_recorded": 2,
+      "wizard_candidates_count": 1
+    },
+    "sm371_scenario1": {
+      "observe_cost": 0.0,
+      "t_replayed": 0,
+      "planning_cost": 61,
+      "total_cost": 61.0,
+      "observations_count": 0,
+      "t_recorded": 0,
+      "wizard_candidates_count": 2
+    },
+    "sm321_scenario2": {
+      "observe_cost": 5.0,
+      "t_replayed": 5,
+      "planning_cost": 110,
+      "total_cost": 115.0,
+      "observations_count": 5,
+      "t_recorded": 5,
+      "wizard_candidates_count": 1
+    },
+    "sm342_scenario1": {
+      "observe_cost": 0.0,
+      "t_replayed": 0,
+      "planning_cost": 139,
+      "total_cost": 139.0,
+      "observations_count": 0,
+      "t_recorded": 0,
+      "wizard_candidates_count": 2
+    },
+    "sm332_scenario2": {
+      "observe_cost": 0.0,
+      "t_replayed": 0,
+      "planning_cost": 94,
+      "total_cost": 94.0,
+      "observations_count": 0,
+      "t_recorded": 0,
+      "wizard_candidates_count": 2
+    },
+    "sm431_scenario1": {
+      "observe_cost": 5.0,
+      "t_replayed": 5,
+      "planning_cost": 107,
+      "total_cost": 112.0,
+      "observations_count": 5,
+      "t_recorded": 5,
+      "wizard_candidates_count": 1
+    },
+    "sm521_scenario2": {
+      "observe_cost": 9.0,
+      "t_replayed": 9,
+      "planning_cost": 110,
+      "total_cost": 119.0,
+      "observations_count": 9,
+      "t_recorded": 9,
+      "wizard_candidates_count": 1
+    },
+    "sm371_scenario2": {
+      "observe_cost": 0.0,
+      "t_replayed": 0,
+      "planning_cost": 61,
+      "total_cost": 61.0,
+      "observations_count": 0,
+      "t_recorded": 0,
+      "wizard_candidates_count": 2
+    },
+    "sm521_scenario1": {
+      "observe_cost": 7.0,
+      "t_replayed": 7,
+      "planning_cost": 110,
+      "total_cost": 117.0,
+      "observations_count": 7,
+      "t_recorded": 7,
+      "wizard_candidates_count": 1
+    },
+    "sm411_scenario2": {
+      "observe_cost": 5.0,
+      "t_replayed": 5,
+      "planning_cost": 98,
+      "total_cost": 103.0,
+      "observations_count": 5,
+      "t_recorded": 5,
+      "wizard_candidates_count": 1
+    },
+    "sm351_scenario2": {
+      "observe_cost": 6.0,
+      "t_replayed": 6,
+      "planning_cost": 107,
+      "total_cost": 113.0,
+      "observations_count": 6,
+      "t_recorded": 6,
+      "wizard_candidates_count": 1
+    },
+    "sm112_scenario2": {
+      "observe_cost": 2.0,
+      "t_replayed": 2,
+      "planning_cost": 50,
+      "total_cost": 52.0,
+      "observations_count": 2,
+      "t_recorded": 2,
+      "wizard_candidates_count": 1
+    },
+    "sm411_scenario1": {
+      "observe_cost": 7.0,
+      "t_replayed": 7,
+      "planning_cost": 98,
+      "total_cost": 105.0,
+      "observations_count": 7,
+      "t_recorded": 7,
+      "wizard_candidates_count": 1
+    },
+    "sm341_scenario1": {
+      "observe_cost": 3.0,
+      "t_replayed": 3,
+      "planning_cost": 137,
+      "total_cost": 140.0,
+      "observations_count": 3,
+      "t_recorded": 3,
+      "wizard_candidates_count": 1
+    },
+    "sm311_scenario1": {
+      "observe_cost": 4.0,
+      "t_replayed": 4,
+      "planning_cost": 122,
+      "total_cost": 126.0,
+      "observations_count": 4,
+      "t_recorded": 4,
+      "wizard_candidates_count": 1
+    },
+    "sm421_scenario2": {
+      "observe_cost": 7.0,
+      "t_replayed": 7,
+      "planning_cost": 110,
+      "total_cost": 117.0,
+      "observations_count": 7,
+      "t_recorded": 7,
+      "wizard_candidates_count": 1
+    },
+    "sm432_scenario1": {
+      "observe_cost": 2.0,
+      "t_replayed": 2,
+      "planning_cost": 146,
+      "total_cost": 148.0,
+      "observations_count": 2,
+      "t_recorded": 2,
+      "wizard_candidates_count": 4
+    },
+    "sm332_scenario1": {
+      "observe_cost": 0.0,
+      "t_replayed": 0,
+      "planning_cost": 94,
+      "total_cost": 94.0,
+      "observations_count": 0,
+      "t_recorded": 0,
+      "wizard_candidates_count": 2
+    },
+    "sm431_scenario2": {
+      "observe_cost": 2.0,
+      "t_replayed": 2,
+      "planning_cost": 164,
+      "total_cost": 166.0,
+      "observations_count": 2,
+      "t_recorded": 2,
+      "wizard_candidates_count": 4
+    },
+    "sm211_scenario2": {
+      "observe_cost": 1.0,
+      "t_replayed": 1,
+      "planning_cost": 131,
+      "total_cost": 132.0,
+      "observations_count": 1,
+      "t_recorded": 1,
+      "wizard_candidates_count": 1
+    },
+    "sm311_scenario2": {
+      "observe_cost": 2.0,
+      "t_replayed": 2,
+      "planning_cost": 122,
+      "total_cost": 124.0,
+      "observations_count": 2,
+      "t_recorded": 2,
+      "wizard_candidates_count": 1
+    },
+    "sm511_scenario2": {
+      "observe_cost": 9.0,
+      "t_replayed": 9,
+      "planning_cost": 80,
+      "total_cost": 89.0,
+      "observations_count": 9,
+      "t_recorded": 9,
+      "wizard_candidates_count": 1
+    },
+    "sm421_scenario1": {
+      "observe_cost": 5.0,
+      "t_replayed": 5,
+      "planning_cost": 110,
+      "total_cost": 115.0,
+      "observations_count": 5,
+      "t_recorded": 5,
+      "wizard_candidates_count": 1
+    },
+    "sm543_scenario2": {
+      "observe_cost": 0.0,
+      "t_replayed": 0,
+      "planning_cost": 61,
+      "total_cost": 61.0,
+      "observations_count": 0,
+      "t_recorded": 0,
+      "wizard_candidates_count": 2
+    },
+    "sm531_scenario2": {
+      "observe_cost": 12.0,
+      "t_replayed": 12,
+      "planning_cost": 71,
+      "total_cost": 83.0,
+      "observations_count": 12,
+      "t_recorded": 12,
+      "wizard_candidates_count": 1
+    },
+    "sm331_scenario1": {
+      "observe_cost": 7.0,
+      "t_replayed": 7,
+      "planning_cost": 92,
+      "total_cost": 99.0,
+      "observations_count": 7,
+      "t_recorded": 7,
+      "wizard_candidates_count": 1
+    },
+    "sm221_scenario1": {
+      "observe_cost": 1.0,
+      "t_replayed": 1,
+      "planning_cost": 110,
+      "total_cost": 111.0,
+      "observations_count": 1,
+      "t_recorded": 1,
+      "wizard_candidates_count": 1
+    },
+    "sm432_scenario2": {
+      "observe_cost": 5.0,
+      "t_replayed": 5,
+      "planning_cost": 89,
+      "total_cost": 94.0,
+      "observations_count": 5,
+      "t_recorded": 5,
+      "wizard_candidates_count": 1
+    },
+    "sm111_scenario2": {
+      "observe_cost": 6.0,
+      "t_replayed": 6,
+      "planning_cost": 80,
+      "total_cost": 86.0,
+      "observations_count": 6,
+      "t_recorded": 6,
+      "wizard_candidates_count": 1
+    },
+    "sm511_scenario1": {
+      "observe_cost": 11.0,
+      "t_replayed": 11,
+      "planning_cost": 80,
+      "total_cost": 91.0,
+      "observations_count": 11,
+      "t_recorded": 11,
+      "wizard_candidates_count": 1
+    },
+    "sm341_scenario2": {
+      "observe_cost": 5.0,
+      "t_replayed": 5,
+      "planning_cost": 137,
+      "total_cost": 142.0,
+      "observations_count": 5,
+      "t_recorded": 5,
+      "wizard_candidates_count": 1
+    },
+    "sm111_scenario1": {
+      "observe_cost": 6.0,
+      "t_replayed": 6,
+      "planning_cost": 80,
+      "total_cost": 86.0,
+      "observations_count": 6,
+      "t_recorded": 6,
+      "wizard_candidates_count": 1
+    },
+    "sm211_scenario1": {
+      "observe_cost": 3.0,
+      "t_replayed": 3,
+      "planning_cost": 131,
+      "total_cost": 134.0,
+      "observations_count": 3,
+      "t_recorded": 3,
+      "wizard_candidates_count": 1
+    }
+  },
+  "exp_normalized": "exp3",
+  "steps_file": "scripts/experiments/experiment_outputs/steps_dict_exp3_test.json",
+  "problem_dir": "/Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/utilities/../../dataset/problems_exp3"
+}
