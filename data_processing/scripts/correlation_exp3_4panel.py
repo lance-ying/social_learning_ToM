@@ -1,14 +1,19 @@
 """
 Two 4x1 scatter subplots for Exp3: one for agent2, one for agent3.
-Each figure has 4 panels: ToM Model, Naive, Non-mentalize, Mentalize.
+Each figure has 4 panels: Rational-Mentalizing, Naive, Non-mentalize, Mentalize.
 Human data is parsed from individual CSVs to get per-participant SD for error bars.
 """
 import json, re, csv
 import numpy as np
 import matplotlib.pyplot as plt
 from pathlib import Path
-from scipy import stats
 from collections import defaultdict
+from correlation_4panel_style import (
+    annotate_r_ci,
+    apply_reference_style,
+    bootstrap_r_ci,
+    plot_points_errorbars_and_fit,
+)
 
 # ── paths ──────────────────────────────────────────────────────────────────
 script_dir = Path(__file__).parent
@@ -157,38 +162,43 @@ output_dir.mkdir(parents=True, exist_ok=True)
 
 for agent in ('agent2', 'agent3'):
     pairs = {
-        'ToM Model':    collect_pairs(model_dict,             human_stats, agent),
-        'Naive':         collect_pairs(baseline_naive,         human_stats, agent),
-        'Non-mentalize': collect_pairs(baseline_nonmentalize,  human_stats, agent),
-        'Mentalize':     collect_pairs(baseline_mentalize,     human_stats, agent),
+        'Rational Mentalizing\n(Full Model)': collect_pairs(model_dict,             human_stats, agent),
+        'Social Mentalizing':                 collect_pairs(baseline_mentalize,      human_stats, agent),
+        'Rational Non-Mentalizing':           collect_pairs(baseline_nonmentalize,   human_stats, agent),
+        'Naive Observer':                     collect_pairs(baseline_naive,          human_stats, agent),
     }
 
-    fig, axes = plt.subplots(1, 4, figsize=(24, 5))
+    fig, axes = plt.subplots(1, 4, figsize=(20, 5))
+    agent_label = "agent 2" if agent == "agent2" else "agent 3"
+    fig.suptitle(f"Experiment 3 ({agent_label})", fontsize=30, color="#1a1a1a", y=0.99)
 
-    for ax, (label, (x, y, sd, _keys)) in zip(axes, pairs.items()):
-        if len(x) < 2:
-            ax.set_title(f'{label} - {agent}\nInsufficient data')
+    for idx, (ax, (label, (x, y, sd, _keys))) in enumerate(zip(axes, pairs.items())):
+        apply_reference_style(ax)
+
+        if len(x) < 3:
+            ax.text(
+                0.05,
+                0.90,
+                "Insufficient data",
+                transform=ax.transAxes,
+                ha="left",
+                va="top",
+                fontsize=18,
+                color="#1a1a1a",
+            )
             continue
 
-        ax.errorbar(x, y, yerr=sd, fmt='o', alpha=0.7, capsize=3, markersize=6,
-                    elinewidth=1, color='#1f77b4', ecolor='gray')
+        plot_points_errorbars_and_fit(ax, x, y, sd)
+        r, ci_low, ci_high = bootstrap_r_ci(x, y, n_resamples=1000)
+        annotate_r_ci(ax, r, ci_low, ci_high)
 
-        r, p = stats.pearsonr(x, y)
-        n = len(x)
+        ax.set_xlabel(label, fontsize=22, color="#1a1a1a")
+        if idx == 0:
+            ax.set_ylabel('Human', fontsize=24, color="#1a1a1a")
+        else:
+            ax.set_ylabel('')
 
-        fit = np.polyfit(x, y, 1)
-        fit_fn = np.poly1d(fit)
-        x_line = np.linspace(x.min(), x.max(), 100)
-        ax.plot(x_line, fit_fn(x_line), color='red', linewidth=2)
-
-        ax.set_xlabel(f'Model {agent} Count', fontsize=18)
-        ax.set_ylabel(f'Human {agent} Count', fontsize=18)
-        ax.set_title(f'{label}, N={n_participants}\nr = {r:.3f}, p = {p:.3f}, n = {n}',
-                     fontsize=20)
-        ax.grid(False)
-        ax.tick_params(labelsize=14)
-
-    plt.tight_layout()
+    plt.tight_layout(w_pad=2.5, rect=(0, 0, 1, 0.97))
     out_path = output_dir / f'correlation_exp3_4panel_{agent}.png'
     plt.savefig(out_path, dpi=300, bbox_inches='tight')
     print(f"Saved -> {out_path}")
