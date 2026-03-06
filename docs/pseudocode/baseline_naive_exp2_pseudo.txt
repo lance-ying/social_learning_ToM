@@ -1,0 +1,27 @@
+TITLE
+Middle-ground pseudocode: baseline_naive_exp2.jl
+
+PURPOSE
+Compute a naive (no inference, no belief reasoning) observation count T for each
+(map, goal) scenario in exp2. T is simply the index of the first interaction with
+a blue wizard in the optimal plan.
+
+ALGORITHM
+1. Load exp2 metadata (map → list of goals) and domain assets.
+2. For each map and each goal scenario (keyed as map_id_i):
+3.   Load domain and problem. Initialize state.
+4.   Find all blue wizards in the state.
+5.   Run A* planner to get the optimal plan toward the problem goal.
+6.   Scan the plan for the first :interact action targeting a blue wizard → that index is T.
+7.   If no such interaction exists, T = length of plan.
+8.   Store T for this (map, scenario) key.
+9. Save all results to JSON.
+
+KEY DIFFERENCES FROM EXP1
+- Exp2 has multiple goal scenarios per map (from metadata), so the outer loop is
+  over maps and the inner loop is over goal entries; keys are "map_id_i".
+- No inference data loaded; purely structural plan-based T.
+
+OUTPUT
+- steps dictionary: { "map_id_i" → T }
+- step_dict_naive_exp2.json

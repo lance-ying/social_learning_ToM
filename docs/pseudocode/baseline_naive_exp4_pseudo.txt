@@ -1,0 +1,30 @@
+TITLE
+Middle-ground pseudocode: baseline_naive_exp4.jl
+
+PURPOSE
+Compute a naive (no inference, no belief reasoning) observation schedule for each
+(map, scenario) in exp4. T is the index of the first blue wizard interaction in
+the optimal plan, then split evenly between two observed agents.
+
+ALGORITHM
+1. Load exp4 metadata (map → agent goals per scenario) and domain assets.
+2. For each map (sorted numerically) and each scenario (keyed as map_id_scenarioN):
+3.   Load domain and ASCII problem. Initialize and compile state.
+4.   Find all blue wizards in the state.
+5.   Run A* planner to get the optimal plan.
+6.   Scan the plan for the first :interact action targeting a blue wizard → that index is T.
+7.   If no such interaction exists, T = length of plan.
+8.   Split T evenly: agent2_count = T ÷ 2, agent3_count = T - agent2_count.
+9.   Build observations list: all agent2 observations first, then all agent3.
+10.  Store result for this (map, scenario) key.
+11. Save all results to JSON.
+
+KEY DIFFERENCES FROM EXP3
+- Problem directory is problems_exp4_013026 (date-stamped).
+- Maps are sorted numerically (smXXX ascending) before processing.
+- Metadata format for agent goals includes a "gem" and "type" field per scenario
+  (e.g., agent_goals["agent2"][scenario]["gem"]), though naive doesn't use these.
+
+OUTPUT
+- steps dictionary: { "map_id_scenarioN" → { observations, agent2_count, agent3_count, t } }
+- step_dict_naive_exp4.json

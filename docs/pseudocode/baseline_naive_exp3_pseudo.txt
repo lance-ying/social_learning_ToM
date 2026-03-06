@@ -1,0 +1,30 @@
+TITLE
+Middle-ground pseudocode: baseline_naive_exp3.jl
+
+PURPOSE
+Compute a naive (no inference, no belief reasoning) observation schedule for each
+(map, scenario) in exp3. T is the index of the first blue wizard interaction in
+the optimal plan, then split evenly between two observed agents.
+
+ALGORITHM
+1. Load exp3 metadata (map → agent goals per scenario) and domain assets.
+2. For each map and each scenario (keyed as map_id_scenarioN):
+3.   Load domain and ASCII problem. Initialize and compile state.
+4.   Find all blue wizards in the state.
+5.   Run A* planner to get the optimal plan.
+6.   Scan the plan for the first :interact action targeting a blue wizard → that index is T.
+7.   If no such interaction exists, T = length of plan.
+8.   Split T evenly: agent2_count = T ÷ 2, agent3_count = T - agent2_count.
+9.   Build observations list: all agent2 observations first, then all agent3.
+10.  Store result for this (map, scenario) key.
+11. Save all results to JSON.
+
+KEY DIFFERENCES FROM EXP1/EXP2
+- Two observed agents (agent2 and agent3); T is split 50/50 between them.
+- Problems are ASCII-format (.txt), not PDDL files.
+- Outer loop is over maps; inner loop is over scenarios 1 and 2.
+- Output stores full observations list plus per-agent counts, not just T.
+
+OUTPUT
+- steps dictionary: { "map_id_scenarioN" → { observations, agent2_count, agent3_count, t } }
+- step_dict_naive_exp3.json

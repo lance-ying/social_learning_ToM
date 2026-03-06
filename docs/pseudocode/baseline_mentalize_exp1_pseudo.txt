@@ -1,0 +1,34 @@
+TITLE
+Middle-ground pseudocode: baseline_mentalize_exp1.jl
+
+PURPOSE
+Compute observation count T for each exp1 map by finding when the observed agent's
+state distribution diverges enough to be informative — using precomputed belief trajectories.
+
+ALGORITHM
+1. Load exp1 map files, domain assets, and precomputed inference data (goal/state/world probs).
+2. For each map (sorted by map id):
+3.   Skip if map not found in inference data.
+4.   Load domain and problem. Initialize state.
+5.   Identify goal_id and find the matching state index (s_id) in the enumerated belief space.
+6.   Load goal_probs and state_probs trajectories for this (g_id, s_id) slice.
+7.   Run A* planner (for reference; not directly used to set T).
+8.   Starting at T=1, scan timesteps t = 1 .. end:
+9.     Take the current state distribution at time t.
+10.    For every plausible (goal g, state s) pair with probability > 0.1:
+11.      Check if the future state trajectory under (g, s) ever matches the current distribution.
+12.      If ANY such match is found → distributions are still ambiguous → flag = false, keep observing.
+13.    If NO match found for any plausible (g, s) → distributions have diverged → set T = t, stop.
+14.  Store T for this map.
+15. Save all map-level T values to JSON.
+
+KEY IDEA
+- T is the earliest timestep at which observing the other agent's state trajectory becomes
+  unambiguously informative (i.e., different hypotheses produce distinguishable futures).
+- This is mentalizing in the sense that the agent reasons about what other agents' goals
+  imply about their future behavior, then decides when those futures diverge enough to act on.
+- Uses precomputed inference data; no online particle filtering.
+
+OUTPUT
+- steps dictionary: { map_id → T }
+- step_dict_mentalize_exp1.json

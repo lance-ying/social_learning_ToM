@@ -1,0 +1,43 @@
+TITLE
+Middle-ground pseudocode: baseline_mentalize_exp4_v2.jl
+
+PURPOSE
+Compute observation schedule for each (map, scenario) in exp4 by finding the
+informativeness horizon independently for agent2 and agent3, then observing
+both for their full individual horizons (interleaved).
+
+ALGORITHM
+1. Load exp4 metadata, domain assets, and precomputed inference data from a
+   configurable inference file (inference_exp4_020126_1.jld2).
+2. For each map (sorted numerically):
+3.   Load domain and ASCII problem. Initialize and compile state.
+4.   Check if agent1 needs blue wizards at all. If not → t=0 for both scenarios, skip.
+5.   Load and compile agent-filtered problems (agent2-only and agent3-only ASCII maps).
+6.   Enumerate belief states and find s_id for agent2 and agent3 (done once per map).
+7.   For each scenario (1 and 2):
+8.     Get agent2_gem and agent3_gem from metadata
+          (exp4 format: agent_goals["agent2"][scenario]["gem"]).
+9.     Load scenario-specific goal_probs and state_probs for each agent.
+10.    Run find_informativeness_horizon for agent2:
+11.      Scan timesteps t=1..end; at each t check if any plausible (goal g, state s) future
+12.      trajectory still matches the current state distribution. If none match → T_agent2 = t.
+13.      If no divergence found across all timesteps → T_agent2 = max available timestep.
+14.    Run find_informativeness_horizon for agent3 (same logic).
+15.    Set agent2_count = T_agent2, agent3_count = T_agent3, T = T_agent2 + T_agent3.
+16.    Build interleaved observations list (alternating agent2/agent3 until each count is met).
+17.    Store result for this (map, scenario) key.
+18. Save all results to JSON.
+
+KEY DIFFERENCES FROM EXP3 MENTALIZE
+- Problem directory and inference file are explicitly configurable at the top of the script.
+- Metadata goal format includes a "gem" and "type" field per agent per scenario
+  (exp3 used just a gem integer directly).
+- find_informativeness_horizon signature is slightly simplified (no goals/initial_states args;
+  uses n_goals and n_states from the probability matrix dimensions instead).
+- Maps are sorted numerically (smXXX ascending) — exp3 used unsorted dict iteration.
+- More verbose progress logging (numbered steps [1]..[12] printed to stdout).
+- Output file is step_dict_mentalize_exp4_v2.json (versioned filename).
+
+OUTPUT
+- steps dictionary: { "map_id_scenarioN" → { observations, agent2_count, agent3_count, t } }
+- step_dict_mentalize_exp4_v2.json

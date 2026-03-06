@@ -41,7 +41,7 @@ progress = Progress(total_iterations, desc="Processing non-mentalize baseline: "
 map_times = Dict()
 total_start_time = time()
 
-for (map_id, agent_goals) in metadata
+for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d+", x[1]).match))
     map_start_time = time()
     println("\nProcessing map: $map_id")
 

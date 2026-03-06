@@ -1,0 +1,29 @@
+TITLE
+Middle-ground pseudocode: baseline_non_mentalizing_exp2.jl
+
+PURPOSE
+Compute observation count T for each (map, goal) scenario in exp2 using a
+cost-comparison heuristic, without reasoning about the other agent's goals.
+
+ALGORITHM
+1. Load exp2 metadata, domain assets, and precomputed inference data (goal/state/world probs).
+2. For each map and each goal scenario (keyed as map_id_i):
+3.   Load domain and problem. Initialize state.
+4.   Enumerate belief states; find the matching state index (s_id).
+5.   Use goal_str from metadata as g_id (not the problem goal_id).
+6.   Find all blue wizards in the state.
+7.   Compute Q_not_observe: estimated cost of self-exploration without observing.
+8.   Run A* planner. Compute Q_observe: plan cost + observe cost × T steps.
+9.   T = index of first :interact with a blue wizard (or plan length if none).
+10.  If Q_observe < Q_not_observe → store T.
+11.  Else → store T = 0 (skip observation).
+12. Save all results to JSON.
+
+KEY DIFFERENCES FROM EXP1
+- g_id is set from metadata goal_str (not parsed from problem goal) — exp2 has
+  metadata-conditioned goals per scenario.
+- Inner loop over goal scenarios per map; keys are "map_id_i".
+
+OUTPUT
+- steps dictionary: { "map_id_i" → T }
+- step_dict_nonmentalize_exp2.json

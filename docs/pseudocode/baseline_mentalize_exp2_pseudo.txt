@@ -1,0 +1,32 @@
+TITLE
+Middle-ground pseudocode: baseline_mentalize_exp2.jl
+
+PURPOSE
+Compute observation count T for each (map, goal) scenario in exp2 by finding when
+the observed agent's state distribution diverges across goal hypotheses —
+using precomputed belief trajectories.
+
+ALGORITHM
+1. Load exp2 metadata, domain assets, and precomputed inference data (goal/state/world probs).
+2. For each map and each goal scenario (keyed as map_id_i):
+3.   Load domain and problem. Initialize state.
+4.   Enumerate belief states; find the matching state index (s_id).
+5.   Use goal_str from metadata as g_id; load goal_probs and state_probs for (g_id, s_id).
+6.   Run A* planner (reference only; not directly used to set T).
+7.   Starting at T=1, scan timesteps t = 1 .. end:
+8.     Take the current state distribution at time t.
+9.     For every plausible (goal g, state s) pair with probability > 0.1:
+10.      Check if any future state trajectory under (g, s) matches the current distribution.
+11.      If ANY match found → still ambiguous → keep observing.
+12.    If NO match found → distributions have diverged → set T = t, stop.
+13.  Store T for this (map, scenario) key.
+14. Save all results to JSON.
+
+KEY DIFFERENCES FROM EXP1
+- Inference data is indexed by map_id directly (not "mod_map_id_ascii" as in exp1).
+- g_id is set from metadata goal_str (not parsed from problem goal).
+- Inner loop over goal scenarios per map; keys are "map_id_i".
+
+OUTPUT
+- steps dictionary: { "map_id_i" → T }
+- step_dict_mentalize_exp2.json
