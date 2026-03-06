@@ -21,7 +21,7 @@ include(joinpath(@__DIR__, "..", "..", "..", "src", "render.jl"))
 experiment_id = "exp4"  # Problem directory: problems_exp4
 inference_file = "inference_exp4_020126_1.jld2"  # Configurable inference file (not used in non-mentalizing)
 
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_$experiment_id")
+PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_exp4_013026")
 
 #--- Initial Setup ---#
 metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
