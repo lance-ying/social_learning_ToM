@@ -64,7 +64,7 @@ function agent_cost_comparison(domain_render, domain_path, problem_dir, map_id,
     problem_sub = load_ascii_problem(temp_path)
     state_sub = initstate(domain_sub, problem_sub)
     state_render_sub = copy(state_sub)
-    domain_sub, state_sub = PDDL.compiled(domain_sub, problem_sub)
+    # Don't compile — planner works fine without compilation (see mentalize baseline v2)
 
     blue_wizards = [w for w in PDDL.get_objects(state_sub, :wizard) if state_sub[pddl"(iscolor $w blue)"]]
 
@@ -159,7 +159,7 @@ end
 total_elapsed = time() - total_start_time
 println("\n=== Timing Summary ===")
 println("Total time: $(round(total_elapsed, digits=2))s")
-println("Average per map: $(round(mean(values(map_times)), digits=2))s")
+println("Average per map: $(round(mean(collect(Float64, values(map_times))), digits=2))s")
 
 # Save results
 output_filename = "step_dict_nonmentalize_exp4_v2.json"

@@ -27,7 +27,7 @@ with open(workspace_root / 'scripts/experiments/experiment_outputs/steps_dict_ex
 with open(workspace_root / 'step_dict_naive_exp4.json') as f:
     baseline_naive = json.load(f)
 
-with open(workspace_root / 'step_dict_nonmentalize_exp4.json') as f:
+with open(workspace_root / 'scripts/baselines/exp4/step_dict_nonmentalize_exp4_v2.json') as f:
     baseline_nonmentalize = json.load(f)
 
 with open(workspace_root / 'step_dict_mentalize_exp4.json') as f:

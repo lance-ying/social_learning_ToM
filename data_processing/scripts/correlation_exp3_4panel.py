@@ -27,7 +27,7 @@ with open(workspace_root / 'steps_dict_exp3.json') as f:
 with open(workspace_root / 'scripts/baselines/exp3/step_dict_naive_exp3.json') as f:
     baseline_naive = json.load(f)
 
-with open(workspace_root / 'scripts/baselines/exp3/step_dict_nonmentalize_exp3.json') as f:
+with open(workspace_root / 'scripts/baselines/exp3/step_dict_nonmentalize_exp3_v2.json') as f:
     baseline_nonmentalize = json.load(f)
 
 with open(workspace_root / 'scripts/baselines/exp3/step_dict_mentalize_exp3.json') as f:

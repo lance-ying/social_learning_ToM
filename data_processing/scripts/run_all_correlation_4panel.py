@@ -9,10 +9,8 @@ from pathlib import Path
 
 
 SCRIPT_ORDER = [
-    "correlation_exp1_4panel.py",
-    "correlation_exp2_4panel.py",
-    "correlation_exp3_4panel.py",
-    "correlation_exp4_4panel.py",
+    "correlation_exp12_combined.py",
+    "correlation_exp34_combined.py",
 ]
 
 
