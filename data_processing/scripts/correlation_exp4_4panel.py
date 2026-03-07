@@ -24,7 +24,7 @@ workspace_root = data_processing_dir.parent
 with open(workspace_root / 'scripts/experiments/experiment_outputs/steps_dict_exp4_020126_2.json') as f:
     model_dict = json.load(f)
 
-with open(workspace_root / 'step_dict_naive_exp4.json') as f:
+with open(workspace_root / 'scripts/baselines/exp4/step_dict_naive_exp4.json') as f:
     baseline_naive = json.load(f)
 
 with open(workspace_root / 'scripts/baselines/exp4/step_dict_nonmentalize_exp4_v2.json') as f:
