@@ -1,0 +1,75 @@
+import { LevelConfig } from '../types';
+
+export const sm351: LevelConfig = {
+  id: 'sm351',
+  name: 'sm351',
+  asciiMap: `
+WWWWWeWeWWb
+WWWWW.W.WW.
+WWWWW.W.WW.
+gR...Y.....
+WWWWW.WWWWW
+WWWWW.WWWWW
+WWWWWX....r
+WWWWW.WWWWW
+WWWWW.WWWWW
+g.B.....B.G
+WWWWW.WWWWW
+WWWWWMWWWWW
+`.trim(),
+  agentPaths: {
+    2: {
+      movements: {
+        experienced1: {
+          path: ["right", "right", "right", "right", "right", "left", "left", "left", "left", "up", "up", "up", "left", "left", "left", "left", "left"],
+          goal: 1,
+          type: 'Expert'
+        },
+        experienced2: {
+          path: ["up", "up", "up", "right", "right", "right", "right", "right", "up", "up", "up", "down", "down", "left", "left", "left", "left", "left", "down", "down", "down", "down", "down", "down", "right", "right", "right", "right", "right"],
+          goal: 3,
+          type: 'Expert'
+        },
+        experienced3: {
+          path: ["right", "right", "right", "right", "right", "left", "left", "left", "left", "up", "up", "up", "left", "left", "left", "left", "left"],
+          goal: 1,
+          type: 'Expert_2'
+        },
+        experienced4: {
+          path: ["up", "up", "up", "right", "right", "right", "right", "right", "up", "up", "up", "down", "down", "left", "left", "left", "left", "left", "down", "down", "down", "down", "down", "down", "right", "right", "right", "right", "right"],
+          goal: 3,
+          type: 'Expert_2'
+        }
+      }
+    },
+    3: {
+      movements: {
+        experienced1: {
+          path: ["right", "right", "right", "right", "right", "up", "up", "up", "down", "down", "left", "left", "left", "left", "left", "down", "down", "down", "down", "down", "down", "left", "left", "left", "left", "left"],
+          goal: 2,
+          type: 'Expert'
+        },
+        experienced2: {
+          path: ["down", "down", "down", "right", "right", "right", "right", "right", "left", "left", "left", "left", "up", "up", "up", "left", "left", "left", "left", "left"],
+          goal: 1,
+          type: 'Expert'
+        },
+        experienced3: {
+          path: ["right", "right", "right", "right", "right", "up", "up", "up", "down", "down", "left", "left", "left", "left", "left", "down", "down", "down", "down", "down", "down", "left", "left", "left", "left", "left"],
+          goal: 2,
+          type: 'Expert_2'
+        },
+        experienced4: {
+          path: ["down", "down", "down", "right", "right", "right", "right", "right", "left", "left", "left", "left", "up", "up", "up", "left", "left", "left", "left", "left"],
+          goal: 1,
+          type: 'Expert_2'
+        }
+      }
+    }
+  },
+  stepsRemaining: 100,
+  goal: {
+    type: 'A',
+    description: 'Find and obtain Treasure A'
+  }
+};

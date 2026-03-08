@@ -1,0 +1,52 @@
+import { LevelConfig } from '../types';
+
+export const mod_s442: LevelConfig = {
+  id: 'mod_s442',
+  name: 'mod_s442',
+  asciiMap: `
+gWWWWWWWeWW
+.WWWWWWW.WW
+BWWWWWWW.WW
+.....Z....e
+WWWWW.WW.WW
+WWWWW.WW.WW
+WWWWW.WW.WW
+.....MWW..e
+WWWWW.WW.WW
+...........
+.WWWWWWW.WW
+eWWWWWWWbWW
+`.trim(),
+  agentPaths: {
+    2: {
+      movements: {
+        experienced1: { 
+          path: ["down", "down", "down", "down", "down", "down", "right", "right", "right", "down", "down", "up", "up", "up", "up", "up", "up", "up", "left", "left", "left", "left", "left", "left", "left", "left", "up", "up", "up"],
+          goal: 1,
+          type: 'Expert'
+        },
+        experienced2: { 
+          path: ["right", "right", "right", "down", "down", "down", "down", "right", "right", "left", "down", "down", "down", "down", "up", "up", "up", "up", "up", "up", "up", "left", "left", "left", "left", "left", "left", "left", "left", "up", "up", "up"],
+          goal: 2,
+          type: 'Novice'
+        },
+        experienced3: { 
+          path: [],
+          goal: 0,
+          type: 'Expert_2'
+        },
+        experienced4: { 
+          path: [],
+          goal: 0,
+          type: 'Novice_2'
+        }
+      }
+    }
+  },
+     
+  stepsRemaining: 105,
+  goal: {
+    type: 'A',
+    description: 'Find and obtain Treasure A'
+  }
+};
