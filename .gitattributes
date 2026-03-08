@@ -1,0 +1,8 @@
+# Exclude config files from LFS
+tsconfig.json -filter -diff -merge text
+package.json -filter -diff -merge text
+package-lock.json -filter -diff -merge text
+next.config.ts -filter -diff -merge text
+
+# Track other JSON files with LFS (if needed for large data files)
+# *.json filter=lfs diff=lfs merge=lfs -text

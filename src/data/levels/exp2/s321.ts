@@ -1,0 +1,52 @@
+import { LevelConfig } from '../types';
+
+export const s321: LevelConfig = {
+  id: 's321',
+  name: 's321',
+  asciiMap:`
+bWWWWWWWWW.
+.WWWWWWWWW.
+.WWWWWWWWW.
+...........
+WWWW.WWWWWW
+WWWW.......
+WWWW.WWWWWW
+gWWW......e
+BWWW.WWWWWW
+M...Z.....e
+BWWW.WWWWWW
+GWWW......g
+
+`.trim(),
+  agentPaths: {
+    2: {
+      movements: {
+        experienced1: {
+          path: ["up", "up", "up", "up", "up", "up", "left", "left", "left", "left", "up", "up", "up", "down", "down", "right", "right", "right", "right", "down", "down", "down", "down", "down", "down", "left", "left", "left", "left", "up", "up"],
+          goal: 1,
+          type: 'Expert'
+        },
+        experienced2: {
+          path: ["down", "down", "right", "right", "right", "right", "right", "right"],
+          goal: 3,
+          type: 'Expert'
+        },
+        experienced3: {
+          path: ["up", "up", "up", "up", "up", "up", "left", "left", "left", "left", "up", "up", "up", "down", "down", "right", "right", "right", "right", "down", "down", "down", "down", "down", "down", "left", "left", "left", "left", "up", "up"],
+          goal: 1,
+          type: 'Expert_2'
+        },
+        experienced4: {
+          path: ["down", "down", "right", "right", "right", "right", "right", "right"],
+          goal: 3,
+          type: 'Novice_2'
+        },
+      }
+    },
+  },
+  stepsRemaining: 130,
+  goal: {
+    type: 'B',
+    description: 'Find and obtain Treasure B'
+  }
+};

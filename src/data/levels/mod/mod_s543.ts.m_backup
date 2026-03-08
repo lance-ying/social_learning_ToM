@@ -1,0 +1,51 @@
+import { LevelConfig } from '../types';
+
+export const mod_s543: LevelConfig = {
+  id: 'mod_s543',
+  name: 'mod_s543',
+  asciiMap: `
+WWWbWWWWWWW
+WWW.WWWWWWW
+e..M.......
+WWWWW.WWWWW
+WWWWW.WWWWW
+g.B........
+WWWWW.WWWWW
+WWWWW.WWWWW
+WWWWW.WWWWW
+Z..........
+WWWWWWWWWWW
+WWWWWWWWWWW
+`.trim(),
+  agentPaths: {
+    1: {
+      movements: {
+        experienced1: { 
+          path: ["right", "right", "right", "right", "right", "up", "up", "up", "up", "up", "up", "up", "left", "left", "up", "down", "right", "right", "down", "down", "down", "left", "left", "left", "left", "left"],
+          goal: 0,
+          type: 'Expert'
+        },
+        experienced2: { 
+          path: ["right", "right", "right", "right", "right", "up", "up", "up", "up", "up", "up", "up", "left", "left", "left", "left", "left", "right", "right", "up", "up", "down", "right", "right", "down", "down", "down", "left", "left", "left", "left", "left"],
+          goal: 0,
+          type: 'Novice'
+        },
+        experienced3: { 
+          path: [],
+          goal: 0,
+          type: 'Expert_2'
+        },
+        experienced4: { 
+          path: ["right", "right", "right", "right", "right", "up", "up", "up", "up", "up", "up", "up", "left", "left", "left", "left", "left", "right", "right", "up", "up", "down", "right", "right", "down", "down", "down", "left", "left", "left", "left", "left"],
+          goal: 0,
+          type: 'Novice_2'
+        }
+      }
+    }
+  },
+  stepsRemaining: 115,
+  goal: {
+    type: 'A',
+    description: 'Find and obtain Treasure A'
+  }
+};

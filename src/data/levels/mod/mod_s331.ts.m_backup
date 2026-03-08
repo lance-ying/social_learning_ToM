@@ -1,0 +1,51 @@
+import { LevelConfig } from '../types';
+
+export const mod_s331: LevelConfig = {
+  id: 'mod_s331',
+  name: 'mod_s331',
+  asciiMap: `
+WWWWeWWWWWg
+WWWW.WWWWWB
+b..Z.......
+WWW.WWWWWWW
+WWW.WWWWWWW
+WWW.WWWWWWW
+WWW.WWWWWWW
+...........
+WWW.WWWWWWW
+WWW.WWWWWWW
+WWW.WWWWWWW
+WWWMWWWWWWW
+`.trim(),
+  agentPaths: {
+    1: {
+      movements: {
+        experienced1: { 
+          path: ["left", "left", "left", "right", "right", "right", "right", "right", "right", "right", "right", "right", "up", "up"],
+          goal: 1,
+          type: 'Expert'
+        },
+        experienced2: { 
+          path: ["right", "up", "up", "down", "left", "left", "left", "left", "right", "right", "right", "right", "right", "right", "right", "right", "right", "up", "up"],
+          goal: 2,
+          type: 'Novice'
+        },
+        experienced3: { 
+          path: ["left", "left", "left", "right", "right", "right", "right", "right", "right", "right", "right", "right", "up", "up"],
+          goal: 1,
+          type: 'Expert_2'
+        },
+        experienced4: { 
+          path: ["right", "up", "up", "down", "left", "left", "left", "left", "right", "right", "right", "right", "right", "right", "right", "right", "right", "up", "up"],
+          goal: 2,
+          type: 'Novice_2'
+        }
+      }
+    }
+  },
+  stepsRemaining: 75,
+  goal: {
+    type: 'A',
+    description: 'Find and obtain Treasure A'
+  }
+};
