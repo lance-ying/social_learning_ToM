@@ -77,20 +77,15 @@ for (map_id, agent_goals) in metadata
             T = length(plan)
         end
 
-        # Naive baseline observes both agents equally (50/50 split) - simplest possible observation strategy
-        # No reasoning about which agent to observe, just split observations evenly
-        agent2_count = T ÷ 2  # Integer division for first half
-        agent3_count = T - agent2_count  # Remainder goes to agent3
-        
-        observations = vcat(
-            ["agent2" for _ in 1:agent2_count],
-            ["agent3" for _ in 1:agent3_count]
-        )
+        # Naive expected-value policy: both agents receive T/2 expected observations.
+        # We do not instantiate a per-step observation assignment when T is odd.
+        expected_count = T / 2
+        observations = String[]
         
         steps_dict[map_key] = Dict(
             "observations" => observations,
-            "agent2_count" => agent2_count,
-            "agent3_count" => agent3_count,
+            "agent2_count" => expected_count,
+            "agent3_count" => expected_count,
             "t" => T
         )
         

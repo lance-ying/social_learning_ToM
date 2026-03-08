@@ -70,22 +70,18 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
         T = length(plan)
     end
 
-    # Naive baseline observes both agents equally (50/50 split)
-    agent2_count = T ÷ 2
-    agent3_count = T - agent2_count
-
-    observations = vcat(
-        ["agent2" for _ in 1:agent2_count],
-        ["agent3" for _ in 1:agent3_count]
-    )
+    # Naive expected-value policy: both agents receive T/2 expected observations.
+    # We do not instantiate a per-step observation assignment when T is odd.
+    expected_count = T / 2
+    observations = String[]
 
     # Both scenarios get the same result (naive doesn't use scenario-specific goals)
     for scenario in 1:2
         map_key = "$(map_id)_scenario$(scenario)"
         steps_dict[map_key] = Dict(
             "observations" => observations,
-            "agent2_count" => agent2_count,
-            "agent3_count" => agent3_count,
+            "agent2_count" => expected_count,
+            "agent3_count" => expected_count,
             "t" => T
         )
         next!(progress)
