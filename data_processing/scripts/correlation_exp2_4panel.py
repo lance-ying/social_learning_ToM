@@ -72,7 +72,7 @@ pairs = {
 }
 
 # ── plot (4 columns x 1 row) ──────────────────────────────────────────────
-fig, axes = plt.subplots(1, 4, figsize=(20, 5))
+fig, axes = plt.subplots(1, 4, figsize=(20, 6))
 fig.suptitle("Experiment 2", fontsize=30, color="#1a1a1a", y=0.99)
 
 for idx, (ax, (label, (x, y, sd, _keys))) in enumerate(zip(axes, pairs.items())):

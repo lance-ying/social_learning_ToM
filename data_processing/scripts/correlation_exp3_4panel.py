@@ -160,47 +160,42 @@ def collect_pairs(pred_dict, human_stats, agent):
 output_dir = data_processing_dir / 'outputs/plots'
 output_dir.mkdir(parents=True, exist_ok=True)
 
-for agent in ('agent2', 'agent3'):
+fig, axes = plt.subplots(2, 4, figsize=(20, 10))
+fig.suptitle("Experiment 3", fontsize=30, color="#1a1a1a", y=1.01)
+
+for row, agent in enumerate(('agent2', 'agent3')):
+    agent_label = "agent 2" if agent == "agent2" else "agent 3"
     pairs = {
-        'Rational Mentalizing\n(Full Model)': collect_pairs(model_dict,             human_stats, agent),
-        'Social Mentalizing':                 collect_pairs(baseline_mentalize,      human_stats, agent),
-        'Rational Non-Mentalizing':           collect_pairs(baseline_nonmentalize,   human_stats, agent),
-        'Naive Observer':                     collect_pairs(baseline_naive,          human_stats, agent),
+        'Rational Mentalizing\n(Full Model)': collect_pairs(model_dict,            human_stats, agent),
+        'Social Mentalizing':                 collect_pairs(baseline_mentalize,     human_stats, agent),
+        'Rational Non-Mentalizing':           collect_pairs(baseline_nonmentalize,  human_stats, agent),
+        'Naive Observer':                     collect_pairs(baseline_naive,         human_stats, agent),
     }
 
-    fig, axes = plt.subplots(1, 4, figsize=(20, 5))
-    agent_label = "agent 2" if agent == "agent2" else "agent 3"
-    fig.suptitle(f"Experiment 3 ({agent_label})", fontsize=30, color="#1a1a1a", y=0.99)
-
-    for idx, (ax, (label, (x, y, sd, _keys))) in enumerate(zip(axes, pairs.items())):
+    for idx, (ax, (label, (x, y, sd, _keys))) in enumerate(zip(axes[row], pairs.items())):
         apply_reference_style(ax)
 
         if len(x) < 3:
-            ax.text(
-                0.05,
-                0.90,
-                "Insufficient data",
-                transform=ax.transAxes,
-                ha="left",
-                va="top",
-                fontsize=18,
-                color="#1a1a1a",
-            )
+            ax.text(0.05, 0.90, "Insufficient data", transform=ax.transAxes,
+                    ha="left", va="top", fontsize=18, color="#1a1a1a")
             continue
 
         plot_points_errorbars_and_fit(ax, x, y, sd)
         r, ci_low, ci_high = bootstrap_r_ci(x, y, n_resamples=1000)
         annotate_r_ci(ax, r, ci_low, ci_high)
 
-        ax.set_xlabel(label, fontsize=22, color="#1a1a1a")
+        if row == 1:
+            ax.set_xlabel(label, fontsize=22, color="#1a1a1a")
+        else:
+            ax.set_xlabel('')
+
         if idx == 0:
-            ax.set_ylabel('Human', fontsize=24, color="#1a1a1a")
+            ax.set_ylabel(f'{agent_label}\nHuman', fontsize=20, color="#1a1a1a")
         else:
             ax.set_ylabel('')
 
-    plt.tight_layout(w_pad=2.5, rect=(0, 0, 1, 0.97))
-    out_path = output_dir / f'correlation_exp3_4panel_{agent}.png'
-    plt.savefig(out_path, dpi=300, bbox_inches='tight')
-    print(f"Saved -> {out_path}")
-
+plt.tight_layout(w_pad=2.5, h_pad=3.5)
+out_path = output_dir / 'correlation_exp3_4panel.png'
+plt.savefig(out_path, dpi=300, bbox_inches='tight')
+print(f"Saved -> {out_path}")
 plt.show()
