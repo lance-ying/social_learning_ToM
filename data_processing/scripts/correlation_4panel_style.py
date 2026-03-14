@@ -64,7 +64,7 @@ def apply_reference_style(ax):
         spine.set_color("#666666")
         spine.set_linewidth(1.0)
     ax.grid(False)
-    ax.tick_params(axis="both", labelsize=14, colors="#1a1a1a")
+    ax.tick_params(axis="both", labelsize=20, colors="#1a1a1a")
 
 
 def plot_points_errorbars_and_fit(ax, x, y, yerr):

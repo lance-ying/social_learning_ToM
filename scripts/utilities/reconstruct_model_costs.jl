@@ -1,13 +1,10 @@
 using PDDL, SymbolicPlanners
-using Gen, GenParticleFilters
 using JSON
 using FileIO, JLD2
 
 PDDL.Arrays.register!()
 
-include(joinpath(@__DIR__, "..", "..", "src", "utils.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
 
 const ROOT = joinpath(@__DIR__, "..", "..")
@@ -42,11 +39,13 @@ function usage()
             --steps-file <path/to/steps_dict.json> \\
             [--output-file <path/to/output.json>] \\
             [--inference-file <path/to/inference.jld2>] \\
-            [--problem-dir <path/to/dataset/problems_...>]
+            [--problem-dir <path/to/dataset/problems_...>] \\
+            [--move-cost <float>] [--interact-cost <float>] [--observe-cost <float>]
 
         Notes:
         - For exp1/exp2/exp3, defaults are inferred if omitted.
         - For exp4, provide both --problem-dir and --inference-file to match the run.
+        - Action costs default from the experiment/steps file, but can be overridden.
         """
     )
 end
@@ -100,15 +99,75 @@ function default_paths(exp::String)
     end
 end
 
+function parse_real_opt(opts::Dict{String, String}, key::String)
+    haskey(opts, key) || return nothing
+    return parse(Float64, opts[key])
+end
+
+function default_action_cost(exp::String, steps_file::String)
+    return Dict{Symbol, Real}(
+        :move => 3.0,
+        :interact => 5.0,
+        :observe => 1.0,
+    )
+end
+
+function resolve_action_cost(opts::Dict{String, String}, exp::String, steps_file::String)
+    action_cost = default_action_cost(exp, steps_file)
+
+    move_cost = parse_real_opt(opts, "move-cost")
+    interact_cost = parse_real_opt(opts, "interact-cost")
+    observe_cost = parse_real_opt(opts, "observe-cost")
+
+    if move_cost !== nothing
+        action_cost[:move] = move_cost
+    end
+    if interact_cost !== nothing
+        action_cost[:interact] = interact_cost
+    end
+    if observe_cost !== nothing
+        action_cost[:observe] = observe_cost
+    end
+
+    return action_cost
+end
+
 toint(x) = x isa Integer ? Int(x) : Int(round(parse(Float64, string(x))))
 
 function blue_wizards_from_state(state)
     [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
 end
 
+function assign_blue_wizard!(state, wizard)
+    for candidate in PDDL.get_objects(state, :wizard)
+        state[pddl"(iscolor $candidate blue)"] = candidate == wizard
+    end
+    return state
+end
+
+function enumerate_beliefs_local(state)
+    wizards = collect(PDDL.get_objects(state, :wizard))
+    belief_states = Vector{typeof(state)}()
+    belief_probs = Float64[]
+    belief_names = String[]
+
+    blue_wizards = [wizard for wizard in sort!(wizards, by=x -> string(x)) if state[pddl"(iscolor $wizard blue)"]]
+    belief_cnt = length(blue_wizards)
+
+    for wizard in blue_wizards
+        push!(belief_names, string(wizard))
+        base_state = copy(state)
+        assign_blue_wizard!(base_state, wizard)
+        push!(belief_states, base_state)
+        push!(belief_probs, 1.0 / belief_cnt)
+    end
+
+    return belief_states, belief_probs, belief_names
+end
+
 function enumerate_beliefs_silent(state)
     redirect_stdout(devnull) do
-        return enumerate_beliefs(state)
+        return enumerate_beliefs_local(state)
     end
 end
 
@@ -158,7 +217,7 @@ function replay_wizard_candidates_multi(blue_wizards, state_probs_agent2, state_
     return wizard_candidates, t_use
 end
 
-function estimate_self_exploration_stats(domain::Any, state::State, agent_goal::Any, wizards::Any, action_cost::Dict{Symbol, Real})
+function estimate_self_exploration_stats(domain, state, agent_goal, wizards, action_cost)
     new_state = copy(state)
     planner = AStarPlanner(GoalManhattan())
 
@@ -213,20 +272,25 @@ function estimate_self_exploration_stats(domain::Any, state::State, agent_goal::
     return total_cost, planning_steps
 end
 
-function reconstruct_exp1(steps_dict, inference_file, problem_dir)
+function normalize_exp1_map_key(map_key::String)
+    if startswith(map_key, "mod_") && endswith(map_key, "_ascii")
+        return replace(replace(map_key, "mod_" => "", count=1), "_ascii" => "")
+    end
+    return split(map_key, "_")[1]
+end
+
+function reconstruct_exp1(steps_dict, inference_file, problem_dir, action_cost)
     data = load(inference_file)
     goal_dict = data["goal"]
     state_dict = data["state"]
     domain_render = load_domain(joinpath(ROOT, "dataset", "domain_render.pddl"))
-    action_cost = Dict(:move => 2, :interact => 5, :observe => 1.0)
 
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
 
     for (map_key, t_raw) in steps_dict
         t = toint(t_raw)
-        parts = split(map_key, "_")
-        map_id = parts[1]
+        map_id = normalize_exp1_map_key(map_key)
         g_id = 1
         inference_map_id = "mod_$(map_id)_ascii"
 
@@ -270,13 +334,12 @@ function reconstruct_exp1(steps_dict, inference_file, problem_dir)
     return out
 end
 
-function reconstruct_exp2(steps_dict, inference_file, problem_dir)
+function reconstruct_exp2(steps_dict, inference_file, problem_dir, action_cost)
     data = load(inference_file)
     goal_dict = data["goal"]
     state_dict = data["state"]
     metadata = JSON.parsefile(joinpath(problem_dir, "metadata.json"))
     domain_render = load_domain(joinpath(ROOT, "dataset", "domain_render.pddl"))
-    action_cost = Dict(:move => 2, :interact => 5, :observe => 1.0)
 
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
@@ -381,6 +444,13 @@ function get_obs_list(entry)
     return String[]
 end
 
+function get_count(entry, key::String)
+    if entry isa Dict && haskey(entry, key)
+        return Float64(entry[key])
+    end
+    return 0.0
+end
+
 function get_t(entry)
     if entry isa Dict && haskey(entry, "t")
         return toint(entry["t"])
@@ -388,13 +458,70 @@ function get_t(entry)
     return toint(entry)
 end
 
-function reconstruct_exp3_or_exp4(steps_dict, inference_file, problem_dir; exp4_metadata_style=false)
+function balanced_observations_from_counts(entry)
+    t = get_t(entry)
+    if t <= 0
+        return String[]
+    end
+
+    agent2_raw = get_count(entry, "agent2_count")
+    agent3_raw = get_count(entry, "agent3_count")
+    total_raw = agent2_raw + agent3_raw
+
+    if total_raw <= 0
+        return String[]
+    end
+
+    scale = t / total_raw
+    scaled_agent2 = agent2_raw * scale
+    scaled_agent3 = agent3_raw * scale
+
+    floors = Dict(
+        "agent2" => floor(Int, scaled_agent2),
+        "agent3" => floor(Int, scaled_agent3),
+    )
+    remainders = [
+        ("agent2", scaled_agent2 - floors["agent2"]),
+        ("agent3", scaled_agent3 - floors["agent3"]),
+    ]
+
+    remaining = t - floors["agent2"] - floors["agent3"]
+    for (agent_name, _) in sort(remainders, by=x -> x[2], rev=true)
+        if remaining <= 0
+            break
+        end
+        floors[agent_name] += 1
+        remaining -= 1
+    end
+
+    counts_left = Dict(
+        "agent2" => floors["agent2"],
+        "agent3" => floors["agent3"],
+    )
+
+    observations = String[]
+    previous_agent = ""
+    while length(observations) < t && (counts_left["agent2"] > 0 || counts_left["agent3"] > 0)
+        candidates = sort(
+            [(agent, counts_left[agent]) for agent in ("agent2", "agent3") if counts_left[agent] > 0],
+            by=x -> (x[2], x[1] != previous_agent),
+            rev=true,
+        )
+        chosen = candidates[1][1]
+        push!(observations, chosen)
+        counts_left[chosen] -= 1
+        previous_agent = chosen
+    end
+
+    return observations
+end
+
+function reconstruct_exp3_or_exp4(steps_dict, inference_file, problem_dir, action_cost; exp4_metadata_style=false)
     data = load(inference_file)
     goal_dict = data["goal"]
     state_dict = data["state"]
     metadata = JSON.parsefile(joinpath(problem_dir, "metadata.json"))
     domain_render = load_domain(joinpath(ROOT, "dataset", "domain_render.pddl"))
-    action_cost = Dict(:move => 3, :interact => 5, :observe => 1.0)
 
     out = Dict{String, Any}()
     map_cache = Dict{String, Any}()
@@ -403,6 +530,12 @@ function reconstruct_exp3_or_exp4(steps_dict, inference_file, problem_dir; exp4_
         map_id, scenario = parse_map_scenario_key(map_key)
         t = get_t(entry)
         observations = get_obs_list(entry)
+        synthesized_observations = false
+
+        if isempty(observations) && entry isa Dict && (haskey(entry, "agent2_count") || haskey(entry, "agent3_count"))
+            observations = balanced_observations_from_counts(entry)
+            synthesized_observations = !isempty(observations)
+        end
 
         if !haskey(map_cache, map_id)
             map_cache[map_id] = build_multi_context(map_id, problem_dir)
@@ -438,6 +571,7 @@ function reconstruct_exp3_or_exp4(steps_dict, inference_file, problem_dir; exp4_
             "total_cost" => planning_cost + observe_cost,
             "wizard_candidates_count" => length(wizard_candidates),
             "observations_count" => length(observations),
+            "observations_synthesized" => synthesized_observations,
         )
     end
 
@@ -489,14 +623,15 @@ function main()
     end
 
     steps_dict = JSON.parsefile(steps_file)
+    action_cost = resolve_action_cost(opts, exp, steps_file)
     costs = if exp == "exp1"
-        reconstruct_exp1(steps_dict, inference_file, problem_dir)
+        reconstruct_exp1(steps_dict, inference_file, problem_dir, action_cost)
     elseif exp == "exp2"
-        reconstruct_exp2(steps_dict, inference_file, problem_dir)
+        reconstruct_exp2(steps_dict, inference_file, problem_dir, action_cost)
     elseif exp == "exp3"
-        reconstruct_exp3_or_exp4(steps_dict, inference_file, problem_dir; exp4_metadata_style=false)
+        reconstruct_exp3_or_exp4(steps_dict, inference_file, problem_dir, action_cost; exp4_metadata_style=false)
     elseif exp == "exp4"
-        reconstruct_exp3_or_exp4(steps_dict, inference_file, problem_dir; exp4_metadata_style=true)
+        reconstruct_exp3_or_exp4(steps_dict, inference_file, problem_dir, action_cost; exp4_metadata_style=true)
     else
         error("Unsupported --exp value: $exp")
     end
@@ -507,6 +642,7 @@ function main()
         "steps_file" => steps_file,
         "inference_file" => inference_file,
         "problem_dir" => problem_dir,
+        "action_cost" => Dict(String(k) => v for (k, v) in action_cost),
         "summary" => summarize(costs),
         "per_case" => costs,
     )
