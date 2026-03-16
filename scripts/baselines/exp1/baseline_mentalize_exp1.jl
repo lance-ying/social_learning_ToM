@@ -101,10 +101,11 @@ for map_id in map_ids
         planner = AStarPlanner(GoalManhattan())
         plan = planner(domain, state, problem.goal)
 
-        T = 1
+        max_t = length(goal_probs[1,:]) - 1
+        T = max_t
 
         # Find when state distributions diverge
-        for t in 1:length(goal_probs[1,:]) - 1  # Check all timesteps (removed 50 limit)
+        for t in 1:max_t  # Check all timesteps (removed 50 limit)
 
             curr_state_dist = state_probs[:, t]
             flag = true

@@ -70,18 +70,22 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
         T = length(plan)
     end
 
-    # Naive expected-value policy: both agents receive T/2 expected observations.
-    # We do not instantiate a per-step observation assignment when T is odd.
-    expected_count = T / 2
+    # Replay requires a concrete observation trace, so materialize an
+    # alternating sequence whose counts sum to T.
+    agent2_count = cld(T, 2)
+    agent3_count = fld(T, 2)
     observations = String[]
+    for obs_idx in 1:T
+        push!(observations, isodd(obs_idx) ? "agent2" : "agent3")
+    end
 
     # Both scenarios get the same result (naive doesn't use scenario-specific goals)
     for scenario in 1:2
         map_key = "$(map_id)_scenario$(scenario)"
         steps_dict[map_key] = Dict(
             "observations" => observations,
-            "agent2_count" => expected_count,
-            "agent3_count" => expected_count,
+            "agent2_count" => agent2_count,
+            "agent3_count" => agent3_count,
             "t" => T
         )
         next!(progress)

@@ -102,6 +102,7 @@ function usage()
             [--model full_model|social_mentalizing|rational_non_mentalizing|naive_observer] \\
             --steps-file <path/to/steps_dict.json> \\
             [--inference-file <path/to/inference.jld2>] \\
+            [--restrict-to-human-levels] [--human-costs-file <path/to/human_costs.json>] \\
             [--output-file <path/to/output.json>] \\
             [--problem-dir <path/to/dataset/problems_...>] \\
             [--move-cost <float>] [--interact-cost <float>] [--observe-cost <float>]
@@ -156,6 +157,10 @@ function default_paths(exp::String)
             problem_dir = "",
         )
     end
+end
+
+function default_human_costs_path(exp::String)
+    return joinpath(ROOT, "data_processing", "outputs", "human_costs", "$(exp)_human_costs.json")
 end
 
 function parse_real_opt(opts::Dict{String, String}, key::String)
@@ -244,7 +249,65 @@ function resolve_model_label(opts::Dict{String, String}, steps_file::String)
     return "full_model"
 end
 
+function exp1_human_candidates_for_reconstruction(model_label::String, model_key::String)
+    if model_label == "full_model"
+        return [model_key]
+    end
+    return ["mod_$(model_key)_ascii"]
+end
+
+function human_candidates_for_reconstruction(exp::String, model_label::String, model_key::String)
+    if exp == "exp1"
+        return exp1_human_candidates_for_reconstruction(model_label, model_key)
+    end
+    return [model_key]
+end
+
+function load_human_per_case(human_costs_file::String)
+    human_costs = JSON.parsefile(human_costs_file)
+    if !haskey(human_costs, "per_case")
+        error("Human costs file is missing per_case: $human_costs_file")
+    end
+    return human_costs["per_case"]
+end
+
+function filter_steps_dict_to_human_cases(
+    steps_dict::Dict,
+    exp::String,
+    model_label::String,
+    human_per_case::Dict,
+)
+    filtered = Dict{String, Any}()
+    matched_human_keys = String[]
+
+    for (raw_key, value) in steps_dict
+        model_key = string(raw_key)
+        human_key = nothing
+        for candidate in human_candidates_for_reconstruction(exp, model_label, model_key)
+            if haskey(human_per_case, candidate)
+                human_key = candidate
+                break
+            end
+        end
+
+        if human_key !== nothing
+            filtered[model_key] = value
+            push!(matched_human_keys, human_key)
+        end
+    end
+
+    return filtered, sort!(unique!(matched_human_keys))
+end
+
 is_mentalizing_model(model_label::String) = model_label in ("full_model", "social_mentalizing")
+uses_latent_hypothesis_replay(model_label::String) = is_mentalizing_model(model_label)
+
+function initial_replay_hypotheses(initial_states, model_label::String)
+    if uses_latent_hypothesis_replay(model_label)
+        return [copy(s) for s in initial_states]
+    end
+    return typeof(initial_states)(undef, 0)
+end
 
 function normalize_exp1_map_key(map_key::String)
     if startswith(map_key, "mod_") && endswith(map_key, "_ascii")
@@ -271,6 +334,24 @@ function get_t(entry)
         return toint(entry["t"])
     end
     return toint(entry)
+end
+
+function resolve_replay_observations(entry, model_label::String)
+    observations = get_obs_list(entry)
+    t = get_t(entry)
+    source = "sequence"
+    warnings = String[]
+
+    if isempty(observations) && t > 0 && !uses_latent_hypothesis_replay(model_label)
+        observations = fill("agent2", t)
+        source = "count_fallback"
+        push!(
+            warnings,
+            "Missing ordered observations; used recorded t=$t as a count-only placeholder for $model_label replay.",
+        )
+    end
+
+    return observations, t, source, warnings
 end
 
 function build_single_context(map_id, problem_dir)
@@ -333,49 +414,53 @@ function build_multi_context(map_id, problem_dir)
     )
 end
 
-function replay_wizard_candidates_single(blue_wizards, state_probs, t::Int)
-    wizard_candidates = copy(blue_wizards)
+function candidate_support_at_count(blue_wizards, state_probs, obs_count::Int)
     max_t = size(state_probs, 2) - 1
     nrows = size(state_probs, 1)
     nw = min(length(blue_wizards), nrows)
-    t_use = min(t, max_t)
-    for k in 1:t_use
-        idx = k + 1
-        wizard_candidates = Any[]
-        for j in 1:nw
-            if state_probs[j, idx] > 0.1
-                push!(wizard_candidates, blue_wizards[j])
-            end
+    t_use = min(obs_count, max_t)
+    if t_use <= 0
+        return copy(blue_wizards), 0
+    end
+
+    idx = t_use + 1
+    wizard_candidates = Any[]
+    for j in 1:nw
+        if state_probs[j, idx] > 0.1
+            push!(wizard_candidates, blue_wizards[j])
         end
     end
     return wizard_candidates, t_use
 end
 
+function replay_wizard_candidates_single(blue_wizards, state_probs, t::Int)
+    return candidate_support_at_count(blue_wizards, state_probs, t)
+end
+
 function replay_wizard_candidates_multi(blue_wizards, state_probs_agent2, state_probs_agent3, observations::AbstractVector, t::Int)
     wizard_candidates = copy(blue_wizards)
     t_use = min(t, length(observations))
-    nrows_agent2 = size(state_probs_agent2, 1)
-    nrows_agent3 = size(state_probs_agent3, 1)
-    nw_agent2 = min(length(blue_wizards), nrows_agent2)
-    nw_agent3 = min(length(blue_wizards), nrows_agent3)
+    agent2_obs_count = 0
+    agent3_obs_count = 0
+
     for k in 1:t_use
-        idx = k + 1
-        wizard_candidates = Any[]
         obs_k = string(observations[k])
+        current_support = nothing
+
         if obs_k == "agent2"
-            for j in 1:nw_agent2
-                if idx <= size(state_probs_agent2, 2) && state_probs_agent2[j, idx] > 0.1
-                    push!(wizard_candidates, blue_wizards[j])
-                end
-            end
+            agent2_obs_count += 1
+            current_support, _ = candidate_support_at_count(blue_wizards, state_probs_agent2, agent2_obs_count)
         elseif obs_k == "agent3"
-            for j in 1:nw_agent3
-                if idx <= size(state_probs_agent3, 2) && state_probs_agent3[j, idx] > 0.1
-                    push!(wizard_candidates, blue_wizards[j])
-                end
-            end
+            agent3_obs_count += 1
+            current_support, _ = candidate_support_at_count(blue_wizards, state_probs_agent3, agent3_obs_count)
+        end
+
+        if current_support !== nothing
+            support_names = Set(string(w) for w in current_support)
+            wizard_candidates = [w for w in wizard_candidates if string(w) in support_names]
         end
     end
+
     return wizard_candidates, t_use
 end
 
@@ -533,18 +618,44 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
     replay_start_time = time()
     last_heartbeat_time = replay_start_time
     replan_count = 0
+    initial_plan_time = 0.0
+    replan_time_total = 0.0
+
+    function timed_get_cached_plan!(state_for_plan, bucket::Symbol)
+        start_time = time()
+        plan = get_cached_plan!(domain, state_for_plan, goal, cache_scope)
+        elapsed = time() - start_time
+        if bucket == :initial
+            initial_plan_time += elapsed
+        else
+            replan_time_total += elapsed
+        end
+        return plan
+    end
+
+    function timed_choose_shortest_plan(states_for_plan, explored_state_ids, bucket::Symbol)
+        start_time = time()
+        best_idx, plan = choose_shortest_plan(
+            (d, s, g) -> get_cached_plan!(d, s, g, cache_scope),
+            domain, states_for_plan, goal, explored_state_ids
+        )
+        elapsed = time() - start_time
+        if bucket == :initial
+            initial_plan_time += elapsed
+        else
+            replan_time_total += elapsed
+        end
+        return best_idx, plan
+    end
 
     if isempty(hypotheses)
-        plan = get_cached_plan!(domain, true_state, goal, cache_scope)
+        plan = timed_get_cached_plan!(true_state, :initial)
         curr_state = copy(true_state)
         explored_state_ids = Set{Int}()
     else
-        best_idx, plan = choose_shortest_plan(
-            (d, s, g) -> get_cached_plan!(d, s, g, cache_scope),
-            domain, hypotheses, goal, Set{Int}()
-        )
+        best_idx, plan = timed_choose_shortest_plan(hypotheses, Set{Int}(), :initial)
         if best_idx == 0
-            plan = get_cached_plan!(domain, true_state, goal, cache_scope)
+            plan = timed_get_cached_plan!(true_state, :initial)
             curr_state = copy(true_state)
             explored_state_ids = Set{Int}()
             push!(warnings, "No latent-state hypothesis available; used true-state plan.")
@@ -552,6 +663,14 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
             curr_state = copy(hypotheses[best_idx])
             explored_state_ids = Set([best_idx])
         end
+    end
+
+    if initial_plan_time >= 30
+        label = isempty(case_label) ? "replay" : case_label
+        println(
+            "  planning [$label]: initial_plan=$(round(initial_plan_time, digits=2))s, " *
+            "start_hypotheses=$(length(hypotheses))"
+        )
     end
 
     executed_actions = String[]
@@ -572,31 +691,25 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
 
         if isempty(plan)
             if !equivalent_plan_state(true_state, curr_state)
-                best_idx, plan = choose_shortest_plan(
-                    (d, s, g) -> get_cached_plan!(d, s, g, cache_scope),
-                    domain, hypotheses, goal, explored_state_ids
-                )
+                best_idx, plan = timed_choose_shortest_plan(hypotheses, explored_state_ids, :replan)
                 replan_count += 1
                 if best_idx > 0
                     push!(explored_state_ids, best_idx)
                     curr_state = copy(hypotheses[best_idx])
                 else
                     curr_state = copy(true_state)
-                    plan = get_cached_plan!(domain, true_state, goal, cache_scope)
+                    plan = timed_get_cached_plan!(true_state, :replan)
                     push!(warnings, "Exhausted hypotheses during replay; fell back to true-state replanning.")
                 end
             else
-                plan = get_cached_plan!(domain, true_state, goal, cache_scope)
+                plan = timed_get_cached_plan!(true_state, :replan)
             end
             isempty(plan) && break
         end
 
         action = plan[1]
         if !PDDL.available(domain, true_state, action)
-            best_idx, plan = choose_shortest_plan(
-                (d, s, g) -> get_cached_plan!(d, s, g, cache_scope),
-                domain, hypotheses, goal, explored_state_ids
-            )
+            best_idx, plan = timed_choose_shortest_plan(hypotheses, explored_state_ids, :replan)
             replan_count += 1
             if best_idx > 0
                 push!(explored_state_ids, best_idx)
@@ -604,14 +717,14 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
                 push!(warnings, "Replanned before execution because $(PDDL.write_pddl(action)) was not applicable in the true state.")
             else
                 curr_state = copy(true_state)
-                plan = get_cached_plan!(domain, true_state, goal, cache_scope)
+                plan = timed_get_cached_plan!(true_state, :replan)
                 push!(warnings, "Fell back to true-state replanning because $(PDDL.write_pddl(action)) was not applicable in the true state.")
             end
             continue
         end
         if !PDDL.available(domain, curr_state, action)
             curr_state = copy(true_state)
-            plan = get_cached_plan!(domain, true_state, goal, cache_scope)
+            plan = timed_get_cached_plan!(true_state, :replan)
             push!(warnings, "Current plan state could not execute $(PDDL.write_pddl(action)); fell back to true-state replanning.")
             continue
         end
@@ -638,17 +751,14 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
         end
 
         if action.name == :interact && !equivalent_plan_state(true_state, curr_state)
-            best_idx, plan = choose_shortest_plan(
-                (d, s, g) -> get_cached_plan!(d, s, g, cache_scope),
-                domain, hypotheses, goal, explored_state_ids
-            )
+            best_idx, plan = timed_choose_shortest_plan(hypotheses, explored_state_ids, :replan)
             replan_count += 1
             if best_idx > 0
                 push!(explored_state_ids, best_idx)
                 curr_state = copy(hypotheses[best_idx])
             else
                 curr_state = copy(true_state)
-                plan = get_cached_plan!(domain, true_state, goal, cache_scope)
+                plan = timed_get_cached_plan!(true_state, :replan)
                 push!(warnings, "Interaction revealed mismatch after all hypotheses were explored; used true-state replanning.")
             end
         else
@@ -659,6 +769,8 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
     planning_steps = length(executed_actions)
     planning_cost = calculate_plan_cost(executed_terms, action_cost)
     total_steps = observe_steps + planning_steps
+    replay_elapsed = time() - replay_start_time
+    replay_nonplanning_time = max(replay_elapsed - initial_plan_time - replan_time_total, 0.0)
 
     return Dict(
         "observe_steps" => observe_steps,
@@ -669,6 +781,10 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
         "total_cost" => observe_cost + planning_cost,
         "executed_actions" => executed_actions,
         "planning_action_counts" => planning_action_counts,
+        "initial_plan_time" => initial_plan_time,
+        "replan_time_total" => replan_time_total,
+        "replay_nonplanning_time" => replay_nonplanning_time,
+        "replay_elapsed" => replay_elapsed,
         "warnings" => warnings,
     )
 end
@@ -753,7 +869,7 @@ function reconstruct_exp1(steps_dict, problem_dir, action_cost, model_label, inf
         clear_planner_cache!()
         ctx = cache[map_id]
         observations = fill("agent2", t)
-        hypothesis_states = [copy(s) for s in ctx.initial_states]
+        hypothesis_states = initial_replay_hypotheses(ctx.initial_states, model_label)
         candidate_names = String[]
         warnings = String[]
         if is_mentalizing_model(model_label)
@@ -796,7 +912,7 @@ function reconstruct_exp2(steps_dict, problem_dir, action_cost, model_label, inf
         clear_planner_cache!()
         ctx = cache[map_id]
         observations = fill("agent2", t)
-        hypothesis_states = [copy(s) for s in ctx.initial_states]
+        hypothesis_states = initial_replay_hypotheses(ctx.initial_states, model_label)
         candidate_names = String[]
         warnings = String[]
         if is_mentalizing_model(model_label)
@@ -835,11 +951,10 @@ function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_la
         case_idx += 1
         case_start_time = time()
         map_id, _ = parse_map_scenario_key(map_key)
-        observations = get_obs_list(entry)
-        t = get_t(entry)
+        observations, t, observation_source, observation_warnings = resolve_replay_observations(entry, model_label)
         println("[$case_idx/$total_cases] starting $map_key (t=$(t), obs_len=$(length(observations)))")
 
-        if isempty(observations) && t > 0
+        if isempty(observations) && t > 0 && uses_latent_hypothesis_replay(model_label)
             error("Missing ordered observations for $map_key; cannot replay without a sequence.")
         end
 
@@ -849,20 +964,22 @@ function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_la
 
         clear_planner_cache!()
         ctx = cache[map_id]
-        hypothesis_states = [copy(s) for s in ctx.initial_states]
+        hypothesis_states = initial_replay_hypotheses(ctx.initial_states, model_label)
         candidate_names = String[]
         warnings = String[]
+        posterior_filter_start = time()
         if is_mentalizing_model(model_label)
             hypothesis_states, candidate_names, warnings = mentalizing_candidates_exp3_or_exp4(
                 ctx, map_key, observations, inference_data, metadata, exp4_metadata_style
             )
         end
+        posterior_filter_time = time() - posterior_filter_start
         replay = replay_case(
             ctx.domain, ctx.state, ctx.problem.goal, hypothesis_states, observations, action_cost;
             cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label),
             case_label=map_key,
         )
-        warnings = vcat(warnings, replay["warnings"])
+        warnings = vcat(observation_warnings, warnings, replay["warnings"])
         if t != length(observations)
             push!(warnings, "Recorded t=$t does not match observations length=$(length(observations)); used observations length.")
         end
@@ -873,10 +990,11 @@ function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_la
                 "t_recorded" => t,
                 "t_replayed" => length(observations),
                 "observations_count" => length(observations),
-                "observation_source" => "sequence",
+                "observation_source" => observation_source,
                 "observation_trace" => observations,
                 "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : "no_mentalizing_update",
                 "posterior_candidates" => candidate_names,
+                "posterior_filter_time" => posterior_filter_time,
                 "reconstruction_mode" => "model_faithful_replay",
             ),
             replay,
@@ -888,9 +1006,16 @@ function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_la
         plan_misses = plan_cache_stats["misses"]
         posterior_hits = posterior_cache_stats["hits"]
         posterior_misses = posterior_cache_stats["misses"]
+        initial_plan_time = Float64(out[map_key]["initial_plan_time"])
+        replan_time_total = Float64(out[map_key]["replan_time_total"])
+        replay_nonplanning_time = Float64(out[map_key]["replay_nonplanning_time"])
         println(
             "[$case_idx/$total_cases] $map_key completed in $(round(case_elapsed, digits=2))s " *
-            "(plan cache: $(plan_hits)/$(plan_misses) hits/misses, " *
+            "(filter=$(round(posterior_filter_time, digits=2))s, " *
+            "initial_plan=$(round(initial_plan_time, digits=2))s, " *
+            "replans=$(round(replan_time_total, digits=2))s, " *
+            "other_replay=$(round(replay_nonplanning_time, digits=2))s, " *
+            "plan cache: $(plan_hits)/$(plan_misses) hits/misses, " *
             "posterior cache: $(posterior_hits)/$(posterior_misses) hits/misses)"
         )
     end
@@ -933,6 +1058,8 @@ function main()
     model_label = resolve_model_label(opts, steps_file)
     inference_file = get(opts, "inference-file", defaults.inference_file)
     problem_dir = get(opts, "problem-dir", defaults.problem_dir)
+    restrict_to_human_levels = get(opts, "restrict-to-human-levels", "false") == "true"
+    human_costs_file = get(opts, "human-costs-file", default_human_costs_path(exp))
 
     if isempty(steps_file) || !isfile(steps_file)
         error("Missing/invalid --steps-file: $steps_file")
@@ -945,6 +1072,29 @@ function main()
     end
 
     steps_dict = JSON.parsefile(steps_file)
+    human_level_filter = Dict{String, Any}("enabled" => false)
+    if restrict_to_human_levels
+        if isempty(human_costs_file) || !isfile(human_costs_file)
+            error("Missing/invalid --human-costs-file: $human_costs_file")
+        end
+        original_case_count = length(steps_dict)
+        human_per_case = load_human_per_case(human_costs_file)
+        filtered_steps_dict, matched_human_keys = filter_steps_dict_to_human_cases(
+            steps_dict, exp, model_label, human_per_case
+        )
+        println(
+            "Restricting to human levels: kept $(length(filtered_steps_dict)) / $(original_case_count) " *
+            "cases from $human_costs_file"
+        )
+        steps_dict = filtered_steps_dict
+        human_level_filter = Dict(
+            "enabled" => true,
+            "human_costs_file" => human_costs_file,
+            "original_case_count" => original_case_count,
+            "kept_case_count" => length(steps_dict),
+            "matched_human_keys" => matched_human_keys,
+        )
+    end
     metadata = isfile(joinpath(problem_dir, "metadata.json")) ? JSON.parsefile(joinpath(problem_dir, "metadata.json")) : nothing
     clear_replay_plan_cache!()
     clear_posterior_filter_cache!()
@@ -969,6 +1119,7 @@ function main()
         "steps_file" => steps_file,
         "inference_file" => inference_file,
         "problem_dir" => problem_dir,
+        "human_level_filter" => human_level_filter,
         "reconstruction_mode" => "model_faithful_replay",
         "action_cost" => Dict(String(k) => v for (k, v) in action_cost),
         "replay_plan_cache_stats" => get_replay_plan_cache_stats(),
@@ -986,4 +1137,6 @@ function main()
     println("Summary: ", out["summary"])
 end
 
-main()
+if abspath(PROGRAM_FILE) == @__FILE__
+    main()
+end

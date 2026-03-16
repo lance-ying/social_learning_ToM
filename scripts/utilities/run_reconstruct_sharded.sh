@@ -10,6 +10,7 @@ STEPS_FILE=""
 INFERENCE_FILE=""
 PROBLEM_DIR=""
 OUTPUT_FILE=""
+HUMAN_COSTS_FILE=""
 JOBS="${JOBS:-4}"
 MOVE_COST="${MOVE_COST:-3}"
 INTERACT_COST="${INTERACT_COST:-5}"
@@ -24,6 +25,7 @@ Usage:
     --model <label> \
     --steps-file <path> \
     --inference-file <path> \
+    --human-costs-file <path> \
     --problem-dir <path> \
     --output-file <path> \
     --jobs <n> \
@@ -47,6 +49,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --inference-file)
       INFERENCE_FILE="$2"
+      shift 2
+      ;;
+    --human-costs-file)
+      HUMAN_COSTS_FILE="$2"
       shift 2
       ;;
     --problem-dir)
@@ -114,12 +120,19 @@ if [[ ! -d "$PROBLEM_DIR" ]]; then
   exit 1
 fi
 
+if [[ -z "$HUMAN_COSTS_FILE" || ! -f "$HUMAN_COSTS_FILE" ]]; then
+  echo "Missing human costs file: $HUMAN_COSTS_FILE" >&2
+  exit 1
+fi
+
 if [[ "$JOBS" -eq 1 ]]; then
   exec julia --project=. scripts/utilities/reconstruct_model_costs.jl \
     --exp "$EXP" \
     --model "$MODEL_LABEL" \
     --steps-file "$STEPS_FILE" \
     --inference-file "$INFERENCE_FILE" \
+    --restrict-to-human-levels \
+    --human-costs-file "$HUMAN_COSTS_FILE" \
     --problem-dir "$PROBLEM_DIR" \
     --move-cost "$MOVE_COST" \
     --interact-cost "$INTERACT_COST" \
@@ -218,6 +231,8 @@ for shard_file in "${SHARD_FILES[@]}"; do
     --model "$MODEL_LABEL" \
     --steps-file "$shard_file" \
     --inference-file "$INFERENCE_FILE" \
+    --restrict-to-human-levels \
+    --human-costs-file "$HUMAN_COSTS_FILE" \
     --problem-dir "$PROBLEM_DIR" \
     --move-cost "$MOVE_COST" \
     --interact-cost "$INTERACT_COST" \
@@ -282,17 +297,29 @@ plan_entries = 0
 posterior_hits = 0
 posterior_misses = 0
 posterior_entries = 0
+human_filter_enabled = False
+human_costs_file = None
+original_case_count = 0
+kept_case_count = 0
+matched_human_keys = set()
 
 for shard in loaded:
     per_case.update(shard["per_case"])
     plan_stats = shard.get("replay_plan_cache_stats", {})
     posterior_stats = shard.get("posterior_filter_cache_stats", {})
+    human_filter = shard.get("human_level_filter", {})
     plan_hits += int(plan_stats.get("hits", 0))
     plan_misses += int(plan_stats.get("misses", 0))
     plan_entries += int(plan_stats.get("entries", 0))
     posterior_hits += int(posterior_stats.get("hits", 0))
     posterior_misses += int(posterior_stats.get("misses", 0))
     posterior_entries += int(posterior_stats.get("entries", 0))
+    human_filter_enabled = human_filter_enabled or bool(human_filter.get("enabled", False))
+    if human_filter.get("human_costs_file"):
+        human_costs_file = human_filter["human_costs_file"]
+    original_case_count += int(human_filter.get("original_case_count", len(shard["per_case"])))
+    kept_case_count += int(human_filter.get("kept_case_count", len(shard["per_case"])))
+    matched_human_keys.update(human_filter.get("matched_human_keys", []))
 
 values = list(per_case.values())
 
@@ -322,6 +349,13 @@ out = {
     "steps_file": steps_file,
     "inference_file": inference_file,
     "problem_dir": problem_dir,
+    "human_level_filter": {
+        "enabled": human_filter_enabled,
+        "human_costs_file": human_costs_file,
+        "original_case_count": original_case_count,
+        "kept_case_count": kept_case_count,
+        "matched_human_keys": sorted(matched_human_keys),
+    },
     "reconstruction_mode": first["reconstruction_mode"],
     "action_cost": {
         "move": move_cost,

@@ -151,6 +151,7 @@ for (map_id, agent_goals) in metadata
     end
 
     map_elapsed = time() - map_start_time
+    map_times[map_id] = map_elapsed
     println("  Result: agent2=$agent2_count (observe=$should_observe_agent2), agent3=$agent3_count (observe=$should_observe_agent3), total=$T")
     println("  Map completed in $(round(map_elapsed, digits=2))s")
 end

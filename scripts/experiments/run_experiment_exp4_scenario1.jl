@@ -242,11 +242,13 @@ for (map_id, agent_goals) in metadata
         while !PDDL.satisfy(domain, state, problem.goal)
             q_start_time = time()
 
-            # Check if we have probability data for timestep t+1
-            max_t_agent2 = size(goal_probs_agent2, 2) - 1  # -1 because we access t+1
+            # Per-agent inference tables are indexed by that agent's own observation count.
+            max_t_agent2 = size(goal_probs_agent2, 2) - 1
             max_t_agent3 = size(goal_probs_agent3, 2) - 1
+            can_observe_agent2 = agent2_count < max_t_agent2
+            can_observe_agent3 = agent3_count < max_t_agent3
 
-            if t >= max_t_agent2 || t >= max_t_agent3
+            if !can_observe_agent2 && !can_observe_agent3
                 steps_dict[map_key] = Dict(
                     "t" => t,
                     "observations" => observations,
@@ -256,17 +258,16 @@ for (map_id, agent_goals) in metadata
                 break
             end
 
-            # Determine correct timestep for each agent
-            # If agent hasn't been observed yet, use initial beliefs (timestep 1)
-            # Otherwise, use current timestep + 1
-            timestep_agent2 = agent2_count == 0 ? 1 : (t + 1)
-            timestep_agent3 = agent3_count == 0 ? 1 : (t + 1)
+            timestep_agent2 = agent2_count + 1
+            timestep_agent3 = agent3_count + 1
 
             # Parallelize Q computation for both agents
             task_agent2 = Threads.@spawn begin
                 # Compute Q_observe for agent2 (X)
-                Q_observe_agent2 = 0.0
+                Q_observe_agent2 = Inf
                 total_probs_agent2 = 0.0
+                can_observe_agent2 || return (Q_observe_agent2, total_probs_agent2, Any[])
+                Q_observe_agent2 = 0.0
 
                 # Pre-cache the nested dictionary access for agent2 to avoid repeated lookups
                 agent2_dict = state_probs_conditioned_dict["agent2"][map_id][scenario]
@@ -372,8 +373,10 @@ for (map_id, agent_goals) in metadata
 
             task_agent3 = Threads.@spawn begin
                 # Compute Q_observe for agent3 (Y)
-                Q_observe_agent3 = 0.0
+                Q_observe_agent3 = Inf
                 total_probs_agent3 = 0.0
+                can_observe_agent3 || return (Q_observe_agent3, total_probs_agent3, Any[])
+                Q_observe_agent3 = 0.0
 
                 # Pre-cache the nested dictionary access for agent3 to avoid repeated lookups
                 agent3_dict = state_probs_conditioned_dict["agent3"][map_id][scenario]
@@ -519,7 +522,7 @@ for (map_id, agent_goals) in metadata
 
                 # Simple wizard update: use state_probs directly (matching exp3_debug approach)
                 for j in 1:length(blue_wizards)
-                    if state_probs_agent2[j, t+1] > 0.1
+                    if state_probs_agent2[j, agent2_count + 1] > 0.1
                         push!(wizard_candicates, blue_wizards[j])
                     end
                 end
@@ -532,7 +535,7 @@ for (map_id, agent_goals) in metadata
 
                 # Simple wizard update: use state_probs directly (matching exp3_debug approach)
                 for j in 1:length(blue_wizards)
-                    if state_probs_agent3[j, t+1] > 0.1
+                    if state_probs_agent3[j, agent3_count + 1] > 0.1
                         push!(wizard_candicates, blue_wizards[j])
                     end
                 end

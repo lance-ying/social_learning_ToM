@@ -197,11 +197,13 @@ for (map_id, agent_goals) in metadata
         # high and they won't be chosen.
 
         while !PDDL.satisfy(domain, state, problem.goal)
-            # Check if we have probability data for timestep t+1
-            max_t_agent2 = size(goal_probs_agent2, 2) - 1  # -1 because we access t+1
+            # Per-agent inference tables are indexed by that agent's own observation count.
+            max_t_agent2 = size(goal_probs_agent2, 2) - 1
             max_t_agent3 = size(goal_probs_agent3, 2) - 1
+            can_observe_agent2 = agent2_count < max_t_agent2
+            can_observe_agent3 = agent3_count < max_t_agent3
             
-            if t >= max_t_agent2 || t >= max_t_agent3
+            if !can_observe_agent2 && !can_observe_agent3
                 steps_dict[map_key] = Dict(
                     "t" => t,
                     "observations" => observations,
@@ -211,17 +213,16 @@ for (map_id, agent_goals) in metadata
                 break
             end
             
-            # Determine correct timestep for each agent
-            # If agent hasn't been observed yet, use initial beliefs (timestep 1)
-            # Otherwise, use current timestep + 1
-            timestep_agent2 = agent2_count == 0 ? 1 : (t + 1)
-            timestep_agent3 = agent3_count == 0 ? 1 : (t + 1)
+            timestep_agent2 = agent2_count + 1
+            timestep_agent3 = agent3_count + 1
             
             # Parallelize Q computation for both agents
             task_agent2 = Threads.@spawn begin
                 # Compute Q_observe for agent2 (X)
-                Q_observe_agent2 = 0.0
+                Q_observe_agent2 = Inf
                 total_probs_agent2 = 0.0
+                can_observe_agent2 || return (Q_observe_agent2, total_probs_agent2)
+                Q_observe_agent2 = 0.0
                 
                 # Pre-cache the nested dictionary access for agent2 to avoid repeated lookups
                 agent2_dict = state_probs_conditioned_dict["agent2"][map_id][scenario]
@@ -245,9 +246,11 @@ for (map_id, agent_goals) in metadata
                     goal_probs_gi = agent2_goal_dict[g][i]
                     
                     T = -1
+                    T_from_state = false
                     for val in 1:size(state_probs_gi, 2)
                         if any(x -> x>0.95, state_probs_gi[:,val])
                             T = val
+                            T_from_state = true
                             break
                         end
                     end
@@ -264,11 +267,12 @@ for (map_id, agent_goals) in metadata
                     # Validate T is within bounds
                     max_T_state = size(state_probs_gi, 2)
                     
-                    if T == -1 || T > max_T_state
-                        # If T is invalid, use all wizards as candidates
+                    if T == -1 || T > max_T_state || !T_from_state
+                        # If T is invalid or came from goal_probs (not state_probs),
+                        # observing this agent won't help identify the wizard
                         new_wizard_candicates = copy(blue_wizards_agent2)
                     else
-                        # Get blue wizards from pre-computed list
+                        # Get blue wizards from pre-computed list at convergence time
                         new_wizard_candicates = []
                         for j in 1:length(blue_wizards_agent2)
                             if state_probs_gi[j, T] > 0.1
@@ -277,8 +281,25 @@ for (map_id, agent_goals) in metadata
                         end
                     end
                     
+                    # Check if this goal/state combination is consistent with learned wizard_candicates
+                    # If wizard_candicates has been filtered (not empty), verify compatibility
+                    if !isempty(wizard_candicates)
+                        is_compatible = false
+                        for wiz in new_wizard_candicates
+                            if wiz in wizard_candicates
+                                is_compatible = true
+                                break
+                            end
+                        end
+                        
+                        if !is_compatible
+                            continue
+                        end
+                    end
+                    
                     Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
-                    obs_cost = action_cost[:observe] * max(T, 1)
+                    remaining_T = T_from_state ? max(T - timestep_agent2 + 1, 1) : max(T, 1)
+                    obs_cost = action_cost[:observe] * remaining_T
                     total_cost = Q_T + obs_cost
                     contribution = goal_probs_agent2[g, timestep_agent2] * state_probs_agent2[i, timestep_agent2] * total_cost
                     Q_observe_agent2 += contribution
@@ -286,14 +307,20 @@ for (map_id, agent_goals) in metadata
                 end
                 end
                 
-                Q_observe_agent2 /= total_probs_agent2
+                if total_probs_agent2 > 0
+                    Q_observe_agent2 /= total_probs_agent2
+                else
+                    Q_observe_agent2 = Inf
+                end
                 (Q_observe_agent2, total_probs_agent2)
             end
             
             task_agent3 = Threads.@spawn begin
                 # Compute Q_observe for agent3 (Y)
-                Q_observe_agent3 = 0.0
+                Q_observe_agent3 = Inf
                 total_probs_agent3 = 0.0
+                can_observe_agent3 || return (Q_observe_agent3, total_probs_agent3)
+                Q_observe_agent3 = 0.0
                 
                 # Pre-cache the nested dictionary access for agent3 to avoid repeated lookups
                 agent3_dict = state_probs_conditioned_dict["agent3"][map_id][scenario]
@@ -317,9 +344,11 @@ for (map_id, agent_goals) in metadata
                     goal_probs_gi = agent3_goal_dict[g][i]
                     
                     T = -1
+                    T_from_state = false
                     for val in 1:size(state_probs_gi, 2)
                         if any(x -> x>0.95, state_probs_gi[:,val])
                             T = val
+                            T_from_state = true
                             break
                         end
                     end
@@ -336,11 +365,12 @@ for (map_id, agent_goals) in metadata
                     # Validate T is within bounds
                     max_T_state = size(state_probs_gi, 2)
                     
-                    if T == -1 || T > max_T_state
-                        # If T is invalid, use all wizards as candidates
+                    if T == -1 || T > max_T_state || !T_from_state
+                        # If T is invalid or came from goal_probs (not state_probs),
+                        # observing this agent won't help identify the wizard
                         new_wizard_candicates = copy(blue_wizards_agent3)
                     else
-                        # Get blue wizards from pre-computed list
+                        # Get blue wizards from pre-computed list at convergence time
                         new_wizard_candicates = []
                         for j in 1:length(blue_wizards_agent3)
                             if state_probs_gi[j, T] > 0.1
@@ -349,8 +379,25 @@ for (map_id, agent_goals) in metadata
                         end
                     end
                     
+                    # Check if this goal/state combination is consistent with learned wizard_candicates
+                    # If wizard_candicates has been filtered (not empty), verify compatibility
+                    if !isempty(wizard_candicates)
+                        is_compatible = false
+                        for wiz in new_wizard_candicates
+                            if wiz in wizard_candicates
+                                is_compatible = true
+                                break
+                            end
+                        end
+                        
+                        if !is_compatible
+                            continue
+                        end
+                    end
+                    
                     Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
-                    obs_cost = action_cost[:observe] * max(T, 1)
+                    remaining_T = T_from_state ? max(T - timestep_agent3 + 1, 1) : max(T, 1)
+                    obs_cost = action_cost[:observe] * remaining_T
                     total_cost = Q_T + obs_cost
                     contribution = goal_probs_agent3[g, timestep_agent3] * state_probs_agent3[i, timestep_agent3] * total_cost
                     Q_observe_agent3 += contribution
@@ -358,7 +405,11 @@ for (map_id, agent_goals) in metadata
                 end
                 end
                 
-                Q_observe_agent3 /= total_probs_agent3
+                if total_probs_agent3 > 0
+                    Q_observe_agent3 /= total_probs_agent3
+                else
+                    Q_observe_agent3 = Inf
+                end
                 (Q_observe_agent3, total_probs_agent3)
             end
             
@@ -382,7 +433,7 @@ for (map_id, agent_goals) in metadata
                 
                 # Simple wizard update: use state_probs directly (matching exp2 approach)
                 for j in 1:length(blue_wizards)
-                    if state_probs_agent2[j, t+1] > 0.1
+                    if state_probs_agent2[j, agent2_count + 1] > 0.1
                         push!(wizard_candicates, blue_wizards[j])
                     end
                 end
@@ -395,7 +446,7 @@ for (map_id, agent_goals) in metadata
                 
                 # Simple wizard update: use state_probs directly (matching exp2 approach)
                 for j in 1:length(blue_wizards)
-                    if state_probs_agent3[j, t+1] > 0.1
+                    if state_probs_agent3[j, agent3_count + 1] > 0.1
                         push!(wizard_candicates, blue_wizards[j])
                     end
                 end

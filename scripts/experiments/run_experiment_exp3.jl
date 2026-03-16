@@ -209,11 +209,13 @@ for (map_id, agent_goals) in metadata
         while !PDDL.satisfy(domain, state, problem.goal)
             q_start_time = time()
             
-            # Check if we have probability data for timestep t+1
-            max_t_agent2 = size(goal_probs_agent2, 2) - 1  # -1 because we access t+1
+            # Per-agent inference tables are indexed by that agent's own observation count.
+            max_t_agent2 = size(goal_probs_agent2, 2) - 1
             max_t_agent3 = size(goal_probs_agent3, 2) - 1
+            can_observe_agent2 = agent2_count < max_t_agent2
+            can_observe_agent3 = agent3_count < max_t_agent3
             
-            if t >= max_t_agent2 || t >= max_t_agent3
+            if !can_observe_agent2 && !can_observe_agent3
                 steps_dict[map_key] = Dict(
                     "t" => t,
                     "observations" => observations,
@@ -223,17 +225,16 @@ for (map_id, agent_goals) in metadata
                 break
             end
             
-            # Determine correct timestep for each agent
-            # If agent hasn't been observed yet, use initial beliefs (timestep 1)
-            # Otherwise, use current timestep + 1
-            timestep_agent2 = agent2_count == 0 ? 1 : (t + 1)
-            timestep_agent3 = agent3_count == 0 ? 1 : (t + 1)
+            timestep_agent2 = agent2_count + 1
+            timestep_agent3 = agent3_count + 1
             
             # Parallelize Q computation for both agents
             task_agent2 = Threads.@spawn begin
                 # Compute Q_observe for agent2 (X)
-                Q_observe_agent2 = 0.0
+                Q_observe_agent2 = Inf
                 total_probs_agent2 = 0.0
+                can_observe_agent2 || return (Q_observe_agent2, total_probs_agent2)
+                Q_observe_agent2 = 0.0
                 
                 # Loop over ALL possible goals (observer doesn't know which goal agent has)
                 for g in 1:length(goals_agent2)
@@ -312,8 +313,10 @@ for (map_id, agent_goals) in metadata
             
             task_agent3 = Threads.@spawn begin
                 # Compute Q_observe for agent3 (Y)
-                Q_observe_agent3 = 0.0
+                Q_observe_agent3 = Inf
                 total_probs_agent3 = 0.0
+                can_observe_agent3 || return (Q_observe_agent3, total_probs_agent3)
+                Q_observe_agent3 = 0.0
                 
                 # Loop over ALL possible goals (observer doesn't know which goal agent has)
                 for g in 1:length(goals_agent3)
@@ -410,12 +413,12 @@ for (map_id, agent_goals) in metadata
                 t += 1
                 wizard_candicates = []
                 # Compute marginal wizard probabilities by summing over goals and states
-                # Use t+1 to match Q-value computation (beliefs have updated after observation)
+                # Use the observing agent's updated count, not the global observation count.
                 wizard_probs_agent2 = zeros(length(blue_wizards))
-                if t+1 <= size(state_probs_agent2, 2)
+                if agent2_count + 1 <= size(state_probs_agent2, 2)
                     for g in 1:length(goals_agent2)
                         for i in 1:length(initial_states_agent2)
-                            joint_prob = goal_probs_agent2[g, t+1] * state_probs_agent2[i, t+1]
+                            joint_prob = goal_probs_agent2[g, agent2_count + 1] * state_probs_agent2[i, agent2_count + 1]
                             if joint_prob > 0.01
                                 # Compute T (convergence timestep) for this goal/state combination
                                 T = -1
@@ -440,9 +443,9 @@ for (map_id, agent_goals) in metadata
                                 # T represents when wizard probabilities have converged for this goal/state
                                 # We use T directly to get the converged probabilities, not the current t
                                 time_idx = if T == -1 || T > max_T_state
-                                    min(t+1, max_T_state)  # Fallback to t+1 if T is invalid (match Q-value computation)
+                                    min(agent2_count + 1, max_T_state)
                                 else
-                                    min(T, max_T_state)  # Use T (convergence timestep), not t
+                                    min(T, max_T_state)
                                 end
                                 
                                 # Check if wizard probabilities have actually converged
@@ -477,12 +480,12 @@ for (map_id, agent_goals) in metadata
                 t += 1
                 wizard_candicates = []
                 # Compute marginal wizard probabilities by summing over goals and states
-                # Use t+1 to match Q-value computation (beliefs have updated after observation)
+                # Use the observing agent's updated count, not the global observation count.
                 wizard_probs_agent3 = zeros(length(blue_wizards))
-                if t+1 <= size(state_probs_agent3, 2)
+                if agent3_count + 1 <= size(state_probs_agent3, 2)
                     for g in 1:length(goals_agent3)
                         for i in 1:length(initial_states_agent3)
-                            joint_prob = goal_probs_agent3[g, t+1] * state_probs_agent3[i, t+1]
+                            joint_prob = goal_probs_agent3[g, agent3_count + 1] * state_probs_agent3[i, agent3_count + 1]
                             if joint_prob > 0.01
                                 # Compute T (convergence timestep) for this goal/state combination
                                 T = -1
@@ -507,9 +510,9 @@ for (map_id, agent_goals) in metadata
                                 # T represents when wizard probabilities have converged for this goal/state
                                 # We use T directly to get the converged probabilities, not the current t
                                 time_idx = if T == -1 || T > max_T_state
-                                    min(t+1, max_T_state)  # Fallback to t+1 if T is invalid (match Q-value computation)
+                                    min(agent3_count + 1, max_T_state)
                                 else
-                                    min(T, max_T_state)  # Use T (convergence timestep), not t
+                                    min(T, max_T_state)
                                 end
                                 
                                 # Check if wizard probabilities have actually converged

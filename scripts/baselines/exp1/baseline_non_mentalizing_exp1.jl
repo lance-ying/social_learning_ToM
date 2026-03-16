@@ -47,16 +47,6 @@ map_times = Dict()
 total_start_time = time()
 
 for map_id in map_ids
-    # Map map_id to inference data format (mod_XXX_ascii)
-    inference_map_id = "mod_$(map_id)_ascii"
-    
-    # Skip maps that don't exist in inference data
-    if !haskey(goal_probs_conditioned_dict, inference_map_id)
-        println("\nSkipping map $map_id (not in inference data as $inference_map_id)")
-        next!(progress)
-        continue
-    end
-    
     map_start_time = time()
     println("\nProcessing map: $map_id")
     
