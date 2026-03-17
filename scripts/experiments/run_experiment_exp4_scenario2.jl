@@ -18,6 +18,10 @@ include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
 
+function wizard_candidate_cache_key(wizards)
+    return join(sort!(string.(wizards)), "|")
+end
+
 # Helper function to filter ASCII map to only include specified agent
 function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
     agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
@@ -214,6 +218,21 @@ for (map_id, agent_goals) in metadata
         # Pre-compute state copy and planner (moved outside loop for efficiency)
         new_state = copy(state_render)
         planner = AStarPlanner(GoalManhattan())
+        exploration_cost_cache = Dict{String, Float64}()
+        exploration_cost_cache_lock = ReentrantLock()
+        function cached_exploration_cost(wizards)
+            key = wizard_candidate_cache_key(wizards)
+            lock(exploration_cost_cache_lock) do
+                if haskey(exploration_cost_cache, key)
+                    return exploration_cost_cache[key]
+                end
+            end
+            cost = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizards, action_cost)
+            lock(exploration_cost_cache_lock) do
+                exploration_cost_cache[key] = cost
+            end
+            return cost
+        end
 
         # Check if agent1's plan requires blue wizards
         debug_println("    Planning for agent1...")
@@ -349,7 +368,7 @@ for (map_id, agent_goals) in metadata
                     end
 
                     # Use problem.goal (agent1's goal) for cost estimation, matching exp3_debug pattern
-                    Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
+                    Q_T = cached_exploration_cost(new_wizard_candicates)
                     # Use REMAINING time to convergence, not total time
                     # This encourages continuing with an agent we've already started observing
                     remaining_T = T_from_state ? max(T - timestep_agent2 + 1, 1) : max(T, 1)
@@ -464,7 +483,7 @@ for (map_id, agent_goals) in metadata
                     end
 
                     # Use problem.goal (agent1's goal) for cost estimation, matching exp3_debug pattern
-                    Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
+                    Q_T = cached_exploration_cost(new_wizard_candicates)
                     # Use REMAINING time to convergence, not total time
                     # This encourages continuing with an agent we've already started observing
                     remaining_T = T_from_state ? max(T - timestep_agent3 + 1, 1) : max(T, 1)
@@ -493,7 +512,7 @@ for (map_id, agent_goals) in metadata
             (Q_observe_agent3, total_probs_agent3, debug_entries_agent3) = fetch(task_agent3)
 
             # Compute Q_not_observe
-            Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizard_candicates, action_cost)
+            Q_not_observe = cached_exploration_cost(wizard_candicates)
 
             # Debug: Print Q-values for understanding decision
             debug_println("    t=$t: Q_observe_agent2=$(round(Q_observe_agent2, digits=2)), Q_observe_agent3=$(round(Q_observe_agent3, digits=2)), Q_not_observe=$(round(Q_not_observe, digits=2))")

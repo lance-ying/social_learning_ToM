@@ -17,6 +17,10 @@ include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
 
+function wizard_candidate_cache_key(wizards)
+    return join(sort!(string.(wizards)), "|")
+end
+
 # Define directory paths
 experiment_id = "exp3"
 
@@ -170,6 +174,21 @@ for (map_id, agent_goals) in metadata
         # Pre-compute state copy and planner (moved outside loop for efficiency)
         new_state = copy(state_render)
         planner = AStarPlanner(GoalManhattan())
+        exploration_cost_cache = Dict{String, Float64}()
+        exploration_cost_cache_lock = ReentrantLock()
+        function cached_exploration_cost(wizards)
+            key = wizard_candidate_cache_key(wizards)
+            lock(exploration_cost_cache_lock) do
+                if haskey(exploration_cost_cache, key)
+                    return exploration_cost_cache[key]
+                end
+            end
+            cost = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizards, action_cost)
+            lock(exploration_cost_cache_lock) do
+                exploration_cost_cache[key] = cost
+            end
+            return cost
+        end
         
         # Check if agent1's plan requires blue wizards
         plan_agent1 = planner(domain, state, problem.goal)
@@ -297,7 +316,7 @@ for (map_id, agent_goals) in metadata
                         end
                     end
                     
-                    Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
+                    Q_T = cached_exploration_cost(new_wizard_candicates)
                     remaining_T = T_from_state ? max(T - timestep_agent2 + 1, 1) : max(T, 1)
                     obs_cost = action_cost[:observe] * remaining_T
                     total_cost = Q_T + obs_cost
@@ -395,7 +414,7 @@ for (map_id, agent_goals) in metadata
                         end
                     end
                     
-                    Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
+                    Q_T = cached_exploration_cost(new_wizard_candicates)
                     remaining_T = T_from_state ? max(T - timestep_agent3 + 1, 1) : max(T, 1)
                     obs_cost = action_cost[:observe] * remaining_T
                     total_cost = Q_T + obs_cost
@@ -418,7 +437,7 @@ for (map_id, agent_goals) in metadata
             (Q_observe_agent3, total_probs_agent3) = fetch(task_agent3)
             
             # Compute Q_not_observe
-            Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizard_candicates, action_cost)
+            Q_not_observe = cached_exploration_cost(wizard_candicates)
             
             # Take argmin to decide which action
             q_values = [Q_observe_agent2, Q_observe_agent3, Q_not_observe]
