@@ -14,7 +14,7 @@ experiment_id = "exp4_013026"
 inference_file = "inference_exp4_020126_1.jld2"
 
 # Output prefix for results files (will have _scenario1.json, _scenario2.json, .json appended)
-output_prefix = "steps_dict_exp4_020126_1"
+output_prefix = "steps_dict_exp4_031726_1"
 
 #==============================================================================#
 
