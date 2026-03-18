@@ -414,6 +414,29 @@ function build_multi_context(map_id, problem_dir)
     )
 end
 
+function build_agent1_context(map_id, problem_dir)
+    txt_path = joinpath(problem_dir, "$(map_id).txt")
+    ascii_content = read(txt_path, String)
+    tmp_a1 = joinpath(problem_dir, ".temp_agent1_$(map_id).txt")
+    if !isfile(tmp_a1)
+        filtered_a1 = filter_ascii_agents(ascii_content, :agent1)
+        write(tmp_a1, filtered_a1)
+    end
+
+    domain = load_domain(joinpath(ROOT, "dataset", "domain.pddl"))
+    problem = load_ascii_problem(tmp_a1)
+    state = initstate(domain, problem)
+    initial_states, _, belief_names = enumerate_beliefs_quiet(state)
+
+    return (
+        problem = problem,
+        state = state,
+        domain = domain,
+        initial_states = initial_states,
+        belief_names = belief_names,
+    )
+end
+
 function candidate_support_at_count(blue_wizards, state_probs, obs_count::Int)
     max_t = size(state_probs, 2) - 1
     nrows = size(state_probs, 1)
@@ -480,6 +503,28 @@ function filter_hypotheses_by_candidates(initial_states, belief_names, candidate
         return [copy(s) for s in initial_states], String[]
     end
     return filtered_states, dropped
+end
+
+function select_hypotheses_by_belief_names(initial_states, belief_names, candidate_names)
+    isempty(candidate_names) && return [copy(s) for s in initial_states], String[]
+
+    candidate_set = Set(string(name) for name in candidate_names)
+    filtered_states = Any[]
+    dropped = String[]
+    for (idx, belief_name) in enumerate(belief_names)
+        if belief_name in candidate_set
+            push!(filtered_states, copy(initial_states[idx]))
+        else
+            push!(dropped, belief_name)
+        end
+    end
+
+    if isempty(filtered_states)
+        return [copy(s) for s in initial_states], ["Reduced planning projection matched no belief states; used all hypotheses."]
+    end
+
+    warnings = isempty(dropped) ? String[] : ["Projected hypotheses into reduced planning world with $(length(filtered_states)) candidate states."]
+    return filtered_states, warnings
 end
 
 function choose_shortest_plan(planner, domain, states, goal, explored_state_ids)
@@ -944,8 +989,10 @@ end
 function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_label, inference_data, metadata; exp4_metadata_style=false)
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
+    reduced_cache = Dict{String, Any}()
     total_cases = length(steps_dict)
     case_idx = 0
+    use_reduced_agent1_planning = true
 
     for (map_key, entry) in steps_dict
         case_idx += 1
@@ -961,22 +1008,34 @@ function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_la
         if !haskey(cache, map_id)
             cache[map_id] = build_multi_context(map_id, problem_dir)
         end
+        if use_reduced_agent1_planning && !haskey(reduced_cache, map_id)
+            reduced_cache[map_id] = build_agent1_context(map_id, problem_dir)
+        end
 
         clear_planner_cache!()
         ctx = cache[map_id]
-        hypothesis_states = initial_replay_hypotheses(ctx.initial_states, model_label)
+        replay_ctx = use_reduced_agent1_planning ? reduced_cache[map_id] : ctx
+        hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
         candidate_names = String[]
         warnings = String[]
         posterior_filter_start = time()
         if is_mentalizing_model(model_label)
-            hypothesis_states, candidate_names, warnings = mentalizing_candidates_exp3_or_exp4(
+            posterior_states, candidate_names, warnings = mentalizing_candidates_exp3_or_exp4(
                 ctx, map_key, observations, inference_data, metadata, exp4_metadata_style
             )
+            if use_reduced_agent1_planning
+                hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
+                    replay_ctx.initial_states, replay_ctx.belief_names, candidate_names
+                )
+                warnings = vcat(warnings, projection_warnings)
+            else
+                hypothesis_states = posterior_states
+            end
         end
         posterior_filter_time = time() - posterior_filter_start
         replay = replay_case(
-            ctx.domain, ctx.state, ctx.problem.goal, hypothesis_states, observations, action_cost;
-            cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label),
+            replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
+            cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
             case_label=map_key,
         )
         warnings = vcat(observation_warnings, warnings, replay["warnings"])
@@ -993,6 +1052,7 @@ function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_la
                 "observation_source" => observation_source,
                 "observation_trace" => observations,
                 "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : "no_mentalizing_update",
+                "planning_world" => use_reduced_agent1_planning ? "agent1_reduced_ascii" : "full_multi_agent_ascii",
                 "posterior_candidates" => candidate_names,
                 "posterior_filter_time" => posterior_filter_time,
                 "reconstruction_mode" => "model_faithful_replay",

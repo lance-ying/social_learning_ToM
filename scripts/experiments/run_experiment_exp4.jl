@@ -90,6 +90,17 @@ for (map_id, agent_goals) in metadata
     txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
     ascii_content = read(txt_path, String)
 
+    domain_agent1 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+    temp_path_agent1 = joinpath(PROBLEM_DIR, ".temp_agent1_$(map_id).txt")
+    if !isfile(temp_path_agent1)
+        filtered_ascii_agent1 = filter_ascii_agents(ascii_content, :agent1)
+        write(temp_path_agent1, filtered_ascii_agent1)
+    end
+    problem_agent1 = load_ascii_problem(temp_path_agent1)
+    state_agent1_init = initstate(domain_agent1, problem_agent1)
+    state_render_agent1 = copy(state_agent1_init)
+    domain_agent1, state_agent1_init = PDDL.compiled(domain_agent1, problem_agent1)
+
     domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
     temp_path_agent2 = joinpath(PROBLEM_DIR, ".temp_agent2_$(map_id).txt")
     if !isfile(temp_path_agent2)
@@ -144,6 +155,7 @@ for (map_id, agent_goals) in metadata
 
         # Use fresh copies of the compiled states for this scenario
         state = copy(state_init)
+        state_agent1 = copy(state_agent1_init)
         state_agent2 = copy(state_agent2_init)
         state_agent3 = copy(state_agent3_init)
 
@@ -193,17 +205,17 @@ for (map_id, agent_goals) in metadata
         debug_println("    Loaded agent3 probs: goal_probs size=$(size(goal_probs_agent3)), state_probs size=$(size(state_probs_agent3))")
 
         # Pre-compute state copy and planner (moved outside loop for efficiency)
-        new_state = copy(state_render)
+        new_state = copy(state_render_agent1)
         planner = AStarPlanner(GoalManhattan())
 
         # Check if agent1's plan requires blue wizards
         debug_println("    Planning for agent1...")
-        debug_println("    problem.goal = $(problem.goal)")
+        debug_println("    problem.goal = $(problem_agent1.goal)")
         debug_println("    agent1 location = ($(state[pddl"(xloc agent1)"]), $(state[pddl"(yloc agent1)"]))")
         # Note: AStarPlanner is used here because we need the actual plan (list of actions)
         # to check for wizard interactions. First run in a fresh Julia session may be slow
         # due to JIT compilation, but subsequent runs are fast.
-        plan_agent1 = planner(domain, state, problem.goal)
+        plan_agent1 = planner(domain_agent1, state_agent1, problem_agent1.goal)
         debug_println("    Agent1 plan computed, length=$(length(collect(plan_agent1)))")
         agent1_needs_wizards = any(x-> x.name == :interact && x.args[end] in blue_wizards, plan_agent1)
         if !agent1_needs_wizards
@@ -222,7 +234,7 @@ for (map_id, agent_goals) in metadata
         # is worthwhile. If agents don't need blue wizards, their Q-values will be
         # high and they won't be chosen.
 
-        while !PDDL.satisfy(domain, state, problem.goal)
+        while !PDDL.satisfy(domain_agent1, state_agent1, problem_agent1.goal)
             q_start_time = time()
 
             # Per-agent inference tables are indexed by that agent's own observation count.
@@ -330,7 +342,7 @@ for (map_id, agent_goals) in metadata
                     end
 
                     # Use problem.goal (agent1's goal) for cost estimation, matching exp3_debug pattern
-                    Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
+                    Q_T = estimate_self_exploration_cost(domain_render, new_state, problem_agent1.goal, new_wizard_candicates, action_cost)
                     # Use REMAINING time to convergence, not total time
                     # This encourages continuing with an agent we've already started observing
                     remaining_T = T_from_state ? max(T - timestep_agent2 + 1, 1) : max(T, 1)
@@ -445,7 +457,7 @@ for (map_id, agent_goals) in metadata
                     end
 
                     # Use problem.goal (agent1's goal) for cost estimation, matching exp3_debug pattern
-                    Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
+                    Q_T = estimate_self_exploration_cost(domain_render, new_state, problem_agent1.goal, new_wizard_candicates, action_cost)
                     # Use REMAINING time to convergence, not total time
                     # This encourages continuing with an agent we've already started observing
                     remaining_T = T_from_state ? max(T - timestep_agent3 + 1, 1) : max(T, 1)
@@ -474,7 +486,7 @@ for (map_id, agent_goals) in metadata
             (Q_observe_agent3, total_probs_agent3, debug_entries_agent3) = fetch(task_agent3)
 
             # Compute Q_not_observe
-            Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizard_candicates, action_cost)
+            Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem_agent1.goal, wizard_candicates, action_cost)
 
             # Debug: Print Q-values for understanding decision
             debug_println("    t=$t: Q_observe_agent2=$(round(Q_observe_agent2, digits=2)), Q_observe_agent3=$(round(Q_observe_agent3, digits=2)), Q_not_observe=$(round(Q_not_observe, digits=2))")

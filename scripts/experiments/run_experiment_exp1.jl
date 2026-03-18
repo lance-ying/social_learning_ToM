@@ -14,6 +14,18 @@ include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "translate.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
+include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
+
+function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
+    agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
+    filtered = ascii_content
+    for (agent_sym, char) in agent_chars
+        if agent_sym != keep_agent
+            filtered = replace(filtered, char => '.')
+        end
+    end
+    return filtered
+end
 
 # include("paths_new.jl")
 # Define directory paths
@@ -92,6 +104,19 @@ for problem_file in problem_files
 
     domain, state = PDDL.compiled(domain, problem)
 
+    txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
+    ascii_content = read(txt_path, String)
+    domain_agent1 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+    temp_path_agent1 = joinpath(PROBLEM_DIR, ".temp_agent1_$(map_id).txt")
+    if !isfile(temp_path_agent1)
+        filtered_ascii_agent1 = filter_ascii_agents(ascii_content, :agent1)
+        write(temp_path_agent1, filtered_ascii_agent1)
+    end
+    problem_agent1 = load_ascii_problem(temp_path_agent1)
+    state_agent1 = initstate(domain_agent1, problem_agent1)
+    state_render_agent1 = copy(state_agent1)
+    domain_agent1, state_agent1 = PDDL.compiled(domain_agent1, problem_agent1)
+
     # Render initial state
 
     #--- Goal Inference Setup ---#
@@ -130,12 +155,12 @@ for problem_file in problem_files
     goal_probs = goal_probs_conditioned_dict[inference_map_id][g_id][s_id]
     state_probs = state_probs_conditioned_dict[inference_map_id][g_id][s_id]
 
-    new_state = copy(state_render)
+    new_state = copy(state_render_agent1)
 
 
     planner = AStarPlanner(GoalManhattan())
 
-    plan = planner(domain, state, problem.goal)
+    plan = planner(domain_agent1, state_agent1, problem_agent1.goal)
 
     if !any(x-> x.name == :interact && x.args[end] in blue_wizards, plan)
         print("t=", 0)
@@ -143,7 +168,7 @@ for problem_file in problem_files
         continue
     end
 
-    while !PDDL.satisfy(domain, state, problem.goal)
+    while !PDDL.satisfy(domain_agent1, state_agent1, problem_agent1.goal)
 
         Q_observe = 0
     
@@ -203,7 +228,7 @@ for problem_file in problem_files
                     end
                 end
     
-                Q_T = estimate_self_exploration_cost(domain_render, new_state, problem.goal, new_wizard_candicates, action_cost)
+                Q_T = estimate_self_exploration_cost(domain_render, new_state, problem_agent1.goal, new_wizard_candicates, action_cost)
     
                 Q_observe += goal_probs[g, t+1] * state_probs[i, t+1] * (Q_T + action_cost[:observe] * max(T,1))
 
@@ -214,7 +239,7 @@ for problem_file in problem_files
 
         Q_observe /= total_probs
     
-        Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizard_candicates, action_cost)
+        Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem_agent1.goal, wizard_candicates, action_cost)
     
         print("Q_observe = ", Q_observe, "Q_not_observe = ", Q_not_observe)
         println()

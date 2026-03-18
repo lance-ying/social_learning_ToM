@@ -101,6 +101,17 @@ for (map_id, agent_goals) in metadata
         
         txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
         ascii_content = read(txt_path, String)
+
+        domain_agent1 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+        temp_path_agent1 = joinpath(PROBLEM_DIR, ".temp_agent1_$(map_id).txt")
+        if !isfile(temp_path_agent1)
+            filtered_ascii_agent1 = filter_ascii_agents(ascii_content, :agent1)
+            write(temp_path_agent1, filtered_ascii_agent1)
+        end
+        problem_agent1 = load_ascii_problem(temp_path_agent1)
+        state_agent1 = initstate(domain_agent1, problem_agent1)
+        state_render_agent1 = copy(state_agent1)
+        domain_agent1, state_agent1 = PDDL.compiled(domain_agent1, problem_agent1)
         
         # Load filtered problem for agent2 (use existing temp file if it exists)
         domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
@@ -172,7 +183,7 @@ for (map_id, agent_goals) in metadata
         state_probs_agent3 = state_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
 
         # Pre-compute state copy and planner (moved outside loop for efficiency)
-        new_state = copy(state_render)
+        new_state = copy(state_render_agent1)
         planner = AStarPlanner(GoalManhattan())
         exploration_cost_cache = Dict{String, Float64}()
         exploration_cost_cache_lock = ReentrantLock()
@@ -183,7 +194,7 @@ for (map_id, agent_goals) in metadata
                     return exploration_cost_cache[key]
                 end
             end
-            cost = estimate_self_exploration_cost(domain_render, new_state, problem.goal, wizards, action_cost)
+            cost = estimate_self_exploration_cost(domain_render, new_state, problem_agent1.goal, wizards, action_cost)
             lock(exploration_cost_cache_lock) do
                 exploration_cost_cache[key] = cost
             end
@@ -191,7 +202,7 @@ for (map_id, agent_goals) in metadata
         end
         
         # Check if agent1's plan requires blue wizards
-        plan_agent1 = planner(domain, state, problem.goal)
+        plan_agent1 = planner(domain_agent1, state_agent1, problem_agent1.goal)
         agent1_needs_wizards = any(x-> x.name == :interact && x.args[end] in blue_wizards, plan_agent1)
         if !agent1_needs_wizards
             print("t=", 0)
@@ -215,7 +226,7 @@ for (map_id, agent_goals) in metadata
         # is worthwhile. If agents don't need blue wizards, their Q-values will be
         # high and they won't be chosen.
 
-        while !PDDL.satisfy(domain, state, problem.goal)
+        while !PDDL.satisfy(domain_agent1, state_agent1, problem_agent1.goal)
             # Per-agent inference tables are indexed by that agent's own observation count.
             max_t_agent2 = size(goal_probs_agent2, 2) - 1
             max_t_agent3 = size(goal_probs_agent3, 2) - 1
