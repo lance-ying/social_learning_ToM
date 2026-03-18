@@ -132,10 +132,30 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->x[1])
     println("  [3] Domain compiled. Running A* planner...")
     flush(stdout)
 
+    #--- Agent-filtered domains (compile once per map, reuse across scenarios) ---#
+    println("  [5] Loading agent-filtered domains...")
+    flush(stdout)
+
+    txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
+    ascii_content = read(txt_path, String)
+
+    # Load and compile filtered problem for agent1
+    domain_agent1 = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl"))
+    temp_path_agent1 = joinpath(PROBLEM_DIR, ".temp_agent1_$(map_id).txt")
+    if !isfile(temp_path_agent1)
+        filtered_ascii_agent1 = filter_ascii_agents(ascii_content, :agent1)
+        write(temp_path_agent1, filtered_ascii_agent1)
+    end
+    problem_agent1 = load_ascii_problem(temp_path_agent1)
+    state_agent1 = initstate(domain_agent1, problem_agent1)
+    println("  [5.5] Compiling agent1 domain...")
+    flush(stdout)
+    domain_agent1, state_agent1 = PDDL.compiled(domain_agent1, problem_agent1)
+
     # Check if agent1 even needs blue wizards (same answer for both scenarios)
     blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
     planner = AStarPlanner(GoalManhattan())
-    plan_agent1 = planner(domain, state, problem.goal)
+    plan_agent1 = planner(domain_agent1, state_agent1, problem_agent1.goal)
     println("  [4] A* planner done.")
     flush(stdout)
     agent1_needs_wizards = any(x -> x.name == :interact && x.args[end] in blue_wizards, plan_agent1)
@@ -157,13 +177,6 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->x[1])
         println("  Map completed in $(round(map_elapsed, digits=2))s")
         continue
     end
-
-    #--- Agent-filtered domains (compile once per map, reuse across scenarios) ---#
-    println("  [5] Loading agent-filtered domains...")
-    flush(stdout)
-
-    txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
-    ascii_content = read(txt_path, String)
 
     # Load and compile filtered problem for agent2
     domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl"))

@@ -12,6 +12,18 @@ include(joinpath(@__DIR__, "..", "..", "..", "src", "utils.jl"))
 include(joinpath(@__DIR__, "..", "..", "..", "src", "heuristics.jl"))
 # beliefs.jl not needed for naive baseline
 include(joinpath(@__DIR__, "..", "..", "..", "src", "render.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "ascii.jl"))
+
+function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
+    agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
+    filtered = ascii_content
+    for (agent_sym, char) in agent_chars
+        if agent_sym != keep_agent
+            filtered = replace(filtered, char => '.')
+        end
+    end
+    return filtered
+end
 
 # Configuration section (matching wrapper pattern)
 experiment_id = "exp4"  # Problem directory: problems_exp4
@@ -37,8 +49,6 @@ progress = Progress(total_iterations, desc="Processing naive baseline: ")
 map_times = Dict()
 total_start_time = time()
 
-include(joinpath(@__DIR__, "..", "..", "..", "src", "ascii.jl"))
-
 for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d+", x[1]).match))
     map_start_time = time()
     println("\nProcessing map: $map_id")
@@ -52,10 +62,22 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
     state = initstate(domain, problem)
     domain, state = PDDL.compiled(domain, problem)
 
+    txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
+    ascii_content = read(txt_path, String)
+    domain_agent1 = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl"))
+    temp_path_agent1 = joinpath(PROBLEM_DIR, ".temp_agent1_$(map_id).txt")
+    if !isfile(temp_path_agent1)
+        filtered_ascii_agent1 = filter_ascii_agents(ascii_content, :agent1)
+        write(temp_path_agent1, filtered_ascii_agent1)
+    end
+    problem_agent1 = load_ascii_problem(temp_path_agent1)
+    state_agent1 = initstate(domain_agent1, problem_agent1)
+    domain_agent1, state_agent1 = PDDL.compiled(domain_agent1, problem_agent1)
+
     blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
 
     planner = AStarPlanner(GoalManhattan())
-    plan = collect(planner(domain, state, problem.goal))
+    plan = collect(planner(domain_agent1, state_agent1, problem_agent1.goal))
 
     # Find first interaction with blue wizard
     T = -1

@@ -38,15 +38,20 @@ progress = Progress(total_iterations, desc="Processing non-mentalize baseline v2
 map_times = Dict()
 total_start_time = time()
 
-# Filter ASCII map to keep agent1 + one other agent (remove the third)
-function filter_to_pair(ascii_content::String, remove_agent::Symbol)
-    agent_chars = Dict(:agent2 => 'X', :agent3 => 'Y')
-    return replace(ascii_content, agent_chars[remove_agent] => '.')
+# Filter ASCII map to keep only agent1
+function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
+    agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
+    filtered = ascii_content
+    for (agent_sym, char) in agent_chars
+        if agent_sym != keep_agent
+            filtered = replace(filtered, char => '.')
+        end
+    end
+    return filtered
 end
 
 """
-Run cost comparison on a sub-problem with agent1 + one observed agent.
-The other agent is removed from the map so it doesn't inflate compilation.
+Run cost comparison on an agent1-only planning sub-problem.
 Returns (should_observe::Bool, T::Int).
 """
 function agent_cost_comparison(domain_render, domain_path, problem_dir, map_id,
@@ -55,9 +60,9 @@ function agent_cost_comparison(domain_render, domain_path, problem_dir, map_id,
     txt_path = joinpath(problem_dir, "$(map_id).txt")
     ascii_content = read(txt_path, String)
 
-    temp_path = joinpath(problem_dir, ".temp_pair_$(observe_agent)_$(map_id).txt")
+    temp_path = joinpath(problem_dir, ".temp_agent1_$(map_id).txt")
     if !isfile(temp_path)
-        filtered_ascii = filter_to_pair(ascii_content, remove_agent)
+        filtered_ascii = filter_ascii_agents(ascii_content, :agent1)
         write(temp_path, filtered_ascii)
     end
     problem_sub = load_ascii_problem(temp_path)

@@ -17,6 +17,18 @@ include(joinpath(@__DIR__, "..", "..", "..", "src", "heuristics.jl"))
 include(joinpath(@__DIR__, "..", "..", "..", "src", "beliefs.jl"))
 include(joinpath(@__DIR__, "..", "..", "..", "src", "translate.jl"))
 include(joinpath(@__DIR__, "..", "..", "..", "src", "render.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "ascii.jl"))
+
+function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
+    agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
+    filtered = ascii_content
+    for (agent_sym, char) in agent_chars
+        if agent_sym != keep_agent
+            filtered = replace(filtered, char => '.')
+        end
+    end
+    return filtered
+end
 
 # Define directory paths
 experiment_id = "exp2"
@@ -65,6 +77,17 @@ for (map_id, goal_list) in metadata
         state = initstate(domain, problem)
         state_render = copy(state)
 
+        txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
+        ascii_content = read(txt_path, String)
+        domain_agent1 = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl"))
+        temp_path_agent1 = joinpath(PROBLEM_DIR, ".temp_agent1_$(map_id).txt")
+        if !isfile(temp_path_agent1)
+            filtered_ascii_agent1 = filter_ascii_agents(ascii_content, :agent1)
+            write(temp_path_agent1, filtered_ascii_agent1)
+        end
+        problem_agent1 = load_ascii_problem(temp_path_agent1)
+        state_agent1 = initstate(domain_agent1, problem_agent1)
+
         # Get goal_id from problem
         goal_id = parse(Int, string(problem.goal.args[2])[end:end])
 
@@ -85,10 +108,10 @@ for (map_id, goal_list) in metadata
         goal_probs = goal_probs_conditioned_dict[map_id][g_id][s_id]
         state_probs = state_probs_conditioned_dict[map_id][g_id][s_id]
 
-        new_state = copy(state_render)
+        new_state = copy(state_agent1)
 
         planner = AStarPlanner(GoalManhattan())
-        plan = planner(domain, state, problem.goal)
+        plan = planner(domain_agent1, state_agent1, problem_agent1.goal)
 
         max_t = length(goal_probs[1,:]) - 1
         T = max_t
