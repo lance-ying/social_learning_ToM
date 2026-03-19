@@ -1,0 +1,5104 @@
+{
+    "sm541_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 3,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 137.83333333333331,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 139.16666666666663,
+                "observation_index": 1,
+                "q_not_observe": 155,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 98.5,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "q_observe_agent3": 139.16666666666663,
+                "observation_index": 2,
+                "q_not_observe": 155,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 94.0,
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(left agent2)",
+                "q_observe_agent3": 145.59999999999997,
+                "observation_index": 3,
+                "q_not_observe": 109,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 3
+    },
+    "sm531_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 5,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 5,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 103.88888888888886,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 100.55555555555553,
+                "observation_index": 1,
+                "q_not_observe": 135,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 103.88888888888886,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 81.33333333333334,
+                "observation_index": 2,
+                "q_not_observe": 135,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 103.88888888888886,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 80.33333333333333,
+                "observation_index": 3,
+                "q_not_observe": 135,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 4,
+                "q_observe_agent2": 99.85714285714285,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 65.0,
+                "observation_index": 4,
+                "q_not_observe": 82,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 5,
+                "q_observe_agent2": 99.85714285714285,
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 64.00000000000001,
+                "observation_index": 5,
+                "q_not_observe": 82,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ],
+        "agent2_count": 0
+    },
+    "sm321_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 3,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 3,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 121.55555555555554,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 120.44444444444443,
+                "observation_index": 1,
+                "q_not_observe": 180,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 135.71428571428572,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 98.0,
+                "observation_index": 2,
+                "q_not_observe": 145,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 135.71428571428572,
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 97.00000000000001,
+                "observation_index": 3,
+                "q_not_observe": 145,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 0
+    },
+    "sm361_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 2,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 172.11111111111106,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 173.3333333333333,
+                "observation_index": 1,
+                "q_not_observe": 192,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 194.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 173.3333333333333,
+                "observation_index": 2,
+                "q_not_observe": 192,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm351_scenario1": {
+        "observations": [
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 3,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 3,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 112.55555555555554,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 110.77777777777773,
+                "observation_index": 1,
+                "q_not_observe": 141,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 121.28571428571428,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 101.00000000000001,
+                "observation_index": 2,
+                "q_not_observe": 124,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 121.28571428571428,
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 100.0,
+                "observation_index": 3,
+                "q_not_observe": 124,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ],
+        "agent2_count": 0
+    },
+    "sm361_scenario1": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 4,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 172.11111111111106,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 173.3333333333333,
+                "observation_index": 1,
+                "q_not_observe": 192,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 129.0,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 178.99999999999994,
+                "observation_index": 2,
+                "q_not_observe": 151,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 128.0,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 178.99999999999994,
+                "observation_index": 3,
+                "q_not_observe": 151,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 127.0,
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 178.99999999999994,
+                "observation_index": 4,
+                "q_not_observe": 151,
+                "observed_agent": "agent2",
+                "agent2_count_after": 4,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ],
+        "agent2_count": 4
+    },
+    "sm543_scenario1": {
+        "observations": [],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 0,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [],
+        "agent2_count": 0
+    },
+    "sm331_scenario2": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 3,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 97.00000000000001,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "q_observe_agent3": 99.66666666666667,
+                "observation_index": 1,
+                "q_not_observe": 103,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 92.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "q_observe_agent3": 99.66666666666667,
+                "observation_index": 2,
+                "q_not_observe": 103,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 91.0,
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "q_observe_agent3": 99.66666666666667,
+                "observation_index": 3,
+                "q_not_observe": 103,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 3
+    },
+    "sm221_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 4,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 111.00000000000001,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 109.66666666666667,
+                "observation_index": 1,
+                "q_not_observe": 145,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 111.00000000000001,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 147.0,
+                "observation_index": 2,
+                "q_not_observe": 145,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 92.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 147.0,
+                "observation_index": 3,
+                "q_not_observe": 145,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 91.0,
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 147.0,
+                "observation_index": 4,
+                "q_not_observe": 145,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 3
+    },
+    "sm342_scenario2": {
+        "observations": [],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard3"
+        ],
+        "stop_reason": "agent1_no_blue_wizard_needed",
+        "t": 0,
+        "final_candidates": [
+            "wizard1",
+            "wizard3"
+        ],
+        "observation_events": [],
+        "agent2_count": 0
+    },
+    "sm541_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 2,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 137.83333333333331,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 139.16666666666663,
+                "observation_index": 1,
+                "q_not_observe": 155,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 156.99999999999994,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 139.16666666666663,
+                "observation_index": 2,
+                "q_not_observe": 155,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm112_scenario1": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 2,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard5"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 3,
+        "final_candidates": [
+            "wizard5"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 86.16666666666667,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard5"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 91.24999999999999,
+                "observation_index": 1,
+                "q_not_observe": 143,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 145.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard5"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 91.24999999999999,
+                "observation_index": 2,
+                "q_not_observe": 143,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 145.0,
+                "wizard_candidates_after": [
+                    "wizard5"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 102.24999999999997,
+                "observation_index": 3,
+                "q_not_observe": 143,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard5"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm371_scenario1": {
+        "observations": [],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 0,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [],
+        "agent2_count": 0
+    },
+    "sm321_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 6,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 121.55555555555554,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 120.44444444444443,
+                "observation_index": 1,
+                "q_not_observe": 180,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 121.55555555555554,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 182.0,
+                "observation_index": 2,
+                "q_not_observe": 180,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 90.33333333333333,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 182.0,
+                "observation_index": 3,
+                "q_not_observe": 180,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 89.33333333333334,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 182.0,
+                "observation_index": 4,
+                "q_not_observe": 180,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 98.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 182.0,
+                "observation_index": 5,
+                "q_not_observe": 145,
+                "observed_agent": "agent2",
+                "agent2_count_after": 4,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 97.0,
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 182.0,
+                "observation_index": 6,
+                "q_not_observe": 145,
+                "observed_agent": "agent2",
+                "agent2_count_after": 5,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 5
+    },
+    "sm342_scenario1": {
+        "observations": [],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard3"
+        ],
+        "stop_reason": "agent1_no_blue_wizard_needed",
+        "t": 0,
+        "final_candidates": [
+            "wizard1",
+            "wizard3"
+        ],
+        "observation_events": [],
+        "agent2_count": 0
+    },
+    "sm332_scenario2": {
+        "observations": [],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "agent1_no_blue_wizard_needed",
+        "t": 0,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [],
+        "agent2_count": 0
+    },
+    "sm431_scenario1": {
+        "observations": [
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 5,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 5,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 143.16666666666666,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 139.83333333333331,
+                "observation_index": 1,
+                "q_not_observe": 182,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 151.19999999999996,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 123.33333333333334,
+                "observation_index": 2,
+                "q_not_observe": 165,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 151.19999999999996,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 122.33333333333334,
+                "observation_index": 3,
+                "q_not_observe": 165,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 4,
+                "q_observe_agent2": 159.99999999999997,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 128.0,
+                "observation_index": 4,
+                "q_not_observe": 148,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 5,
+                "q_observe_agent2": 159.99999999999997,
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 127.00000000000001,
+                "observation_index": 5,
+                "q_not_observe": 148,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ],
+        "agent2_count": 0
+    },
+    "sm521_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4",
+            "wizard5"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 10,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 158.26666666666668,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 156.93333333333337,
+                "observation_index": 1,
+                "q_not_observe": 268,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 158.26666666666668,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 270.0,
+                "observation_index": 2,
+                "q_not_observe": 268,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 101.4,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 270.0,
+                "observation_index": 3,
+                "q_not_observe": 268,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 100.40000000000002,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 270.0,
+                "observation_index": 4,
+                "q_not_observe": 268,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 106.75000000000001,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 270.0,
+                "observation_index": 5,
+                "q_not_observe": 233,
+                "observed_agent": "agent2",
+                "agent2_count_after": 4,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 105.74999999999996,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 270.0,
+                "observation_index": 6,
+                "q_not_observe": 233,
+                "observed_agent": "agent2",
+                "agent2_count_after": 5,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 112.33333333333334,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 270.0,
+                "observation_index": 7,
+                "q_not_observe": 198,
+                "observed_agent": "agent2",
+                "agent2_count_after": 6,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 111.33333333333334,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 270.0,
+                "observation_index": 8,
+                "q_not_observe": 198,
+                "observed_agent": "agent2",
+                "agent2_count_after": 7,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 118.99999999999999,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 270.0,
+                "observation_index": 9,
+                "q_not_observe": 163,
+                "observed_agent": "agent2",
+                "agent2_count_after": 8,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 118.0,
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(left agent2)",
+                "q_observe_agent3": 270.0,
+                "observation_index": 10,
+                "q_not_observe": 163,
+                "observed_agent": "agent2",
+                "agent2_count_after": 9,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 9
+    },
+    "sm371_scenario2": {
+        "observations": [],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 0,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [],
+        "agent2_count": 0
+    },
+    "sm521_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(left agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 7,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4",
+            "wizard5"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 7,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 158.26666666666668,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 156.93333333333337,
+                "observation_index": 1,
+                "q_not_observe": 268,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 171.3846153846154,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 106.75,
+                "observation_index": 2,
+                "q_not_observe": 233,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 171.3846153846154,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 105.75,
+                "observation_index": 3,
+                "q_not_observe": 233,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 4,
+                "q_observe_agent2": 186.72727272727275,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 112.33333333333336,
+                "observation_index": 4,
+                "q_not_observe": 198,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 5,
+                "q_observe_agent2": 186.72727272727275,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 111.33333333333336,
+                "observation_index": 5,
+                "q_not_observe": 198,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 6,
+                "q_observe_agent2": 206.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 118.99999999999999,
+                "observation_index": 6,
+                "q_not_observe": 163,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 7,
+                "q_observe_agent2": 206.0,
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(left agent3)",
+                "q_observe_agent3": 118.00000000000001,
+                "observation_index": 7,
+                "q_not_observe": 163,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 0
+    },
+    "sm411_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 5,
+        "final_candidates": [
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 131.66666666666669,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 132.99999999999997,
+                "observation_index": 1,
+                "q_not_observe": 191,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 104.0,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 141.39999999999995,
+                "observation_index": 2,
+                "q_not_observe": 156,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 114.0,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 155.49999999999997,
+                "observation_index": 3,
+                "q_not_observe": 139,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 112.99999999999999,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 155.49999999999997,
+                "observation_index": 4,
+                "q_not_observe": 139,
+                "observed_agent": "agent2",
+                "agent2_count_after": 4,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 112.0,
+                "wizard_candidates_after": [
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 155.49999999999997,
+                "observation_index": 5,
+                "q_not_observe": 139,
+                "observed_agent": "agent2",
+                "agent2_count_after": 5,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ],
+        "agent2_count": 5
+    },
+    "sm351_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 7,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 112.55555555555554,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 110.77777777777773,
+                "observation_index": 1,
+                "q_not_observe": 141,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 112.55555555555554,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 142.99999999999997,
+                "observation_index": 2,
+                "q_not_observe": 141,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 96.33333333333333,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 142.99999999999997,
+                "observation_index": 3,
+                "q_not_observe": 141,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 95.33333333333334,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 142.99999999999997,
+                "observation_index": 4,
+                "q_not_observe": 141,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 94.33333333333331,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 142.99999999999997,
+                "observation_index": 5,
+                "q_not_observe": 141,
+                "observed_agent": "agent2",
+                "agent2_count_after": 4,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 101.0,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 142.99999999999997,
+                "observation_index": 6,
+                "q_not_observe": 124,
+                "observed_agent": "agent2",
+                "agent2_count_after": 5,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 100.0,
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 142.99999999999997,
+                "observation_index": 7,
+                "q_not_observe": 124,
+                "observed_agent": "agent2",
+                "agent2_count_after": 6,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ],
+        "agent2_count": 6
+    },
+    "sm112_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 2,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard5"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 3,
+        "final_candidates": [
+            "wizard5"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 86.16666666666667,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard5"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 91.24999999999999,
+                "observation_index": 1,
+                "q_not_observe": 143,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 145.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard5"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 91.24999999999999,
+                "observation_index": 2,
+                "q_not_observe": 143,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 145.0,
+                "wizard_candidates_after": [
+                    "wizard5"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 102.24999999999997,
+                "observation_index": 3,
+                "q_not_observe": 143,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard5"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm411_scenario1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 7,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 8,
+        "final_candidates": [
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 131.66666666666669,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 132.99999999999997,
+                "observation_index": 1,
+                "q_not_observe": 191,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 193.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 132.99999999999997,
+                "observation_index": 2,
+                "q_not_observe": 191,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 193.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 102.0,
+                "observation_index": 3,
+                "q_not_observe": 191,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 193.0,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 101.0,
+                "observation_index": 4,
+                "q_not_observe": 191,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 4,
+                "q_observe_agent2": 193.0,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 103.99999999999999,
+                "observation_index": 5,
+                "q_not_observe": 156,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 5,
+                "q_observe_agent2": 193.0,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 114.0,
+                "observation_index": 6,
+                "q_not_observe": 139,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 6,
+                "q_observe_agent2": 193.0,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 113.0,
+                "observation_index": 7,
+                "q_not_observe": 139,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 7,
+                "q_observe_agent2": 193.0,
+                "wizard_candidates_after": [
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 112.00000000000001,
+                "observation_index": 8,
+                "q_not_observe": 139,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm341_scenario1": {
+        "observations": [
+            {
+                "action": "(left agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(left agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 3,
+        "initial_candidates": [
+            "wizard1",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 3,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 151.66666666666669,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3"
+                ],
+                "action": "(left agent3)",
+                "q_observe_agent3": 151.00000000000003,
+                "observation_index": 1,
+                "q_not_observe": 154,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 151.66666666666669,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3"
+                ],
+                "action": "(left agent3)",
+                "q_observe_agent3": 140.0,
+                "observation_index": 2,
+                "q_not_observe": 154,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 151.66666666666669,
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 139.0,
+                "observation_index": 3,
+                "q_not_observe": 154,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3"
+                ]
+            }
+        ],
+        "agent2_count": 0
+    },
+    "sm311_scenario1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 4,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 5,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 124.66666666666663,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 125.77777777777774,
+                "observation_index": 1,
+                "q_not_observe": 174,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 176.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 125.77777777777774,
+                "observation_index": 2,
+                "q_not_observe": 174,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 176.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 99.66666666666666,
+                "observation_index": 3,
+                "q_not_observe": 174,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 176.0,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 98.66666666666667,
+                "observation_index": 4,
+                "q_not_observe": 174,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 4,
+                "q_observe_agent2": 176.0,
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 103.0,
+                "observation_index": 5,
+                "q_not_observe": 139,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm421_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 8,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 135.16666666666666,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 133.83333333333331,
+                "observation_index": 1,
+                "q_not_observe": 215,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 135.16666666666666,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 217.0,
+                "observation_index": 2,
+                "q_not_observe": 215,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 93.24999999999999,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 217.0,
+                "observation_index": 3,
+                "q_not_observe": 215,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 92.25000000000003,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 217.0,
+                "observation_index": 4,
+                "q_not_observe": 215,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 98.33333333333336,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 217.0,
+                "observation_index": 5,
+                "q_not_observe": 180,
+                "observed_agent": "agent2",
+                "agent2_count_after": 4,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 97.33333333333334,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 217.0,
+                "observation_index": 6,
+                "q_not_observe": 180,
+                "observed_agent": "agent2",
+                "agent2_count_after": 5,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 104.00000000000001,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 217.0,
+                "observation_index": 7,
+                "q_not_observe": 145,
+                "observed_agent": "agent2",
+                "agent2_count_after": 6,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 103.00000000000001,
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 217.0,
+                "observation_index": 8,
+                "q_not_observe": 145,
+                "observed_agent": "agent2",
+                "agent2_count_after": 7,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 7
+    },
+    "sm432_scenario1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 2,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 121.83333333333331,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 129.16666666666666,
+                "observation_index": 1,
+                "q_not_observe": 164,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 166.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 129.16666666666666,
+                "observation_index": 2,
+                "q_not_observe": 164,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm332_scenario1": {
+        "observations": [],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "agent1_no_blue_wizard_needed",
+        "t": 0,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [],
+        "agent2_count": 0
+    },
+    "sm431_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 2,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 143.16666666666666,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 139.83333333333331,
+                "observation_index": 1,
+                "q_not_observe": 182,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 143.16666666666666,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 183.99999999999997,
+                "observation_index": 2,
+                "q_not_observe": 182,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm211_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 1,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 130.66666666666666,
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 132.00000000000003,
+                "observation_index": 1,
+                "q_not_observe": 160,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm311_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 2,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 124.66666666666663,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 125.77777777777774,
+                "observation_index": 1,
+                "q_not_observe": 174,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 103.0,
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 135.99999999999997,
+                "observation_index": 2,
+                "q_not_observe": 139,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ],
+        "agent2_count": 2
+    },
+    "sm511_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4",
+            "wizard6"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 9,
+        "final_candidates": [
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 142.13333333333338,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 143.4666666666667,
+                "observation_index": 1,
+                "q_not_observe": 208,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 112.00000000000001,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 151.53846153846158,
+                "observation_index": 2,
+                "q_not_observe": 173,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 120.66666666666669,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 163.45454545454547,
+                "observation_index": 3,
+                "q_not_observe": 156,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 119.6666666666667,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 163.45454545454547,
+                "observation_index": 4,
+                "q_not_observe": 156,
+                "observed_agent": "agent2",
+                "agent2_count_after": 4,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 118.66666666666667,
+                "wizard_candidates_after": [
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 163.45454545454547,
+                "observation_index": 5,
+                "q_not_observe": 156,
+                "observed_agent": "agent2",
+                "agent2_count_after": 5,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 127.0,
+                "wizard_candidates_after": [
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 176.22222222222226,
+                "observation_index": 6,
+                "q_not_observe": 139,
+                "observed_agent": "agent2",
+                "agent2_count_after": 6,
+                "wizard_candidates_before": [
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 126.0,
+                "wizard_candidates_after": [
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 176.22222222222226,
+                "observation_index": 7,
+                "q_not_observe": 139,
+                "observed_agent": "agent2",
+                "agent2_count_after": 7,
+                "wizard_candidates_before": [
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 125.0,
+                "wizard_candidates_after": [
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 176.22222222222226,
+                "observation_index": 8,
+                "q_not_observe": 139,
+                "observed_agent": "agent2",
+                "agent2_count_after": 8,
+                "wizard_candidates_before": [
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 124.0,
+                "wizard_candidates_after": [
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 176.22222222222226,
+                "observation_index": 9,
+                "q_not_observe": 139,
+                "observed_agent": "agent2",
+                "agent2_count_after": 9,
+                "wizard_candidates_before": [
+                    "wizard4",
+                    "wizard6"
+                ]
+            }
+        ],
+        "agent2_count": 9
+    },
+    "sm421_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 5,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 5,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 135.16666666666666,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 133.83333333333331,
+                "observation_index": 1,
+                "q_not_observe": 215,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 147.59999999999997,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 98.33333333333331,
+                "observation_index": 2,
+                "q_not_observe": 180,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 147.59999999999997,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 97.33333333333334,
+                "observation_index": 3,
+                "q_not_observe": 180,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 4,
+                "q_observe_agent2": 162.99999999999997,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 104.0,
+                "observation_index": 4,
+                "q_not_observe": 145,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 5,
+                "q_observe_agent2": 162.99999999999997,
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 103.0,
+                "observation_index": 5,
+                "q_not_observe": 145,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 0
+    },
+    "sm543_scenario2": {
+        "observations": [],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 0,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [],
+        "agent2_count": 0
+    },
+    "sm531_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 13,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 103.88888888888886,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(down agent3)",
+                "q_observe_agent3": 100.55555555555553,
+                "observation_index": 1,
+                "q_not_observe": 135,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 103.88888888888886,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 2,
+                "q_not_observe": 135,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 86.33333333333333,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 3,
+                "q_not_observe": 135,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 85.33333333333333,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 4,
+                "q_not_observe": 135,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 84.33333333333334,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 5,
+                "q_not_observe": 135,
+                "observed_agent": "agent2",
+                "agent2_count_after": 4,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 83.33333333333334,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 6,
+                "q_not_observe": 135,
+                "observed_agent": "agent2",
+                "agent2_count_after": 5,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 87.56570653937672,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 7,
+                "q_not_observe": 135,
+                "observed_agent": "agent2",
+                "agent2_count_after": 6,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 86.56570654568367,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 8,
+                "q_not_observe": 135,
+                "observed_agent": "agent2",
+                "agent2_count_after": 7,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 85.77142102029188,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 9,
+                "q_not_observe": 135,
+                "observed_agent": "agent2",
+                "agent2_count_after": 8,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 84.97713549478661,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 10,
+                "q_not_observe": 135,
+                "observed_agent": "agent2",
+                "agent2_count_after": 9,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 84.1828499692793,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 11,
+                "q_not_observe": 135,
+                "observed_agent": "agent2",
+                "agent2_count_after": 10,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 67.17535025598121,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 12,
+                "q_not_observe": 82,
+                "observed_agent": "agent2",
+                "agent2_count_after": 11,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 66.51658274318216,
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 137.0,
+                "observation_index": 13,
+                "q_not_observe": 82,
+                "observed_agent": "agent2",
+                "agent2_count_after": 12,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ],
+        "agent2_count": 12
+    },
+    "sm331_scenario1": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(left agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(left agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(left agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(left agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(left agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 7,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 8,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 97.00000000000001,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 99.66666666666667,
+                "observation_index": 1,
+                "q_not_observe": 103,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 105.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 99.66666666666667,
+                "observation_index": 2,
+                "q_not_observe": 103,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 105.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 95.99999999999999,
+                "observation_index": 3,
+                "q_not_observe": 103,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 105.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent3)",
+                "q_observe_agent3": 95.0,
+                "observation_index": 4,
+                "q_not_observe": 103,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 4,
+                "q_observe_agent2": 105.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent3)",
+                "q_observe_agent3": 93.99999999999999,
+                "observation_index": 5,
+                "q_not_observe": 103,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 5,
+                "q_observe_agent2": 105.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent3)",
+                "q_observe_agent3": 93.00000000000001,
+                "observation_index": 6,
+                "q_not_observe": 103,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 6,
+                "q_observe_agent2": 105.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent3)",
+                "q_observe_agent3": 92.0,
+                "observation_index": 7,
+                "q_not_observe": 103,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 7,
+                "q_observe_agent2": 105.0,
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(left agent3)",
+                "q_observe_agent3": 91.0,
+                "observation_index": 8,
+                "q_not_observe": 103,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm221_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 1,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 111.00000000000001,
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 109.66666666666667,
+                "observation_index": 1,
+                "q_not_observe": 145,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 0
+    },
+    "sm432_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 5,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 121.83333333333331,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 129.16666666666666,
+                "observation_index": 1,
+                "q_not_observe": 164,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 105.33333333333333,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 136.79999999999995,
+                "observation_index": 2,
+                "q_not_observe": 147,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 104.33333333333334,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 136.79999999999995,
+                "observation_index": 3,
+                "q_not_observe": 147,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 110.00000000000001,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "q_observe_agent3": 144.99999999999997,
+                "observation_index": 4,
+                "q_not_observe": 130,
+                "observed_agent": "agent2",
+                "agent2_count_after": 4,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 109.0,
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "q_observe_agent3": 144.99999999999997,
+                "observation_index": 5,
+                "q_not_observe": 130,
+                "observed_agent": "agent2",
+                "agent2_count_after": 5,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ],
+        "agent2_count": 5
+    },
+    "sm111_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 6,
+        "initial_candidates": [
+            "wizard1",
+            "wizard3",
+            "wizard4",
+            "wizard5"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 7,
+        "final_candidates": [
+            "wizard5"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 102.91666666666666,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 106.50000000000001,
+                "observation_index": 1,
+                "q_not_observe": 161,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 106.50000000000001,
+                "observation_index": 2,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 105.83333333333336,
+                "observation_index": 3,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 75.74999999999999,
+                "observation_index": 4,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 4,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 74.75,
+                "observation_index": 5,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 5,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 73.75000000000001,
+                "observation_index": 6,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 6,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard5"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 72.75,
+                "observation_index": 7,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm511_scenario1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 11,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4",
+            "wizard6"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 12,
+        "final_candidates": [
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 142.13333333333338,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 143.4666666666667,
+                "observation_index": 1,
+                "q_not_observe": 208,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 143.4666666666667,
+                "observation_index": 2,
+                "q_not_observe": 208,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 109.20000000000002,
+                "observation_index": 3,
+                "q_not_observe": 208,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 108.2,
+                "observation_index": 4,
+                "q_not_observe": 208,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 4,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 112.0,
+                "observation_index": 5,
+                "q_not_observe": 173,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 5,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 120.66666666666666,
+                "observation_index": 6,
+                "q_not_observe": 156,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 6,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 119.66666666666667,
+                "observation_index": 7,
+                "q_not_observe": 156,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 7,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 118.66666666666667,
+                "observation_index": 8,
+                "q_not_observe": 156,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 8,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 127.0,
+                "observation_index": 9,
+                "q_not_observe": 139,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 9,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 126.0,
+                "observation_index": 10,
+                "q_not_observe": 139,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 10,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 125.0,
+                "observation_index": 11,
+                "q_not_observe": 139,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "agent3_count_after": 11,
+                "q_observe_agent2": 210.00000000000003,
+                "wizard_candidates_after": [
+                    "wizard4"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 124.0,
+                "observation_index": 12,
+                "q_not_observe": 139,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard4",
+                    "wizard6"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm341_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(left agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 1,
+        "initial_candidates": [
+            "wizard1",
+            "wizard3"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 6,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 151.66666666666669,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 151.00000000000003,
+                "observation_index": 1,
+                "q_not_observe": 154,
+                "observed_agent": "agent3",
+                "agent2_count_after": 0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 151.66666666666669,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3"
+                ],
+                "action": "(left agent2)",
+                "q_observe_agent3": 156.0,
+                "observation_index": 2,
+                "q_not_observe": 154,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 142.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3"
+                ],
+                "action": "(left agent2)",
+                "q_observe_agent3": 156.0,
+                "observation_index": 3,
+                "q_not_observe": 154,
+                "observed_agent": "agent2",
+                "agent2_count_after": 2,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 141.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3"
+                ],
+                "action": "(left agent2)",
+                "q_observe_agent3": 156.0,
+                "observation_index": 4,
+                "q_not_observe": 154,
+                "observed_agent": "agent2",
+                "agent2_count_after": 3,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 140.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3"
+                ],
+                "action": "(left agent2)",
+                "q_observe_agent3": 156.0,
+                "observation_index": 5,
+                "q_not_observe": 154,
+                "observed_agent": "agent2",
+                "agent2_count_after": 4,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 139.0,
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 156.0,
+                "observation_index": 6,
+                "q_not_observe": 154,
+                "observed_agent": "agent2",
+                "agent2_count_after": 5,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3"
+                ]
+            }
+        ],
+        "agent2_count": 5
+    },
+    "sm111_scenario1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 6,
+        "initial_candidates": [
+            "wizard1",
+            "wizard3",
+            "wizard4",
+            "wizard5"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 7,
+        "final_candidates": [
+            "wizard5"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 102.91666666666666,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 106.50000000000001,
+                "observation_index": 1,
+                "q_not_observe": 161,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 106.50000000000001,
+                "observation_index": 2,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 105.83333333333336,
+                "observation_index": 3,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 75.74999999999999,
+                "observation_index": 4,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 4,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 74.75,
+                "observation_index": 5,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 5,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 73.75000000000001,
+                "observation_index": 6,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "agent3_count_after": 6,
+                "q_observe_agent2": 130.75438470293832,
+                "wizard_candidates_after": [
+                    "wizard5"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 72.75,
+                "observation_index": 7,
+                "q_not_observe": 161,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    },
+    "sm211_scenario1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(up agent3)",
+                "agent": "agent3"
+            },
+            {
+                "action": "(right agent3)",
+                "agent": "agent3"
+            }
+        ],
+        "agent3_count": 3,
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 4,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "agent3_count_after": 0,
+                "q_observe_agent2": 130.66666666666666,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(down agent2)",
+                "q_observe_agent3": 132.00000000000003,
+                "observation_index": 1,
+                "q_not_observe": 160,
+                "observed_agent": "agent2",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 1,
+                "q_observe_agent2": 162.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 132.00000000000003,
+                "observation_index": 2,
+                "q_not_observe": 160,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 2,
+                "q_observe_agent2": 162.0,
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent3)",
+                "q_observe_agent3": 116.00000000000001,
+                "observation_index": 3,
+                "q_not_observe": 160,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "agent3_count_after": 3,
+                "q_observe_agent2": 162.0,
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(right agent3)",
+                "q_observe_agent3": 115.0,
+                "observation_index": 4,
+                "q_not_observe": 160,
+                "observed_agent": "agent3",
+                "agent2_count_after": 1,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ],
+        "agent2_count": 1
+    }
+}

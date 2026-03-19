@@ -8,18 +8,25 @@ OUTPUT_DIR="${OUTPUT_DIR:-data_processing/outputs/human_costs}"
 MOVE_COST="${MOVE_COST:-3}"
 INTERACT_COST="${INTERACT_COST:-5}"
 OBSERVE_COST="${OBSERVE_COST:-1}"
+REQUIRE_POSITIVE_TOTAL_STEPS_REMAINING="${REQUIRE_POSITIVE_TOTAL_STEPS_REMAINING:-0}"
 
 mkdir -p "$OUTPUT_DIR"
 
 run_exp() {
   local exp="$1"
   echo "==> ${exp}"
-  python3 data_processing/scripts/reconstruct_human_costs.py \
-    --exp "$exp" \
-    --move-cost "$MOVE_COST" \
-    --interact-cost "$INTERACT_COST" \
-    --observe-cost "$OBSERVE_COST" \
+  local -a cmd=(
+    python3 data_processing/scripts/reconstruct_human_costs.py
+    --exp "$exp"
+    --move-cost "$MOVE_COST"
+    --interact-cost "$INTERACT_COST"
+    --observe-cost "$OBSERVE_COST"
     --output-file "$OUTPUT_DIR/${exp}_human_costs.json"
+  )
+  if [[ "$REQUIRE_POSITIVE_TOTAL_STEPS_REMAINING" == "1" ]]; then
+    cmd+=(--require-positive-total-steps-remaining)
+  fi
+  "${cmd[@]}"
 }
 
 run_exp exp1

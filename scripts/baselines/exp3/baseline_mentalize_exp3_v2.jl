@@ -58,31 +58,63 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
     return filtered
 end
 
-serialize_observation(agent::String, action::Term) = Dict(
+serialize_observation(agent::String, action::Term, interaction_outcome::String="none") = Dict(
     "agent" => agent,
     "action" => write_pddl(action),
+    "interaction_outcome" => interaction_outcome,
 )
 
-function materialize_interleaved_observation_trace(map_key::String, observations, plan_agent2, plan_agent3)
+function agent_has_blue_item(state, agent_sym::Symbol)
+    for key in PDDL.get_objects(state, :key)
+        if state[pddl"(iscolor $key blue)"] && state[pddl"(has $agent_sym $key)"]
+            return true
+        end
+    end
+    return false
+end
+
+function interaction_outcome(state_before, state_after, agent_sym::Symbol, action::Term)
+    if action.name != :interact
+        return "none"
+    end
+    had_blue_before = agent_has_blue_item(state_before, agent_sym)
+    has_blue_after = agent_has_blue_item(state_after, agent_sym)
+    return (!had_blue_before && has_blue_after) ? "blue_amulet_present" : "blue_amulet_absent"
+end
+
+function realized_observation_horizon(target_horizon::Int, observed_plan)
+    return min(target_horizon, length(observed_plan))
+end
+
+function materialize_interleaved_observation_trace(map_key::String, observations, plan_agent2, plan_agent3, domain_agent2, state_agent2, domain_agent3, state_agent3)
     trace = Any[]
     events = Any[]
     agent2_idx = 0
     agent3_idx = 0
+    observed_state_agent2 = copy(state_agent2)
+    observed_state_agent3 = copy(state_agent3)
     for (obs_idx, observed_agent) in enumerate(observations)
         if observed_agent == "agent2"
             agent2_idx += 1
             agent2_idx <= length(plan_agent2) || error("Observed plan exhausted for $map_key: need $agent2_idx agent2 actions, found $(length(plan_agent2))")
             action = plan_agent2[agent2_idx]
+            state_before_observation = copy(observed_state_agent2)
+            observed_state_agent2 = PDDL.execute(domain_agent2, observed_state_agent2, action)
+            observed_outcome = interaction_outcome(state_before_observation, observed_state_agent2, :agent2, action)
         else
             agent3_idx += 1
             agent3_idx <= length(plan_agent3) || error("Observed plan exhausted for $map_key: need $agent3_idx agent3 actions, found $(length(plan_agent3))")
             action = plan_agent3[agent3_idx]
+            state_before_observation = copy(observed_state_agent3)
+            observed_state_agent3 = PDDL.execute(domain_agent3, observed_state_agent3, action)
+            observed_outcome = interaction_outcome(state_before_observation, observed_state_agent3, :agent3, action)
         end
-        push!(trace, serialize_observation(observed_agent, action))
+        push!(trace, serialize_observation(observed_agent, action, observed_outcome))
         push!(events, Dict(
             "observation_index" => obs_idx,
             "observed_agent" => observed_agent,
             "action" => write_pddl(action),
+            "interaction_outcome" => observed_outcome,
         ))
     end
     return trace, events
@@ -278,8 +310,8 @@ for (map_id, agent_goals) in metadata
 
         # Each agent's count is independent: observe each agent for as long
         # as their actions remain informative about the environment state
-        agent2_count = T_agent2
-        agent3_count = T_agent3
+        agent2_count = realized_observation_horizon(T_agent2, observed_plan_agent2)
+        agent3_count = realized_observation_horizon(T_agent3, observed_plan_agent3)
         T = agent2_count + agent3_count
 
         # Build interleaved observations list (alternate between agents)
@@ -304,7 +336,8 @@ for (map_id, agent_goals) in metadata
             "t" => T
         )
         observation_trace, observation_events = materialize_interleaved_observation_trace(
-            map_key, observations, observed_plan_agent2, observed_plan_agent3
+            map_key, observations, observed_plan_agent2, observed_plan_agent3,
+            domain_agent2, state_agent2, domain_agent3, state_agent3
         )
         replay_trace_dict[map_key] = Dict(
             "t" => T,
@@ -316,7 +349,7 @@ for (map_id, agent_goals) in metadata
         )
 
         scenario_elapsed = time() - scenario_start_time
-        println("    Result: agent2=$T_agent2, agent3=$T_agent3, total=$T")
+        println("    Result: agent2=$agent2_count, agent3=$agent3_count, total=$T")
         println("    Time: $(round(scenario_elapsed, digits=2))s")
 
         next!(progress)

@@ -7,6 +7,7 @@ cd "$ROOT_DIR"
 EXP=""
 MODEL_LABEL=""
 STEPS_FILE=""
+REPLAY_TRACE_FILE=""
 INFERENCE_FILE=""
 PROBLEM_DIR=""
 OUTPUT_FILE=""
@@ -16,6 +17,7 @@ MOVE_COST="${MOVE_COST:-3}"
 INTERACT_COST="${INTERACT_COST:-5}"
 OBSERVE_COST="${OBSERVE_COST:-1}"
 KEEP_TEMP="${KEEP_TEMP:-0}"
+DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING="${DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING:-0}"
 
 usage() {
   cat <<'EOF'
@@ -24,11 +26,13 @@ Usage:
     --exp exp1|exp2|exp3|exp4 \
     --model <label> \
     --steps-file <path> \
+    [--replay-trace-file <path>] \
     --inference-file <path> \
     --human-costs-file <path> \
     --problem-dir <path> \
     --output-file <path> \
     --jobs <n> \
+    [--disable-exp4-interaction-outcome-pruning] \
     [--move-cost 3] [--interact-cost 5] [--observe-cost 1]
 EOF
 }
@@ -45,6 +49,10 @@ while [[ $# -gt 0 ]]; do
       ;;
     --steps-file)
       STEPS_FILE="$2"
+      shift 2
+      ;;
+    --replay-trace-file)
+      REPLAY_TRACE_FILE="$2"
       shift 2
       ;;
     --inference-file)
@@ -66,6 +74,10 @@ while [[ $# -gt 0 ]]; do
     --jobs)
       JOBS="$2"
       shift 2
+      ;;
+    --disable-exp4-interaction-outcome-pruning)
+      DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING=1
+      shift
       ;;
     --move-cost)
       MOVE_COST="$2"
@@ -115,6 +127,11 @@ if [[ ! -f "$STEPS_FILE" ]]; then
   exit 1
 fi
 
+if [[ -n "$REPLAY_TRACE_FILE" && ! -f "$REPLAY_TRACE_FILE" ]]; then
+  echo "Missing replay trace file: $REPLAY_TRACE_FILE" >&2
+  exit 1
+fi
+
 if [[ ! -d "$PROBLEM_DIR" ]]; then
   echo "Missing problem dir: $PROBLEM_DIR" >&2
   exit 1
@@ -125,19 +142,36 @@ if [[ -z "$HUMAN_COSTS_FILE" || ! -f "$HUMAN_COSTS_FILE" ]]; then
   exit 1
 fi
 
+REPLAY_TRACE_ARGS=()
+if [[ -n "$REPLAY_TRACE_FILE" ]]; then
+  REPLAY_TRACE_ARGS=(--replay-trace-file "$REPLAY_TRACE_FILE")
+fi
+
+declare -a EXP4_DISABLE_ARGS=()
+if [[ "$EXP" == "exp4" && "$MODEL_LABEL" != "full_model" && "$MODEL_LABEL" != "social_mentalizing" && "$DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING" == "1" ]]; then
+  EXP4_DISABLE_ARGS=(--disable-exp4-interaction-outcome-pruning)
+fi
+
 if [[ "$JOBS" -eq 1 ]]; then
-  exec julia --project=. scripts/utilities/reconstruct_model_costs.jl \
-    --exp "$EXP" \
-    --model "$MODEL_LABEL" \
-    --steps-file "$STEPS_FILE" \
-    --inference-file "$INFERENCE_FILE" \
-    --restrict-to-human-levels \
-    --human-costs-file "$HUMAN_COSTS_FILE" \
-    --problem-dir "$PROBLEM_DIR" \
-    --move-cost "$MOVE_COST" \
-    --interact-cost "$INTERACT_COST" \
-    --observe-cost "$OBSERVE_COST" \
+  cmd=(
+    julia --project=. scripts/utilities/reconstruct_model_costs.jl
+    --exp "$EXP"
+    --model "$MODEL_LABEL"
+    --steps-file "$STEPS_FILE"
+    "${REPLAY_TRACE_ARGS[@]}"
+    --inference-file "$INFERENCE_FILE"
+    --restrict-to-human-levels
+    --human-costs-file "$HUMAN_COSTS_FILE"
+    --problem-dir "$PROBLEM_DIR"
+    --move-cost "$MOVE_COST"
+    --interact-cost "$INTERACT_COST"
+    --observe-cost "$OBSERVE_COST"
     --output-file "$OUTPUT_FILE"
+  )
+  if [[ ${#EXP4_DISABLE_ARGS[@]} -gt 0 ]]; then
+    cmd+=("${EXP4_DISABLE_ARGS[@]}")
+  fi
+  exec "${cmd[@]}"
 fi
 
 TMP_DIR="$(mktemp -d "${TMPDIR:-/tmp}/reconstruct_shards.XXXXXX")"
@@ -228,19 +262,25 @@ for shard_file in "${SHARD_FILES[@]}"; do
     tee "$shard_log" < "$shard_pipe" | awk -v prefix="[$shard_base] " '{ print prefix $0; fflush() }'
   ) &
   logger_pids+=("$!")
-  julia --project=. scripts/utilities/reconstruct_model_costs.jl \
-    --exp "$EXP" \
-    --model "$MODEL_LABEL" \
-    --steps-file "$shard_file" \
-    --inference-file "$INFERENCE_FILE" \
-    --restrict-to-human-levels \
-    --human-costs-file "$HUMAN_COSTS_FILE" \
-    --problem-dir "$PROBLEM_DIR" \
-    --move-cost "$MOVE_COST" \
-    --interact-cost "$INTERACT_COST" \
-    --observe-cost "$OBSERVE_COST" \
-    --output-file "$shard_output" \
-    >"$shard_pipe" 2>&1 &
+  shard_cmd=(
+    julia --project=. scripts/utilities/reconstruct_model_costs.jl
+    --exp "$EXP"
+    --model "$MODEL_LABEL"
+    --steps-file "$shard_file"
+    "${REPLAY_TRACE_ARGS[@]}"
+    --inference-file "$INFERENCE_FILE"
+    --restrict-to-human-levels
+    --human-costs-file "$HUMAN_COSTS_FILE"
+    --problem-dir "$PROBLEM_DIR"
+    --move-cost "$MOVE_COST"
+    --interact-cost "$INTERACT_COST"
+    --observe-cost "$OBSERVE_COST"
+    --output-file "$shard_output"
+  )
+  if [[ ${#EXP4_DISABLE_ARGS[@]} -gt 0 ]]; then
+    shard_cmd+=("${EXP4_DISABLE_ARGS[@]}")
+  fi
+  "${shard_cmd[@]}" >"$shard_pipe" 2>&1 &
   pids+=("$!")
 done
 
@@ -274,7 +314,7 @@ if [[ "$status" -ne 0 ]]; then
   exit "$status"
 fi
 
-python3 - "$OUTPUT_FILE" "$EXP" "$MODEL_LABEL" "$STEPS_FILE" "$INFERENCE_FILE" "$PROBLEM_DIR" "$MOVE_COST" "$INTERACT_COST" "$OBSERVE_COST" "$JOBS" "${shard_outputs[@]}" <<'PY'
+python3 - "$OUTPUT_FILE" "$EXP" "$MODEL_LABEL" "$STEPS_FILE" "$INFERENCE_FILE" "$PROBLEM_DIR" "$MOVE_COST" "$INTERACT_COST" "$OBSERVE_COST" "$JOBS" "$DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING" "${shard_outputs[@]}" <<'PY'
 import json
 import sys
 
@@ -288,7 +328,8 @@ move_cost = float(sys.argv[7])
 interact_cost = float(sys.argv[8])
 observe_cost = float(sys.argv[9])
 jobs = int(sys.argv[10])
-shard_outputs = sys.argv[11:]
+disable_exp4_interaction_outcome_pruning = bool(int(sys.argv[11]))
+shard_outputs = sys.argv[12:]
 
 loaded = [json.load(open(path)) for path in shard_outputs]
 first = loaded[0]
@@ -351,6 +392,7 @@ out = {
     "steps_file": steps_file,
     "inference_file": inference_file,
     "problem_dir": problem_dir,
+    "disable_exp4_interaction_outcome_pruning": disable_exp4_interaction_outcome_pruning,
     "human_level_filter": {
         "enabled": human_filter_enabled,
         "human_costs_file": human_costs_file,

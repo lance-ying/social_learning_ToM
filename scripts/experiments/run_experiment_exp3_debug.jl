@@ -22,10 +22,29 @@ function wizard_candidate_cache_key(wizards)
 end
 
 serialize_wizards(wizards) = sort(string.(wizards))
-serialize_observation(agent::String, action::Term) = Dict(
+serialize_observation(agent::String, action::Term, interaction_outcome::String="none") = Dict(
     "agent" => agent,
     "action" => write_pddl(action),
+    "interaction_outcome" => interaction_outcome,
 )
+
+function agent_has_blue_item(state, agent_sym::Symbol)
+    for key in PDDL.get_objects(state, :key)
+        if state[pddl"(iscolor $key blue)"] && state[pddl"(has $agent_sym $key)"]
+            return true
+        end
+    end
+    return false
+end
+
+function interaction_outcome(state_before, state_after, agent_sym::Symbol, action::Term)
+    if action.name != :interact
+        return "none"
+    end
+    had_blue_before = agent_has_blue_item(state_before, agent_sym)
+    has_blue_after = agent_has_blue_item(state_after, agent_sym)
+    return (!had_blue_before && has_blue_after) ? "blue_amulet_present" : "blue_amulet_absent"
+end
 
 # Define directory paths
 experiment_id = "exp3"
@@ -238,6 +257,8 @@ for (map_id, agent_goals) in metadata
 
         observed_plan_agent2 = collect(planner(domain_agent2, state_agent2, goals_agent2[agent2_gem]))
         observed_plan_agent3 = collect(planner(domain_agent3, state_agent3, goals_agent3[agent3_gem]))
+        observed_state_agent2 = copy(state_agent2)
+        observed_state_agent3 = copy(state_agent3)
         
         # Pre-compute plans for agent2 and agent3 for debug output
         # agent2_goal = goals_agent2[agent2_gem]
@@ -482,6 +503,9 @@ for (map_id, agent_goals) in metadata
                 # Observe agent2 (X) - it has the lowest Q-value
                 candidates_before = serialize_wizards(wizard_candicates)
                 observed_action = observed_plan_agent2[agent2_count + 1]
+                state_before_observation = copy(observed_state_agent2)
+                observed_state_agent2 = PDDL.execute(domain_agent2, observed_state_agent2, observed_action)
+                observed_outcome = interaction_outcome(state_before_observation, observed_state_agent2, :agent2, observed_action)
                 push!(observations, "agent2")
                 agent2_count += 1
                 t += 1
@@ -497,6 +521,7 @@ for (map_id, agent_goals) in metadata
                     "observation_index" => t,
                     "observed_agent" => "agent2",
                     "action" => write_pddl(observed_action),
+                    "interaction_outcome" => observed_outcome,
                     "q_observe_agent2" => Q_observe_agent2,
                     "q_observe_agent3" => Q_observe_agent3,
                     "q_not_observe" => Q_not_observe,
@@ -509,6 +534,9 @@ for (map_id, agent_goals) in metadata
                 # Observe agent3 (Y) - it has the lowest Q-value
                 candidates_before = serialize_wizards(wizard_candicates)
                 observed_action = observed_plan_agent3[agent3_count + 1]
+                state_before_observation = copy(observed_state_agent3)
+                observed_state_agent3 = PDDL.execute(domain_agent3, observed_state_agent3, observed_action)
+                observed_outcome = interaction_outcome(state_before_observation, observed_state_agent3, :agent3, observed_action)
                 push!(observations, "agent3")
                 agent3_count += 1
                 t += 1
@@ -524,6 +552,7 @@ for (map_id, agent_goals) in metadata
                     "observation_index" => t,
                     "observed_agent" => "agent3",
                     "action" => write_pddl(observed_action),
+                    "interaction_outcome" => observed_outcome,
                     "q_observe_agent2" => Q_observe_agent2,
                     "q_observe_agent3" => Q_observe_agent3,
                     "q_not_observe" => Q_not_observe,
@@ -556,7 +585,7 @@ for (map_id, agent_goals) in metadata
         end
         replay_trace_dict[map_key] = Dict(
             "t" => steps_dict[map_key]["t"],
-            "observations" => [serialize_observation(event["observed_agent"], parse_pddl(event["action"])) for event in observation_events],
+            "observations" => [serialize_observation(event["observed_agent"], parse_pddl(event["action"]), get(event, "interaction_outcome", "none")) for event in observation_events],
             "observation_events" => observation_events,
             "agent2_count" => agent2_count,
             "agent3_count" => agent3_count,

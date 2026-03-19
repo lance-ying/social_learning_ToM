@@ -9,6 +9,7 @@ experiments grouped within each category.
 from __future__ import annotations
 
 import json
+import os
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -27,6 +28,14 @@ from grouped_barplot_style import (
 def load_json(path: Path) -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def human_costs_path(repo_root: Path, exp: str) -> Path:
+    if exp == "exp4":
+        override = os.environ.get("EXP4_HUMAN_COSTS_FILE", "").strip()
+        if override:
+            return Path(override)
+    return repo_root / "data_processing" / "outputs" / "human_costs" / f"{exp}_human_costs.json"
 
 
 def normalize_exp1_model_key(model_key: str) -> str:
@@ -51,9 +60,10 @@ def human_candidates(exp: str, label: str, model_key: str) -> list[str]:
 
 
 def common_matched_keys(repo_root: Path, exp: str) -> tuple[dict[str, dict[str, float]], dict]:
-    model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
-    human_dir = repo_root / "data_processing" / "outputs" / "human_costs"
-    human_per_case = load_json(human_dir / f"{exp}_human_costs.json")["per_case"]
+    model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs"
+    if not model_dir.exists():
+        model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
+    human_per_case = load_json(human_costs_path(repo_root, exp))["per_case"]
 
     series_data = {}
     matched_human_keys = []

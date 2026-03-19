@@ -30,10 +30,58 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
     return filtered
 end
 
-serialize_observation(agent::String, action::Term) = Dict(
+serialize_observation(agent::String, action::Term, interaction_outcome::String="none") = Dict(
     "agent" => agent,
     "action" => write_pddl(action),
+    "interaction_outcome" => interaction_outcome,
 )
+
+function agent_has_blue_item(state, agent_sym::Symbol)
+    for key in PDDL.get_objects(state, :key)
+        if state[pddl"(iscolor $key blue)"] && state[pddl"(has $agent_sym $key)"]
+            return true
+        end
+    end
+    return false
+end
+
+function interaction_outcome(state_before, state_after, agent_sym::Symbol, action::Term)
+    if action.name != :interact
+        return "none"
+    end
+    had_blue_before = agent_has_blue_item(state_before, agent_sym)
+    has_blue_after = agent_has_blue_item(state_after, agent_sym)
+    return (!had_blue_before && has_blue_after) ? "blue_amulet_present" : "blue_amulet_absent"
+end
+
+function materialize_single_observation_trace(observed_agent::String, observed_plan, domain, start_state, T::Int, agent_sym::Symbol)
+    trace = Any[]
+    events = Any[]
+    observed_state = copy(start_state)
+    for obs_idx in 1:T
+        action = observed_plan[obs_idx]
+        state_before_observation = copy(observed_state)
+        observed_state = PDDL.execute(domain, observed_state, action)
+        observed_outcome = interaction_outcome(state_before_observation, observed_state, agent_sym, action)
+        push!(trace, serialize_observation(observed_agent, action, observed_outcome))
+        push!(events, Dict(
+            "observation_index" => obs_idx,
+            "observed_agent" => observed_agent,
+            "action" => write_pddl(action),
+            "interaction_outcome" => observed_outcome,
+        ))
+    end
+    return trace, events
+end
+
+function observation_stop_horizon(plan)
+    for (idx, action) in enumerate(plan)
+        if action.name == :interact
+            return idx
+        end
+    end
+    return length(plan)
+end
 
 # Define directory paths
 experiment_id = "exp1"
@@ -127,41 +175,25 @@ for map_id in map_ids
 
         planner = AStarPlanner(GoalManhattan())
         plan_main = collect(planner(domain_agent1, state_agent1, problem_agent1.goal))
+        observed_plan_agent2 = collect(AStarPlanner(GoalManhattan())(domain_agent2, state_agent2, observed_agent_goals[g_id]))
+        observed_T = observation_stop_horizon(observed_plan_agent2)
 
-        # Compute Q_observe (cost with observing)
-        Q_observe = calculate_plan_cost(plan_main, action_cost)
-
-        # Find first interaction with blue wizard
-        T = -1
-        for (idx, action) in enumerate(plan_main)
-            if action.name == :interact && action.args[end] in blue_wizards
-                T = idx
-                break
-            end
-        end
-
-        if T == -1
-            T = length(plan_main)
-        end
-
-        Q_observe = Q_observe + action_cost[:observe] * T
+        # Compute Q_observe (cost with observing) using the realizable observed-agent horizon.
+        Q_observe = calculate_plan_cost(plan_main, action_cost) + action_cost[:observe] * observed_T
 
     # Decide based on cost comparison
     if Q_observe < Q_not_observe
-        steps_dict[map_key] = T
+        steps_dict[map_key] = observed_T
     else
         steps_dict[map_key] = 0
     end
-    observed_plan_agent2 = collect(AStarPlanner(GoalManhattan())(domain_agent2, state_agent2, observed_agent_goals[g_id]))
-    steps_dict[map_key] <= length(observed_plan_agent2) || error("Observed plan exhausted for $map_key: need $(steps_dict[map_key]) agent2 actions, found $(length(observed_plan_agent2))")
+    observation_trace, observation_events = materialize_single_observation_trace(
+        "agent2", observed_plan_agent2, domain_agent2, state_agent2, steps_dict[map_key], :agent2
+    )
     replay_trace_dict[map_key] = Dict(
         "t" => steps_dict[map_key],
-        "observations" => [serialize_observation("agent2", action) for action in observed_plan_agent2[1:steps_dict[map_key]]],
-        "observation_events" => [Dict(
-            "observation_index" => obs_idx,
-            "observed_agent" => "agent2",
-            "action" => write_pddl(observed_plan_agent2[obs_idx]),
-        ) for obs_idx in 1:steps_dict[map_key]],
+        "observations" => observation_trace,
+        "observation_events" => observation_events,
         "q_observe" => Q_observe,
         "q_not_observe" => Q_not_observe,
         "stop_reason" => steps_dict[map_key] > 0 ? "q_observe_better" : "q_not_observe_better",

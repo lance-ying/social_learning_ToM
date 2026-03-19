@@ -25,31 +25,68 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
     return filtered
 end
 
-serialize_observation(agent::String, action::Term) = Dict(
+serialize_observation(agent::String, action::Term, interaction_outcome::String="none") = Dict(
     "agent" => agent,
     "action" => write_pddl(action),
+    "interaction_outcome" => interaction_outcome,
 )
 
-function materialize_interleaved_observation_trace(map_key::String, observations, plan_agent2, plan_agent3)
+function agent_has_blue_item(state, agent_sym::Symbol)
+    for key in PDDL.get_objects(state, :key)
+        if state[pddl"(iscolor $key blue)"] && state[pddl"(has $agent_sym $key)"]
+            return true
+        end
+    end
+    return false
+end
+
+function interaction_outcome(state_before, state_after, agent_sym::Symbol, action::Term)
+    if action.name != :interact
+        return "none"
+    end
+    had_blue_before = agent_has_blue_item(state_before, agent_sym)
+    has_blue_after = agent_has_blue_item(state_after, agent_sym)
+    return (!had_blue_before && has_blue_after) ? "blue_amulet_present" : "blue_amulet_absent"
+end
+
+function observation_stop_horizon(plan)
+    for (idx, action) in enumerate(plan)
+        if action.name == :interact
+            return idx
+        end
+    end
+    return length(plan)
+end
+
+function materialize_interleaved_observation_trace(map_key::String, observations, plan_agent2, plan_agent3, domain_agent2, state_agent2, domain_agent3, state_agent3)
     trace = Any[]
     events = Any[]
     agent2_idx = 0
     agent3_idx = 0
+    observed_state_agent2 = copy(state_agent2)
+    observed_state_agent3 = copy(state_agent3)
     for (obs_idx, observed_agent) in enumerate(observations)
         if observed_agent == "agent2"
             agent2_idx += 1
             agent2_idx <= length(plan_agent2) || error("Observed plan exhausted for $map_key: need $agent2_idx agent2 actions, found $(length(plan_agent2))")
             action = plan_agent2[agent2_idx]
+            state_before_observation = copy(observed_state_agent2)
+            observed_state_agent2 = PDDL.execute(domain_agent2, observed_state_agent2, action)
+            observed_outcome = interaction_outcome(state_before_observation, observed_state_agent2, :agent2, action)
         else
             agent3_idx += 1
             agent3_idx <= length(plan_agent3) || error("Observed plan exhausted for $map_key: need $agent3_idx agent3 actions, found $(length(plan_agent3))")
             action = plan_agent3[agent3_idx]
+            state_before_observation = copy(observed_state_agent3)
+            observed_state_agent3 = PDDL.execute(domain_agent3, observed_state_agent3, action)
+            observed_outcome = interaction_outcome(state_before_observation, observed_state_agent3, :agent3, action)
         end
-        push!(trace, serialize_observation(observed_agent, action))
+        push!(trace, serialize_observation(observed_agent, action, observed_outcome))
         push!(events, Dict(
             "observation_index" => obs_idx,
             "observed_agent" => observed_agent,
             "action" => write_pddl(action),
+            "interaction_outcome" => observed_outcome,
         ))
     end
     return trace, events
@@ -135,33 +172,26 @@ for (map_id, agent_goals) in metadata
         domain_agent3, state_agent3 = PDDL.compiled(domain_agent3, problem_agent3)
         goals_agent3, _ = initialize_goals(state_agent3, :agent3)
         
-        blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
-
         planner = AStarPlanner(GoalManhattan())
         observed_plan_agent2 = collect(planner(domain_agent2, state_agent2, goals_agent2[agent_goals["agent2"][scenario]]))
         observed_plan_agent3 = collect(planner(domain_agent3, state_agent3, goals_agent3[agent_goals["agent3"][scenario]]))
-        plan = collect(planner(domain_agent1, state_agent1, problem_agent1.goal))
 
-        # Find first interaction with blue wizard
-        T = -1
-        for (idx, action) in enumerate(plan)
-            if action.name == :interact && action.args[end] in blue_wizards
-                T = idx
-                break
-            end
-        end
+        agent2_count = observation_stop_horizon(observed_plan_agent2)
+        agent3_count = observation_stop_horizon(observed_plan_agent3)
+        T = agent2_count + agent3_count
 
-        if T == -1
-            T = length(plan)
-        end
-
-        # Replay requires a concrete observation trace, so materialize an
-        # alternating sequence whose counts sum to T.
-        agent2_count = cld(T, 2)
-        agent3_count = fld(T, 2)
         observations = String[]
-        for obs_idx in 1:T
-            push!(observations, isodd(obs_idx) ? "agent2" : "agent3")
+        a2_remaining = agent2_count
+        a3_remaining = agent3_count
+        while a2_remaining > 0 || a3_remaining > 0
+            if a2_remaining > 0
+                push!(observations, "agent2")
+                a2_remaining -= 1
+            end
+            if a3_remaining > 0
+                push!(observations, "agent3")
+                a3_remaining -= 1
+            end
         end
         
         steps_dict[map_key] = Dict(
@@ -171,7 +201,8 @@ for (map_id, agent_goals) in metadata
             "t" => T
         )
         observation_trace, observation_events = materialize_interleaved_observation_trace(
-            map_key, observations, observed_plan_agent2, observed_plan_agent3
+            map_key, observations, observed_plan_agent2, observed_plan_agent3,
+            domain_agent2, state_agent2, domain_agent3, state_agent3
         )
         replay_trace_dict[map_key] = Dict(
             "t" => T,

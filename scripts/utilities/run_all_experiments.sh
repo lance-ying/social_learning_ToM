@@ -5,6 +5,9 @@ ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT_DIR"
 
 BOOTSTRAP_ENV="${BOOTSTRAP_ENV:-1}"
+RUN_ID="${RUN_ID:-$(date +%Y%m%d_%H%M%S)}"
+ORGANIZED_OUTPUT_ROOT="${ORGANIZED_OUTPUT_ROOT:-scripts/organized_outputs}"
+RUN_OUTPUT_DIR="$ORGANIZED_OUTPUT_ROOT/$RUN_ID/experiments"
 
 usage() {
   cat <<'EOF'
@@ -42,6 +45,19 @@ if [[ "$BOOTSTRAP_ENV" == "1" ]]; then
   julia --project=. -e 'using Pkg; Pkg.instantiate()'
 fi
 
+mkdir -p "$RUN_OUTPUT_DIR"
+
+copy_output() {
+  local src="$1"
+  local dst="$2"
+  if [[ ! -f "$src" ]]; then
+    echo "Missing expected output: $src" >&2
+    exit 1
+  fi
+  mkdir -p "$(dirname "$dst")"
+  cp "$src" "$dst"
+}
+
 run_experiment() {
   local label="$1"
   local script_path="$2"
@@ -52,8 +68,24 @@ run_experiment() {
 }
 
 run_experiment "exp1 / full experiment" "scripts/experiments/run_experiment_exp1.jl"
-run_experiment "exp2 / full experiment" "scripts/experiments/run_experiment_exp2.jl"
-run_experiment "exp3 / debug runner" "scripts/experiments/run_experiment_exp3_debug.jl"
-run_experiment "exp4 / wrapper" "scripts/experiments/run_experiment_exp4_wrapper.jl"
+copy_output "scripts/experiments/experiment_outputs/steps_dict_exp1.json" "$RUN_OUTPUT_DIR/exp1/steps_dict.json"
+copy_output "scripts/experiments/experiment_outputs/replay_trace_exp1.json" "$RUN_OUTPUT_DIR/exp1/replay_trace.json"
 
+run_experiment "exp2 / full experiment" "scripts/experiments/run_experiment_exp2.jl"
+copy_output "scripts/experiments/experiment_outputs/steps_dict_exp2.json" "$RUN_OUTPUT_DIR/exp2/steps_dict.json"
+copy_output "scripts/experiments/experiment_outputs/replay_trace_exp2.json" "$RUN_OUTPUT_DIR/exp2/replay_trace.json"
+
+run_experiment "exp3 / debug runner" "scripts/experiments/run_experiment_exp3_debug.jl"
+copy_output "scripts/experiments/experiment_outputs/step_dict_3_031625.json" "$RUN_OUTPUT_DIR/exp3/steps_dict.json"
+copy_output "scripts/experiments/experiment_outputs/replay_trace_3_031625.json" "$RUN_OUTPUT_DIR/exp3/replay_trace.json"
+
+run_experiment "exp4 / wrapper" "scripts/experiments/run_experiment_exp4_wrapper.jl"
+copy_output "scripts/experiments/experiment_outputs/steps_dict_exp4_031726_2.json" "$RUN_OUTPUT_DIR/exp4/steps_dict.json"
+copy_output "scripts/experiments/experiment_outputs/steps_dict_exp4_031726_2_scenario1.json" "$RUN_OUTPUT_DIR/exp4/scenario1_steps_dict.json"
+copy_output "scripts/experiments/experiment_outputs/steps_dict_exp4_031726_2_scenario2.json" "$RUN_OUTPUT_DIR/exp4/scenario2_steps_dict.json"
+copy_output "scripts/experiments/experiment_outputs/steps_dict_exp4_031726_2_replay_trace.json" "$RUN_OUTPUT_DIR/exp4/replay_trace.json"
+copy_output "scripts/experiments/experiment_outputs/steps_dict_exp4_031726_2_scenario1_replay_trace.json" "$RUN_OUTPUT_DIR/exp4/scenario1_replay_trace.json"
+copy_output "scripts/experiments/experiment_outputs/steps_dict_exp4_031726_2_scenario2_replay_trace.json" "$RUN_OUTPUT_DIR/exp4/scenario2_replay_trace.json"
+
+echo "Organized outputs: $RUN_OUTPUT_DIR"
 echo "Done."

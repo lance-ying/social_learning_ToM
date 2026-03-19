@@ -102,6 +102,8 @@ function usage()
             --exp exp1|exp2|exp3|exp3_debug|exp4|exp4_wrapper \\
             [--model full_model|social_mentalizing|rational_non_mentalizing|naive_observer] \\
             --steps-file <path/to/steps_dict.json> \\
+            [--replay-trace-file <path/to/replay_trace.json>] \\
+            [--disable-exp4-interaction-outcome-pruning] \\
             [--inference-file <path/to/inference.jld2>] \\
             [--restrict-to-human-levels] [--human-costs-file <path/to/human_costs.json>] \\
             [--output-file <path/to/output.json>] \\
@@ -300,10 +302,10 @@ end
 
 is_mentalizing_model(model_label::String) = model_label in ("full_model", "social_mentalizing")
 uses_latent_hypothesis_replay(model_label::String) = is_mentalizing_model(model_label)
-uses_naive_wizard_planning(model_label::String) = model_label in ("rational_non_mentalizing", "naive_observer")
+uses_direct_evidence_candidates(model_label::String) = model_label in ("rational_non_mentalizing", "naive_observer")
 
 function initial_replay_hypotheses(initial_states, model_label::String)
-    if uses_latent_hypothesis_replay(model_label)
+    if uses_latent_hypothesis_replay(model_label) || uses_direct_evidence_candidates(model_label)
         return [copy(s) for s in initial_states]
     end
     return typeof(initial_states)(undef, 0)
@@ -322,13 +324,6 @@ function parse_map_scenario_key(map_key::String)
     return m.captures[1], parse(Int, m.captures[2])
 end
 
-function get_obs_list(entry)
-    if entry isa Dict && haskey(entry, "observations")
-        return [string(x) for x in entry["observations"]]
-    end
-    return String[]
-end
-
 function get_t(entry)
     if entry isa Dict && haskey(entry, "t")
         return toint(entry["t"])
@@ -336,14 +331,99 @@ function get_t(entry)
     return toint(entry)
 end
 
+function normalize_observation_event(raw, obs_idx::Int)
+    if raw isa Dict
+        agent = if haskey(raw, "agent")
+            string(raw["agent"])
+        elseif haskey(raw, "observed_agent")
+            string(raw["observed_agent"])
+        else
+            ""
+        end
+        if !isempty(agent)
+            action = haskey(raw, "action") ? string(raw["action"]) : ""
+            interaction_outcome = haskey(raw, "interaction_outcome") ? string(raw["interaction_outcome"]) : "none"
+            return Dict(
+                "observation_index" => obs_idx,
+                "observed_agent" => agent,
+                "action" => action,
+                "interaction_outcome" => interaction_outcome,
+            )
+        end
+    end
+    if raw !== nothing
+        return Dict(
+            "observation_index" => obs_idx,
+            "observed_agent" => string(raw),
+            "action" => "",
+            "interaction_outcome" => "none",
+        )
+    end
+    return nothing
+end
+
+function get_observation_events(entry)
+    if entry isa Dict
+        if haskey(entry, "observations")
+            raw_observations = entry["observations"]
+            events = Any[]
+            for (obs_idx, raw) in enumerate(raw_observations)
+                event = normalize_observation_event(raw, obs_idx)
+                event === nothing || push!(events, event)
+            end
+            return events
+        elseif haskey(entry, "observation_events")
+            raw_events = entry["observation_events"]
+            events = Any[]
+            for (obs_idx, raw) in enumerate(raw_events)
+                event = normalize_observation_event(raw, obs_idx)
+                event === nothing || push!(events, event)
+            end
+            return events
+        end
+    end
+    return Any[]
+end
+
+function merge_step_and_replay_entry(step_entry, replay_entry)
+    replay_entry === nothing && return step_entry
+
+    merged = Dict{String, Any}()
+    if step_entry isa Dict
+        for (k, v) in step_entry
+            merged[string(k)] = v
+        end
+    else
+        merged["t"] = step_entry
+    end
+
+    if replay_entry isa Dict
+        for (k, v) in replay_entry
+            merged[string(k)] = v
+        end
+    else
+        merged["t"] = replay_entry
+    end
+
+    return merged
+end
+
 function resolve_replay_observations(entry, model_label::String)
-    observations = get_obs_list(entry)
+    observation_events = get_observation_events(entry)
+    observations = [event["observed_agent"] for event in observation_events]
     t = get_t(entry)
     source = "sequence"
     warnings = String[]
 
     if isempty(observations) && t > 0 && !uses_latent_hypothesis_replay(model_label)
         observations = fill("agent2", t)
+        observation_events = [
+            Dict(
+                "observation_index" => obs_idx,
+                "observed_agent" => "agent2",
+                "action" => "",
+            ) for obs_idx in 1:t
+        ]
         source = "count_fallback"
         push!(
             warnings,
@@ -351,7 +431,7 @@ function resolve_replay_observations(entry, model_label::String)
         )
     end
 
-    return observations, t, source, warnings
+    return observations, observation_events, t, source, warnings
 end
 
 function build_single_context(map_id, problem_dir)
@@ -716,16 +796,17 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
     end
 
     if isempty(hypotheses)
-        plan = timed_get_cached_plan!(true_state, :initial)
-        curr_state = copy(true_state)
+        plan = Term[]
+        curr_state = copy(state)
         explored_state_ids = Set{Int}()
+        push!(warnings, "No latent-state hypothesis available; skipped planning rather than using true-state planning.")
     else
         best_idx, plan = timed_choose_shortest_plan(hypotheses, Set{Int}(), :initial)
         if best_idx == 0
-            plan = timed_get_cached_plan!(true_state, :initial)
-            curr_state = copy(true_state)
+            plan = Term[]
+            curr_state = copy(hypotheses[1])
             explored_state_ids = Set{Int}()
-            push!(warnings, "No latent-state hypothesis available; used true-state plan.")
+            push!(warnings, "No latent-state hypothesis plan available; skipped planning rather than using true-state planning.")
         else
             curr_state = copy(hypotheses[best_idx])
             explored_state_ids = Set([best_idx])
@@ -757,19 +838,16 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
         end
 
         if isempty(plan)
-            if !equivalent_plan_state(true_state, curr_state)
+            plan = timed_get_cached_plan!(curr_state, :replan)
+            if isempty(plan)
                 best_idx, plan = timed_choose_shortest_plan(hypotheses, explored_state_ids, :replan)
                 replan_count += 1
                 if best_idx > 0
                     push!(explored_state_ids, best_idx)
                     curr_state = copy(hypotheses[best_idx])
                 else
-                    curr_state = copy(true_state)
-                    plan = timed_get_cached_plan!(true_state, :replan)
-                    push!(warnings, "Exhausted hypotheses during replay; fell back to true-state replanning.")
+                    push!(warnings, "Exhausted hypotheses during replay; stopped planning rather than using true-state replanning.")
                 end
-            else
-                plan = timed_get_cached_plan!(true_state, :replan)
             end
             isempty(plan) && break
         end
@@ -783,16 +861,27 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
                 curr_state = copy(hypotheses[best_idx])
                 push!(warnings, "Replanned before execution because $(PDDL.write_pddl(action)) was not applicable in the true state.")
             else
-                curr_state = copy(true_state)
-                plan = timed_get_cached_plan!(true_state, :replan)
-                push!(warnings, "Fell back to true-state replanning because $(PDDL.write_pddl(action)) was not applicable in the true state.")
+                plan = Term[]
+                push!(warnings, "Stopped planning because $(PDDL.write_pddl(action)) was not applicable in the true state and no latent-state hypothesis remained.")
+                break
             end
             continue
         end
         if !PDDL.available(domain, curr_state, action)
-            curr_state = copy(true_state)
-            plan = timed_get_cached_plan!(true_state, :replan)
-            push!(warnings, "Current plan state could not execute $(PDDL.write_pddl(action)); fell back to true-state replanning.")
+            plan = timed_get_cached_plan!(curr_state, :replan)
+            if isempty(plan)
+                best_idx, plan = timed_choose_shortest_plan(hypotheses, explored_state_ids, :replan)
+                replan_count += 1
+                if best_idx > 0
+                    push!(explored_state_ids, best_idx)
+                    curr_state = copy(hypotheses[best_idx])
+                    push!(warnings, "Current hypothesis could not execute $(PDDL.write_pddl(action)); replanned using another latent-state hypothesis.")
+                else
+                    push!(warnings, "Current hypothesis could not execute $(PDDL.write_pddl(action)); stopped planning rather than using true-state replanning.")
+                end
+            else
+                push!(warnings, "Current plan state could not execute $(PDDL.write_pddl(action)); replanned within the current latent-state hypothesis.")
+            end
             continue
         end
         push!(executed_terms, action)
@@ -824,9 +913,8 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
                 push!(explored_state_ids, best_idx)
                 curr_state = copy(hypotheses[best_idx])
             else
-                curr_state = copy(true_state)
-                plan = timed_get_cached_plan!(true_state, :replan)
-                push!(warnings, "Interaction revealed mismatch after all hypotheses were explored; used true-state replanning.")
+                plan = Term[]
+                push!(warnings, "Interaction revealed mismatch after all hypotheses were explored; stopped planning rather than using true-state replanning.")
             end
         else
             plan = plan[2:end]
@@ -897,6 +985,245 @@ function replay_case_naive_like(domain, state, goal, observation_trace, action_c
     )
 end
 
+function resolve_direct_evidence_candidates(state::State, candidate_names; had_direct_evidence::Bool=false)
+    blue_wizards = [
+        wizard for wizard in sort!(collect(PDDL.get_objects(state, :wizard)), by=x -> string(x))
+        if state[pddl"(iscolor $wizard blue)"]
+    ]
+    if isempty(candidate_names)
+        if had_direct_evidence
+            return Const[], ["Direct-evidence interaction outcomes ruled out all blue wizard candidates."]
+        end
+        return blue_wizards, [
+            "No direct-evidence wizard update was available; searched all blue wizard candidates."
+        ]
+    end
+
+    candidate_set = Set(string(name) for name in candidate_names)
+    selected = [wizard for wizard in blue_wizards if string(wizard) in candidate_set]
+    if isempty(selected)
+        return blue_wizards, [
+            "Direct-evidence candidate set matched no blue wizards in the planning world; searched all blue wizard candidates."
+        ]
+    end
+
+    warnings = length(selected) < length(blue_wizards) ? [
+        "Direct-evidence planner restricted self-exploration to $(length(selected)) candidate wizards."
+    ] : String[]
+    return selected, warnings
+end
+
+function replay_case_candidate_search(domain, state, goal, candidate_names, observation_trace, action_cost; cache_scope=nothing, case_label="", had_direct_evidence::Bool=false)
+    current_state = copy(state)
+    observations = [string(x) for x in observation_trace]
+    observe_steps = length(observations)
+    observe_cost = action_cost[:observe] * observe_steps
+    warnings = String[]
+    replay_start_time = time()
+    planning_time_total = 0.0
+
+    candidate_wizards, candidate_warnings = resolve_direct_evidence_candidates(current_state, candidate_names; had_direct_evidence=had_direct_evidence)
+    append!(warnings, candidate_warnings)
+    all_blue_wizards = [
+        wizard for wizard in sort!(collect(PDDL.get_objects(current_state, :wizard)), by=x -> string(x))
+        if current_state[pddl"(iscolor $wizard blue)"]
+    ]
+    broadened_beyond_direct_evidence = false
+
+    fallback_planner = (d, s, g) -> get_cached_plan!(d, s, g, (cache_scope, :candidate_search))
+    agent_name = :agent1
+    agent_const = Const(agent_name)
+    blue_keys = [k for k in PDDL.get_objects(current_state, :key) if current_state[pddl"(iscolor $k blue)"]]
+    blue_key = isempty(blue_keys) ? nothing : blue_keys[1]
+    visited_wizards = Set{Const}()
+    for wizard in candidate_wizards
+        if current_state[Compound(:visited, [agent_const, wizard])]
+            push!(visited_wizards, wizard)
+        end
+    end
+
+    executed_terms = Term[]
+    executed_actions = String[]
+    planning_action_counts = Dict("move" => 0, "interact" => 0, "observe" => 0)
+
+    function execute_action!(action::Term)
+        push!(executed_terms, action)
+        push!(executed_actions, PDDL.write_pddl(action))
+        planning_action_counts[classify_action(action)] += 1
+        current_state = PDDL.execute(domain, current_state, action)
+        return current_state
+    end
+
+    function timed_cached_plan(state_for_plan, goal_for_plan)
+        start_time = time()
+        plan = fallback_planner(domain, state_for_plan, goal_for_plan)
+        planning_time_total += time() - start_time
+        return copy(plan)
+    end
+
+    while !PDDL.satisfy(domain, current_state, goal)
+        if blue_key !== nothing && current_state[pddl"(has $agent_name $blue_key)"]
+            plan_to_goal = timed_cached_plan(current_state, goal)
+            if isempty(plan_to_goal)
+                push!(warnings, "Candidate-search planner could not find a goal-reaching plan after obtaining the blue key.")
+                break
+            end
+            goal_plan_failed = false
+            for action in plan_to_goal
+                if !PDDL.available(domain, current_state, action)
+                    push!(warnings, "Candidate-search goal plan became unavailable in the executed state.")
+                    goal_plan_failed = true
+                    break
+                end
+                current_state = execute_action!(action)
+            end
+            goal_plan_failed && break
+            continue
+        end
+
+        agent_loc = get_obj_loc(current_state, agent_const)
+        closest_wizard = nothing
+        closest_wizard_loc = nothing
+        min_dist = typemax(Int)
+        for wizard in candidate_wizards
+            if wizard in visited_wizards
+                continue
+            end
+            wizard_loc = get_obj_loc(current_state, wizard)
+            dist = sum(abs.(agent_loc .- wizard_loc))
+            if dist < min_dist
+                min_dist = dist
+                closest_wizard = wizard
+                closest_wizard_loc = wizard_loc
+            end
+        end
+
+        if closest_wizard === nothing
+            if !broadened_beyond_direct_evidence && length(candidate_wizards) < length(all_blue_wizards)
+                candidate_wizards = all_blue_wizards
+                broadened_beyond_direct_evidence = true
+                push!(
+                    warnings,
+                    "Direct-evidence candidate subset was exhausted before reaching the goal; broadened self-exploration to all remaining blue wizards."
+                )
+                continue
+            end
+            push!(warnings, "Candidate-search planner exhausted all candidate wizards before reaching the goal.")
+            break
+        end
+
+        plan_to_wizard = plan_to_wizard_location_naive(domain, current_state, closest_wizard_loc, agent_name, fallback_planner)
+        if isempty(plan_to_wizard) && min_dist != 1
+            push!(visited_wizards, closest_wizard)
+            push!(warnings, "Candidate-search planner could not reach $(string(closest_wizard)); removed it and continued.")
+            continue
+        end
+
+        move_plan_failed = false
+        for action in plan_to_wizard
+            if !PDDL.available(domain, current_state, action)
+                push!(warnings, "Candidate-search movement plan toward $(string(closest_wizard)) became unavailable in the executed state.")
+                move_plan_failed = true
+                break
+            end
+            current_state = execute_action!(action)
+        end
+        if move_plan_failed
+            push!(visited_wizards, closest_wizard)
+            continue
+        end
+
+        interact_action = PDDL.parse_pddl("(interact $agent_name $closest_wizard)")
+        if !PDDL.available(domain, current_state, interact_action)
+            push!(visited_wizards, closest_wizard)
+            push!(warnings, "Candidate-search planner reached $(string(closest_wizard)) but could not interact with it.")
+            continue
+        end
+
+        current_state = execute_action!(interact_action)
+        push!(visited_wizards, closest_wizard)
+    end
+
+    planning_steps = length(executed_actions)
+    planning_cost = calculate_plan_cost(executed_terms, action_cost)
+    total_steps = observe_steps + planning_steps
+    replay_elapsed = time() - replay_start_time
+    replay_nonplanning_time = max(replay_elapsed - planning_time_total, 0.0)
+
+    return Dict(
+        "observe_steps" => observe_steps,
+        "planning_steps" => planning_steps,
+        "total_steps" => total_steps,
+        "observe_cost" => observe_cost,
+        "planning_cost" => planning_cost,
+        "total_cost" => observe_cost + planning_cost,
+        "executed_actions" => executed_actions,
+        "planning_action_counts" => planning_action_counts,
+        "initial_plan_time" => planning_time_total,
+        "replan_time_total" => 0.0,
+        "replay_nonplanning_time" => replay_nonplanning_time,
+        "replay_elapsed" => replay_elapsed,
+        "warnings" => warnings,
+    )
+end
+
+function direct_evidence_candidate_names(belief_names, observation_events)
+    belief_name_set = Set(string(name) for name in belief_names)
+    remaining_candidates = Set(string(name) for name in belief_names)
+    warnings = String[]
+    saw_action_detail = false
+    saw_interaction = false
+    saw_direct_evidence = false
+
+    for event in observation_events
+        action_str = get(event, "action", "")
+        isempty(action_str) && continue
+        saw_action_detail = true
+        action = PDDL.parse_pddl(action_str)
+        if action isa Term && action.name == :interact
+            saw_interaction = true
+            wizard_name = string(action.args[end])
+            outcome = lowercase(strip(string(get(event, "interaction_outcome", "none"))))
+
+            if outcome == "blue_amulet_present"
+                saw_direct_evidence = true
+                if wizard_name in belief_name_set
+                    empty!(remaining_candidates)
+                    push!(remaining_candidates, wizard_name)
+                else
+                    push!(warnings, "Replay trace reported blue amulet at unknown wizard $(wizard_name); ignored that outcome.")
+                end
+            elseif outcome == "blue_amulet_absent"
+                saw_direct_evidence = true
+                if wizard_name in remaining_candidates
+                    delete!(remaining_candidates, wizard_name)
+                end
+            elseif outcome != "none" && !isempty(outcome)
+                push!(warnings, "Replay trace had unrecognized interaction outcome '$outcome'; ignored it.")
+            end
+        end
+    end
+
+    if !saw_direct_evidence
+        if saw_interaction
+            push!(warnings, "Replay trace includes observed interactions but no explicit interaction outcomes; direct-evidence candidate update was unavailable.")
+        elseif !saw_action_detail && !isempty(observation_events)
+            push!(warnings, "Replay trace lacks action-level observations; direct-evidence candidate update was unavailable.")
+        end
+        return String[], warnings, false
+    end
+
+    candidate_names = sort!(collect(remaining_candidates))
+    if isempty(candidate_names)
+        push!(warnings, "Direct-evidence interaction outcomes ruled out all blue wizard candidates.")
+    elseif length(candidate_names) < length(belief_names)
+        push!(warnings, "Direct-evidence interaction outcomes reduced candidates to $(length(candidate_names)) blue wizards.")
+    end
+
+    sort!(candidate_names)
+    return candidate_names, warnings, true
+end
+
 function mentalizing_candidates_exp1(ctx, map_key, t, inference_data)
     cache_key = ("exp1", map_key, t)
     return get_cached_posterior_filter!(cache_key) do
@@ -963,14 +1290,15 @@ function mentalizing_candidates_exp3_or_exp4(ctx, map_key, observations, inferen
     end
 end
 
-function reconstruct_exp1(steps_dict, problem_dir, action_cost, model_label, inference_data)
+function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data)
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
     reduced_cache = Dict{String, Any}()
     use_reduced_agent1_planning = true
 
-    for (map_key, t_raw) in steps_dict
-        t = get_t(t_raw)
+    for (map_key, step_entry) in steps_dict
+        entry = merge_step_and_replay_entry(step_entry, get(replay_trace_dict, string(map_key), nothing))
+        observations, observation_events, t, observation_source, observation_warnings = resolve_replay_observations(entry, model_label)
         map_id = normalize_exp1_map_key(map_key)
         if !haskey(cache, map_id)
             cache[map_id] = build_single_context(map_id, problem_dir)
@@ -982,11 +1310,10 @@ function reconstruct_exp1(steps_dict, problem_dir, action_cost, model_label, inf
         clear_planner_cache!()
         ctx = cache[map_id]
         replay_ctx = use_reduced_agent1_planning ? reduced_cache[map_id] : ctx
-        observations = fill("agent2", t)
-        hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
         candidate_names = String[]
-        warnings = String[]
+        warnings = copy(observation_warnings)
         if is_mentalizing_model(model_label)
+            hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
             posterior_states, candidate_names, warnings = mentalizing_candidates_exp1(ctx, map_key, t, inference_data)
             if use_reduced_agent1_planning
                 hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
@@ -996,16 +1323,22 @@ function reconstruct_exp1(steps_dict, problem_dir, action_cost, model_label, inf
             else
                 hypothesis_states = posterior_states
             end
-        end
-        replay = if uses_naive_wizard_planning(model_label)
-            replay_case_naive_like(
-                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, observations, action_cost;
-                cache_scope=("exp1", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced_naive" : "full_world_naive"),
-                case_label=map_key,
+            warnings = vcat(observation_warnings, warnings)
+            replay = replay_case(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
+                cache_scope=("exp1", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+            )
+        elseif uses_direct_evidence_candidates(model_label)
+            candidate_names, direct_warnings, had_direct_evidence = direct_evidence_candidate_names(replay_ctx.belief_names, observation_events)
+            warnings = vcat(warnings, direct_warnings)
+            replay = replay_case_candidate_search(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, candidate_names, observations, action_cost;
+                cache_scope=("exp1", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+                had_direct_evidence=had_direct_evidence,
             )
         else
-            replay_case(
-                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
+            replay = replay_case(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, replay_ctx.initial_states[1:0], observations, action_cost;
                 cache_scope=("exp1", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
             )
         end
@@ -1014,10 +1347,12 @@ function reconstruct_exp1(steps_dict, problem_dir, action_cost, model_label, inf
         out[map_key] = merge(
             Dict(
                 "t_recorded" => t,
-                "t_replayed" => t,
-                "observation_source" => "count",
+                "t_replayed" => length(observations),
+                "observations_count" => length(observations),
+                "observation_source" => observation_source,
                 "observation_trace" => observations,
-                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : "no_mentalizing_update",
+                "observation_events" => observation_events,
+                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? "direct_observation_evidence" : "no_mentalizing_update"),
                 "planning_world" => use_reduced_agent1_planning ? "agent1_reduced_ascii" : "full_single_agent_pddl",
                 "posterior_candidates" => candidate_names,
                 "reconstruction_mode" => "model_faithful_replay",
@@ -1029,14 +1364,15 @@ function reconstruct_exp1(steps_dict, problem_dir, action_cost, model_label, inf
     return out
 end
 
-function reconstruct_exp2(steps_dict, problem_dir, action_cost, model_label, inference_data, metadata)
+function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, metadata)
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
     reduced_cache = Dict{String, Any}()
     use_reduced_agent1_planning = true
 
-    for (map_key, t_raw) in steps_dict
-        t = get_t(t_raw)
+    for (map_key, step_entry) in steps_dict
+        entry = merge_step_and_replay_entry(step_entry, get(replay_trace_dict, string(map_key), nothing))
+        observations, observation_events, t, observation_source, observation_warnings = resolve_replay_observations(entry, model_label)
         map_id = split(map_key, "_")[1]
         if !haskey(cache, map_id)
             cache[map_id] = build_single_context(map_id, problem_dir)
@@ -1048,11 +1384,10 @@ function reconstruct_exp2(steps_dict, problem_dir, action_cost, model_label, inf
         clear_planner_cache!()
         ctx = cache[map_id]
         replay_ctx = use_reduced_agent1_planning ? reduced_cache[map_id] : ctx
-        observations = fill("agent2", t)
-        hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
         candidate_names = String[]
-        warnings = String[]
+        warnings = copy(observation_warnings)
         if is_mentalizing_model(model_label)
+            hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
             posterior_states, candidate_names, warnings = mentalizing_candidates_exp2(ctx, map_key, t, inference_data, metadata)
             if use_reduced_agent1_planning
                 hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
@@ -1062,16 +1397,22 @@ function reconstruct_exp2(steps_dict, problem_dir, action_cost, model_label, inf
             else
                 hypothesis_states = posterior_states
             end
-        end
-        replay = if uses_naive_wizard_planning(model_label)
-            replay_case_naive_like(
-                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, observations, action_cost;
-                cache_scope=("exp2", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced_naive" : "full_world_naive"),
-                case_label=map_key,
+            warnings = vcat(observation_warnings, warnings)
+            replay = replay_case(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
+                cache_scope=("exp2", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+            )
+        elseif uses_direct_evidence_candidates(model_label)
+            candidate_names, direct_warnings, had_direct_evidence = direct_evidence_candidate_names(replay_ctx.belief_names, observation_events)
+            warnings = vcat(warnings, direct_warnings)
+            replay = replay_case_candidate_search(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, candidate_names, observations, action_cost;
+                cache_scope=("exp2", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+                had_direct_evidence=had_direct_evidence,
             )
         else
-            replay_case(
-                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
+            replay = replay_case(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, replay_ctx.initial_states[1:0], observations, action_cost;
                 cache_scope=("exp2", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
             )
         end
@@ -1080,10 +1421,12 @@ function reconstruct_exp2(steps_dict, problem_dir, action_cost, model_label, inf
         out[map_key] = merge(
             Dict(
                 "t_recorded" => t,
-                "t_replayed" => t,
-                "observation_source" => "count",
+                "t_replayed" => length(observations),
+                "observations_count" => length(observations),
+                "observation_source" => observation_source,
                 "observation_trace" => observations,
-                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : "no_mentalizing_update",
+                "observation_events" => observation_events,
+                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? "direct_observation_evidence" : "no_mentalizing_update"),
                 "planning_world" => use_reduced_agent1_planning ? "agent1_reduced_ascii" : "full_single_agent_pddl",
                 "posterior_candidates" => candidate_names,
                 "reconstruction_mode" => "model_faithful_replay",
@@ -1095,7 +1438,7 @@ function reconstruct_exp2(steps_dict, problem_dir, action_cost, model_label, inf
     return out
 end
 
-function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_label, inference_data, metadata; exp4_metadata_style=false)
+function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, metadata; exp4_metadata_style=false, disable_exp4_interaction_outcome_pruning=false)
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
     reduced_cache = Dict{String, Any}()
@@ -1103,11 +1446,12 @@ function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_la
     case_idx = 0
     use_reduced_agent1_planning = true
 
-    for (map_key, entry) in steps_dict
+    for (map_key, step_entry) in steps_dict
         case_idx += 1
         case_start_time = time()
         map_id, _ = parse_map_scenario_key(map_key)
-        observations, t, observation_source, observation_warnings = resolve_replay_observations(entry, model_label)
+        entry = merge_step_and_replay_entry(step_entry, get(replay_trace_dict, string(map_key), nothing))
+        observations, observation_events, t, observation_source, observation_warnings = resolve_replay_observations(entry, model_label)
         println("[$case_idx/$total_cases] starting $map_key (t=$(t), obs_len=$(length(observations)))")
 
         if isempty(observations) && t > 0 && uses_latent_hypothesis_replay(model_label)
@@ -1124,11 +1468,11 @@ function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_la
         clear_planner_cache!()
         ctx = cache[map_id]
         replay_ctx = use_reduced_agent1_planning ? reduced_cache[map_id] : ctx
-        hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
         candidate_names = String[]
-        warnings = String[]
+        warnings = copy(observation_warnings)
         posterior_filter_start = time()
         if is_mentalizing_model(model_label)
+            hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
             posterior_states, candidate_names, warnings = mentalizing_candidates_exp3_or_exp4(
                 ctx, map_key, observations, inference_data, metadata, exp4_metadata_style
             )
@@ -1140,21 +1484,35 @@ function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_la
             else
                 hypothesis_states = posterior_states
             end
-        end
-        posterior_filter_time = time() - posterior_filter_start
-        replay = if uses_naive_wizard_planning(model_label)
-            replay_case_naive_like(
-                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, observations, action_cost;
-                cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced_naive" : "full_world_naive"),
-                case_label=map_key,
-            )
-        else
-            replay_case(
+            warnings = vcat(observation_warnings, warnings)
+            replay = replay_case(
                 replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
                 cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
                 case_label=map_key,
             )
+        elseif uses_direct_evidence_candidates(model_label)
+            if exp4_metadata_style && disable_exp4_interaction_outcome_pruning
+                candidate_names = String[]
+                direct_warnings = ["Exp4 interaction-outcome pruning disabled for direct-evidence reconstruction; searched all blue wizard candidates."]
+                had_direct_evidence = false
+            else
+                candidate_names, direct_warnings, had_direct_evidence = direct_evidence_candidate_names(replay_ctx.belief_names, observation_events)
+            end
+            warnings = vcat(warnings, direct_warnings)
+            replay = replay_case_candidate_search(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, candidate_names, observations, action_cost;
+                cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+                case_label=map_key,
+                had_direct_evidence=had_direct_evidence,
+            )
+        else
+            replay = replay_case(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, replay_ctx.initial_states[1:0], observations, action_cost;
+                cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+                case_label=map_key,
+            )
         end
+        posterior_filter_time = time() - posterior_filter_start
         warnings = vcat(observation_warnings, warnings, replay["warnings"])
         if t != length(observations)
             push!(warnings, "Recorded t=$t does not match observations length=$(length(observations)); used observations length.")
@@ -1168,7 +1526,8 @@ function reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_la
                 "observations_count" => length(observations),
                 "observation_source" => observation_source,
                 "observation_trace" => observations,
-                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : "no_mentalizing_update",
+                "observation_events" => observation_events,
+                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? "direct_observation_evidence" : "no_mentalizing_update"),
                 "planning_world" => use_reduced_agent1_planning ? "agent1_reduced_ascii" : "full_multi_agent_ascii",
                 "posterior_candidates" => candidate_names,
                 "posterior_filter_time" => posterior_filter_time,
@@ -1232,14 +1591,19 @@ function main()
     defaults = default_paths(exp)
 
     steps_file = get(opts, "steps-file", defaults.steps_file)
+    replay_trace_file = get(opts, "replay-trace-file", "")
     model_label = resolve_model_label(opts, steps_file)
     inference_file = get(opts, "inference-file", defaults.inference_file)
     problem_dir = get(opts, "problem-dir", defaults.problem_dir)
+    disable_exp4_interaction_outcome_pruning = get(opts, "disable-exp4-interaction-outcome-pruning", "false") == "true"
     restrict_to_human_levels = get(opts, "restrict-to-human-levels", "false") == "true"
     human_costs_file = get(opts, "human-costs-file", default_human_costs_path(exp))
 
     if isempty(steps_file) || !isfile(steps_file)
         error("Missing/invalid --steps-file: $steps_file")
+    end
+    if !isempty(replay_trace_file) && !isfile(replay_trace_file)
+        error("Missing/invalid --replay-trace-file: $replay_trace_file")
     end
     if isempty(problem_dir) || !isdir(problem_dir)
         error("Missing/invalid --problem-dir: $problem_dir")
@@ -1249,6 +1613,7 @@ function main()
     end
 
     steps_dict = JSON.parsefile(steps_file)
+    replay_trace_dict = isempty(replay_trace_file) ? Dict{String, Any}() : JSON.parsefile(replay_trace_file)
     human_level_filter = Dict{String, Any}("enabled" => false)
     if restrict_to_human_levels
         if isempty(human_costs_file) || !isfile(human_costs_file)
@@ -1278,13 +1643,33 @@ function main()
     inference_data = is_mentalizing_model(model_label) ? Dict("state" => load(inference_file, "state")) : nothing
     action_cost = resolve_action_cost(opts, exp, steps_file)
     costs = if exp == "exp1"
-        reconstruct_exp1(steps_dict, problem_dir, action_cost, model_label, inference_data)
+        reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data)
     elseif exp == "exp2"
-        reconstruct_exp2(steps_dict, problem_dir, action_cost, model_label, inference_data, metadata)
+        reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, metadata)
     elseif exp == "exp3"
-        reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_label, inference_data, metadata; exp4_metadata_style=false)
+        reconstruct_exp3_or_exp4(
+            steps_dict,
+            replay_trace_dict,
+            problem_dir,
+            action_cost,
+            model_label,
+            inference_data,
+            metadata;
+            exp4_metadata_style=false,
+            disable_exp4_interaction_outcome_pruning=disable_exp4_interaction_outcome_pruning,
+        )
     elseif exp == "exp4"
-        reconstruct_exp3_or_exp4(steps_dict, problem_dir, action_cost, model_label, inference_data, metadata; exp4_metadata_style=true)
+        reconstruct_exp3_or_exp4(
+            steps_dict,
+            replay_trace_dict,
+            problem_dir,
+            action_cost,
+            model_label,
+            inference_data,
+            metadata;
+            exp4_metadata_style=true,
+            disable_exp4_interaction_outcome_pruning=disable_exp4_interaction_outcome_pruning,
+        )
     else
         error("Unsupported --exp value: $exp")
     end
@@ -1294,8 +1679,10 @@ function main()
         "exp_normalized" => exp,
         "model_label" => model_label,
         "steps_file" => steps_file,
+        "replay_trace_file" => replay_trace_file,
         "inference_file" => inference_file,
         "problem_dir" => problem_dir,
+        "disable_exp4_interaction_outcome_pruning" => disable_exp4_interaction_outcome_pruning,
         "human_level_filter" => human_level_filter,
         "reconstruction_mode" => "model_faithful_replay",
         "action_cost" => Dict(String(k) => v for (k, v) in action_cost),

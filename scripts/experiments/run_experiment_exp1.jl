@@ -28,10 +28,29 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
 end
 
 serialize_wizards(wizards) = sort(string.(wizards))
-serialize_observation(agent::String, action::Term) = Dict(
+serialize_observation(agent::String, action::Term, interaction_outcome::String="none") = Dict(
     "agent" => agent,
     "action" => write_pddl(action),
+    "interaction_outcome" => interaction_outcome,
 )
+
+function agent_has_blue_item(state, agent_sym::Symbol)
+    for key in PDDL.get_objects(state, :key)
+        if state[pddl"(iscolor $key blue)"] && state[pddl"(has $agent_sym $key)"]
+            return true
+        end
+    end
+    return false
+end
+
+function interaction_outcome(state_before, state_after, agent_sym::Symbol, action::Term)
+    if action.name != :interact
+        return "none"
+    end
+    had_blue_before = agent_has_blue_item(state_before, agent_sym)
+    has_blue_after = agent_has_blue_item(state_after, agent_sym)
+    return (!had_blue_before && has_blue_after) ? "blue_amulet_present" : "blue_amulet_absent"
+end
 
 # include("paths_new.jl")
 # Define directory paths
@@ -198,6 +217,7 @@ for problem_file in problem_files
     end
 
     observed_agent_plan = collect(planner(domain_agent2, state_agent2, observed_agent_goals[g_id]))
+    observed_state_agent2 = copy(state_agent2)
 
     while !PDDL.satisfy(domain_agent1, state_agent1, problem_agent1.goal)
 
@@ -283,9 +303,14 @@ for problem_file in problem_files
                 break
             end
             t+=1
-    
+
             wizard_candicates = []
-    
+
+            observed_action = observed_agent_plan[t]
+            state_before_observation = copy(observed_state_agent2)
+            observed_state_agent2 = PDDL.execute(domain_agent2, observed_state_agent2, observed_action)
+            observed_outcome = interaction_outcome(state_before_observation, observed_state_agent2, :agent2, observed_action)
+
             for j in 1:length(blue_wizards)
                 if state_probs[j, t+1] > 0.1
                     push!(wizard_candicates, blue_wizards[j])
@@ -294,7 +319,8 @@ for problem_file in problem_files
             push!(observation_events, Dict(
                 "observation_index" => t,
                 "observed_agent" => "agent2",
-                "action" => write_pddl(observed_agent_plan[t]),
+                "action" => write_pddl(observed_action),
+                "interaction_outcome" => observed_outcome,
                 "q_observe" => Q_observe,
                 "q_not_observe" => Q_not_observe,
                 "wizard_candidates_before" => candidates_before,
@@ -314,7 +340,7 @@ for problem_file in problem_files
     end
     replay_trace_dict[map_key] = Dict(
         "t" => steps_dict[map_key],
-        "observations" => [serialize_observation(event["observed_agent"], parse_pddl(event["action"])) for event in observation_events],
+        "observations" => [serialize_observation(event["observed_agent"], parse_pddl(event["action"]), get(event, "interaction_outcome", "none")) for event in observation_events],
         "observation_events" => observation_events,
         "initial_candidates" => serialize_wizards(blue_wizards),
         "final_candidates" => serialize_wizards(wizard_candicates),

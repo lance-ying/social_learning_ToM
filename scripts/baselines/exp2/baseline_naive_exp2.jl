@@ -7,13 +7,13 @@ using Statistics
 # Register PDDL array theory
 PDDL.Arrays.register!()
 
-include(joinpath(@__DIR__, "..", "..", "src", "plan_io.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "utils.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "plan_io.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "utils.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "heuristics.jl"))
 # beliefs.jl not needed for naive baseline
-include(joinpath(@__DIR__, "..", "..", "src", "translate.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "translate.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "render.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "ascii.jl"))
 
 function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
     agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
@@ -26,15 +26,63 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
     return filtered
 end
 
-serialize_observation(agent::String, action::Term) = Dict(
+serialize_observation(agent::String, action::Term, interaction_outcome::String="none") = Dict(
     "agent" => agent,
     "action" => write_pddl(action),
+    "interaction_outcome" => interaction_outcome,
 )
+
+function agent_has_blue_item(state, agent_sym::Symbol)
+    for key in PDDL.get_objects(state, :key)
+        if state[pddl"(iscolor $key blue)"] && state[pddl"(has $agent_sym $key)"]
+            return true
+        end
+    end
+    return false
+end
+
+function interaction_outcome(state_before, state_after, agent_sym::Symbol, action::Term)
+    if action.name != :interact
+        return "none"
+    end
+    had_blue_before = agent_has_blue_item(state_before, agent_sym)
+    has_blue_after = agent_has_blue_item(state_after, agent_sym)
+    return (!had_blue_before && has_blue_after) ? "blue_amulet_present" : "blue_amulet_absent"
+end
+
+function materialize_single_observation_trace(observed_agent::String, observed_plan, domain, start_state, T::Int, agent_sym::Symbol)
+    trace = Any[]
+    events = Any[]
+    observed_state = copy(start_state)
+    for obs_idx in 1:T
+        action = observed_plan[obs_idx]
+        state_before_observation = copy(observed_state)
+        observed_state = PDDL.execute(domain, observed_state, action)
+        observed_outcome = interaction_outcome(state_before_observation, observed_state, agent_sym, action)
+        push!(trace, serialize_observation(observed_agent, action, observed_outcome))
+        push!(events, Dict(
+            "observation_index" => obs_idx,
+            "observed_agent" => observed_agent,
+            "action" => write_pddl(action),
+            "interaction_outcome" => observed_outcome,
+        ))
+    end
+    return trace, events
+end
+
+function observation_stop_horizon(plan)
+    for (idx, action) in enumerate(plan)
+        if action.name == :interact
+            return idx
+        end
+    end
+    return length(plan)
+end
 
 # Define directory paths
 experiment_id = "exp2"
 
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
+PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_$experiment_id")
 
 #--- Initial Setup ---#
 metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
@@ -43,7 +91,7 @@ metadata = JSON.parsefile(metadata_path)
 steps_dict = Dict()
 replay_trace_dict = Dict()
 
-domain_render = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain_render.pddl"))
+domain_render = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain_render.pddl"))
 
 action_cost = Dict(:move => 2, :interact => 5, :observe => 0.5)
 
@@ -68,7 +116,7 @@ for (map_id, goal_list) in metadata
         
         println("  Scenario $i (goal=$goal_str)")
 
-        domain = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+        domain = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl"))
         problem = load_problem(joinpath(PROBLEM_DIR, "$(map_id).pddl"))
         
         # Initialize and compile reference state
@@ -77,7 +125,7 @@ for (map_id, goal_list) in metadata
 
         txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
         ascii_content = read(txt_path, String)
-        domain_agent1 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+        domain_agent1 = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl"))
         temp_path_agent1 = joinpath(PROBLEM_DIR, ".temp_agent1_$(map_id).txt")
         if !isfile(temp_path_agent1)
             filtered_ascii_agent1 = filter_ascii_agents(ascii_content, :agent1)
@@ -86,7 +134,7 @@ for (map_id, goal_list) in metadata
         problem_agent1 = load_ascii_problem(temp_path_agent1)
         state_agent1 = initstate(domain_agent1, problem_agent1)
 
-        domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+        domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl"))
         temp_path_agent2 = joinpath(PROBLEM_DIR, ".temp_agent2_$(map_id).txt")
         if !isfile(temp_path_agent2)
             filtered_ascii_agent2 = filter_ascii_agents(ascii_content, :agent2)
@@ -96,36 +144,17 @@ for (map_id, goal_list) in metadata
         state_agent2 = initstate(domain_agent2, problem_agent2)
         observed_agent_goals, _ = initialize_goals(state_agent2, :agent2)
         
-        blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
-
-        planner = AStarPlanner(GoalManhattan())
-        plan = collect(planner(domain_agent1, state_agent1, problem_agent1.goal))
-
-        # Find first interaction with blue wizard
-        T = -1
-        for (idx, action) in enumerate(plan)
-            if action.name == :interact && action.args[end] in blue_wizards
-                T = idx
-                break
-            end
-        end
-
-        if T == -1
-            T = length(plan)
-        end
-
         observed_plan_agent2 = collect(AStarPlanner(GoalManhattan())(domain_agent2, state_agent2, observed_agent_goals[goal_str]))
-        T <= length(observed_plan_agent2) || error("Observed plan exhausted for $map_key: need $T agent2 actions, found $(length(observed_plan_agent2))")
+        T = observation_stop_horizon(observed_plan_agent2)
+        observation_trace, observation_events = materialize_single_observation_trace(
+            "agent2", observed_plan_agent2, domain_agent2, state_agent2, T, :agent2
+        )
 
         steps_dict[map_key] = T
         replay_trace_dict[map_key] = Dict(
             "t" => T,
-            "observations" => [serialize_observation("agent2", action) for action in observed_plan_agent2[1:T]],
-            "observation_events" => [Dict(
-                "observation_index" => obs_idx,
-                "observed_agent" => "agent2",
-                "action" => write_pddl(observed_plan_agent2[obs_idx]),
-            ) for obs_idx in 1:T],
+            "observations" => observation_trace,
+            "observation_events" => observation_events,
             "stop_reason" => "first_blue_wizard_interaction",
         )
         

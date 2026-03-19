@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -48,6 +49,14 @@ def load_json(path: Path) -> dict:
         return json.load(f)
 
 
+def human_costs_path(repo_root: Path, exp: str) -> Path:
+    if exp == "exp4":
+        override = os.environ.get("EXP4_HUMAN_COSTS_FILE", "").strip()
+        if override:
+            return Path(override)
+    return repo_root / "data_processing" / "outputs" / "human_costs" / f"{exp}_human_costs.json"
+
+
 def normalize_exp1_model_key(model_key: str) -> str:
     if model_key.startswith("mod_") and model_key.endswith("_ascii"):
         return model_key.removeprefix("mod_").removesuffix("_ascii")
@@ -70,8 +79,10 @@ def human_candidates(exp: str, label: str, model_key: str) -> list[str]:
 
 
 def common_matched_keys(repo_root: Path, exp: str) -> tuple[dict[str, dict[str, float]], dict]:
-    model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
-    human_path = repo_root / "data_processing" / "outputs" / "human_costs" / f"{exp}_human_costs.json"
+    model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs"
+    if not model_dir.exists():
+        model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
+    human_path = human_costs_path(repo_root, exp)
     human_per_case = load_json(human_path)["per_case"]
 
     series_data = {}

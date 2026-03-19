@@ -52,6 +52,11 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Include tutorial levels instead of filtering them out.",
     )
+    parser.add_argument(
+        "--require-positive-total-steps-remaining",
+        action="store_true",
+        help="Only include participants whose summed LEVEL_COMPLETE 'Steps Remaining' across included levels is > 0.",
+    )
     return parser.parse_args()
 
 
@@ -220,6 +225,14 @@ def parse_participant_csv(csv_path: Path, exp: str, include_tutorials: bool) -> 
     }
 
 
+def participant_total_steps_remaining(levels: dict[str, dict[str, float]]) -> float:
+    return sum(
+        stats["final_steps_remaining"]
+        for stats in levels.values()
+        if not math.isnan(stats["final_steps_remaining"])
+    )
+
+
 def aggregate_levels(
     participant_level_costs: dict[str, dict[str, dict[str, float]]],
     move_cost: float,
@@ -334,6 +347,16 @@ def main() -> int:
             csv_path, exp=args.exp, include_tutorials=args.include_tutorials
         )
 
+    filtered_out_participants: list[str] = []
+    if args.require_positive_total_steps_remaining:
+        filtered = {}
+        for participant_id, levels in participant_level_costs.items():
+            if participant_total_steps_remaining(levels) > 0:
+                filtered[participant_id] = levels
+            else:
+                filtered_out_participants.append(participant_id)
+        participant_level_costs = filtered
+
     per_case = aggregate_levels(
         participant_level_costs,
         move_cost=args.move_cost,
@@ -349,6 +372,12 @@ def main() -> int:
             "move": args.move_cost,
             "interact": args.interact_cost,
             "observe": args.observe_cost,
+        },
+        "participant_filter": {
+            "require_positive_total_steps_remaining": args.require_positive_total_steps_remaining,
+            "participants_kept": len(participant_level_costs),
+            "participants_filtered_out": len(filtered_out_participants),
+            "filtered_out_ids": filtered_out_participants,
         },
         "summary": summary,
         "per_case": per_case,

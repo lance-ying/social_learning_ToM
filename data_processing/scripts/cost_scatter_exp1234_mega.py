@@ -19,6 +19,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import os
 from pathlib import Path
 
 import matplotlib.pyplot as plt
@@ -60,6 +61,14 @@ def parse_args() -> argparse.Namespace:
 def load_json(path: Path) -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def human_costs_path(repo_root: Path, exp: str) -> Path:
+    if exp == "exp4":
+        override = os.environ.get("EXP4_HUMAN_COSTS_FILE", "").strip()
+        if override:
+            return Path(override)
+    return repo_root / "data_processing" / "outputs" / "human_costs" / f"{exp}_human_costs.json"
 
 
 def normalize_exp1_model_key(model_key: str) -> str:
@@ -122,8 +131,10 @@ def collect_pairs(
 
 
 def build_row_pairs(repo_root: Path, exp: str, metric: str) -> dict[str, tuple[np.ndarray, np.ndarray, np.ndarray, list[str]]]:
-    model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
-    human_path = repo_root / "data_processing" / "outputs" / "human_costs" / f"{exp}_human_costs.json"
+    model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs"
+    if not model_dir.exists():
+        model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
+    human_path = human_costs_path(repo_root, exp)
     human_per_case = load_json(human_path)["per_case"]
 
     model_paths = {
@@ -146,6 +157,25 @@ def build_row_pairs(repo_root: Path, exp: str, metric: str) -> dict[str, tuple[n
         pairs[label] = collect_pairs(model_per_case, human_per_case, metric, key_mapper)
 
     return pairs
+
+
+def annotate_fit_stats(ax, x: np.ndarray, y: np.ndarray, include_error_metrics: bool) -> None:
+    r, ci_low, ci_high = bootstrap_r_ci(x, y, n_resamples=1000)
+    if include_error_metrics:
+        rmse = float(np.sqrt(np.mean((y - x) ** 2)))
+        mae = float(np.mean(np.abs(y - x)))
+        ax.text(
+            0.05,
+            0.90,
+            f"r = {r:.2f}\nCI = [{ci_low:.2f}, {ci_high:.2f}]\nRMSE = {rmse:.2f}\nMAE = {mae:.2f}",
+            transform=ax.transAxes,
+            ha="left",
+            va="top",
+            fontsize=20,
+            color="#1a1a1a",
+        )
+    else:
+        annotate_r_ci(ax, r, ci_low, ci_high)
 
 
 def plot_metric(metric: str, output_file: Path) -> None:
@@ -178,8 +208,7 @@ def plot_metric(metric: str, output_file: Path) -> None:
                 )
             else:
                 plot_points_errorbars_and_fit(ax, x, y, sd)
-                r, ci_low, ci_high = bootstrap_r_ci(x, y, n_resamples=1000)
-                annotate_r_ci(ax, r, ci_low, ci_high)
+                annotate_fit_stats(ax, x, y, include_error_metrics=(metric == "total_cost"))
 
             if row_idx == len(row_pairs) - 1:
                 ax.set_xlabel(f"{label}\nModel {pretty_metric}", fontsize=24, color="#1a1a1a")
