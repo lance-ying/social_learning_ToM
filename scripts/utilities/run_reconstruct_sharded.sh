@@ -21,7 +21,7 @@ usage() {
   cat <<'EOF'
 Usage:
   bash scripts/utilities/run_reconstruct_sharded.sh \
-    --exp exp3|exp4 \
+    --exp exp1|exp2|exp3|exp4 \
     --model <label> \
     --steps-file <path> \
     --inference-file <path> \
@@ -100,8 +100,8 @@ if [[ -z "$EXP" || -z "$MODEL_LABEL" || -z "$STEPS_FILE" || -z "$PROBLEM_DIR" ||
   exit 1
 fi
 
-if [[ "$EXP" != "exp3" && "$EXP" != "exp4" ]]; then
-  echo "Sharded runner only supports exp3 or exp4, got: $EXP" >&2
+if [[ "$EXP" != "exp1" && "$EXP" != "exp2" && "$EXP" != "exp3" && "$EXP" != "exp4" ]]; then
+  echo "Sharded runner only supports exp1, exp2, exp3, or exp4, got: $EXP" >&2
   exit 1
 fi
 
@@ -165,6 +165,8 @@ with open(steps_file) as f:
 def group_name(key: str) -> str:
     if exp in ("exp3", "exp4") and "_scenario" in key:
         return key.split("_scenario", 1)[0]
+    if exp in ("exp1", "exp2") and "_" in key:
+        return key.split("_", 1)[0]
     return key
 
 groups = OrderedDict()

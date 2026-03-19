@@ -14,6 +14,7 @@ include(joinpath(@__DIR__, "..", "..", "..", "src", "utils.jl"))
 include(joinpath(@__DIR__, "..", "..", "..", "src", "heuristics.jl"))
 # include(joinpath(@__DIR__, "..", "..", "..", "src", "render.jl"))
 include(joinpath(@__DIR__, "..", "..", "..", "src", "ascii.jl"))
+include(joinpath(@__DIR__, "..", "..", "..", "src", "planners.jl"))
 
 # Configuration section (matching wrapper pattern)
 experiment_id = "exp4_013026"  # Problem directory: problems_exp4_013026
@@ -26,6 +27,7 @@ metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
 metadata = JSON.parsefile(metadata_path)
 
 steps_dict = Dict()
+replay_trace_dict = Dict()
 
 domain_render = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain_render.pddl"))
 
@@ -49,6 +51,36 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
         end
     end
     return filtered
+end
+
+serialize_observation(agent::String, action::Term) = Dict(
+    "agent" => agent,
+    "action" => write_pddl(action),
+)
+
+function materialize_interleaved_observation_trace(map_key::String, observations, plan_agent2, plan_agent3)
+    trace = Any[]
+    events = Any[]
+    agent2_idx = 0
+    agent3_idx = 0
+    for (obs_idx, observed_agent) in enumerate(observations)
+        if observed_agent == "agent2"
+            agent2_idx += 1
+            agent2_idx <= length(plan_agent2) || error("Observed plan exhausted for $map_key: need $agent2_idx agent2 actions, found $(length(plan_agent2))")
+            action = plan_agent2[agent2_idx]
+        else
+            agent3_idx += 1
+            agent3_idx <= length(plan_agent3) || error("Observed plan exhausted for $map_key: need $agent3_idx agent3 actions, found $(length(plan_agent3))")
+            action = plan_agent3[agent3_idx]
+        end
+        push!(trace, serialize_observation(observed_agent, action))
+        push!(events, Dict(
+            "observation_index" => obs_idx,
+            "observed_agent" => observed_agent,
+            "action" => write_pddl(action),
+        ))
+    end
+    return trace, events
 end
 
 """
@@ -114,6 +146,29 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
 
     clear_planner_cache!()
 
+    domain_agent2 = load_domain(domain_path)
+    domain_agent3 = load_domain(domain_path)
+    txt_path = joinpath(PROBLEM_DIR, "$(map_id).txt")
+    ascii_content = read(txt_path, String)
+
+    temp_path_agent2 = joinpath(PROBLEM_DIR, ".temp_agent2_$(map_id).txt")
+    if !isfile(temp_path_agent2)
+        filtered_ascii_agent2 = filter_ascii_agents(ascii_content, :agent2)
+        write(temp_path_agent2, filtered_ascii_agent2)
+    end
+    problem_agent2 = load_ascii_problem(temp_path_agent2)
+    state_agent2 = initstate(domain_agent2, problem_agent2)
+    goals_agent2, _ = initialize_goals(state_agent2, :agent2)
+
+    temp_path_agent3 = joinpath(PROBLEM_DIR, ".temp_agent3_$(map_id).txt")
+    if !isfile(temp_path_agent3)
+        filtered_ascii_agent3 = filter_ascii_agents(ascii_content, :agent3)
+        write(temp_path_agent3, filtered_ascii_agent3)
+    end
+    problem_agent3 = load_ascii_problem(temp_path_agent3)
+    state_agent3 = initstate(domain_agent3, problem_agent3)
+    goals_agent3, _ = initialize_goals(state_agent3, :agent3)
+
     # Compute cost comparison once per map (results are the same for both scenarios)
     # Sub-problem 1: agent1 + agent2 (remove agent3)
     should_observe_agent2, T_agent2 = agent_cost_comparison(
@@ -147,11 +202,41 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
     # Both scenarios get the same result (non-mentalizing doesn't use scenario-specific goals)
     for scenario in 1:2
         map_key = "$(map_id)_scenario$(scenario)"
+        agent2_goal_info = agent_goals["agent2"][scenario]
+        agent3_goal_info = agent_goals["agent3"][scenario]
+        agent2_gem = agent2_goal_info["gem"]
+        agent3_gem = agent3_goal_info["gem"]
+        agent2_type = agent2_goal_info["type"]
+        agent3_type = agent3_goal_info["type"]
+        planner = AStarPlanner(GoalManhattan())
+        blue_wizards_agent2 = [w for w in PDDL.get_objects(state_agent2, :wizard) if state_agent2[pddl"(iscolor $w blue)"]]
+        blue_wizards_agent3 = [w for w in PDDL.get_objects(state_agent3, :wizard) if state_agent3[pddl"(iscolor $w blue)"]]
+        observed_plan_agent2 = agent2_type == "naive" ?
+            generate_naive_plan(domain_agent2, state_agent2, goals_agent2[agent2_gem], blue_wizards_agent2, :agent2, planner) :
+            collect(planner(domain_agent2, state_agent2, goals_agent2[agent2_gem]))
+        observed_plan_agent3 = agent3_type == "naive" ?
+            generate_naive_plan(domain_agent3, state_agent3, goals_agent3[agent3_gem], blue_wizards_agent3, :agent3, planner) :
+            collect(planner(domain_agent3, state_agent3, goals_agent3[agent3_gem]))
         steps_dict[map_key] = Dict(
             "observations" => observations,
             "agent2_count" => agent2_count,
             "agent3_count" => agent3_count,
             "t" => T
+        )
+        observation_trace, observation_events = materialize_interleaved_observation_trace(
+            map_key, observations, observed_plan_agent2, observed_plan_agent3
+        )
+        replay_trace_dict[map_key] = Dict(
+            "t" => T,
+            "observations" => observation_trace,
+            "observation_events" => observation_events,
+            "agent2_count" => agent2_count,
+            "agent3_count" => agent3_count,
+            "agent2_should_observe" => should_observe_agent2,
+            "agent3_should_observe" => should_observe_agent3,
+            "agent2_t_if_observed" => T_agent2,
+            "agent3_t_if_observed" => T_agent3,
+            "stop_reason" => "cost_comparison",
         )
         next!(progress)
     end
@@ -173,5 +258,11 @@ open(output_filename, "w") do f
     JSON.print(f, steps_dict, 4)
 end
 
+replay_trace_filename = "replay_trace_nonmentalize_exp4_v2.json"
+open(replay_trace_filename, "w") do f
+    JSON.print(f, replay_trace_dict, 4)
+end
+
 println("\n=== Experiment Complete ===")
 println("Results saved to: $output_filename")
+println("Replay trace saved to: $replay_trace_filename")

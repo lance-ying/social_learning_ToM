@@ -48,10 +48,15 @@ def load_json(path: Path) -> dict:
         return json.load(f)
 
 
+def normalize_exp1_model_key(model_key: str) -> str:
+    if model_key.startswith("mod_") and model_key.endswith("_ascii"):
+        return model_key.removeprefix("mod_").removesuffix("_ascii")
+    return model_key.split("_")[0]
+
+
 def exp1_human_candidates(label: str, model_key: str) -> list[str]:
-    if label == "full_model":
-        return [model_key]
-    return [f"mod_{model_key}_ascii"]
+    normalized = normalize_exp1_model_key(model_key)
+    return [f"mod_{normalized}_ascii"]
 
 
 def default_human_candidates(_label: str, model_key: str) -> list[str]:

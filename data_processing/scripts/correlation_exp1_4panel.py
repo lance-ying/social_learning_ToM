@@ -19,8 +19,19 @@ script_dir = Path(__file__).parent            # data_processing/scripts/
 data_processing_dir = script_dir.parent       # data_processing/
 workspace_root = data_processing_dir.parent   # repo root
 
+def first_existing(*paths: Path) -> Path:
+    for path in paths:
+        if path.exists():
+            return path
+    raise FileNotFoundError(f"No candidate file exists: {paths}")
+
 # ── load model / baseline JSONs ───────────────────────────────────────────
-with open(workspace_root / 'steps.dict.json') as f:
+model_json = first_existing(
+    workspace_root / 'scripts/experiments/experiment_outputs/steps_dict_exp1.json',
+    workspace_root / 'steps.dict.json',
+)
+
+with open(model_json) as f:
     steps_dict = json.load(f)
 
 with open(workspace_root / 'scripts/baselines/exp1/step_dict_naive_exp1.json') as f:
@@ -53,8 +64,11 @@ def collect_pairs(model_dict, human_dict, key_transform):
     """Return arrays: model_vals, human_means, human_sds, matched_keys."""
     m_vals, h_means, h_sds, keys = [], [], [], []
     for mk in model_dict:
-        hk = key_transform(mk)
-        if hk in human_dict:
+        candidates = key_transform(mk)
+        if isinstance(candidates, str):
+            candidates = [candidates]
+        hk = next((candidate for candidate in candidates if candidate in human_dict), None)
+        if hk is not None:
             m_vals.append(model_dict[mk])
             h_means.append(human_dict[hk]['mean_observe_per_activation'])
             h_sds.append(human_dict[hk]['bootstrap_sd'])
@@ -62,7 +76,7 @@ def collect_pairs(model_dict, human_dict, key_transform):
     return np.array(m_vals), np.array(h_means), np.array(h_sds), keys
 
 # key transforms
-main_transform     = lambda k: k.replace('_ascii', '_1')       # mod_s544_ascii -> mod_s544_1
+main_transform     = lambda k: [f'mod_{k}', f'mod_{k.split("_")[0]}_1', f'mod_{k.split("_")[0]}']
 baseline_transform  = lambda k: f'mod_{k}_1'                   # s351 -> mod_s351_1
 
 pairs = {

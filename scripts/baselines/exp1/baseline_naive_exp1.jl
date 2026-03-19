@@ -26,6 +26,11 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
     return filtered
 end
 
+serialize_observation(agent::String, action::Term) = Dict(
+    "agent" => agent,
+    "action" => write_pddl(action),
+)
+
 # Define directory paths
 experiment_id = "exp1"
 
@@ -33,6 +38,7 @@ PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_$experim
 
 #--- Initial Setup ---#
 steps_dict = Dict()
+replay_trace_dict = Dict()
 
 domain_render = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain_render.pddl"))
 
@@ -77,6 +83,16 @@ for map_id in map_ids
         end
         problem_agent1 = load_ascii_problem(temp_path_agent1)
         state_agent1 = initstate(domain_agent1, problem_agent1)
+
+        domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl"))
+        temp_path_agent2 = joinpath(PROBLEM_DIR, ".temp_agent2_$(map_id).txt")
+        if !isfile(temp_path_agent2)
+            filtered_ascii_agent2 = filter_ascii_agents(ascii_content, :agent2)
+            write(temp_path_agent2, filtered_ascii_agent2)
+        end
+        problem_agent2 = load_ascii_problem(temp_path_agent2)
+        state_agent2 = initstate(domain_agent2, problem_agent2)
+        observed_agent_goals, _ = initialize_goals(state_agent2, :agent2)
         
         blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
 
@@ -96,7 +112,20 @@ for map_id in map_ids
             T = length(plan)
         end
 
+    observed_plan_agent2 = collect(AStarPlanner(GoalManhattan())(domain_agent2, state_agent2, observed_agent_goals[1]))
+    T <= length(observed_plan_agent2) || error("Observed plan exhausted for $map_key: need $T agent2 actions, found $(length(observed_plan_agent2))")
+
     steps_dict[map_key] = T
+    replay_trace_dict[map_key] = Dict(
+        "t" => T,
+        "observations" => [serialize_observation("agent2", action) for action in observed_plan_agent2[1:T]],
+        "observation_events" => [Dict(
+            "observation_index" => obs_idx,
+            "observed_agent" => "agent2",
+            "action" => write_pddl(observed_plan_agent2[obs_idx]),
+        ) for obs_idx in 1:T],
+        "stop_reason" => "first_blue_wizard_interaction",
+    )
     
     scenario_elapsed = time() - scenario_start_time
     cache_stats = get_cache_stats()
@@ -122,5 +151,11 @@ open(output_filename, "w") do f
     JSON.print(f, steps_dict)
 end
 
+replay_trace_filename = "replay_trace_naive_exp1.json"
+open(replay_trace_filename, "w") do f
+    JSON.print(f, replay_trace_dict, 4)
+end
+
 println("\n=== Experiment Complete ===")
 println("Results saved to: $output_filename")
+println("Replay trace saved to: $replay_trace_filename")

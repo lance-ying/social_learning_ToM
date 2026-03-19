@@ -62,20 +62,20 @@ def load_json(path: Path) -> dict:
         return json.load(f)
 
 
+def normalize_exp1_model_key(model_key: str) -> str:
+    if model_key.startswith("mod_") and model_key.endswith("_ascii"):
+        return model_key.removeprefix("mod_").removesuffix("_ascii")
+    return model_key.split("_")[0]
+
+
 def exp1_full_model_human_keys(model_key: str) -> list[str]:
-    return [
-        model_key,
-        model_key.replace("_ascii", "_1"),
-        model_key.replace("_ascii", ""),
-    ]
+    normalized = normalize_exp1_model_key(model_key)
+    return [f"mod_{normalized}_ascii"]
 
 
 def exp1_baseline_human_keys(model_key: str) -> list[str]:
-    return [
-        f"mod_{model_key}_1",
-        f"mod_{model_key}_ascii",
-        f"mod_{model_key}",
-    ]
+    normalized = normalize_exp1_model_key(model_key)
+    return [f"mod_{normalized}_ascii"]
 
 
 def default_human_keys(model_key: str) -> list[str]:

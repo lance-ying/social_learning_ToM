@@ -17,10 +17,17 @@ include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
+include(joinpath(@__DIR__, "..", "..", "src", "planners.jl"))
 
 function wizard_candidate_cache_key(wizards)
     return join(sort!(string.(wizards)), "|")
 end
+
+serialize_wizards(wizards) = sort(string.(wizards))
+serialize_observation(agent::String, action::Term) = Dict(
+    "agent" => agent,
+    "action" => write_pddl(action),
+)
 
 # Helper function to filter ASCII map to only include specified agent
 function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
@@ -67,6 +74,7 @@ metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
 metadata = JSON.parsefile(metadata_path)
 
 steps_dict = Dict()
+replay_trace_dict = Dict()
 
 # Load inference data for both agents (agent2=X, agent3=Y)
 data = load(joinpath(@__DIR__, "..", "..", "data", "inference", inference_file))
@@ -189,6 +197,8 @@ for (map_id, agent_goals) in metadata
         observations = []
         agent2_count = 0
         agent3_count = 0
+        observation_events = Any[]
+        stop_reason = ""
 
         blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
         wizard_candicates = blue_wizards
@@ -264,9 +274,27 @@ for (map_id, agent_goals) in metadata
                 "agent2_count" => 0,
                 "agent3_count" => 0
             )
+            stop_reason = "agent1_no_blue_wizard_needed"
+            replay_trace_dict[map_key] = Dict(
+                "t" => 0,
+                "observations" => Any[],
+                "observation_events" => observation_events,
+                "agent2_count" => 0,
+                "agent3_count" => 0,
+                "initial_candidates" => serialize_wizards(blue_wizards),
+                "final_candidates" => serialize_wizards(wizard_candicates),
+                "stop_reason" => stop_reason,
+            )
             next!(progress)
             continue
         end
+
+        observed_plan_agent2 = agent2_type == "naive" ?
+            generate_naive_plan(domain_agent2, state_agent2, goals_agent2[agent2_gem], blue_wizards_agent2, :agent2, planner) :
+            collect(planner(domain_agent2, state_agent2, goals_agent2[agent2_gem]))
+        observed_plan_agent3 = agent3_type == "naive" ?
+            generate_naive_plan(domain_agent3, state_agent3, goals_agent3[agent3_gem], blue_wizards_agent3, :agent3, planner) :
+            collect(planner(domain_agent3, state_agent3, goals_agent3[agent3_gem]))
 
         # Note: We don't skip observations here - let Q-values determine if observing
         # is worthwhile. If agents don't need blue wizards, their Q-values will be
@@ -278,8 +306,8 @@ for (map_id, agent_goals) in metadata
             # Per-agent inference tables are indexed by that agent's own observation count.
             max_t_agent2 = size(goal_probs_agent2, 2) - 1
             max_t_agent3 = size(goal_probs_agent3, 2) - 1
-            can_observe_agent2 = agent2_count < max_t_agent2
-            can_observe_agent3 = agent3_count < max_t_agent3
+            can_observe_agent2 = agent2_count < max_t_agent2 && agent2_count < length(observed_plan_agent2)
+            can_observe_agent3 = agent3_count < max_t_agent3 && agent3_count < length(observed_plan_agent3)
 
             if !can_observe_agent2 && !can_observe_agent3
                 steps_dict[map_key] = Dict(
@@ -288,6 +316,7 @@ for (map_id, agent_goals) in metadata
                     "agent2_count" => agent2_count,
                     "agent3_count" => agent3_count
                 )
+                stop_reason = "observation_horizon_exhausted"
                 break
             end
 
@@ -548,6 +577,8 @@ for (map_id, agent_goals) in metadata
 
             if best_action_idx == 1
                 # Observe agent2 (X) - it has the lowest Q-value
+                candidates_before = serialize_wizards(wizard_candicates)
+                observed_action = observed_plan_agent2[agent2_count + 1]
                 push!(observations, "agent2")
                 agent2_count += 1
                 t += 1
@@ -559,8 +590,22 @@ for (map_id, agent_goals) in metadata
                         push!(wizard_candicates, blue_wizards[j])
                     end
                 end
+                push!(observation_events, Dict(
+                    "observation_index" => t,
+                    "observed_agent" => "agent2",
+                    "action" => write_pddl(observed_action),
+                    "q_observe_agent2" => Q_observe_agent2,
+                    "q_observe_agent3" => Q_observe_agent3,
+                    "q_not_observe" => Q_not_observe,
+                    "agent2_count_after" => agent2_count,
+                    "agent3_count_after" => agent3_count,
+                    "wizard_candidates_before" => candidates_before,
+                    "wizard_candidates_after" => serialize_wizards(wizard_candicates),
+                ))
             elseif best_action_idx == 2
                 # Observe agent3 (Y) - it has the lowest Q-value
+                candidates_before = serialize_wizards(wizard_candicates)
+                observed_action = observed_plan_agent3[agent3_count + 1]
                 push!(observations, "agent3")
                 agent3_count += 1
                 t += 1
@@ -572,6 +617,18 @@ for (map_id, agent_goals) in metadata
                         push!(wizard_candicates, blue_wizards[j])
                     end
                 end
+                push!(observation_events, Dict(
+                    "observation_index" => t,
+                    "observed_agent" => "agent3",
+                    "action" => write_pddl(observed_action),
+                    "q_observe_agent2" => Q_observe_agent2,
+                    "q_observe_agent3" => Q_observe_agent3,
+                    "q_not_observe" => Q_not_observe,
+                    "agent2_count_after" => agent2_count,
+                    "agent3_count_after" => agent3_count,
+                    "wizard_candidates_before" => candidates_before,
+                    "wizard_candidates_after" => serialize_wizards(wizard_candicates),
+                ))
             else
                 # best_action_idx == 3: Not observing has the lowest Q-value
                 steps_dict[map_key] = Dict(
@@ -580,9 +637,30 @@ for (map_id, agent_goals) in metadata
                     "agent2_count" => agent2_count,
                     "agent3_count" => agent3_count
                 )
+                stop_reason = "q_not_observe_better"
                 break
             end
         end
+
+        if !haskey(steps_dict, map_key)
+            steps_dict[map_key] = Dict(
+                "t" => t,
+                "observations" => observations,
+                "agent2_count" => agent2_count,
+                "agent3_count" => agent3_count
+            )
+            stop_reason = "goal_satisfied"
+        end
+        replay_trace_dict[map_key] = Dict(
+            "t" => steps_dict[map_key]["t"],
+            "observations" => [serialize_observation(event["observed_agent"], parse_pddl(event["action"])) for event in observation_events],
+            "observation_events" => observation_events,
+            "agent2_count" => agent2_count,
+            "agent3_count" => agent3_count,
+            "initial_candidates" => serialize_wizards(blue_wizards),
+            "final_candidates" => serialize_wizards(wizard_candicates),
+            "stop_reason" => stop_reason,
+        )
 
         # Update progress bar after each scenario
         scenario_elapsed = time() - scenario_start_time
@@ -611,8 +689,16 @@ open(output_path, "w") do io
     JSON.print(io, steps_dict, 4)
 end
 
+replay_trace_filename = "$(output_prefix)_scenario2_replay_trace.json"
+replay_trace_path = joinpath(OUTPUT_DIR, replay_trace_filename)
+open(replay_trace_path, "w") do io
+    JSON.print(io, replay_trace_dict, 4)
+end
+
 debug_println("\n=== Experiment Complete ===")
 debug_println("Results saved to: $output_path")
+debug_println("Replay trace saved to: $replay_trace_path")
 close(debug_log_file)
 println("\nResults saved to: $output_path")
+println("Replay trace saved to: $replay_trace_path")
 println("Debug output saved to: $debug_log_path")

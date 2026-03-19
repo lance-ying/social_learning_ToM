@@ -27,6 +27,12 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
     return filtered
 end
 
+serialize_wizards(wizards) = sort(string.(wizards))
+serialize_observation(agent::String, action::Term) = Dict(
+    "agent" => agent,
+    "action" => write_pddl(action),
+)
+
 # include("paths_new.jl")
 # Define directory paths
 experiment_id = "exp1"
@@ -44,6 +50,7 @@ problem_files = filter(f -> endswith(f, ".pddl") && !endswith(f, "_plan.pddl"), 
 # metadata = JSON.parsefile(metadata_path)
 
 steps_dict = Dict()
+replay_trace_dict = Dict()
 
 # steps_dict = JSON.parsefile("/Users/lance/Documents/GitHub/ObserveMove/step_dict.json") 
 
@@ -117,12 +124,23 @@ for problem_file in problem_files
     state_render_agent1 = copy(state_agent1)
     domain_agent1, state_agent1 = PDDL.compiled(domain_agent1, problem_agent1)
 
+    domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
+    temp_path_agent2 = joinpath(PROBLEM_DIR, ".temp_agent2_$(map_id).txt")
+    if !isfile(temp_path_agent2)
+        filtered_ascii_agent2 = filter_ascii_agents(ascii_content, :agent2)
+        write(temp_path_agent2, filtered_ascii_agent2)
+    end
+    problem_agent2 = load_ascii_problem(temp_path_agent2)
+    state_agent2 = initstate(domain_agent2, problem_agent2)
+    domain_agent2, state_agent2 = PDDL.compiled(domain_agent2, problem_agent2)
+
     # Render initial state
 
     #--- Goal Inference Setup ---#
 
     # Specify possible goals
     goals, goal_names = initialize_goals(state)
+    observed_agent_goals, _ = initialize_goals(state_agent2, :agent2)
 
     # goal_names = ["A", "B", "C"]
     # goal_colors = gem_colors
@@ -136,6 +154,8 @@ for problem_file in problem_files
 
 
     t= 0
+    observation_events = Any[]
+    stop_reason = ""
 
     blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
     wizard_candicates = blue_wizards
@@ -165,8 +185,19 @@ for problem_file in problem_files
     if !any(x-> x.name == :interact && x.args[end] in blue_wizards, plan)
         print("t=", 0)
         steps_dict[map_key] = 0
+        stop_reason = "agent1_no_blue_wizard_needed"
+        replay_trace_dict[map_key] = Dict(
+            "t" => 0,
+            "observations" => Any[],
+            "observation_events" => observation_events,
+            "initial_candidates" => serialize_wizards(blue_wizards),
+            "final_candidates" => serialize_wizards(wizard_candicates),
+            "stop_reason" => stop_reason,
+        )
         continue
     end
+
+    observed_agent_plan = collect(planner(domain_agent2, state_agent2, observed_agent_goals[g_id]))
 
     while !PDDL.satisfy(domain_agent1, state_agent1, problem_agent1.goal)
 
@@ -245,6 +276,12 @@ for problem_file in problem_files
         println()
     
         if Q_observe+0.3 < Q_not_observe
+            candidates_before = serialize_wizards(wizard_candicates)
+            if t + 1 > length(observed_agent_plan)
+                steps_dict[map_key] = t
+                stop_reason = "observed_plan_exhausted"
+                break
+            end
             t+=1
     
             wizard_candicates = []
@@ -254,12 +291,35 @@ for problem_file in problem_files
                     push!(wizard_candicates, blue_wizards[j])
                 end
             end
+            push!(observation_events, Dict(
+                "observation_index" => t,
+                "observed_agent" => "agent2",
+                "action" => write_pddl(observed_agent_plan[t]),
+                "q_observe" => Q_observe,
+                "q_not_observe" => Q_not_observe,
+                "wizard_candidates_before" => candidates_before,
+                "wizard_candidates_after" => serialize_wizards(wizard_candicates),
+            ))
         else
             print("t = ", t)
             steps_dict[map_key] = t
+            stop_reason = "q_not_observe_better"
             break
         end
     end
+
+    if !haskey(steps_dict, map_key)
+        steps_dict[map_key] = t
+        stop_reason = "goal_satisfied"
+    end
+    replay_trace_dict[map_key] = Dict(
+        "t" => steps_dict[map_key],
+        "observations" => [serialize_observation(event["observed_agent"], parse_pddl(event["action"])) for event in observation_events],
+        "observation_events" => observation_events,
+        "initial_candidates" => serialize_wizards(blue_wizards),
+        "final_candidates" => serialize_wizards(wizard_candicates),
+        "stop_reason" => stop_reason,
+    )
 end
 
 
@@ -268,3 +328,9 @@ open(output_path, "w") do io
     JSON.print(io, steps_dict)
 end
 println("Results saved to: $output_path")
+
+replay_trace_path = joinpath(OUTPUT_DIR, "replay_trace_$experiment_id.json")
+open(replay_trace_path, "w") do io
+    JSON.print(io, replay_trace_dict, 4)
+end
+println("Replay trace saved to: $replay_trace_path")

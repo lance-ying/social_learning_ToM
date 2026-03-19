@@ -47,18 +47,29 @@ println("=" ^ 50)
 results1_path = joinpath(OUTPUT_DIR, "$(output_prefix)_scenario1.json")
 results2_path = joinpath(OUTPUT_DIR, "$(output_prefix)_scenario2.json")
 merged_path = joinpath(OUTPUT_DIR, "$(output_prefix).json")
+trace1_path = joinpath(OUTPUT_DIR, "$(output_prefix)_scenario1_replay_trace.json")
+trace2_path = joinpath(OUTPUT_DIR, "$(output_prefix)_scenario2_replay_trace.json")
+merged_trace_path = joinpath(OUTPUT_DIR, "$(output_prefix)_replay_trace.json")
 
 results1 = JSON.parsefile(results1_path)
 results2 = JSON.parsefile(results2_path)
+trace1 = JSON.parsefile(trace1_path)
+trace2 = JSON.parsefile(trace2_path)
 
 # Merge the two dictionaries
 merged = merge(results1, results2)
+merged_trace = merge(trace1, trace2)
 
 open(merged_path, "w") do io
     JSON.print(io, merged, 4)
 end
 
+open(merged_trace_path, "w") do io
+    JSON.print(io, merged_trace, 4)
+end
+
 println("Scenario 1 results: $results1_path")
 println("Scenario 2 results: $results2_path")
 println("Merged results: $merged_path")
+println("Merged replay trace: $merged_trace_path")
 println("\n=== Experiment Complete ===")

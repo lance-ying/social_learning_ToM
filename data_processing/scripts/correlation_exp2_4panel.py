@@ -20,8 +20,19 @@ script_dir = Path(__file__).parent            # data_processing/scripts/
 data_processing_dir = script_dir.parent       # data_processing/
 workspace_root = data_processing_dir.parent   # repo root
 
+def first_existing(*paths: Path) -> Path:
+    for path in paths:
+        if path.exists():
+            return path
+    raise FileNotFoundError(f"No candidate file exists: {paths}")
+
 # ── load model / baseline JSONs ───────────────────────────────────────────
-with open(workspace_root / 'steps_exp2.json') as f:
+model_json = first_existing(
+    workspace_root / 'scripts/experiments/experiment_outputs/steps_dict_exp2.json',
+    workspace_root / 'steps_exp2.json',
+)
+
+with open(model_json) as f:
     steps_dict = json.load(f)
 
 with open(workspace_root / 'scripts/baselines/exp2/step_dict_naive_exp2.json') as f:

@@ -23,6 +23,7 @@ Examples:
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp3,exp4
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp2
   bash scripts/utilities/run_reconstruct_replay_all.sh --exp3-4 --parallel-multiagent-jobs 4
+  bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp1,exp2 --parallel-multiagent-jobs 4
 EOF
 }
 
@@ -120,7 +121,7 @@ run_reconstruct() {
   echo "    steps:   $steps_file"
   echo "    output:  $output_file"
 
-  if [[ "$PARALLEL_MULTIAGENT_JOBS" -gt 1 && ( "$exp" == "exp3" || "$exp" == "exp4" ) ]]; then
+  if [[ "$PARALLEL_MULTIAGENT_JOBS" -gt 1 ]]; then
     bash scripts/utilities/run_reconstruct_sharded.sh \
       --exp "$exp" \
       --model "$label" \

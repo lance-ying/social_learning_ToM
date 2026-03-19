@@ -28,6 +28,7 @@ metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
 metadata = JSON.parsefile(metadata_path)
 
 steps_dict = Dict()
+replay_trace_dict = Dict()
 
 # Load inference data for both agents (agent2=X, agent3=Y)
 data = load(joinpath(@__DIR__, "..", "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"))
@@ -55,6 +56,36 @@ function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
         end
     end
     return filtered
+end
+
+serialize_observation(agent::String, action::Term) = Dict(
+    "agent" => agent,
+    "action" => write_pddl(action),
+)
+
+function materialize_interleaved_observation_trace(map_key::String, observations, plan_agent2, plan_agent3)
+    trace = Any[]
+    events = Any[]
+    agent2_idx = 0
+    agent3_idx = 0
+    for (obs_idx, observed_agent) in enumerate(observations)
+        if observed_agent == "agent2"
+            agent2_idx += 1
+            agent2_idx <= length(plan_agent2) || error("Observed plan exhausted for $map_key: need $agent2_idx agent2 actions, found $(length(plan_agent2))")
+            action = plan_agent2[agent2_idx]
+        else
+            agent3_idx += 1
+            agent3_idx <= length(plan_agent3) || error("Observed plan exhausted for $map_key: need $agent3_idx agent3 actions, found $(length(plan_agent3))")
+            action = plan_agent3[agent3_idx]
+        end
+        push!(trace, serialize_observation(observed_agent, action))
+        push!(events, Dict(
+            "observation_index" => obs_idx,
+            "observed_agent" => observed_agent,
+            "action" => write_pddl(action),
+        ))
+    end
+    return trace, events
 end
 
 """
@@ -220,6 +251,8 @@ for (map_id, agent_goals) in metadata
         # Get which gems each agent wants in this scenario
         agent2_gem = agent_goals["agent2"][scenario]  # X's goal
         agent3_gem = agent_goals["agent3"][scenario]  # Y's goal
+        observed_plan_agent2 = collect(planner(domain_agent2, state_agent2, goals_agent2[agent2_gem]))
+        observed_plan_agent3 = collect(planner(domain_agent3, state_agent3, goals_agent3[agent3_gem]))
 
         # Load scenario-specific probabilities
         goal_probs_agent2 = goal_probs_conditioned_dict["agent2"][map_id][scenario][agent2_gem][s_id_agent2]
@@ -270,6 +303,17 @@ for (map_id, agent_goals) in metadata
             "agent3_count" => agent3_count,
             "t" => T
         )
+        observation_trace, observation_events = materialize_interleaved_observation_trace(
+            map_key, observations, observed_plan_agent2, observed_plan_agent3
+        )
+        replay_trace_dict[map_key] = Dict(
+            "t" => T,
+            "observations" => observation_trace,
+            "observation_events" => observation_events,
+            "agent2_count" => agent2_count,
+            "agent3_count" => agent3_count,
+            "stop_reason" => "state_divergence",
+        )
 
         scenario_elapsed = time() - scenario_start_time
         println("    Result: agent2=$T_agent2, agent3=$T_agent3, total=$T")
@@ -294,5 +338,11 @@ open(output_filename, "w") do f
     JSON.print(f, steps_dict, 4)
 end
 
+replay_trace_filename = "replay_trace_mentalize_exp3.json"
+open(replay_trace_filename, "w") do f
+    JSON.print(f, replay_trace_dict, 4)
+end
+
 println("\n=== Experiment Complete ===")
 println("Results saved to: $output_filename")
+println("Replay trace saved to: $replay_trace_filename")
