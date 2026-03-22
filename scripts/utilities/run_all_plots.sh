@@ -77,6 +77,8 @@ run_plot "$PYTHON_BIN" data_processing/scripts/cost_scatter_exp1234_mega.py --me
 run_plot "$PYTHON_BIN" data_processing/scripts/cost_scatter_exp1234_mega.py --metric move_cost
 run_plot "$PYTHON_BIN" data_processing/scripts/cost_scatter_exp1234_mega.py --metric interaction_cost
 
+run_plot "$PYTHON_BIN" data_processing/scripts/cost_forest_exp1234_multi.py --metrics total_cost planning_cost observe_cost
+run_plot "$PYTHON_BIN" data_processing/scripts/cost_effects_exp1234_multi.py --metrics total_cost planning_cost observe_cost
 run_plot "$PYTHON_BIN" data_processing/scripts/cost_barplot_exp1234_multi.py --metrics total_cost planning_cost observe_cost
 run_plot "$PYTHON_BIN" data_processing/scripts/steps_barplot_exp1234_multi.py
 run_plot "$PYTHON_BIN" data_processing/scripts/run_all_correlation_4panel.py --python "$PYTHON_BIN"
