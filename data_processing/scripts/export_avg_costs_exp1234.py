@@ -68,6 +68,10 @@ def summary_mean_key(metric: str) -> str:
     return f"mean_{metric}"
 
 
+def summary_median_key(metric: str) -> str:
+    return f"median_{metric}"
+
+
 def extract_summary_value(path: Path, key: str) -> float:
     data = load_json(path)
     summary = data.get("summary", {})
@@ -80,10 +84,13 @@ def build_output(repo_root: Path, metric: str) -> dict:
     out = {"metric": summary_mean_key(metric)}
     models_root = model_dir(repo_root)
     mean_key = summary_mean_key(metric)
+    median_key = summary_median_key(metric)
 
     for exp in EXPERIMENTS:
+        human_path = human_costs_path(repo_root, exp)
         exp_out = {
-            "human": extract_summary_value(human_costs_path(repo_root, exp), mean_key),
+            "human_mean": extract_summary_value(human_path, mean_key),
+            "human_median": extract_summary_value(human_path, median_key),
         }
         for label in MODEL_LABELS:
             exp_out[label] = extract_summary_value(models_root / f"{exp}_{label}.json", mean_key)

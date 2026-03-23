@@ -27,6 +27,7 @@ import numpy as np
 
 from correlation_4panel_style import (
     annotate_r_ci,
+    bootstrap_ccc_ci,
     apply_reference_style,
     bootstrap_r_ci,
     plot_points_errorbars_and_fit,
@@ -50,6 +51,12 @@ def parse_args() -> argparse.Namespace:
         choices=["planning_cost", "total_cost", "observe_cost", "move_cost", "interaction_cost"],
         default="total_cost",
         help="Cost metric to plot.",
+    )
+    parser.add_argument(
+        "--human-aggregate",
+        choices=["mean", "median"],
+        default="mean",
+        help="Human per-level aggregate to plot on the y-axis.",
     )
     parser.add_argument(
         "--output-file",
@@ -95,6 +102,7 @@ def collect_pairs(
     model_per_case: dict,
     human_per_case: dict,
     metric: str,
+    human_aggregate: str,
     human_key_candidates,
 ) -> tuple[np.ndarray, np.ndarray, np.ndarray, list[str]]:
     model_vals = []
@@ -102,7 +110,7 @@ def collect_pairs(
     human_sds = []
     matched_keys = []
 
-    human_mean_key = f"{metric}_mean"
+    human_center_key = f"{metric}_{human_aggregate}"
     human_sd_key = f"{metric}_sd"
 
     for model_key, model_data in model_per_case.items():
@@ -114,11 +122,11 @@ def collect_pairs(
             continue
 
         human_data = human_per_case[human_key]
-        if human_mean_key not in human_data:
+        if human_center_key not in human_data:
             continue
 
         model_vals.append(float(model_data[metric]))
-        human_means.append(float(human_data[human_mean_key]))
+        human_means.append(float(human_data[human_center_key]))
         human_sds.append(float(human_data.get(human_sd_key, 0.0)))
         matched_keys.append(human_key)
 
@@ -130,7 +138,9 @@ def collect_pairs(
     )
 
 
-def build_row_pairs(repo_root: Path, exp: str, metric: str) -> dict[str, tuple[np.ndarray, np.ndarray, np.ndarray, list[str]]]:
+def build_row_pairs(
+    repo_root: Path, exp: str, metric: str, human_aggregate: str
+) -> dict[str, tuple[np.ndarray, np.ndarray, np.ndarray, list[str]]]:
     model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs"
     if not model_dir.exists():
         model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
@@ -154,20 +164,21 @@ def build_row_pairs(repo_root: Path, exp: str, metric: str) -> dict[str, tuple[n
         else:
             key_mapper = default_human_keys
 
-        pairs[label] = collect_pairs(model_per_case, human_per_case, metric, key_mapper)
+        pairs[label] = collect_pairs(model_per_case, human_per_case, metric, human_aggregate, key_mapper)
 
     return pairs
 
 
 def annotate_fit_stats(ax, x: np.ndarray, y: np.ndarray, include_error_metrics: bool) -> None:
     r, ci_low, ci_high = bootstrap_r_ci(x, y, n_resamples=1000)
+    ccc, _ccc_low, _ccc_high = bootstrap_ccc_ci(x, y, n_resamples=1000)
     if include_error_metrics:
         rmse = float(np.sqrt(np.mean((y - x) ** 2)))
         mae = float(np.mean(np.abs(y - x)))
         ax.text(
             0.05,
             0.90,
-            f"r = {r:.2f}\nCI = [{ci_low:.2f}, {ci_high:.2f}]\nRMSE = {rmse:.2f}\nMAE = {mae:.2f}",
+            f"r = {r:.2f}\nCI = [{ci_low:.2f}, {ci_high:.2f}]\nCCC = {ccc:.2f}\nRMSE = {rmse:.2f}\nMAE = {mae:.2f}",
             transform=ax.transAxes,
             ha="left",
             va="top",
@@ -175,19 +186,29 @@ def annotate_fit_stats(ax, x: np.ndarray, y: np.ndarray, include_error_metrics: 
             color="#1a1a1a",
         )
     else:
-        annotate_r_ci(ax, r, ci_low, ci_high)
+        ax.text(
+            0.05,
+            0.90,
+            f"r = {r:.2f}\nCI = [{ci_low:.2f}, {ci_high:.2f}]\nCCC = {ccc:.2f}",
+            transform=ax.transAxes,
+            ha="left",
+            va="top",
+            fontsize=24,
+            color="#1a1a1a",
+        )
 
 
-def plot_metric(metric: str, output_file: Path) -> None:
+def plot_metric(metric: str, human_aggregate: str, output_file: Path) -> None:
     repo_root = Path(__file__).resolve().parents[2]
     row_pairs = [
-        ("Experiment 1", build_row_pairs(repo_root, "exp1", metric)),
-        ("Experiment 2", build_row_pairs(repo_root, "exp2", metric)),
-        ("Experiment 3", build_row_pairs(repo_root, "exp3", metric)),
-        ("Experiment 4", build_row_pairs(repo_root, "exp4", metric)),
+        ("Experiment 1", build_row_pairs(repo_root, "exp1", metric, human_aggregate)),
+        ("Experiment 2", build_row_pairs(repo_root, "exp2", metric, human_aggregate)),
+        ("Experiment 3", build_row_pairs(repo_root, "exp3", metric, human_aggregate)),
+        ("Experiment 4", build_row_pairs(repo_root, "exp4", metric, human_aggregate)),
     ]
 
     pretty_metric = metric.replace("_", " ")
+    pretty_aggregate = human_aggregate.capitalize()
     fig, axes = plt.subplots(4, 4, figsize=(20, 19))
 
     for row_idx, (row_label, pairs) in enumerate(row_pairs):
@@ -216,7 +237,11 @@ def plot_metric(metric: str, output_file: Path) -> None:
                 ax.set_xlabel("")
 
             if col_idx == 0:
-                ax.set_ylabel(f"{row_label}\nHuman {pretty_metric}", fontsize=22, color="#1a1a1a")
+                ax.set_ylabel(
+                    f"{row_label}\nHuman {pretty_aggregate} {pretty_metric}",
+                    fontsize=22,
+                    color="#1a1a1a",
+                )
             else:
                 ax.set_ylabel("")
 
@@ -230,16 +255,18 @@ def plot_metric(metric: str, output_file: Path) -> None:
 def main() -> int:
     args = parse_args()
     repo_root = Path(__file__).resolve().parents[2]
-    output_file = (
-        Path(args.output_file)
-        if args.output_file
-        else repo_root
-        / "data_processing"
-        / "outputs"
-        / "plots"
-        / f"cost_scatter_{args.metric}_exp1234_mega.png"
-    )
-    plot_metric(args.metric, output_file)
+    if args.output_file:
+        output_file = Path(args.output_file)
+    else:
+        suffix = "" if args.human_aggregate == "mean" else f"_human_{args.human_aggregate}"
+        output_file = (
+            repo_root
+            / "data_processing"
+            / "outputs"
+            / "plots"
+            / f"cost_scatter_{args.metric}_exp1234_mega{suffix}.png"
+        )
+    plot_metric(args.metric, args.human_aggregate, output_file)
     return 0
 
 

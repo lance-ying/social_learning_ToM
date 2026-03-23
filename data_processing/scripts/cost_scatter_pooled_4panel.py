@@ -16,7 +16,7 @@ from pathlib import Path
 import matplotlib.pyplot as plt
 import numpy as np
 
-from correlation_4panel_style import apply_reference_style, bootstrap_r_ci
+from correlation_4panel_style import apply_reference_style, bootstrap_ccc_ci, bootstrap_r_ci
 from grouped_barplot_style import EXPERIMENTS, EXPERIMENT_COLORS, EXPERIMENT_LABELS
 
 
@@ -111,10 +111,11 @@ def annotate_stats(ax: plt.Axes, x: np.ndarray, y: np.ndarray) -> None:
     if len(x) < 3:
         return
     r, ci_low, ci_high = bootstrap_r_ci(x, y, n_resamples=1000)
+    ccc, _ccc_low, _ccc_high = bootstrap_ccc_ci(x, y, n_resamples=1000)
     ax.text(
         0.05,
         0.90,
-        f"r = {r:.2f}\nCI = [{ci_low:.2f}, {ci_high:.2f}]",
+        f"r = {r:.2f}\nCI = [{ci_low:.2f}, {ci_high:.2f}]\nCCC = {ccc:.2f}",
         transform=ax.transAxes,
         ha="left",
         va="top",

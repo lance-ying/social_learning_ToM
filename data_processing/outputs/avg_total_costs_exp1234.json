@@ -1,31 +1,35 @@
 {
   "metric": "mean_total_cost",
   "exp1": {
-    "human": 104.32853939642733,
+    "human_mean": 104.32853939642733,
+    "human_median": 97.5,
     "full_model": 97.85,
     "social_mentalizing": 99.4,
-    "rational_non_mentalizing": 109.05,
-    "naive_observer": 109.25
+    "rational_non_mentalizing": 102.3,
+    "naive_observer": 102.5
   },
   "exp2": {
-    "human": 124.94681249492868,
-    "full_model": 113.8125,
-    "social_mentalizing": 115.60416666666667,
-    "rational_non_mentalizing": 112.41666666666667,
-    "naive_observer": 112.70833333333333
+    "human_mean": 124.94681249492868,
+    "human_median": 114.5,
+    "full_model": 105.0,
+    "social_mentalizing": 106.79166666666667,
+    "rational_non_mentalizing": 111.16666666666667,
+    "naive_observer": 111.45833333333333
   },
   "exp3": {
-    "human": 123.44319476018086,
-    "full_model": 105.575,
-    "social_mentalizing": 109.1,
-    "rational_non_mentalizing": 126.425,
-    "naive_observer": 128.125
+    "human_mean": 123.44319476018086,
+    "human_median": 114.5,
+    "full_model": 109.975,
+    "social_mentalizing": 113.5,
+    "rational_non_mentalizing": 122.125,
+    "naive_observer": 123.825
   },
   "exp4": {
-    "human": 119.28750401935844,
-    "full_model": 107.3,
-    "social_mentalizing": 116.675,
-    "rational_non_mentalizing": 116.65,
-    "naive_observer": 119.05
+    "human_mean": 119.28750401935844,
+    "human_median": 120.0,
+    "full_model": 112.85,
+    "social_mentalizing": 122.225,
+    "rational_non_mentalizing": 119.025,
+    "naive_observer": 121.425
   }
 }

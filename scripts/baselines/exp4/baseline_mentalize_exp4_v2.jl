@@ -65,6 +65,7 @@ serialize_observation(agent::String, action::Term, interaction_outcome::String="
     "action" => write_pddl(action),
     "interaction_outcome" => interaction_outcome,
 )
+serialize_wizards(wizards) = sort(string.(wizards))
 
 function agent_has_blue_item(state, agent_sym::Symbol)
     for key in PDDL.get_objects(state, :key)
@@ -88,14 +89,28 @@ function realized_observation_horizon(target_horizon::Int, observed_plan)
     return min(target_horizon, length(observed_plan))
 end
 
-function materialize_interleaved_observation_trace(map_key::String, observations, plan_agent2, plan_agent3, domain_agent2, state_agent2, domain_agent3, state_agent3)
+function materialize_interleaved_observation_trace(
+    map_key::String,
+    observations,
+    plan_agent2,
+    plan_agent3,
+    domain_agent2,
+    state_agent2,
+    domain_agent3,
+    state_agent3,
+    blue_wizards,
+    state_probs_agent2,
+    state_probs_agent3,
+)
     trace = Any[]
     events = Any[]
     agent2_idx = 0
     agent3_idx = 0
     observed_state_agent2 = copy(state_agent2)
     observed_state_agent3 = copy(state_agent3)
+    wizard_candidates = copy(blue_wizards)
     for (obs_idx, observed_agent) in enumerate(observations)
+        candidates_before = serialize_wizards(wizard_candidates)
         if observed_agent == "agent2"
             agent2_idx += 1
             agent2_idx <= length(plan_agent2) || error("Observed plan exhausted for $map_key: need $agent2_idx agent2 actions, found $(length(plan_agent2))")
@@ -103,6 +118,10 @@ function materialize_interleaved_observation_trace(map_key::String, observations
             state_before_observation = copy(observed_state_agent2)
             observed_state_agent2 = PDDL.execute(domain_agent2, observed_state_agent2, action)
             observed_outcome = interaction_outcome(state_before_observation, observed_state_agent2, :agent2, action)
+            wizard_candidates = [
+                blue_wizards[j] for j in 1:length(blue_wizards)
+                if state_probs_agent2[j, agent2_idx + 1] > 0.1
+            ]
         else
             agent3_idx += 1
             agent3_idx <= length(plan_agent3) || error("Observed plan exhausted for $map_key: need $agent3_idx agent3 actions, found $(length(plan_agent3))")
@@ -110,6 +129,10 @@ function materialize_interleaved_observation_trace(map_key::String, observations
             state_before_observation = copy(observed_state_agent3)
             observed_state_agent3 = PDDL.execute(domain_agent3, observed_state_agent3, action)
             observed_outcome = interaction_outcome(state_before_observation, observed_state_agent3, :agent3, action)
+            wizard_candidates = [
+                blue_wizards[j] for j in 1:length(blue_wizards)
+                if state_probs_agent3[j, agent3_idx + 1] > 0.1
+            ]
         end
         push!(trace, serialize_observation(observed_agent, action, observed_outcome))
         push!(events, Dict(
@@ -117,9 +140,11 @@ function materialize_interleaved_observation_trace(map_key::String, observations
             "observed_agent" => observed_agent,
             "action" => write_pddl(action),
             "interaction_outcome" => observed_outcome,
+            "wizard_candidates_before" => candidates_before,
+            "wizard_candidates_after" => serialize_wizards(wizard_candidates),
         ))
     end
-    return trace, events
+    return trace, events, serialize_wizards(wizard_candidates)
 end
 
 """
@@ -374,9 +399,11 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->x[1])
             "agent3_count" => agent3_count,
             "t" => T
         )
-        observation_trace, observation_events = materialize_interleaved_observation_trace(
+        blue_wizards = [w for w in PDDL.get_objects(state_agent1, :wizard) if state_agent1[pddl"(iscolor $w blue)"]]
+        observation_trace, observation_events, final_candidates = materialize_interleaved_observation_trace(
             map_key, observations, observed_plan_agent2, observed_plan_agent3,
-            domain_agent2, state_agent2, domain_agent3, state_agent3
+            domain_agent2, state_agent2, domain_agent3, state_agent3,
+            blue_wizards, state_probs_agent2, state_probs_agent3
         )
         replay_trace_dict[map_key] = Dict(
             "t" => T,
@@ -384,6 +411,8 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->x[1])
             "observation_events" => observation_events,
             "agent2_count" => agent2_count,
             "agent3_count" => agent3_count,
+            "initial_candidates" => serialize_wizards(blue_wizards),
+            "final_candidates" => final_candidates,
             "stop_reason" => "state_divergence",
         )
 

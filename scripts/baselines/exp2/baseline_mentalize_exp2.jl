@@ -35,6 +35,7 @@ serialize_observation(agent::String, action::Term, interaction_outcome::String="
     "action" => write_pddl(action),
     "interaction_outcome" => interaction_outcome,
 )
+serialize_wizards(wizards) = sort(string.(wizards))
 
 function agent_has_blue_item(state, agent_sym::Symbol)
     for key in PDDL.get_objects(state, :key)
@@ -54,24 +55,41 @@ function interaction_outcome(state_before, state_after, agent_sym::Symbol, actio
     return (!had_blue_before && has_blue_after) ? "blue_amulet_present" : "blue_amulet_absent"
 end
 
-function materialize_single_observation_trace(observed_agent::String, observed_plan, domain, start_state, T::Int, agent_sym::Symbol)
+function materialize_single_observation_trace(
+    observed_agent::String,
+    observed_plan,
+    domain,
+    start_state,
+    T::Int,
+    agent_sym::Symbol,
+    blue_wizards,
+    state_probs,
+)
     trace = Any[]
     events = Any[]
     observed_state = copy(start_state)
+    wizard_candidates = copy(blue_wizards)
     for obs_idx in 1:T
+        candidates_before = serialize_wizards(wizard_candidates)
         action = observed_plan[obs_idx]
         state_before_observation = copy(observed_state)
         observed_state = PDDL.execute(domain, observed_state, action)
         observed_outcome = interaction_outcome(state_before_observation, observed_state, agent_sym, action)
+        wizard_candidates = [
+            blue_wizards[j] for j in 1:length(blue_wizards)
+            if state_probs[j, obs_idx + 1] > 0.1
+        ]
         push!(trace, serialize_observation(observed_agent, action, observed_outcome))
         push!(events, Dict(
             "observation_index" => obs_idx,
             "observed_agent" => observed_agent,
             "action" => write_pddl(action),
             "interaction_outcome" => observed_outcome,
+            "wizard_candidates_before" => candidates_before,
+            "wizard_candidates_after" => serialize_wizards(wizard_candidates),
         ))
     end
-    return trace, events
+    return trace, events, serialize_wizards(wizard_candidates)
 end
 
 function realized_observation_horizon(target_horizon::Int, observed_plan)
@@ -212,8 +230,8 @@ for (map_id, goal_list) in metadata
 
         observed_plan_agent2 = collect(planner(domain_agent2, state_agent2, observed_agent_goals[g_id]))
         T = realized_observation_horizon(T, observed_plan_agent2)
-        observation_trace, observation_events = materialize_single_observation_trace(
-            "agent2", observed_plan_agent2, domain_agent2, state_agent2, T, :agent2
+        observation_trace, observation_events, final_candidates = materialize_single_observation_trace(
+            "agent2", observed_plan_agent2, domain_agent2, state_agent2, T, :agent2, blue_wizards, state_probs
         )
 
         steps_dict[map_key] = T
@@ -221,6 +239,8 @@ for (map_id, goal_list) in metadata
             "t" => T,
             "observations" => observation_trace,
             "observation_events" => observation_events,
+            "initial_candidates" => serialize_wizards(blue_wizards),
+            "final_candidates" => final_candidates,
             "stop_reason" => T < max_t ? "state_divergence" : "observed_plan_or_horizon_exhausted",
         )
         

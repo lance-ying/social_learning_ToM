@@ -100,7 +100,7 @@ function usage()
         Usage:
           julia scripts/utilities/reconstruct_model_costs.jl \\
             --exp exp1|exp2|exp3|exp3_debug|exp4|exp4_wrapper \\
-            [--model full_model|social_mentalizing|rational_non_mentalizing|naive_observer] \\
+            [--model full_model|social_mentalizing|rational_non_mentalizing|naive_observer|agent1_naive_planner] \\
             --steps-file <path/to/steps_dict.json> \\
             [--replay-trace-file <path/to/replay_trace.json>] \\
             [--disable-exp4-interaction-outcome-pruning] \\
@@ -108,7 +108,10 @@ function usage()
             [--restrict-to-human-levels] [--human-costs-file <path/to/human_costs.json>] \\
             [--output-file <path/to/output.json>] \\
             [--problem-dir <path/to/dataset/problems_...>] \\
-            [--move-cost <float>] [--interact-cost <float>] [--observe-cost <float>]
+            [--move-cost <float>] [--interact-cost <float>] [--observe-cost <float>] \\
+            [--posterior-candidate-rule prob_threshold|top_mass|positive_support] \\
+            [--posterior-mass-threshold <float>]
+            [--posterior-prob-threshold <float>]
 
         Notes:
         - Reconstruction replays stored observations and uses model-specific internal updates.
@@ -169,6 +172,35 @@ end
 function parse_real_opt(opts::Dict{String, String}, key::String)
     haskey(opts, key) || return nothing
     return parse(Float64, opts[key])
+end
+
+function resolve_posterior_candidate_rule(opts::Dict{String, String})
+    rule = lowercase(get(opts, "posterior-candidate-rule", "prob_threshold"))
+    rule in ("prob_threshold", "top_mass", "positive_support") || error(
+        "Unsupported --posterior-candidate-rule: $rule (expected prob_threshold, top_mass, or positive_support)"
+    )
+
+    posterior_mass_threshold = parse_real_opt(opts, "posterior-mass-threshold")
+    if posterior_mass_threshold === nothing
+        posterior_mass_threshold = 0.9
+    end
+    0.0 < posterior_mass_threshold <= 1.0 || error(
+        "--posterior-mass-threshold must be in (0, 1], got $(posterior_mass_threshold)"
+    )
+
+    posterior_prob_threshold = parse_real_opt(opts, "posterior-prob-threshold")
+    if posterior_prob_threshold === nothing
+        posterior_prob_threshold = 0.1
+    end
+    0.0 <= posterior_prob_threshold <= 1.0 || error(
+        "--posterior-prob-threshold must be in [0, 1], got $(posterior_prob_threshold)"
+    )
+
+    return (
+        rule = rule,
+        mass_threshold = posterior_mass_threshold,
+        prob_threshold = posterior_prob_threshold,
+    )
 end
 
 function default_action_cost(exp::String, steps_file::String)
@@ -242,6 +274,9 @@ function resolve_model_label(opts::Dict{String, String}, steps_file::String)
         return lowercase(opts["model"])
     end
     file_label = lowercase(basename(steps_file))
+    if occursin("agent1_naive", file_label)
+        return "agent1_naive_planner"
+    end
     if occursin("naive", file_label)
         return "naive_observer"
     elseif occursin("nonmental", file_label)
@@ -301,6 +336,7 @@ function filter_steps_dict_to_human_cases(
 end
 
 is_mentalizing_model(model_label::String) = model_label in ("full_model", "social_mentalizing")
+uses_agent1_naive_replay(model_label::String) = model_label == "agent1_naive_planner"
 uses_latent_hypothesis_replay(model_label::String) = is_mentalizing_model(model_label)
 uses_direct_evidence_candidates(model_label::String) = model_label in ("rational_non_mentalizing", "naive_observer")
 
@@ -517,7 +553,7 @@ function build_agent1_context(map_id, problem_dir)
     )
 end
 
-function candidate_support_at_count(blue_wizards, state_probs, obs_count::Int)
+function candidate_support_at_count(blue_wizards, state_probs, obs_count::Int; rule::String="prob_threshold", mass_threshold::Float64=0.9, prob_threshold::Float64=0.1)
     max_t = size(state_probs, 2) - 1
     nrows = size(state_probs, 1)
     nw = min(length(blue_wizards), nrows)
@@ -527,20 +563,53 @@ function candidate_support_at_count(blue_wizards, state_probs, obs_count::Int)
     end
 
     idx = t_use + 1
+    probs = [Float64(state_probs[j, idx]) for j in 1:nw]
+    positive_indices = [j for j in 1:nw if probs[j] > 0]
+    isempty(positive_indices) && return copy(blue_wizards), t_use
+
     wizard_candidates = Any[]
-    for j in 1:nw
-        if state_probs[j, idx] > 0.1
+    if rule == "prob_threshold"
+        threshold_indices = [j for j in positive_indices if probs[j] >= prob_threshold]
+        isempty(threshold_indices) && return copy(blue_wizards), t_use
+        for j in threshold_indices
             push!(wizard_candidates, blue_wizards[j])
         end
+        return wizard_candidates, t_use
+    elseif rule == "positive_support"
+        for j in positive_indices
+            push!(wizard_candidates, blue_wizards[j])
+        end
+        return wizard_candidates, t_use
+    elseif rule == "top_mass"
+        total_positive_mass = sum(probs[j] for j in positive_indices)
+        total_positive_mass <= 0 && return copy(blue_wizards), t_use
+
+        ranked_indices = sort(positive_indices, by=j -> (-probs[j], string(blue_wizards[j])))
+        running_mass = 0.0
+        for j in ranked_indices
+            push!(wizard_candidates, blue_wizards[j])
+            running_mass += probs[j]
+            if running_mass / total_positive_mass >= mass_threshold
+                break
+            end
+        end
+        return wizard_candidates, t_use
     end
-    return wizard_candidates, t_use
+    error("Unsupported posterior candidate rule: $rule")
 end
 
-function replay_wizard_candidates_single(blue_wizards, state_probs, t::Int)
-    return candidate_support_at_count(blue_wizards, state_probs, t)
+function replay_wizard_candidates_single(blue_wizards, state_probs, t::Int; posterior_rule)
+    return candidate_support_at_count(
+        blue_wizards,
+        state_probs,
+        t;
+        rule=posterior_rule.rule,
+        mass_threshold=posterior_rule.mass_threshold,
+        prob_threshold=posterior_rule.prob_threshold,
+    )
 end
 
-function replay_wizard_candidates_multi(blue_wizards, state_probs_agent2, state_probs_agent3, observations::AbstractVector, t::Int)
+function replay_wizard_candidates_multi(blue_wizards, state_probs_agent2, state_probs_agent3, observations::AbstractVector, t::Int; posterior_rule)
     wizard_candidates = copy(blue_wizards)
     t_use = min(t, length(observations))
     agent2_obs_count = 0
@@ -552,10 +621,24 @@ function replay_wizard_candidates_multi(blue_wizards, state_probs_agent2, state_
 
         if obs_k == "agent2"
             agent2_obs_count += 1
-            current_support, _ = candidate_support_at_count(blue_wizards, state_probs_agent2, agent2_obs_count)
+            current_support, _ = candidate_support_at_count(
+                blue_wizards,
+                state_probs_agent2,
+                agent2_obs_count;
+                rule=posterior_rule.rule,
+                mass_threshold=posterior_rule.mass_threshold,
+                prob_threshold=posterior_rule.prob_threshold,
+            )
         elseif obs_k == "agent3"
             agent3_obs_count += 1
-            current_support, _ = candidate_support_at_count(blue_wizards, state_probs_agent3, agent3_obs_count)
+            current_support, _ = candidate_support_at_count(
+                blue_wizards,
+                state_probs_agent3,
+                agent3_obs_count;
+                rule=posterior_rule.rule,
+                mass_threshold=posterior_rule.mass_threshold,
+                prob_threshold=posterior_rule.prob_threshold,
+            )
         end
 
         if current_support !== nothing
@@ -767,6 +850,12 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
     replan_count = 0
     initial_plan_time = 0.0
     replan_time_total = 0.0
+    plan = Term[]
+    curr_state = copy(state)
+    explored_state_ids = Set{Int}()
+    executed_actions = String[]
+    executed_terms = Term[]
+    planning_action_counts = Dict("move" => 0, "interact" => 0, "observe" => 0)
 
     function timed_get_cached_plan!(state_for_plan, bucket::Symbol)
         start_time = time()
@@ -795,18 +884,23 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
         return best_idx, plan
     end
 
+    function exhaustion_error(reason::String)
+        label = isempty(case_label) ? "unlabeled_case" : case_label
+        executed_tail = isempty(executed_actions) ? "<none>" : join(executed_actions[max(1, end - 4):end], " | ")
+        error(
+            "Latent hypothesis exhaustion in $(label): $(reason) " *
+            "(observations=$(length(observations)), executed=$(length(executed_actions)), " *
+            "remaining_hypotheses=$(length(hypotheses)), replans=$(replan_count), " *
+            "recent_actions=$(executed_tail))"
+        )
+    end
+
     if isempty(hypotheses)
-        plan = Term[]
-        curr_state = copy(state)
-        explored_state_ids = Set{Int}()
-        push!(warnings, "No latent-state hypothesis available; skipped planning rather than using true-state planning.")
+        exhaustion_error("No latent-state hypothesis available at initialization.")
     else
         best_idx, plan = timed_choose_shortest_plan(hypotheses, Set{Int}(), :initial)
         if best_idx == 0
-            plan = Term[]
-            curr_state = copy(hypotheses[1])
-            explored_state_ids = Set{Int}()
-            push!(warnings, "No latent-state hypothesis plan available; skipped planning rather than using true-state planning.")
+            exhaustion_error("No latent-state hypothesis plan available at initialization.")
         else
             curr_state = copy(hypotheses[best_idx])
             explored_state_ids = Set([best_idx])
@@ -820,10 +914,6 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
             "start_hypotheses=$(length(hypotheses))"
         )
     end
-
-    executed_actions = String[]
-    executed_terms = Term[]
-    planning_action_counts = Dict("move" => 0, "interact" => 0, "observe" => 0)
 
     while !PDDL.satisfy(domain, true_state, goal)
         now = time()
@@ -846,7 +936,7 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
                     push!(explored_state_ids, best_idx)
                     curr_state = copy(hypotheses[best_idx])
                 else
-                    push!(warnings, "Exhausted hypotheses during replay; stopped planning rather than using true-state replanning.")
+                    exhaustion_error("Exhausted hypotheses during replay.")
                 end
             end
             isempty(plan) && break
@@ -861,9 +951,7 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
                 curr_state = copy(hypotheses[best_idx])
                 push!(warnings, "Replanned before execution because $(PDDL.write_pddl(action)) was not applicable in the true state.")
             else
-                plan = Term[]
-                push!(warnings, "Stopped planning because $(PDDL.write_pddl(action)) was not applicable in the true state and no latent-state hypothesis remained.")
-                break
+                exhaustion_error("Action $(PDDL.write_pddl(action)) was not applicable in the true state and no latent-state hypothesis remained.")
             end
             continue
         end
@@ -877,7 +965,7 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
                     curr_state = copy(hypotheses[best_idx])
                     push!(warnings, "Current hypothesis could not execute $(PDDL.write_pddl(action)); replanned using another latent-state hypothesis.")
                 else
-                    push!(warnings, "Current hypothesis could not execute $(PDDL.write_pddl(action)); stopped planning rather than using true-state replanning.")
+                    exhaustion_error("Current hypothesis could not execute $(PDDL.write_pddl(action)).")
                 end
             else
                 push!(warnings, "Current plan state could not execute $(PDDL.write_pddl(action)); replanned within the current latent-state hypothesis.")
@@ -906,15 +994,31 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
             push!(warnings, "Pruned $pruned_hypotheses latent-state hypotheses because $(PDDL.write_pddl(action)) was not applicable.")
         end
 
-        if action.name == :interact && !equivalent_plan_state(true_state, curr_state)
-            best_idx, plan = timed_choose_shortest_plan(hypotheses, explored_state_ids, :replan)
-            replan_count += 1
-            if best_idx > 0
-                push!(explored_state_ids, best_idx)
-                curr_state = copy(hypotheses[best_idx])
+        if action.name == :interact
+            consistent_hypotheses = Any[
+                copy(hypothesis) for hypothesis in hypotheses
+                if equivalent_plan_state(hypothesis, true_state)
+            ]
+            pruned_by_interaction = length(hypotheses) - length(consistent_hypotheses)
+            if pruned_by_interaction > 0
+                hypotheses = consistent_hypotheses
+                explored_state_ids = Set{Int}()
+                push!(warnings, "Pruned $pruned_by_interaction latent-state hypotheses after interaction outcome.")
+            end
+
+            if isempty(hypotheses)
+                exhaustion_error("Interaction outcome ruled out all latent-state hypotheses.")
+            elseif !equivalent_plan_state(true_state, curr_state)
+                best_idx, plan = timed_choose_shortest_plan(hypotheses, Set{Int}(), :replan)
+                replan_count += 1
+                if best_idx > 0
+                    explored_state_ids = Set([best_idx])
+                    curr_state = copy(hypotheses[best_idx])
+                else
+                    exhaustion_error("Interaction revealed mismatch after all hypotheses were explored.")
+                end
             else
-                plan = Term[]
-                push!(warnings, "Interaction revealed mismatch after all hypotheses were explored; stopped planning rather than using true-state replanning.")
+                plan = plan[2:end]
             end
         else
             plan = plan[2:end]
@@ -1224,8 +1328,40 @@ function direct_evidence_candidate_names(belief_names, observation_events)
     return candidate_names, warnings, true
 end
 
-function mentalizing_candidates_exp1(ctx, map_key, t, inference_data)
-    cache_key = ("exp1", map_key, t)
+function replay_trace_candidate_names(entry, belief_names)
+    entry isa Dict || return nothing, String[]
+    belief_name_set = Set(string(name) for name in belief_names)
+
+    if haskey(entry, "final_candidates")
+        raw_candidates = entry["final_candidates"]
+        candidate_names = sort!([string(name) for name in raw_candidates if string(name) in belief_name_set])
+        if !isempty(candidate_names)
+            return candidate_names, [
+                "Used replay trace final_candidates for mentalizing posterior replay."
+            ]
+        end
+    end
+
+    if haskey(entry, "observation_events")
+        raw_events = entry["observation_events"]
+        for raw_event in Iterators.reverse(raw_events)
+            if raw_event isa Dict && haskey(raw_event, "wizard_candidates_after")
+                raw_candidates = raw_event["wizard_candidates_after"]
+                candidate_names = sort!([string(name) for name in raw_candidates if string(name) in belief_name_set])
+                if !isempty(candidate_names)
+                    return candidate_names, [
+                        "Used replay trace wizard_candidates_after for mentalizing posterior replay."
+                    ]
+                end
+            end
+        end
+    end
+
+    return nothing, String[]
+end
+
+function mentalizing_candidates_exp1(ctx, map_key, t, inference_data, posterior_rule)
+    cache_key = ("exp1", map_key, t, posterior_rule.rule, posterior_rule.mass_threshold)
     return get_cached_posterior_filter!(cache_key) do
         state_dict = inference_data["state"]
         map_id = normalize_exp1_map_key(map_key)
@@ -1236,15 +1372,17 @@ function mentalizing_candidates_exp1(ctx, map_key, t, inference_data)
 
         blue_wizards = [PDDL.parse_pddl(name) for name in ctx.belief_names]
         state_probs = state_dict[inference_map_id][goal_id][s_id]
-        candidate_wizards, _ = replay_wizard_candidates_single(blue_wizards, state_probs, t)
+        candidate_wizards, _ = replay_wizard_candidates_single(blue_wizards, state_probs, t; posterior_rule=posterior_rule)
         filtered_states, dropped = filter_hypotheses_by_candidates(ctx.initial_states, ctx.belief_names, candidate_wizards)
-        warnings = isempty(dropped) ? String[] : ["Filtered hypotheses after observations to $(length(filtered_states)) candidate states."]
+        warnings = isempty(dropped) ? String[] : [
+            "Filtered hypotheses after observations to $(length(filtered_states)) candidate states using posterior rule $(posterior_rule.rule) (threshold=$(posterior_rule.mass_threshold))."
+        ]
         return filtered_states, [string(w) for w in candidate_wizards], warnings
     end
 end
 
-function mentalizing_candidates_exp2(ctx, map_key, t, inference_data, metadata)
-    cache_key = ("exp2", map_key, t)
+function mentalizing_candidates_exp2(ctx, map_key, t, inference_data, metadata, posterior_rule)
+    cache_key = ("exp2", map_key, t, posterior_rule.rule, posterior_rule.mass_threshold)
     return get_cached_posterior_filter!(cache_key) do
         state_dict = inference_data["state"]
         parts = split(map_key, "_")
@@ -1256,16 +1394,25 @@ function mentalizing_candidates_exp2(ctx, map_key, t, inference_data, metadata)
 
         blue_wizards = [PDDL.parse_pddl(name) for name in ctx.belief_names]
         state_probs = state_dict[map_id][g_id][s_id]
-        candidate_wizards, _ = replay_wizard_candidates_single(blue_wizards, state_probs, t)
+        candidate_wizards, _ = replay_wizard_candidates_single(blue_wizards, state_probs, t; posterior_rule=posterior_rule)
         filtered_states, dropped = filter_hypotheses_by_candidates(ctx.initial_states, ctx.belief_names, candidate_wizards)
-        warnings = isempty(dropped) ? String[] : ["Filtered hypotheses after observations to $(length(filtered_states)) candidate states."]
+        warnings = isempty(dropped) ? String[] : [
+            "Filtered hypotheses after observations to $(length(filtered_states)) candidate states using posterior rule $(posterior_rule.rule) (threshold=$(posterior_rule.mass_threshold))."
+        ]
         return filtered_states, [string(w) for w in candidate_wizards], warnings
     end
 end
 
-function mentalizing_candidates_exp3_or_exp4(ctx, map_key, observations, inference_data, metadata, exp4_metadata_style)
-    cache_key = ((exp4_metadata_style ? "exp4" : "exp3"), map_key, Tuple(observations))
+function mentalizing_candidates_exp3_or_exp4(ctx, map_key, observations, entry, inference_data, metadata, exp4_metadata_style, posterior_rule)
+    cache_key = ((exp4_metadata_style ? "exp4" : "exp3"), map_key, Tuple(observations), posterior_rule.rule, posterior_rule.mass_threshold)
     return get_cached_posterior_filter!(cache_key) do
+        replay_candidates, replay_candidate_warnings = replay_trace_candidate_names(entry, ctx.belief_names)
+        if replay_candidates !== nothing
+            filtered_states, dropped = select_hypotheses_by_belief_names(ctx.initial_states, ctx.belief_names, replay_candidates)
+            warnings = vcat(replay_candidate_warnings, dropped)
+            return filtered_states, replay_candidates, warnings
+        end
+
         state_dict = inference_data["state"]
         map_id, scenario = parse_map_scenario_key(map_key)
 
@@ -1283,14 +1430,23 @@ function mentalizing_candidates_exp3_or_exp4(ctx, map_key, observations, inferen
 
         state_probs_agent2 = state_dict["agent2"][map_id][scenario][agent2_gem][ctx.s_id_a2]
         state_probs_agent3 = state_dict["agent3"][map_id][scenario][agent3_gem][ctx.s_id_a3]
-        candidate_wizards, _ = replay_wizard_candidates_multi(ctx.blue_wizards, state_probs_agent2, state_probs_agent3, observations, length(observations))
+        candidate_wizards, _ = replay_wizard_candidates_multi(
+            ctx.blue_wizards,
+            state_probs_agent2,
+            state_probs_agent3,
+            observations,
+            length(observations);
+            posterior_rule=posterior_rule,
+        )
         filtered_states, dropped = filter_hypotheses_by_candidates(ctx.initial_states, ctx.belief_names, candidate_wizards)
-        warnings = isempty(dropped) ? String[] : ["Filtered hypotheses after observations to $(length(filtered_states)) candidate states."]
+        warnings = isempty(dropped) ? String[] : [
+            "Filtered hypotheses after observations to $(length(filtered_states)) candidate states using posterior rule $(posterior_rule.rule) (threshold=$(posterior_rule.mass_threshold))."
+        ]
         return filtered_states, [string(w) for w in candidate_wizards], warnings
     end
 end
 
-function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data)
+function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, posterior_rule)
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
     reduced_cache = Dict{String, Any}()
@@ -1314,7 +1470,7 @@ function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cos
         warnings = copy(observation_warnings)
         if is_mentalizing_model(model_label)
             hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
-            posterior_states, candidate_names, warnings = mentalizing_candidates_exp1(ctx, map_key, t, inference_data)
+            posterior_states, candidate_names, warnings = mentalizing_candidates_exp1(ctx, map_key, t, inference_data, posterior_rule)
             if use_reduced_agent1_planning
                 hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
                     replay_ctx.initial_states, replay_ctx.belief_names, candidate_names
@@ -1331,10 +1487,22 @@ function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cos
         elseif uses_direct_evidence_candidates(model_label)
             candidate_names, direct_warnings, had_direct_evidence = direct_evidence_candidate_names(replay_ctx.belief_names, observation_events)
             warnings = vcat(warnings, direct_warnings)
-            replay = replay_case_candidate_search(
-                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, candidate_names, observations, action_cost;
+            hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
+            hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
+                replay_ctx.initial_states, replay_ctx.belief_names, candidate_names
+            )
+            warnings = vcat(warnings, projection_warnings)
+            if had_direct_evidence && isempty(candidate_names)
+                push!(warnings, "Direct-evidence update ruled out all named candidates; replay kept all latent hypotheses rather than true-state candidate search.")
+            end
+            replay = replay_case(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
                 cache_scope=("exp1", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
-                had_direct_evidence=had_direct_evidence,
+            )
+        elseif uses_agent1_naive_replay(model_label)
+            replay = replay_case_naive_like(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, observations, action_cost;
+                cache_scope=("exp1", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
             )
         else
             replay = replay_case(
@@ -1352,7 +1520,7 @@ function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cos
                 "observation_source" => observation_source,
                 "observation_trace" => observations,
                 "observation_events" => observation_events,
-                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? "direct_observation_evidence" : "no_mentalizing_update"),
+                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? "direct_observation_evidence" : (uses_agent1_naive_replay(model_label) ? "agent1_naive_planner" : "no_mentalizing_update")),
                 "planning_world" => use_reduced_agent1_planning ? "agent1_reduced_ascii" : "full_single_agent_pddl",
                 "posterior_candidates" => candidate_names,
                 "reconstruction_mode" => "model_faithful_replay",
@@ -1364,7 +1532,7 @@ function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cos
     return out
 end
 
-function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, metadata)
+function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, metadata, posterior_rule)
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
     reduced_cache = Dict{String, Any}()
@@ -1388,7 +1556,7 @@ function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cos
         warnings = copy(observation_warnings)
         if is_mentalizing_model(model_label)
             hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
-            posterior_states, candidate_names, warnings = mentalizing_candidates_exp2(ctx, map_key, t, inference_data, metadata)
+            posterior_states, candidate_names, warnings = mentalizing_candidates_exp2(ctx, map_key, t, inference_data, metadata, posterior_rule)
             if use_reduced_agent1_planning
                 hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
                     replay_ctx.initial_states, replay_ctx.belief_names, candidate_names
@@ -1405,10 +1573,22 @@ function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cos
         elseif uses_direct_evidence_candidates(model_label)
             candidate_names, direct_warnings, had_direct_evidence = direct_evidence_candidate_names(replay_ctx.belief_names, observation_events)
             warnings = vcat(warnings, direct_warnings)
-            replay = replay_case_candidate_search(
-                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, candidate_names, observations, action_cost;
+            hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
+            hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
+                replay_ctx.initial_states, replay_ctx.belief_names, candidate_names
+            )
+            warnings = vcat(warnings, projection_warnings)
+            if had_direct_evidence && isempty(candidate_names)
+                push!(warnings, "Direct-evidence update ruled out all named candidates; replay kept all latent hypotheses rather than true-state candidate search.")
+            end
+            replay = replay_case(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
                 cache_scope=("exp2", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
-                had_direct_evidence=had_direct_evidence,
+            )
+        elseif uses_agent1_naive_replay(model_label)
+            replay = replay_case_naive_like(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, observations, action_cost;
+                cache_scope=("exp2", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
             )
         else
             replay = replay_case(
@@ -1426,7 +1606,7 @@ function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cos
                 "observation_source" => observation_source,
                 "observation_trace" => observations,
                 "observation_events" => observation_events,
-                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? "direct_observation_evidence" : "no_mentalizing_update"),
+                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? "direct_observation_evidence" : (uses_agent1_naive_replay(model_label) ? "agent1_naive_planner" : "no_mentalizing_update")),
                 "planning_world" => use_reduced_agent1_planning ? "agent1_reduced_ascii" : "full_single_agent_pddl",
                 "posterior_candidates" => candidate_names,
                 "reconstruction_mode" => "model_faithful_replay",
@@ -1438,7 +1618,7 @@ function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cos
     return out
 end
 
-function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, metadata; exp4_metadata_style=false, disable_exp4_interaction_outcome_pruning=false)
+function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, metadata, posterior_rule; exp4_metadata_style=false, disable_exp4_interaction_outcome_pruning=false)
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
     reduced_cache = Dict{String, Any}()
@@ -1474,7 +1654,7 @@ function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, ac
         if is_mentalizing_model(model_label)
             hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
             posterior_states, candidate_names, warnings = mentalizing_candidates_exp3_or_exp4(
-                ctx, map_key, observations, inference_data, metadata, exp4_metadata_style
+                ctx, map_key, observations, entry, inference_data, metadata, exp4_metadata_style, posterior_rule
             )
             if use_reduced_agent1_planning
                 hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
@@ -1499,11 +1679,24 @@ function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, ac
                 candidate_names, direct_warnings, had_direct_evidence = direct_evidence_candidate_names(replay_ctx.belief_names, observation_events)
             end
             warnings = vcat(warnings, direct_warnings)
-            replay = replay_case_candidate_search(
-                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, candidate_names, observations, action_cost;
+            hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
+            hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
+                replay_ctx.initial_states, replay_ctx.belief_names, candidate_names
+            )
+            warnings = vcat(warnings, projection_warnings)
+            if had_direct_evidence && isempty(candidate_names)
+                push!(warnings, "Direct-evidence update ruled out all named candidates; replay kept all latent hypotheses rather than true-state candidate search.")
+            end
+            replay = replay_case(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
                 cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
                 case_label=map_key,
-                had_direct_evidence=had_direct_evidence,
+            )
+        elseif uses_agent1_naive_replay(model_label)
+            replay = replay_case_naive_like(
+                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, observations, action_cost;
+                cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+                case_label=map_key,
             )
         else
             replay = replay_case(
@@ -1527,7 +1720,7 @@ function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, ac
                 "observation_source" => observation_source,
                 "observation_trace" => observations,
                 "observation_events" => observation_events,
-                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? "direct_observation_evidence" : "no_mentalizing_update"),
+                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? "direct_observation_evidence" : (uses_agent1_naive_replay(model_label) ? "agent1_naive_planner" : "no_mentalizing_update")),
                 "planning_world" => use_reduced_agent1_planning ? "agent1_reduced_ascii" : "full_multi_agent_ascii",
                 "posterior_candidates" => candidate_names,
                 "posterior_filter_time" => posterior_filter_time,
@@ -1642,10 +1835,11 @@ function main()
     clear_posterior_filter_cache!()
     inference_data = is_mentalizing_model(model_label) ? Dict("state" => load(inference_file, "state")) : nothing
     action_cost = resolve_action_cost(opts, exp, steps_file)
+    posterior_rule = resolve_posterior_candidate_rule(opts)
     costs = if exp == "exp1"
-        reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data)
+        reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, posterior_rule)
     elseif exp == "exp2"
-        reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, metadata)
+        reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cost, model_label, inference_data, metadata, posterior_rule)
     elseif exp == "exp3"
         reconstruct_exp3_or_exp4(
             steps_dict,
@@ -1654,7 +1848,8 @@ function main()
             action_cost,
             model_label,
             inference_data,
-            metadata;
+            metadata,
+            posterior_rule;
             exp4_metadata_style=false,
             disable_exp4_interaction_outcome_pruning=disable_exp4_interaction_outcome_pruning,
         )
@@ -1666,7 +1861,8 @@ function main()
             action_cost,
             model_label,
             inference_data,
-            metadata;
+            metadata,
+            posterior_rule;
             exp4_metadata_style=true,
             disable_exp4_interaction_outcome_pruning=disable_exp4_interaction_outcome_pruning,
         )
@@ -1683,6 +1879,11 @@ function main()
         "inference_file" => inference_file,
         "problem_dir" => problem_dir,
         "disable_exp4_interaction_outcome_pruning" => disable_exp4_interaction_outcome_pruning,
+        "posterior_candidate_rule" => Dict(
+            "rule" => posterior_rule.rule,
+            "mass_threshold" => posterior_rule.mass_threshold,
+            "prob_threshold" => posterior_rule.prob_threshold,
+        ),
         "human_level_filter" => human_level_filter,
         "reconstruction_mode" => "model_faithful_replay",
         "action_cost" => Dict(String(k) => v for (k, v) in action_cost),

@@ -20,7 +20,7 @@ import json
 import math
 from collections import defaultdict
 from pathlib import Path
-from statistics import mean, stdev
+from statistics import mean, median, stdev
 
 
 SKIP_LEVELS = {"comprehension_check", "experiment"}
@@ -107,6 +107,10 @@ def safe_mean(values: list[float]) -> float:
 
 def safe_sd(values: list[float]) -> float:
     return stdev(values) if len(values) > 1 else 0.0
+
+
+def safe_median(values: list[float]) -> float:
+    return median(values) if values else 0.0
 
 
 def parse_participant_csv(csv_path: Path, exp: str, include_tutorials: bool) -> dict[str, dict[str, float]]:
@@ -270,34 +274,55 @@ def aggregate_levels(
 
     per_case = {}
     for level, entries in sorted(by_level.items()):
+        move_steps = [e["move_steps"] for e in entries]
+        observe_steps = [e["observe_steps"] for e in entries]
+        interaction_steps = [e["interaction_steps"] for e in entries]
+        planning_steps = [e["planning_steps"] for e in entries]
+        total_steps = [e["total_steps"] for e in entries]
+        move_costs = [e["move_cost"] for e in entries]
+        observe_costs = [e["observe_cost"] for e in entries]
+        interaction_costs = [e["interaction_cost"] for e in entries]
+        planning_costs = [e["planning_cost"] for e in entries]
+        total_costs = [e["total_cost"] for e in entries]
+        steps_remaining = [
+            e["final_steps_remaining"] for e in entries if not math.isnan(e["final_steps_remaining"])
+        ]
+
         per_case[level] = {
             "n_participants": len(entries),
-            "move_steps_mean": safe_mean([e["move_steps"] for e in entries]),
-            "move_steps_sd": safe_sd([e["move_steps"] for e in entries]),
-            "observe_steps_mean": safe_mean([e["observe_steps"] for e in entries]),
-            "observe_steps_sd": safe_sd([e["observe_steps"] for e in entries]),
-            "interaction_steps_mean": safe_mean([e["interaction_steps"] for e in entries]),
-            "interaction_steps_sd": safe_sd([e["interaction_steps"] for e in entries]),
-            "planning_steps_mean": safe_mean([e["planning_steps"] for e in entries]),
-            "planning_steps_sd": safe_sd([e["planning_steps"] for e in entries]),
-            "total_steps_mean": safe_mean([e["total_steps"] for e in entries]),
-            "total_steps_sd": safe_sd([e["total_steps"] for e in entries]),
-            "move_cost_mean": safe_mean([e["move_cost"] for e in entries]),
-            "move_cost_sd": safe_sd([e["move_cost"] for e in entries]),
-            "observe_cost_mean": safe_mean([e["observe_cost"] for e in entries]),
-            "observe_cost_sd": safe_sd([e["observe_cost"] for e in entries]),
-            "interaction_cost_mean": safe_mean([e["interaction_cost"] for e in entries]),
-            "interaction_cost_sd": safe_sd([e["interaction_cost"] for e in entries]),
-            "planning_cost_mean": safe_mean([e["planning_cost"] for e in entries]),
-            "planning_cost_sd": safe_sd([e["planning_cost"] for e in entries]),
-            "total_cost_mean": safe_mean([e["total_cost"] for e in entries]),
-            "total_cost_sd": safe_sd([e["total_cost"] for e in entries]),
-            "steps_remaining_mean": safe_mean(
-                [e["final_steps_remaining"] for e in entries if not math.isnan(e["final_steps_remaining"])]
-            ),
-            "steps_remaining_sd": safe_sd(
-                [e["final_steps_remaining"] for e in entries if not math.isnan(e["final_steps_remaining"])]
-            ),
+            "move_steps_mean": safe_mean(move_steps),
+            "move_steps_median": safe_median(move_steps),
+            "move_steps_sd": safe_sd(move_steps),
+            "observe_steps_mean": safe_mean(observe_steps),
+            "observe_steps_median": safe_median(observe_steps),
+            "observe_steps_sd": safe_sd(observe_steps),
+            "interaction_steps_mean": safe_mean(interaction_steps),
+            "interaction_steps_median": safe_median(interaction_steps),
+            "interaction_steps_sd": safe_sd(interaction_steps),
+            "planning_steps_mean": safe_mean(planning_steps),
+            "planning_steps_median": safe_median(planning_steps),
+            "planning_steps_sd": safe_sd(planning_steps),
+            "total_steps_mean": safe_mean(total_steps),
+            "total_steps_median": safe_median(total_steps),
+            "total_steps_sd": safe_sd(total_steps),
+            "move_cost_mean": safe_mean(move_costs),
+            "move_cost_median": safe_median(move_costs),
+            "move_cost_sd": safe_sd(move_costs),
+            "observe_cost_mean": safe_mean(observe_costs),
+            "observe_cost_median": safe_median(observe_costs),
+            "observe_cost_sd": safe_sd(observe_costs),
+            "interaction_cost_mean": safe_mean(interaction_costs),
+            "interaction_cost_median": safe_median(interaction_costs),
+            "interaction_cost_sd": safe_sd(interaction_costs),
+            "planning_cost_mean": safe_mean(planning_costs),
+            "planning_cost_median": safe_median(planning_costs),
+            "planning_cost_sd": safe_sd(planning_costs),
+            "total_cost_mean": safe_mean(total_costs),
+            "total_cost_median": safe_median(total_costs),
+            "total_cost_sd": safe_sd(total_costs),
+            "steps_remaining_mean": safe_mean(steps_remaining),
+            "steps_remaining_median": safe_median(steps_remaining),
+            "steps_remaining_sd": safe_sd(steps_remaining),
         }
 
     return per_case
@@ -309,11 +334,17 @@ def build_summary(per_case: dict[str, dict[str, float]]) -> dict[str, float]:
             "n_levels": 0,
             "mean_n_participants": 0.0,
             "mean_move_cost": 0.0,
+            "median_move_cost": 0.0,
             "mean_observe_cost": 0.0,
+            "median_observe_cost": 0.0,
             "mean_interaction_cost": 0.0,
+            "median_interaction_cost": 0.0,
             "mean_planning_cost": 0.0,
+            "median_planning_cost": 0.0,
             "mean_total_cost": 0.0,
+            "median_total_cost": 0.0,
             "mean_steps_remaining": 0.0,
+            "median_steps_remaining": 0.0,
         }
 
     cases = list(per_case.values())
@@ -321,11 +352,17 @@ def build_summary(per_case: dict[str, dict[str, float]]) -> dict[str, float]:
         "n_levels": len(cases),
         "mean_n_participants": safe_mean([c["n_participants"] for c in cases]),
         "mean_move_cost": safe_mean([c["move_cost_mean"] for c in cases]),
+        "median_move_cost": safe_median([c["move_cost_median"] for c in cases]),
         "mean_observe_cost": safe_mean([c["observe_cost_mean"] for c in cases]),
+        "median_observe_cost": safe_median([c["observe_cost_median"] for c in cases]),
         "mean_interaction_cost": safe_mean([c["interaction_cost_mean"] for c in cases]),
+        "median_interaction_cost": safe_median([c["interaction_cost_median"] for c in cases]),
         "mean_planning_cost": safe_mean([c["planning_cost_mean"] for c in cases]),
+        "median_planning_cost": safe_median([c["planning_cost_median"] for c in cases]),
         "mean_total_cost": safe_mean([c["total_cost_mean"] for c in cases]),
+        "median_total_cost": safe_median([c["total_cost_median"] for c in cases]),
         "mean_steps_remaining": safe_mean([c["steps_remaining_mean"] for c in cases]),
+        "median_steps_remaining": safe_median([c["steps_remaining_median"] for c in cases]),
     }
 
 

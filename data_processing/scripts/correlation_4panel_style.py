@@ -28,6 +28,26 @@ def _pearson_scalar(sample1, sample2):
     return float(stats.pearsonr(x, y)[0])
 
 
+def _ccc_scalar(sample1, sample2):
+    """Lin's concordance correlation coefficient for one paired sample."""
+    x = np.asarray(sample1, dtype=float)
+    y = np.asarray(sample2, dtype=float)
+    if x.size != y.size:
+        raise ValueError("CCC requires paired samples of equal length.")
+    if x.size < 2:
+        return float("nan")
+
+    mean_x = float(np.mean(x))
+    mean_y = float(np.mean(y))
+    var_x = float(np.var(x, ddof=1))
+    var_y = float(np.var(y, ddof=1))
+    cov_xy = float(np.cov(x, y, ddof=1)[0, 1])
+    denom = var_x + var_y + (mean_x - mean_y) ** 2
+    if denom == 0:
+        return 1.0
+    return float((2.0 * cov_xy) / denom)
+
+
 def bootstrap_r_ci(
     x,
     y,
@@ -55,6 +75,34 @@ def bootstrap_r_ci(
         res = stats.bootstrap((x, y), _pearson_scalar, random_state=seed, **kwargs)
 
     return r, float(res.confidence_interval.low), float(res.confidence_interval.high)
+
+
+def bootstrap_ccc_ci(
+    x,
+    y,
+    n_resamples=1000,
+    confidence_level=0.95,
+    seed=42,
+    method="percentile",
+):
+    """Compute Lin's CCC and bootstrap confidence interval."""
+    x = np.asarray(x)
+    y = np.asarray(y)
+    ccc = _ccc_scalar(x, y)
+    rng = np.random.default_rng(seed)
+    kwargs = {
+        "paired": True,
+        "n_resamples": n_resamples,
+        "confidence_level": confidence_level,
+        "method": method,
+    }
+
+    try:
+        res = stats.bootstrap((x, y), _ccc_scalar, rng=rng, **kwargs)
+    except TypeError:
+        res = stats.bootstrap((x, y), _ccc_scalar, random_state=seed, **kwargs)
+
+    return ccc, float(res.confidence_interval.low), float(res.confidence_interval.high)
 
 
 def apply_reference_style(ax):

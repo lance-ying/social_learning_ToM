@@ -9,6 +9,9 @@ BOOTSTRAP_ENV="${BOOTSTRAP_ENV:-1}"
 MOVE_COST="${MOVE_COST:-3}"
 INTERACT_COST="${INTERACT_COST:-5}"
 OBSERVE_COST="${OBSERVE_COST:-1}"
+POSTERIOR_CANDIDATE_RULE="${POSTERIOR_CANDIDATE_RULE:-prob_threshold}"
+POSTERIOR_MASS_THRESHOLD="${POSTERIOR_MASS_THRESHOLD:-0.9}"
+POSTERIOR_PROB_THRESHOLD="${POSTERIOR_PROB_THRESHOLD:-0.1}"
 EXPERIMENTS="exp1,exp2,exp3,exp4"
 PARALLEL_MULTIAGENT_JOBS="${PARALLEL_MULTIAGENT_JOBS:-1}"
 DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING="${DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING:-0}"
@@ -27,6 +30,11 @@ Examples:
   bash scripts/utilities/run_reconstruct_replay_all.sh --exp3-4 --parallel-multiagent-jobs 4
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp1,exp2 --parallel-multiagent-jobs 4
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp4 --disable-exp4-interaction-outcome-pruning
+
+Environment overrides:
+  POSTERIOR_CANDIDATE_RULE=prob_threshold|top_mass|positive_support
+  POSTERIOR_MASS_THRESHOLD=0.9
+  POSTERIOR_PROB_THRESHOLD=0.1
 EOF
 }
 
@@ -85,6 +93,8 @@ EXP1_NONMENTALIZE_STEPS="${EXP1_NONMENTALIZE_STEPS:-scripts/baselines/exp1/step_
 EXP1_NONMENTALIZE_REPLAY_TRACE="${EXP1_NONMENTALIZE_REPLAY_TRACE:-scripts/baselines/exp1/replay_trace_nonmentalize_exp1.json}"
 EXP1_NAIVE_STEPS="${EXP1_NAIVE_STEPS:-scripts/baselines/exp1/step_dict_naive_exp1.json}"
 EXP1_NAIVE_REPLAY_TRACE="${EXP1_NAIVE_REPLAY_TRACE:-scripts/baselines/exp1/replay_trace_naive_exp1.json}"
+EXP1_AGENT1_NAIVE_STEPS="${EXP1_AGENT1_NAIVE_STEPS:-$EXP1_NAIVE_STEPS}"
+EXP1_AGENT1_NAIVE_REPLAY_TRACE="${EXP1_AGENT1_NAIVE_REPLAY_TRACE:-$EXP1_NAIVE_REPLAY_TRACE}"
 EXP1_INFERENCE="${EXP1_INFERENCE:-data/inference/inference_data_exp1.jld2}"
 EXP1_PROBLEM_DIR="${EXP1_PROBLEM_DIR:-dataset/problems_exp1}"
 EXP1_HUMAN_COSTS="${EXP1_HUMAN_COSTS:-data_processing/outputs/human_costs/exp1_human_costs.json}"
@@ -98,6 +108,8 @@ EXP2_NONMENTALIZE_STEPS="${EXP2_NONMENTALIZE_STEPS:-scripts/baselines/exp2/step_
 EXP2_NONMENTALIZE_REPLAY_TRACE="${EXP2_NONMENTALIZE_REPLAY_TRACE:-scripts/baselines/exp2/replay_trace_nonmentalize_exp2.json}"
 EXP2_NAIVE_STEPS="${EXP2_NAIVE_STEPS:-scripts/baselines/exp2/step_dict_naive_exp2.json}"
 EXP2_NAIVE_REPLAY_TRACE="${EXP2_NAIVE_REPLAY_TRACE:-scripts/baselines/exp2/replay_trace_naive_exp2.json}"
+EXP2_AGENT1_NAIVE_STEPS="${EXP2_AGENT1_NAIVE_STEPS:-$EXP2_NAIVE_STEPS}"
+EXP2_AGENT1_NAIVE_REPLAY_TRACE="${EXP2_AGENT1_NAIVE_REPLAY_TRACE:-$EXP2_NAIVE_REPLAY_TRACE}"
 EXP2_INFERENCE="${EXP2_INFERENCE:-data/inference/inference_data_exp2.jld2}"
 EXP2_PROBLEM_DIR="${EXP2_PROBLEM_DIR:-dataset/problems_exp2}"
 EXP2_HUMAN_COSTS="${EXP2_HUMAN_COSTS:-data_processing/outputs/human_costs/exp2_human_costs.json}"
@@ -111,6 +123,8 @@ EXP3_NONMENTALIZE_STEPS="${EXP3_NONMENTALIZE_STEPS:-scripts/baselines/exp3/step_
 EXP3_NONMENTALIZE_REPLAY_TRACE="${EXP3_NONMENTALIZE_REPLAY_TRACE:-scripts/baselines/exp3/replay_trace_nonmentalize_exp3_v2.json}"
 EXP3_NAIVE_STEPS="${EXP3_NAIVE_STEPS:-scripts/baselines/exp3/step_dict_naive_exp3.json}"
 EXP3_NAIVE_REPLAY_TRACE="${EXP3_NAIVE_REPLAY_TRACE:-scripts/baselines/exp3/replay_trace_naive_exp3.json}"
+EXP3_AGENT1_NAIVE_STEPS="${EXP3_AGENT1_NAIVE_STEPS:-$EXP3_NAIVE_STEPS}"
+EXP3_AGENT1_NAIVE_REPLAY_TRACE="${EXP3_AGENT1_NAIVE_REPLAY_TRACE:-$EXP3_NAIVE_REPLAY_TRACE}"
 EXP3_INFERENCE="${EXP3_INFERENCE:-data/inference/inference_data_exp3.jld2}"
 EXP3_PROBLEM_DIR="${EXP3_PROBLEM_DIR:-dataset/problems_exp3}"
 EXP3_HUMAN_COSTS="${EXP3_HUMAN_COSTS:-data_processing/outputs/human_costs/exp3_human_costs.json}"
@@ -124,6 +138,8 @@ EXP4_NONMENTALIZE_STEPS="${EXP4_NONMENTALIZE_STEPS:-scripts/baselines/exp4/step_
 EXP4_NONMENTALIZE_REPLAY_TRACE="${EXP4_NONMENTALIZE_REPLAY_TRACE:-scripts/baselines/exp4/replay_trace_nonmentalize_exp4_v2.json}"
 EXP4_NAIVE_STEPS="${EXP4_NAIVE_STEPS:-scripts/baselines/exp4/step_dict_naive_exp4.json}"
 EXP4_NAIVE_REPLAY_TRACE="${EXP4_NAIVE_REPLAY_TRACE:-scripts/baselines/exp4/replay_trace_naive_exp4.json}"
+EXP4_AGENT1_NAIVE_STEPS="${EXP4_AGENT1_NAIVE_STEPS:-$EXP4_NAIVE_STEPS}"
+EXP4_AGENT1_NAIVE_REPLAY_TRACE="${EXP4_AGENT1_NAIVE_REPLAY_TRACE:-$EXP4_NAIVE_REPLAY_TRACE}"
 EXP4_INFERENCE="${EXP4_INFERENCE:-data/inference/inference_exp4_020126_1.jld2}"
 EXP4_PROBLEM_DIR="${EXP4_PROBLEM_DIR:-dataset/problems_exp4_013026}"
 EXP4_HUMAN_COSTS="${EXP4_HUMAN_COSTS:-data_processing/outputs/human_costs/exp4_human_costs.json}"
@@ -174,6 +190,9 @@ run_reconstruct() {
       --move-cost "$MOVE_COST"
       --interact-cost "$INTERACT_COST"
       --observe-cost "$OBSERVE_COST"
+      --posterior-candidate-rule "$POSTERIOR_CANDIDATE_RULE"
+      --posterior-mass-threshold "$POSTERIOR_MASS_THRESHOLD"
+      --posterior-prob-threshold "$POSTERIOR_PROB_THRESHOLD"
       --jobs "$PARALLEL_MULTIAGENT_JOBS"
       --output-file "$output_file"
     )
@@ -195,6 +214,9 @@ run_reconstruct() {
       --move-cost "$MOVE_COST"
       --interact-cost "$INTERACT_COST"
       --observe-cost "$OBSERVE_COST"
+      --posterior-candidate-rule "$POSTERIOR_CANDIDATE_RULE"
+      --posterior-mass-threshold "$POSTERIOR_MASS_THRESHOLD"
+      --posterior-prob-threshold "$POSTERIOR_PROB_THRESHOLD"
       --output-file "$output_file"
     )
     if [[ ${#exp4_disable_args[@]} -gt 0 ]]; then
@@ -219,6 +241,7 @@ has_experiment() {
 
 echo "Output directory: $OUTPUT_DIR"
 echo "Action costs: move=$MOVE_COST interact=$INTERACT_COST observe=$OBSERVE_COST"
+echo "Posterior candidate rule: $POSTERIOR_CANDIDATE_RULE (mass threshold=$POSTERIOR_MASS_THRESHOLD, prob threshold=$POSTERIOR_PROB_THRESHOLD)"
 echo "Experiments: $EXPERIMENTS"
 echo "Parallel multi-agent jobs: $PARALLEL_MULTIAGENT_JOBS"
 echo "Disable exp4 interaction-outcome pruning: $DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING"
@@ -228,6 +251,7 @@ if has_experiment exp1; then
   run_reconstruct exp1 social_mentalizing "$EXP1_MENTALIZE_STEPS" "$EXP1_MENTALIZE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
   run_reconstruct exp1 rational_non_mentalizing "$EXP1_NONMENTALIZE_STEPS" "$EXP1_NONMENTALIZE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
   run_reconstruct exp1 naive_observer "$EXP1_NAIVE_STEPS" "$EXP1_NAIVE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
+  run_reconstruct exp1 agent1_naive_planner "$EXP1_AGENT1_NAIVE_STEPS" "$EXP1_AGENT1_NAIVE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
 fi
 
 if has_experiment exp2; then
@@ -235,6 +259,7 @@ if has_experiment exp2; then
   run_reconstruct exp2 social_mentalizing "$EXP2_MENTALIZE_STEPS" "$EXP2_MENTALIZE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
   run_reconstruct exp2 rational_non_mentalizing "$EXP2_NONMENTALIZE_STEPS" "$EXP2_NONMENTALIZE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
   run_reconstruct exp2 naive_observer "$EXP2_NAIVE_STEPS" "$EXP2_NAIVE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
+  run_reconstruct exp2 agent1_naive_planner "$EXP2_AGENT1_NAIVE_STEPS" "$EXP2_AGENT1_NAIVE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
 fi
 
 if has_experiment exp3; then
@@ -242,6 +267,7 @@ if has_experiment exp3; then
   run_reconstruct exp3 social_mentalizing "$EXP3_MENTALIZE_STEPS" "$EXP3_MENTALIZE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
   run_reconstruct exp3 rational_non_mentalizing "$EXP3_NONMENTALIZE_STEPS" "$EXP3_NONMENTALIZE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
   run_reconstruct exp3 naive_observer "$EXP3_NAIVE_STEPS" "$EXP3_NAIVE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
+  run_reconstruct exp3 agent1_naive_planner "$EXP3_AGENT1_NAIVE_STEPS" "$EXP3_AGENT1_NAIVE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
 fi
 
 if has_experiment exp4; then
@@ -249,6 +275,7 @@ if has_experiment exp4; then
   run_reconstruct exp4 social_mentalizing "$EXP4_MENTALIZE_STEPS" "$EXP4_MENTALIZE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
   run_reconstruct exp4 rational_non_mentalizing "$EXP4_NONMENTALIZE_STEPS" "$EXP4_NONMENTALIZE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
   run_reconstruct exp4 naive_observer "$EXP4_NAIVE_STEPS" "$EXP4_NAIVE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  run_reconstruct exp4 agent1_naive_planner "$EXP4_AGENT1_NAIVE_STEPS" "$EXP4_AGENT1_NAIVE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
 fi
 
 echo "Done."

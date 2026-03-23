@@ -16,6 +16,9 @@ JOBS="${JOBS:-4}"
 MOVE_COST="${MOVE_COST:-3}"
 INTERACT_COST="${INTERACT_COST:-5}"
 OBSERVE_COST="${OBSERVE_COST:-1}"
+POSTERIOR_CANDIDATE_RULE="${POSTERIOR_CANDIDATE_RULE:-prob_threshold}"
+POSTERIOR_MASS_THRESHOLD="${POSTERIOR_MASS_THRESHOLD:-0.9}"
+POSTERIOR_PROB_THRESHOLD="${POSTERIOR_PROB_THRESHOLD:-0.1}"
 KEEP_TEMP="${KEEP_TEMP:-0}"
 DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING="${DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING:-0}"
 
@@ -33,7 +36,10 @@ Usage:
     --output-file <path> \
     --jobs <n> \
     [--disable-exp4-interaction-outcome-pruning] \
-    [--move-cost 3] [--interact-cost 5] [--observe-cost 1]
+    [--move-cost 3] [--interact-cost 5] [--observe-cost 1] \
+    [--posterior-candidate-rule prob_threshold|top_mass|positive_support] \
+    [--posterior-mass-threshold 0.9]
+    [--posterior-prob-threshold 0.1]
 EOF
 }
 
@@ -89,6 +95,18 @@ while [[ $# -gt 0 ]]; do
       ;;
     --observe-cost)
       OBSERVE_COST="$2"
+      shift 2
+      ;;
+    --posterior-candidate-rule)
+      POSTERIOR_CANDIDATE_RULE="$2"
+      shift 2
+      ;;
+    --posterior-mass-threshold)
+      POSTERIOR_MASS_THRESHOLD="$2"
+      shift 2
+      ;;
+    --posterior-prob-threshold)
+      POSTERIOR_PROB_THRESHOLD="$2"
       shift 2
       ;;
     --keep-temp)
@@ -166,6 +184,9 @@ if [[ "$JOBS" -eq 1 ]]; then
     --move-cost "$MOVE_COST"
     --interact-cost "$INTERACT_COST"
     --observe-cost "$OBSERVE_COST"
+    --posterior-candidate-rule "$POSTERIOR_CANDIDATE_RULE"
+    --posterior-mass-threshold "$POSTERIOR_MASS_THRESHOLD"
+    --posterior-prob-threshold "$POSTERIOR_PROB_THRESHOLD"
     --output-file "$OUTPUT_FILE"
   )
   if [[ ${#EXP4_DISABLE_ARGS[@]} -gt 0 ]]; then
@@ -275,6 +296,9 @@ for shard_file in "${SHARD_FILES[@]}"; do
     --move-cost "$MOVE_COST"
     --interact-cost "$INTERACT_COST"
     --observe-cost "$OBSERVE_COST"
+    --posterior-candidate-rule "$POSTERIOR_CANDIDATE_RULE"
+    --posterior-mass-threshold "$POSTERIOR_MASS_THRESHOLD"
+    --posterior-prob-threshold "$POSTERIOR_PROB_THRESHOLD"
     --output-file "$shard_output"
   )
   if [[ ${#EXP4_DISABLE_ARGS[@]} -gt 0 ]]; then
@@ -314,7 +338,7 @@ if [[ "$status" -ne 0 ]]; then
   exit "$status"
 fi
 
-python3 - "$OUTPUT_FILE" "$EXP" "$MODEL_LABEL" "$STEPS_FILE" "$INFERENCE_FILE" "$PROBLEM_DIR" "$MOVE_COST" "$INTERACT_COST" "$OBSERVE_COST" "$JOBS" "$DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING" "${shard_outputs[@]}" <<'PY'
+python3 - "$OUTPUT_FILE" "$EXP" "$MODEL_LABEL" "$STEPS_FILE" "$INFERENCE_FILE" "$PROBLEM_DIR" "$MOVE_COST" "$INTERACT_COST" "$OBSERVE_COST" "$POSTERIOR_CANDIDATE_RULE" "$POSTERIOR_MASS_THRESHOLD" "$POSTERIOR_PROB_THRESHOLD" "$JOBS" "$DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING" "${shard_outputs[@]}" <<'PY'
 import json
 import sys
 
@@ -327,9 +351,12 @@ problem_dir = sys.argv[6]
 move_cost = float(sys.argv[7])
 interact_cost = float(sys.argv[8])
 observe_cost = float(sys.argv[9])
-jobs = int(sys.argv[10])
-disable_exp4_interaction_outcome_pruning = bool(int(sys.argv[11]))
-shard_outputs = sys.argv[12:]
+posterior_candidate_rule = sys.argv[10]
+posterior_mass_threshold = float(sys.argv[11])
+posterior_prob_threshold = float(sys.argv[12])
+jobs = int(sys.argv[13])
+disable_exp4_interaction_outcome_pruning = bool(int(sys.argv[14]))
+shard_outputs = sys.argv[15:]
 
 loaded = [json.load(open(path)) for path in shard_outputs]
 first = loaded[0]
@@ -393,6 +420,11 @@ out = {
     "inference_file": inference_file,
     "problem_dir": problem_dir,
     "disable_exp4_interaction_outcome_pruning": disable_exp4_interaction_outcome_pruning,
+    "posterior_candidate_rule": {
+        "rule": posterior_candidate_rule,
+        "mass_threshold": posterior_mass_threshold,
+        "prob_threshold": posterior_prob_threshold,
+    },
     "human_level_filter": {
         "enabled": human_filter_enabled,
         "human_costs_file": human_costs_file,
