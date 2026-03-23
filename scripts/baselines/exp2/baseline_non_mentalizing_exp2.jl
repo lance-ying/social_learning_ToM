@@ -150,6 +150,7 @@ for (map_id, goal_list) in metadata
         end
         problem_agent2 = load_ascii_problem(temp_path_agent2)
         state_agent2 = initstate(domain_agent2, problem_agent2)
+        domain_agent2, state_agent2 = PDDL.compiled(domain_agent2, problem_agent2)
         observed_agent_goals, _ = initialize_goals(state_agent2, :agent2)
         
         # Enumerate belief states

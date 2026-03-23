@@ -270,7 +270,12 @@ function initialize_goals(state::State, agent_name::Symbol=:agent2)
     goals = []
     goal_names = []
 
-    gems = PDDL.get_objects(state, :gem)
+    # Preserve semantic gem numbering by sorting in map order:
+    # top-to-bottom first, then left-to-right within a row.
+    gems = sort!(collect(PDDL.get_objects(state, :gem)), by=g -> begin
+        x, y = get_obj_loc(state, g)
+        (y, x, string(g))
+    end)
     for (i, gem) in enumerate(gems)
         push!(goals, pddl"(has $agent_name $gem)")
         push!(goal_names, string(Char('A' + i - 1)))

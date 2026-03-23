@@ -184,6 +184,7 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
     end
     problem_agent2 = load_ascii_problem(temp_path_agent2)
     state_agent2 = initstate(domain_agent2, problem_agent2)
+    domain_agent2, state_agent2 = PDDL.compiled(domain_agent2, problem_agent2)
     goals_agent2, _ = initialize_goals(state_agent2, :agent2)
 
     temp_path_agent3 = joinpath(PROBLEM_DIR, ".temp_agent3_$(map_id).txt")
@@ -193,6 +194,7 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
     end
     problem_agent3 = load_ascii_problem(temp_path_agent3)
     state_agent3 = initstate(domain_agent3, problem_agent3)
+    domain_agent3, state_agent3 = PDDL.compiled(domain_agent3, problem_agent3)
     goals_agent3, _ = initialize_goals(state_agent3, :agent3)
 
     for scenario in 1:2

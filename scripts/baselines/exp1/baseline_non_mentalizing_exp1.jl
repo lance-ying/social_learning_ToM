@@ -148,6 +148,7 @@ for map_id in map_ids
     end
     problem_agent2 = load_ascii_problem(temp_path_agent2)
     state_agent2 = initstate(domain_agent2, problem_agent2)
+    domain_agent2, state_agent2 = PDDL.compiled(domain_agent2, problem_agent2)
     
     # Get goal_id from problem
     goal_id = parse(Int, string(problem.goal.args[2])[end:end])
