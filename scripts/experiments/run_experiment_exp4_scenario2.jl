@@ -80,9 +80,11 @@ OUTPUT_DIR = joinpath(REPO_ROOT, "model_outputs", "experiments", "exp4")
 mkpath(OUTPUT_DIR)  # Create output directory if it doesn't exist
 CANONICAL_OUTPUT_DIR = joinpath(OUTPUT_DIR, "scenario2")
 mkpath(CANONICAL_OUTPUT_DIR)
+DETAIL_OUTPUT_DIR = joinpath(OUTPUT_DIR, "_wrapper_artifacts")
+mkpath(DETAIL_OUTPUT_DIR)
 
 # Open debug log file
-debug_log_path = joinpath(OUTPUT_DIR, "$(output_prefix)_scenario2_debug.txt")
+debug_log_path = joinpath(DETAIL_OUTPUT_DIR, "$(output_prefix)_scenario2_debug.txt")
 debug_log_file = open(debug_log_path, "w")
 function debug_println(args...)
     msg = join(string.(args), " ")
@@ -716,7 +718,7 @@ println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
 output_filename = "$(output_prefix)_scenario2.json"
-output_path = joinpath(OUTPUT_DIR, output_filename)
+output_path = joinpath(DETAIL_OUTPUT_DIR, output_filename)
 open(output_path, "w") do io
     JSON.print(io, steps_dict, 4)
 end
@@ -725,7 +727,7 @@ open(joinpath(CANONICAL_OUTPUT_DIR, "steps_dict.json"), "w") do io
 end
 
 replay_trace_filename = "$(output_prefix)_scenario2_replay_trace.json"
-replay_trace_path = joinpath(OUTPUT_DIR, replay_trace_filename)
+replay_trace_path = joinpath(DETAIL_OUTPUT_DIR, replay_trace_filename)
 open(replay_trace_path, "w") do io
     JSON.print(io, replay_trace_dict, 4)
 end

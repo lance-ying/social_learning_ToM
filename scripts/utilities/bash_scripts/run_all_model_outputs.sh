@@ -89,7 +89,11 @@ fi
 
 if [[ "$RUN_RECONSTRUCT" == "1" ]]; then
   echo "==> running reconstruction"
-  bash scripts/utilities/bash_scripts/run_reconstruct_all.sh --no-bootstrap "${RECONSTRUCT_ARGS[@]}"
+  if [[ ${#RECONSTRUCT_ARGS[@]} -gt 0 ]]; then
+    bash scripts/utilities/bash_scripts/run_reconstruct_all.sh --no-bootstrap "${RECONSTRUCT_ARGS[@]}"
+  else
+    bash scripts/utilities/bash_scripts/run_reconstruct_all.sh --no-bootstrap
+  fi
 fi
 
 echo "Pipeline complete."

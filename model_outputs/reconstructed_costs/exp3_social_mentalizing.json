@@ -1,0 +1,5460 @@
+{
+  "replay_trace_file": "model_outputs/baselines/exp3/replay_trace_social_mentalizing.json",
+  "model_label": "social_mentalizing",
+  "problem_dir": "dataset/problems_exp3",
+  "disable_exp4_interaction_outcome_pruning": false,
+  "posterior_filter_cache_stats": {
+    "hits": 0,
+    "hit_rate": 0.0,
+    "misses": 40,
+    "entries": 40
+  },
+  "steps_file": "model_outputs/baselines/exp3/step_dict_social_mentalizing.json",
+  "reconstruction_mode": "model_faithful_replay",
+  "replay_plan_cache_stats": {
+    "hits": 22,
+    "hit_rate": 0.3142857142857143,
+    "misses": 48,
+    "entries": 48
+  },
+  "summary": {
+    "mean_observe_steps": 8.7,
+    "n_cases": 40,
+    "mean_planning_steps": 34.45,
+    "mean_total_steps": 43.15,
+    "mean_observe_cost": 8.7,
+    "mean_total_cost": 114.35,
+    "cases_with_warnings": 36,
+    "mean_planning_cost": 105.65
+  },
+  "exp": "exp3",
+  "human_level_filter": {
+    "kept_case_count": 40,
+    "original_case_count": 44,
+    "matched_human_keys": [
+      "sm211_scenario1",
+      "sm211_scenario2",
+      "sm221_scenario1",
+      "sm221_scenario2",
+      "sm311_scenario1",
+      "sm311_scenario2",
+      "sm321_scenario1",
+      "sm321_scenario2",
+      "sm331_scenario1",
+      "sm331_scenario2",
+      "sm332_scenario1",
+      "sm332_scenario2",
+      "sm341_scenario1",
+      "sm341_scenario2",
+      "sm342_scenario1",
+      "sm342_scenario2",
+      "sm351_scenario1",
+      "sm351_scenario2",
+      "sm361_scenario1",
+      "sm361_scenario2",
+      "sm371_scenario1",
+      "sm371_scenario2",
+      "sm411_scenario1",
+      "sm411_scenario2",
+      "sm421_scenario1",
+      "sm421_scenario2",
+      "sm431_scenario1",
+      "sm431_scenario2",
+      "sm432_scenario1",
+      "sm432_scenario2",
+      "sm511_scenario1",
+      "sm511_scenario2",
+      "sm521_scenario1",
+      "sm521_scenario2",
+      "sm531_scenario1",
+      "sm531_scenario2",
+      "sm541_scenario1",
+      "sm541_scenario2",
+      "sm543_scenario1",
+      "sm543_scenario2"
+    ],
+    "enabled": true,
+    "human_costs_file": "data_processing/outputs/human_costs/exp3_human_costs.json"
+  },
+  "action_cost": {
+    "observe": 1.0,
+    "move": 3.0,
+    "interact": 5.0
+  },
+  "inference_file": "inference/inference_data_exp3.jld2",
+  "per_case": {
+    "sm541_scenario1": {
+      "observe_cost": 12.0,
+      "t_recorded": 12,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1"
+      ],
+      "replay_elapsed": 2.2494919300079346,
+      "t_replayed": 12,
+      "observations_count": 12,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(up agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 12,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 3.3359768390655518,
+      "total_steps": 44,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 12,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pickup agent1 gem1)"
+      ],
+      "planning_steps": 32,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 31,
+        "interact": 1
+      },
+      "planning_cost": 98.0,
+      "replay_nonplanning_time": 0.13289785385131836,
+      "total_cost": 110.0,
+      "initial_plan_time": 2.116594076156616,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm411_scenario1": {
+      "observe_cost": 9.0,
+      "t_recorded": 9,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard4"
+      ],
+      "replay_elapsed": 0.39927196502685547,
+      "t_replayed": 9,
+      "observations_count": 9,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(down agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.4575510025024414,
+      "total_steps": 49,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 9,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard4)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 40,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 39,
+        "interact": 1
+      },
+      "planning_cost": 122.0,
+      "replay_nonplanning_time": 0.020181894302368164,
+      "total_cost": 131.0,
+      "initial_plan_time": 0.3790900707244873,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm341_scenario1": {
+      "observe_cost": 5.0,
+      "t_recorded": 5,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard3"
+      ],
+      "replay_elapsed": 0.13584399223327637,
+      "t_replayed": 5,
+      "observations_count": 5,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.1878519058227539,
+      "total_steps": 50,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 5,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(interact agent1 wizard3)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(pass agent1 key2 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 45,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 44,
+        "interact": 1
+      },
+      "planning_cost": 137.0,
+      "replay_nonplanning_time": 0.02037191390991211,
+      "total_cost": 142.0,
+      "initial_plan_time": 0.11547207832336426,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm531_scenario1": {
+      "observe_cost": 7.0,
+      "t_recorded": 7,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard2"
+      ],
+      "replay_elapsed": 0.02782893180847168,
+      "t_replayed": 7,
+      "observations_count": 7,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(down agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.08513498306274414,
+      "total_steps": 30,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 7,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(pass agent1 key1 door2)",
+        "(right agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 23,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 22,
+        "interact": 1
+      },
+      "planning_cost": 71.0,
+      "replay_nonplanning_time": 0.006387948989868164,
+      "total_cost": 78.0,
+      "initial_plan_time": 0.021440982818603516,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm421_scenario1": {
+      "observe_cost": 7.0,
+      "t_recorded": 7,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1"
+      ],
+      "replay_elapsed": 0.1393730640411377,
+      "t_replayed": 7,
+      "observations_count": 7,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.13947796821594238,
+      "total_steps": 43,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 7,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 36,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 35,
+        "interact": 1
+      },
+      "planning_cost": 110.0,
+      "replay_nonplanning_time": 0.016231060028076172,
+      "total_cost": 117.0,
+      "initial_plan_time": 0.12314200401306152,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm543_scenario2": {
+      "observe_cost": 28.0,
+      "t_recorded": 28,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard2"
+      ],
+      "replay_elapsed": 0.024029016494750977,
+      "t_replayed": 28,
+      "observations_count": 28,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(left agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 12,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 13,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 14,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 15,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 16,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 17,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 18,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 19,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 20,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 21,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 22,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 23,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 24,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 25,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 26,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 27,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(interact agent2 wizard2)",
+          "observation_index": 28,
+          "interaction_outcome": "blue_amulet_present",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.123291015625,
+      "total_steps": 44,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 28,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(right agent1)",
+        "(interact agent1 wizard2)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pickup agent1 gem1)"
+      ],
+      "planning_steps": 16,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 15,
+        "interact": 1
+      },
+      "planning_cost": 50.0,
+      "replay_nonplanning_time": 0.004147052764892578,
+      "total_cost": 78.0,
+      "initial_plan_time": 0.0198819637298584,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm311_scenario1": {
+      "observe_cost": 6.0,
+      "t_recorded": 6,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard3"
+      ],
+      "replay_elapsed": 0.1238701343536377,
+      "t_replayed": 6,
+      "observations_count": 6,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(down agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.1781139373779297,
+      "total_steps": 46,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 6,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 40,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 39,
+        "interact": 1
+      },
+      "planning_cost": 122.0,
+      "replay_nonplanning_time": 0.015731096267700195,
+      "total_cost": 128.0,
+      "initial_plan_time": 0.1081390380859375,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm321_scenario1": {
+      "observe_cost": 5.0,
+      "t_recorded": 5,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1"
+      ],
+      "replay_elapsed": 0.13212203979492188,
+      "t_replayed": 5,
+      "observations_count": 5,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.13221406936645508,
+      "total_steps": 41,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 5,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 36,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 35,
+        "interact": 1
+      },
+      "planning_cost": 110.0,
+      "replay_nonplanning_time": 0.008821964263916016,
+      "total_cost": 115.0,
+      "initial_plan_time": 0.12330007553100586,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm361_scenario2": {
+      "observe_cost": 2.0,
+      "t_recorded": 2,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1",
+        "wizard2",
+        "wizard3"
+      ],
+      "replay_elapsed": 0.5169620513916016,
+      "t_replayed": 2,
+      "observations_count": 2,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(down agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.5657968521118164,
+      "total_steps": 51,
+      "observation_trace": [
+        "agent2",
+        "agent3"
+      ],
+      "observe_steps": 2,
+      "replan_time_total": 0.10347819328308105,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(pass agent1 key1 door2)",
+        "(right agent1)",
+        "(right agent1)",
+        "(pickup agent1 gem3)"
+      ],
+      "planning_steps": 49,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 47,
+        "interact": 2
+      },
+      "planning_cost": 151.0,
+      "replay_nonplanning_time": 0.04693889617919922,
+      "total_cost": 153.0,
+      "initial_plan_time": 0.3665449619293213,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_present)."
+      ]
+    },
+    "sm351_scenario1": {
+      "observe_cost": 5.0,
+      "t_recorded": 5,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard3"
+      ],
+      "replay_elapsed": 0.09950399398803711,
+      "t_replayed": 5,
+      "observations_count": 5,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.09960484504699707,
+      "total_steps": 40,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 5,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(pass agent1 key1 door3)",
+        "(right agent1)",
+        "(right agent1)",
+        "(pickup agent1 gem3)"
+      ],
+      "planning_steps": 35,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 34,
+        "interact": 1
+      },
+      "planning_cost": 107.0,
+      "replay_nonplanning_time": 0.009675025939941406,
+      "total_cost": 112.0,
+      "initial_plan_time": 0.0898289680480957,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm361_scenario1": {
+      "observe_cost": 14.0,
+      "t_recorded": 14,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard3"
+      ],
+      "replay_elapsed": 0.1643848419189453,
+      "t_replayed": 14,
+      "observations_count": 14,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 12,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 13,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 14,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.25891685485839844,
+      "total_steps": 58,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 14,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(pass agent1 key1 door2)",
+        "(right agent1)",
+        "(right agent1)",
+        "(pickup agent1 gem3)"
+      ],
+      "planning_steps": 44,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 43,
+        "interact": 1
+      },
+      "planning_cost": 134.0,
+      "replay_nonplanning_time": 0.011506795883178711,
+      "total_cost": 148.0,
+      "initial_plan_time": 0.1528780460357666,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm421_scenario2": {
+      "observe_cost": 9.0,
+      "t_recorded": 9,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1"
+      ],
+      "replay_elapsed": 0.09166598320007324,
+      "t_replayed": 9,
+      "observations_count": 9,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(up agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.09176206588745117,
+      "total_steps": 45,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 9,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 36,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 35,
+        "interact": 1
+      },
+      "planning_cost": 110.0,
+      "replay_nonplanning_time": 0.009149789810180664,
+      "total_cost": 119.0,
+      "initial_plan_time": 0.08251619338989258,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm531_scenario2": {
+      "observe_cost": 14.0,
+      "t_recorded": 14,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard2"
+      ],
+      "replay_elapsed": 0.053936004638671875,
+      "t_replayed": 14,
+      "observations_count": 14,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 12,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 13,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 14,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.05403614044189453,
+      "total_steps": 37,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 14,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(pass agent1 key1 door2)",
+        "(right agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 23,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 22,
+        "interact": 1
+      },
+      "planning_cost": 71.0,
+      "replay_nonplanning_time": 0.006289005279541016,
+      "total_cost": 85.0,
+      "initial_plan_time": 0.04764699935913086,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm331_scenario1": {
+      "observe_cost": 9.0,
+      "t_recorded": 9,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard2"
+      ],
+      "replay_elapsed": 0.05616593360900879,
+      "t_replayed": 9,
+      "observations_count": 9,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.0562589168548584,
+      "total_steps": 39,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 9,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(interact agent1 wizard2)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(pass agent1 key1 door3)",
+        "(right agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 30,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 29,
+        "interact": 1
+      },
+      "planning_cost": 92.0,
+      "replay_nonplanning_time": 0.01546788215637207,
+      "total_cost": 101.0,
+      "initial_plan_time": 0.04069805145263672,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm543_scenario1": {
+      "observe_cost": 24.0,
+      "t_recorded": 24,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard2"
+      ],
+      "replay_elapsed": 0.04019308090209961,
+      "t_replayed": 24,
+      "observations_count": 24,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(left agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(down agent2)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 12,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 13,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 14,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 15,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 16,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 17,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 18,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 19,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 20,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 21,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 22,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 23,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(interact agent3 wizard2)",
+          "observation_index": 24,
+          "interaction_outcome": "blue_amulet_present",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.1232609748840332,
+      "total_steps": 40,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 24,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(right agent1)",
+        "(interact agent1 wizard2)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pickup agent1 gem1)"
+      ],
+      "planning_steps": 16,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 15,
+        "interact": 1
+      },
+      "planning_cost": 50.0,
+      "replay_nonplanning_time": 0.004073143005371094,
+      "total_cost": 74.0,
+      "initial_plan_time": 0.036119937896728516,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm432_scenario1": {
+      "observe_cost": 2.0,
+      "t_recorded": 2,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1",
+        "wizard2",
+        "wizard3",
+        "wizard4"
+      ],
+      "replay_elapsed": 0.564223051071167,
+      "t_replayed": 2,
+      "observations_count": 2,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(down agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.5643739700317383,
+      "total_steps": 45,
+      "observation_trace": [
+        "agent2",
+        "agent3"
+      ],
+      "observe_steps": 2,
+      "replan_time_total": 0.24231290817260742,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 43,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 40,
+        "interact": 3
+      },
+      "planning_cost": 135.0,
+      "replay_nonplanning_time": 0.016456127166748047,
+      "total_cost": 137.0,
+      "initial_plan_time": 0.3054540157318115,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_present)."
+      ]
+    },
+    "sm331_scenario2": {
+      "observe_cost": 5.0,
+      "t_recorded": 5,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard2"
+      ],
+      "replay_elapsed": 0.052783966064453125,
+      "t_replayed": 5,
+      "observations_count": 5,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(left agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.0528719425201416,
+      "total_steps": 35,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 5,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(interact agent1 wizard2)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(pass agent1 key1 door3)",
+        "(right agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 30,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 29,
+        "interact": 1
+      },
+      "planning_cost": 92.0,
+      "replay_nonplanning_time": 0.012113094329833984,
+      "total_cost": 97.0,
+      "initial_plan_time": 0.04067087173461914,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm371_scenario1": {
+      "observe_cost": 25.0,
+      "t_recorded": 25,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard2"
+      ],
+      "replay_elapsed": 0.07602500915527344,
+      "t_replayed": 25,
+      "observations_count": 25,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(up agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 12,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 13,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 14,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 15,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 16,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 17,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 18,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 19,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 20,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 21,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 22,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 23,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 24,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(interact agent3 wizard2)",
+          "observation_index": 25,
+          "interaction_outcome": "blue_amulet_present",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.15528297424316406,
+      "total_steps": 41,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 25,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(down agent1)",
+        "(interact agent1 wizard2)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(pass agent1 key1 door1)",
+        "(up agent1)",
+        "(pickup agent1 gem1)"
+      ],
+      "planning_steps": 16,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 15,
+        "interact": 1
+      },
+      "planning_cost": 50.0,
+      "replay_nonplanning_time": 0.0036439895629882812,
+      "total_cost": 75.0,
+      "initial_plan_time": 0.07238101959228516,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm321_scenario2": {
+      "observe_cost": 7.0,
+      "t_recorded": 7,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1"
+      ],
+      "replay_elapsed": 0.07834506034851074,
+      "t_replayed": 7,
+      "observations_count": 7,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(up agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.07843708992004395,
+      "total_steps": 43,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 7,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 36,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 35,
+        "interact": 1
+      },
+      "planning_cost": 110.0,
+      "replay_nonplanning_time": 0.008624076843261719,
+      "total_cost": 117.0,
+      "initial_plan_time": 0.06972098350524902,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm342_scenario1": {
+      "observe_cost": 0.0,
+      "t_recorded": 0,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1",
+        "wizard3"
+      ],
+      "replay_elapsed": 0.04842805862426758,
+      "t_replayed": 0,
+      "observations_count": 0,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [],
+      "posterior_filter_time": 0.45301103591918945,
+      "total_steps": 30,
+      "observation_trace": [],
+      "observe_steps": 0,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(pass agent1 key1 door1)",
+        "(up agent1)",
+        "(pickup agent1 gem1)"
+      ],
+      "planning_steps": 30,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 29,
+        "interact": 1
+      },
+      "planning_cost": 92.0,
+      "replay_nonplanning_time": 0.010270118713378906,
+      "total_cost": 92.0,
+      "initial_plan_time": 0.03815793991088867,
+      "warnings": []
+    },
+    "sm332_scenario2": {
+      "observe_cost": 0.0,
+      "t_recorded": 0,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1",
+        "wizard2"
+      ],
+      "replay_elapsed": 0.04960203170776367,
+      "t_replayed": 0,
+      "observations_count": 0,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [],
+      "posterior_filter_time": 0.049714088439941406,
+      "total_steps": 25,
+      "observation_trace": [],
+      "observe_steps": 0,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(interact agent1 wizard3)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key2 door2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(pickup agent1 gem3)"
+      ],
+      "planning_steps": 25,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 24,
+        "interact": 1
+      },
+      "planning_cost": 77.0,
+      "replay_nonplanning_time": 0.008761882781982422,
+      "total_cost": 77.0,
+      "initial_plan_time": 0.04084014892578125,
+      "warnings": []
+    },
+    "sm221_scenario1": {
+      "observe_cost": 3.0,
+      "t_recorded": 3,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1"
+      ],
+      "replay_elapsed": 0.10041999816894531,
+      "t_replayed": 3,
+      "observations_count": 3,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.1512298583984375,
+      "total_steps": 39,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 3,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 36,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 35,
+        "interact": 1
+      },
+      "planning_cost": 110.0,
+      "replay_nonplanning_time": 0.00845789909362793,
+      "total_cost": 113.0,
+      "initial_plan_time": 0.09196209907531738,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm431_scenario1": {
+      "observe_cost": 17.0,
+      "t_recorded": 17,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard3"
+      ],
+      "replay_elapsed": 0.12840604782104492,
+      "t_replayed": 17,
+      "observations_count": 17,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(left agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 12,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 13,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 14,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 15,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 16,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 17,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.19672513008117676,
+      "total_steps": 56,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 17,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 39,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 38,
+        "interact": 1
+      },
+      "planning_cost": 119.0,
+      "replay_nonplanning_time": 0.011091947555541992,
+      "total_cost": 136.0,
+      "initial_plan_time": 0.11731410026550293,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm221_scenario2": {
+      "observe_cost": 5.0,
+      "t_recorded": 5,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1"
+      ],
+      "replay_elapsed": 0.06403994560241699,
+      "t_replayed": 5,
+      "observations_count": 5,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(up agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.06412386894226074,
+      "total_steps": 41,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 5,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 36,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 35,
+        "interact": 1
+      },
+      "planning_cost": 110.0,
+      "replay_nonplanning_time": 0.008408069610595703,
+      "total_cost": 115.0,
+      "initial_plan_time": 0.05563187599182129,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm332_scenario1": {
+      "observe_cost": 0.0,
+      "t_recorded": 0,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1",
+        "wizard2"
+      ],
+      "replay_elapsed": 0.039546966552734375,
+      "t_replayed": 0,
+      "observations_count": 0,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [],
+      "posterior_filter_time": 0.03965497016906738,
+      "total_steps": 25,
+      "observation_trace": [],
+      "observe_steps": 0,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(interact agent1 wizard3)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key2 door2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(pickup agent1 gem3)"
+      ],
+      "planning_steps": 25,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 24,
+        "interact": 1
+      },
+      "planning_cost": 77.0,
+      "replay_nonplanning_time": 0.009086847305297852,
+      "total_cost": 77.0,
+      "initial_plan_time": 0.030460119247436523,
+      "warnings": []
+    },
+    "sm432_scenario2": {
+      "observe_cost": 23.0,
+      "t_recorded": 23,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard3"
+      ],
+      "replay_elapsed": 0.12111711502075195,
+      "t_replayed": 23,
+      "observations_count": 23,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 12,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 13,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 14,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 15,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 16,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 17,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 18,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 19,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 20,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 21,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 22,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 23,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.20217204093933105,
+      "total_steps": 56,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 23,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 33,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 32,
+        "interact": 1
+      },
+      "planning_cost": 101.0,
+      "replay_nonplanning_time": 0.016173124313354492,
+      "total_cost": 124.0,
+      "initial_plan_time": 0.10494399070739746,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm521_scenario2": {
+      "observe_cost": 11.0,
+      "t_recorded": 11,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1"
+      ],
+      "replay_elapsed": 0.15374398231506348,
+      "t_replayed": 11,
+      "observations_count": 11,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(up agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.2156050205230713,
+      "total_steps": 47,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 11,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 36,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 35,
+        "interact": 1
+      },
+      "planning_cost": 110.0,
+      "replay_nonplanning_time": 0.009504079818725586,
+      "total_cost": 121.0,
+      "initial_plan_time": 0.1442399024963379,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm511_scenario1": {
+      "observe_cost": 13.0,
+      "t_recorded": 13,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard4"
+      ],
+      "replay_elapsed": 0.2760031223297119,
+      "t_replayed": 13,
+      "observations_count": 13,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(down agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 12,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 13,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.3389132022857666,
+      "total_steps": 53,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 13,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard4)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 40,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 39,
+        "interact": 1
+      },
+      "planning_cost": 122.0,
+      "replay_nonplanning_time": 0.011795282363891602,
+      "total_cost": 135.0,
+      "initial_plan_time": 0.2642078399658203,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm371_scenario2": {
+      "observe_cost": 23.0,
+      "t_recorded": 23,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard2"
+      ],
+      "replay_elapsed": 0.02753901481628418,
+      "t_replayed": 23,
+      "observations_count": 23,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(up agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 12,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 13,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 14,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 15,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 16,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 17,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 18,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 19,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 20,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 21,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent2)",
+          "observation_index": 22,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(interact agent2 wizard2)",
+          "observation_index": 23,
+          "interaction_outcome": "blue_amulet_present",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.02763080596923828,
+      "total_steps": 39,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 23,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(down agent1)",
+        "(interact agent1 wizard2)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(pass agent1 key1 door1)",
+        "(up agent1)",
+        "(pickup agent1 gem1)"
+      ],
+      "planning_steps": 16,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 15,
+        "interact": 1
+      },
+      "planning_cost": 50.0,
+      "replay_nonplanning_time": 0.0036139488220214844,
+      "total_cost": 73.0,
+      "initial_plan_time": 0.023925065994262695,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm342_scenario2": {
+      "observe_cost": 0.0,
+      "t_recorded": 0,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1",
+        "wizard3"
+      ],
+      "replay_elapsed": 0.04690694808959961,
+      "t_replayed": 0,
+      "observations_count": 0,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [],
+      "posterior_filter_time": 0.047013044357299805,
+      "total_steps": 30,
+      "observation_trace": [],
+      "observe_steps": 0,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(pass agent1 key1 door1)",
+        "(up agent1)",
+        "(pickup agent1 gem1)"
+      ],
+      "planning_steps": 30,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 29,
+        "interact": 1
+      },
+      "planning_cost": 92.0,
+      "replay_nonplanning_time": 0.010304927825927734,
+      "total_cost": 92.0,
+      "initial_plan_time": 0.036602020263671875,
+      "warnings": []
+    },
+    "sm431_scenario2": {
+      "observe_cost": 2.0,
+      "t_recorded": 2,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1",
+        "wizard2",
+        "wizard3",
+        "wizard4"
+      ],
+      "replay_elapsed": 0.6800501346588135,
+      "t_replayed": 2,
+      "observations_count": 2,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(down agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.6802070140838623,
+      "total_steps": 51,
+      "observation_trace": [
+        "agent2",
+        "agent3"
+      ],
+      "observe_steps": 2,
+      "replan_time_total": 0.2437911033630371,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 49,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 46,
+        "interact": 3
+      },
+      "planning_cost": 153.0,
+      "replay_nonplanning_time": 0.01986098289489746,
+      "total_cost": 155.0,
+      "initial_plan_time": 0.4163980484008789,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_present)."
+      ]
+    },
+    "sm521_scenario1": {
+      "observe_cost": 9.0,
+      "t_recorded": 9,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1"
+      ],
+      "replay_elapsed": 0.09612894058227539,
+      "t_replayed": 9,
+      "observations_count": 9,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.09623503684997559,
+      "total_steps": 45,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 9,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 36,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 35,
+        "interact": 1
+      },
+      "planning_cost": 110.0,
+      "replay_nonplanning_time": 0.009280920028686523,
+      "total_cost": 119.0,
+      "initial_plan_time": 0.08684802055358887,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm211_scenario2": {
+      "observe_cost": 3.0,
+      "t_recorded": 3,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard2"
+      ],
+      "replay_elapsed": 0.08744287490844727,
+      "t_replayed": 3,
+      "observations_count": 3,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.08754181861877441,
+      "total_steps": 46,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2"
+      ],
+      "observe_steps": 3,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(pass agent1 key1 door3)",
+        "(down agent1)",
+        "(pickup agent1 gem3)"
+      ],
+      "planning_steps": 43,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 42,
+        "interact": 1
+      },
+      "planning_cost": 131.0,
+      "replay_nonplanning_time": 0.011654853820800781,
+      "total_cost": 134.0,
+      "initial_plan_time": 0.07578802108764648,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm311_scenario2": {
+      "observe_cost": 4.0,
+      "t_recorded": 4,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard3"
+      ],
+      "replay_elapsed": 0.12021899223327637,
+      "t_replayed": 4,
+      "observations_count": 4,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.17475104331970215,
+      "total_steps": 44,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 4,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 40,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 39,
+        "interact": 1
+      },
+      "planning_cost": 122.0,
+      "replay_nonplanning_time": 0.011059045791625977,
+      "total_cost": 126.0,
+      "initial_plan_time": 0.10915994644165039,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm341_scenario2": {
+      "observe_cost": 7.0,
+      "t_recorded": 7,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard3"
+      ],
+      "replay_elapsed": 0.06893014907836914,
+      "t_replayed": 7,
+      "observations_count": 7,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(left agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent2)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.06902384757995605,
+      "total_steps": 52,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 7,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(interact agent1 wizard3)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(pass agent1 key2 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 45,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 44,
+        "interact": 1
+      },
+      "planning_cost": 137.0,
+      "replay_nonplanning_time": 0.011310100555419922,
+      "total_cost": 144.0,
+      "initial_plan_time": 0.05762004852294922,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm511_scenario2": {
+      "observe_cost": 11.0,
+      "t_recorded": 11,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard4"
+      ],
+      "replay_elapsed": 0.21655893325805664,
+      "t_replayed": 11,
+      "observations_count": 11,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 9,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 10,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 11,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.21668004989624023,
+      "total_steps": 51,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 11,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard4)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 40,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 39,
+        "interact": 1
+      },
+      "planning_cost": 122.0,
+      "replay_nonplanning_time": 0.011787891387939453,
+      "total_cost": 133.0,
+      "initial_plan_time": 0.2047710418701172,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm541_scenario2": {
+      "observe_cost": 2.0,
+      "t_recorded": 2,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard1",
+        "wizard2",
+        "wizard3",
+        "wizard4"
+      ],
+      "replay_elapsed": 0.3389911651611328,
+      "t_replayed": 2,
+      "observations_count": 2,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(down agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.3391458988189697,
+      "total_steps": 37,
+      "observation_trace": [
+        "agent2",
+        "agent3"
+      ],
+      "observe_steps": 2,
+      "replan_time_total": 0.07097005844116211,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pickup agent1 gem1)"
+      ],
+      "planning_steps": 35,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 33,
+        "interact": 2
+      },
+      "planning_cost": 109.0,
+      "replay_nonplanning_time": 0.014748096466064453,
+      "total_cost": 111.0,
+      "initial_plan_time": 0.25327301025390625,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 2 latent-state hypotheses after interaction evidence (blue_amulet_present)."
+      ]
+    },
+    "sm411_scenario2": {
+      "observe_cost": 7.0,
+      "t_recorded": 7,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard4"
+      ],
+      "replay_elapsed": 0.17137694358825684,
+      "t_replayed": 7,
+      "observations_count": 7,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(right agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(left agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.17148113250732422,
+      "total_steps": 47,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 7,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard4)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(pass agent1 key1 door2)",
+        "(down agent1)",
+        "(pickup agent1 gem2)"
+      ],
+      "planning_steps": 40,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 39,
+        "interact": 1
+      },
+      "planning_cost": 122.0,
+      "replay_nonplanning_time": 0.011334896087646484,
+      "total_cost": 129.0,
+      "initial_plan_time": 0.16004204750061035,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm351_scenario2": {
+      "observe_cost": 8.0,
+      "t_recorded": 8,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard3"
+      ],
+      "replay_elapsed": 0.10033106803894043,
+      "t_replayed": 8,
+      "observations_count": 8,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(up agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(down agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent2)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 6,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 7,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(right agent2)",
+          "observation_index": 8,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        }
+      ],
+      "posterior_filter_time": 0.16021513938903809,
+      "total_steps": 43,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2",
+        "agent2"
+      ],
+      "observe_steps": 8,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(pass agent1 key1 door3)",
+        "(right agent1)",
+        "(right agent1)",
+        "(pickup agent1 gem3)"
+      ],
+      "planning_steps": 35,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 34,
+        "interact": 1
+      },
+      "planning_cost": 107.0,
+      "replay_nonplanning_time": 0.010171175003051758,
+      "total_cost": 115.0,
+      "initial_plan_time": 0.09015989303588867,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    },
+    "sm211_scenario1": {
+      "observe_cost": 5.0,
+      "t_recorded": 5,
+      "model_update_mode": "mentalizing_posterior",
+      "posterior_candidates": [
+        "wizard2"
+      ],
+      "replay_elapsed": 0.08836698532104492,
+      "t_replayed": 5,
+      "observations_count": 5,
+      "observation_source": "sequence",
+      "reconstruction_mode": "model_faithful_replay",
+      "observation_events": [
+        {
+          "action": "(down agent2)",
+          "observation_index": 1,
+          "interaction_outcome": "none",
+          "observed_agent": "agent2"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 2,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(up agent3)",
+          "observation_index": 3,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 4,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        },
+        {
+          "action": "(right agent3)",
+          "observation_index": 5,
+          "interaction_outcome": "none",
+          "observed_agent": "agent3"
+        }
+      ],
+      "posterior_filter_time": 0.08846187591552734,
+      "total_steps": 48,
+      "observation_trace": [
+        "agent2",
+        "agent3",
+        "agent3",
+        "agent3",
+        "agent3"
+      ],
+      "observe_steps": 5,
+      "replan_time_total": 0.0,
+      "planning_world": "agent1_reduced_ascii",
+      "executed_actions": [
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(pass agent1 key1 door3)",
+        "(down agent1)",
+        "(pickup agent1 gem3)"
+      ],
+      "planning_steps": 43,
+      "planning_action_counts": {
+        "observe": 0,
+        "move": 42,
+        "interact": 1
+      },
+      "planning_cost": 131.0,
+      "replay_nonplanning_time": 0.01195383071899414,
+      "total_cost": 136.0,
+      "initial_plan_time": 0.07641315460205078,
+      "warnings": [
+        "Used replay trace final_candidates for mentalizing posterior replay.",
+        "Projected hypotheses into reduced planning world with 1 candidate states.",
+        "Projected hypotheses into reduced planning world with 1 candidate states."
+      ]
+    }
+  },
+  "exp_normalized": "exp3",
+  "posterior_candidate_rule": {
+    "prob_threshold": 0.1,
+    "rule": "prob_threshold",
+    "mass_threshold": 0.9
+  }
+}

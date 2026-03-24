@@ -21,7 +21,23 @@ output_prefix = "steps_dict_exp4_031726_2"
 REPO_ROOT = normpath(joinpath(@__DIR__, "..", ".."))
 OUTPUT_DIR = joinpath(REPO_ROOT, "model_outputs", "experiments", "exp4")
 CANONICAL_OUTPUT_DIR = OUTPUT_DIR
+DETAIL_OUTPUT_DIR = joinpath(OUTPUT_DIR, "_wrapper_artifacts")
+mkpath(DETAIL_OUTPUT_DIR)
 mkpath(CANONICAL_OUTPUT_DIR)
+
+function relocate_top_level_wrapper_artifacts!(output_dir::String, detail_output_dir::String)
+    for name in readdir(output_dir)
+        src = joinpath(output_dir, name)
+        if !isfile(src)
+            continue
+        end
+        if startswith(name, "steps_dict_exp4_")
+            mv(src, joinpath(detail_output_dir, name); force=true)
+        end
+    end
+end
+
+relocate_top_level_wrapper_artifacts!(OUTPUT_DIR, DETAIL_OUTPUT_DIR)
 
 println("=== Running Experiment $experiment_id ===")
 println("Inference file: $inference_file")
@@ -47,12 +63,12 @@ println("\n" * "=" ^ 50)
 println("PHASE 3: Merging results")
 println("=" ^ 50)
 
-results1_path = joinpath(OUTPUT_DIR, "$(output_prefix)_scenario1.json")
-results2_path = joinpath(OUTPUT_DIR, "$(output_prefix)_scenario2.json")
-merged_path = joinpath(OUTPUT_DIR, "$(output_prefix).json")
-trace1_path = joinpath(OUTPUT_DIR, "$(output_prefix)_scenario1_replay_trace.json")
-trace2_path = joinpath(OUTPUT_DIR, "$(output_prefix)_scenario2_replay_trace.json")
-merged_trace_path = joinpath(OUTPUT_DIR, "$(output_prefix)_replay_trace.json")
+results1_path = joinpath(DETAIL_OUTPUT_DIR, "$(output_prefix)_scenario1.json")
+results2_path = joinpath(DETAIL_OUTPUT_DIR, "$(output_prefix)_scenario2.json")
+merged_path = joinpath(DETAIL_OUTPUT_DIR, "$(output_prefix).json")
+trace1_path = joinpath(DETAIL_OUTPUT_DIR, "$(output_prefix)_scenario1_replay_trace.json")
+trace2_path = joinpath(DETAIL_OUTPUT_DIR, "$(output_prefix)_scenario2_replay_trace.json")
+merged_trace_path = joinpath(DETAIL_OUTPUT_DIR, "$(output_prefix)_replay_trace.json")
 
 results1 = JSON.parsefile(results1_path)
 results2 = JSON.parsefile(results2_path)
