@@ -57,9 +57,18 @@ end
 experiment_id = "exp2"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
-# PLAN_DIR = joinpath(@__DIR__, "..", "..", "dataset", "plans")
-OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
-mkpath(OUTPUT_DIR)  # Create output directory if it doesn't exist
+LEGACY_OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
+CANONICAL_OUTPUT_DIR = joinpath(@__DIR__, "outputs", experiment_id)
+mkpath(LEGACY_OUTPUT_DIR)
+mkpath(CANONICAL_OUTPUT_DIR)
+
+function write_json_to_paths(paths, payload; indent::Int=4)
+    for path in paths
+        open(path, "w") do io
+            JSON.print(io, payload, indent)
+        end
+    end
+end
 
 #--- Initial Setup ---#
 problem_files = filter(f -> endswith(f, "ascii.pddl"), readdir(joinpath(@__DIR__, "..", "..", "dataset","problems_$experiment_id")))
@@ -339,14 +348,14 @@ for (map_id, v) in metadata
 end
 
 
-output_path = joinpath(OUTPUT_DIR, "steps_dict_$experiment_id.json")
-open(output_path, "w") do io
-    JSON.print(io, steps_dict)
-end
-println("Results saved to: $output_path")
+legacy_steps_path = joinpath(LEGACY_OUTPUT_DIR, "steps_dict_$experiment_id.json")
+canonical_steps_path = joinpath(CANONICAL_OUTPUT_DIR, "steps_dict.json")
+write_json_to_paths((legacy_steps_path, canonical_steps_path), steps_dict)
+println("Results saved to: $canonical_steps_path")
+println("Legacy compatibility copy: $legacy_steps_path")
 
-replay_trace_path = joinpath(OUTPUT_DIR, "replay_trace_$experiment_id.json")
-open(replay_trace_path, "w") do io
-    JSON.print(io, replay_trace_dict, 4)
-end
-println("Replay trace saved to: $replay_trace_path")
+legacy_replay_trace_path = joinpath(LEGACY_OUTPUT_DIR, "replay_trace_$experiment_id.json")
+canonical_replay_trace_path = joinpath(CANONICAL_OUTPUT_DIR, "replay_trace.json")
+write_json_to_paths((legacy_replay_trace_path, canonical_replay_trace_path), replay_trace_dict)
+println("Replay trace saved to: $canonical_replay_trace_path")
+println("Legacy compatibility copy: $legacy_replay_trace_path")

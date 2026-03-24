@@ -77,6 +77,8 @@ selected_maps = length(ARGS) >= 4 && !isempty(ARGS[4]) ? split(ARGS[4], ",") : S
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
 OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
 mkpath(OUTPUT_DIR)  # Create output directory if it doesn't exist
+CANONICAL_OUTPUT_DIR = joinpath(@__DIR__, "outputs", "exp4", "scenario2")
+mkpath(CANONICAL_OUTPUT_DIR)
 
 # Open debug log file
 debug_log_path = joinpath(OUTPUT_DIR, "$(output_prefix)_scenario2_debug.txt")
@@ -717,10 +719,16 @@ output_path = joinpath(OUTPUT_DIR, output_filename)
 open(output_path, "w") do io
     JSON.print(io, steps_dict, 4)
 end
+open(joinpath(CANONICAL_OUTPUT_DIR, "steps_dict.json"), "w") do io
+    JSON.print(io, steps_dict, 4)
+end
 
 replay_trace_filename = "$(output_prefix)_scenario2_replay_trace.json"
 replay_trace_path = joinpath(OUTPUT_DIR, replay_trace_filename)
 open(replay_trace_path, "w") do io
+    JSON.print(io, replay_trace_dict, 4)
+end
+open(joinpath(CANONICAL_OUTPUT_DIR, "replay_trace.json"), "w") do io
     JSON.print(io, replay_trace_dict, 4)
 end
 
@@ -730,4 +738,5 @@ debug_println("Replay trace saved to: $replay_trace_path")
 close(debug_log_file)
 println("\nResults saved to: $output_path")
 println("Replay trace saved to: $replay_trace_path")
+println("Canonical scenario outputs: $CANONICAL_OUTPUT_DIR")
 println("Debug output saved to: $debug_log_path")

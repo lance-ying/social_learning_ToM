@@ -21,6 +21,10 @@ workspace_root = data_processing_dir.parent
 output_dir = data_processing_dir / "outputs"
 output_dir.mkdir(parents=True, exist_ok=True)
 
+
+def baseline_step_path(exp: str, model: str) -> Path:
+    return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
+
 # ── shared stats helpers ───────────────────────────────────────────────────
 def _pearson_statistic(a, b, axis=-1):
     """Pearson r that handles both 1-D and 2-D (bootstrap-resampled) inputs."""
@@ -92,13 +96,13 @@ def add_row(exp, agent, model, x, y):
 # ══════════════════════════════════════════════════════════════════════════
 print("\n── Exp1 ──────────────────────────────────────────────────────────────")
 
-with open(workspace_root / "steps.dict.json") as f:
+with open(workspace_root / "scripts/experiments/outputs/exp1/steps_dict.json") as f:
     steps_dict_exp1 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp1/step_dict_naive_exp1.json") as f:
+with open(baseline_step_path("exp1", "naive_observer")) as f:
     naive_exp1 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp1/step_dict_nonmentalize_exp1.json") as f:
+with open(baseline_step_path("exp1", "rational_non_mentalizing")) as f:
     nonmentalize_exp1 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp1/step_dict_mentalize_exp1.json") as f:
+with open(baseline_step_path("exp1", "social_mentalizing")) as f:
     mentalize_exp1 = json.load(f)
 
 results_dict = {}
@@ -134,13 +138,13 @@ for label, d, tfm in [
 # ══════════════════════════════════════════════════════════════════════════
 print("\n── Exp2 ──────────────────────────────────────────────────────────────")
 
-with open(workspace_root / "steps_exp2.json") as f:
+with open(workspace_root / "scripts/experiments/outputs/exp2/steps_dict.json") as f:
     steps_dict_exp2 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp2/step_dict_naive_exp2.json") as f:
+with open(baseline_step_path("exp2", "naive_observer")) as f:
     naive_exp2 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp2/step_dict_nonmentalize_exp2.json") as f:
+with open(baseline_step_path("exp2", "rational_non_mentalizing")) as f:
     nonmentalize_exp2 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp2/step_dict_mentalize_exp2.json") as f:
+with open(baseline_step_path("exp2", "social_mentalizing")) as f:
     mentalize_exp2 = json.load(f)
 
 results_dict = {}
@@ -258,13 +262,13 @@ def collect_multi_agent(pred_dict, human_stats, agent):
 # ── Exp3 ───────────────────────────────────────────────────────────────────
 print("\n── Exp3 ──────────────────────────────────────────────────────────────")
 
-with open(workspace_root / "steps_dict_exp3.json") as f:
+with open(workspace_root / "scripts/experiments/outputs/exp3/steps_dict.json") as f:
     model_exp3 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp3/step_dict_naive_exp3.json") as f:
+with open(baseline_step_path("exp3", "naive_observer")) as f:
     naive_exp3 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp3/step_dict_nonmentalize_exp3_v2.json") as f:
+with open(baseline_step_path("exp3", "rational_non_mentalizing")) as f:
     nonmentalize_exp3 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp3/step_dict_mentalize_exp3.json") as f:
+with open(baseline_step_path("exp3", "social_mentalizing")) as f:
     mentalize_exp3 = json.load(f)
 
 human_stats_exp3 = build_human_stats(data_processing_dir / "data_processed/exp3")
@@ -283,13 +287,13 @@ for agent in ("agent2", "agent3"):
 # ── Exp4 ───────────────────────────────────────────────────────────────────
 print("\n── Exp4 ──────────────────────────────────────────────────────────────")
 
-with open(workspace_root / "scripts/experiments/experiment_outputs/steps_dict_exp4_020126_2.json") as f:
+with open(workspace_root / "scripts/experiments/outputs/exp4/steps_dict.json") as f:
     model_exp4 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp4/step_dict_naive_exp4.json") as f:
+with open(baseline_step_path("exp4", "naive_observer")) as f:
     naive_exp4 = json.load(f)
-with open(workspace_root / "scripts/baselines/exp4/step_dict_nonmentalize_exp4_v2.json") as f:
+with open(baseline_step_path("exp4", "rational_non_mentalizing")) as f:
     nonmentalize_exp4 = json.load(f)
-with open(workspace_root / "step_dict_mentalize_exp4.json") as f:
+with open(baseline_step_path("exp4", "social_mentalizing")) as f:
     mentalize_exp4 = json.load(f)
 
 human_stats_exp4 = build_human_stats(data_processing_dir / "data_processed/exp4")

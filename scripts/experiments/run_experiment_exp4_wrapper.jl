@@ -19,6 +19,8 @@ output_prefix = "steps_dict_exp4_031726_2"
 #==============================================================================#
 
 OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
+CANONICAL_OUTPUT_DIR = joinpath(@__DIR__, "outputs", "exp4")
+mkpath(CANONICAL_OUTPUT_DIR)
 
 println("=== Running Experiment $experiment_id ===")
 println("Inference file: $inference_file")
@@ -68,8 +70,17 @@ open(merged_trace_path, "w") do io
     JSON.print(io, merged_trace, 4)
 end
 
+open(joinpath(CANONICAL_OUTPUT_DIR, "steps_dict.json"), "w") do io
+    JSON.print(io, merged, 4)
+end
+
+open(joinpath(CANONICAL_OUTPUT_DIR, "replay_trace.json"), "w") do io
+    JSON.print(io, merged_trace, 4)
+end
+
 println("Scenario 1 results: $results1_path")
 println("Scenario 2 results: $results2_path")
 println("Merged results: $merged_path")
 println("Merged replay trace: $merged_trace_path")
+println("Canonical exp4 outputs: $CANONICAL_OUTPUT_DIR")
 println("\n=== Experiment Complete ===")

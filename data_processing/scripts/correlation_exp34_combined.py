@@ -18,24 +18,28 @@ script_dir = Path(__file__).parent
 data_processing_dir = script_dir.parent
 workspace_root = data_processing_dir.parent
 
+
+def baseline_step_path(exp: str, model: str) -> Path:
+    return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
+
 # ── Load Exp3 model/baseline JSONs ─────────────────────────────────────────
-with open(workspace_root / 'steps_dict_exp3.json') as f:
+with open(workspace_root / 'scripts/experiments/outputs/exp3/steps_dict.json') as f:
     model_exp3 = json.load(f)
-with open(workspace_root / 'scripts/baselines/exp3/step_dict_naive_exp3.json') as f:
+with open(baseline_step_path('exp3', 'naive_observer')) as f:
     naive_exp3 = json.load(f)
-with open(workspace_root / 'scripts/baselines/exp3/step_dict_nonmentalize_exp3_v2.json') as f:
+with open(baseline_step_path('exp3', 'rational_non_mentalizing')) as f:
     nonmentalize_exp3 = json.load(f)
-with open(workspace_root / 'scripts/baselines/exp3/step_dict_mentalize_exp3.json') as f:
+with open(baseline_step_path('exp3', 'social_mentalizing')) as f:
     mentalize_exp3 = json.load(f)
 
 # ── Load Exp4 model/baseline JSONs ─────────────────────────────────────────
-with open(workspace_root / 'scripts/experiments/experiment_outputs/steps_dict_exp4_020126_2.json') as f:
+with open(workspace_root / 'scripts/experiments/outputs/exp4/steps_dict.json') as f:
     model_exp4 = json.load(f)
-with open(workspace_root / 'scripts/baselines/exp4/step_dict_naive_exp4.json') as f:
+with open(baseline_step_path('exp4', 'naive_observer')) as f:
     naive_exp4 = json.load(f)
-with open(workspace_root / 'scripts/baselines/exp4/step_dict_nonmentalize_exp4_v2.json') as f:
+with open(baseline_step_path('exp4', 'rational_non_mentalizing')) as f:
     nonmentalize_exp4 = json.load(f)
-with open(workspace_root / 'step_dict_mentalize_exp4.json') as f:
+with open(baseline_step_path('exp4', 'social_mentalizing')) as f:
     mentalize_exp4 = json.load(f)
 
 # ── CSV parsing ────────────────────────────────────────────────────────────

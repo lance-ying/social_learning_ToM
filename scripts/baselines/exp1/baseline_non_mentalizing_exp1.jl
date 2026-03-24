@@ -85,8 +85,19 @@ end
 
 # Define directory paths
 experiment_id = "exp1"
+model_label = "rational_non_mentalizing"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_$experiment_id")
+OUTPUT_DIR = joinpath(@__DIR__, "..", "outputs", experiment_id)
+mkpath(OUTPUT_DIR)
+
+function write_json_to_paths(paths, payload; indent::Int=4)
+    for path in paths
+        open(path, "w") do io
+            JSON.print(io, payload, indent)
+        end
+    end
+end
 
 #--- Initial Setup ---#
 steps_dict = Dict()
@@ -224,15 +235,13 @@ end
 
 # Save results
 output_filename = "step_dict_nonmentalize_exp1.json"
-open(output_filename, "w") do f
-    JSON.print(f, steps_dict)
-end
+canonical_output_path = joinpath(OUTPUT_DIR, "step_dict_$(model_label).json")
+write_json_to_paths((canonical_output_path,), steps_dict)
 
 replay_trace_filename = "replay_trace_nonmentalize_exp1.json"
-open(replay_trace_filename, "w") do f
-    JSON.print(f, replay_trace_dict, 4)
-end
+canonical_replay_trace_path = joinpath(OUTPUT_DIR, "replay_trace_$(model_label).json")
+write_json_to_paths((canonical_replay_trace_path,), replay_trace_dict)
 
 println("\n=== Experiment Complete ===")
-println("Results saved to: $output_filename")
-println("Replay trace saved to: $replay_trace_filename")
+println("Results saved to: $canonical_output_path")
+println("Replay trace saved to: $canonical_replay_trace_path")

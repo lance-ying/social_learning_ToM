@@ -14,13 +14,22 @@ include(joinpath(@__DIR__, "..", "..", "..", "src", "utils.jl"))
 include(joinpath(@__DIR__, "..", "..", "..", "src", "heuristics.jl"))
 # include(joinpath(@__DIR__, "..", "..", "..", "src", "render.jl"))
 include(joinpath(@__DIR__, "..", "..", "..", "src", "ascii.jl"))
-include(joinpath(@__DIR__, "..", "..", "..", "src", "planners.jl"))
 
-# Configuration section (matching wrapper pattern)
-experiment_id = "exp4_013026"  # Problem directory: problems_exp4_013026
-inference_file = "inference_exp4_020126_1.jld2"  # Configurable inference file (not used in non-mentalizing)
+# Define directory paths
+experiment_id = "exp3"
+model_label = "rational_non_mentalizing"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_$experiment_id")
+OUTPUT_DIR = joinpath(@__DIR__, "..", "outputs", experiment_id)
+mkpath(OUTPUT_DIR)
+
+function write_json_to_paths(paths, payload; indent::Int=4)
+    for path in paths
+        open(path, "w") do io
+            JSON.print(io, payload, indent)
+        end
+    end
+end
 
 #--- Initial Setup ---#
 metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
@@ -34,7 +43,7 @@ domain_render = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "dom
 action_cost = Dict(:move => 3, :interact => 5, :observe => 1.0)
 
 # Create progress bar for all (map, scenario) combinations
-total_iterations = length(metadata) * 2  # ~21 maps × 2 scenarios
+total_iterations = length(metadata) * 2  # 25 maps × 2 scenarios
 progress = Progress(total_iterations, desc="Processing non-mentalize baseline v2: ")
 
 # Track timing
@@ -166,7 +175,7 @@ end
 
 domain_path = joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl")
 
-for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d+", x[1]).match))
+for (map_id, agent_goals) in metadata
     map_start_time = time()
     println("\nProcessing map: $map_id")
 
@@ -199,21 +208,8 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
 
     for scenario in 1:2
         map_key = "$(map_id)_scenario$(scenario)"
-        agent2_goal_info = agent_goals["agent2"][scenario]
-        agent3_goal_info = agent_goals["agent3"][scenario]
-        agent2_gem = agent2_goal_info["gem"]
-        agent3_gem = agent3_goal_info["gem"]
-        agent2_type = agent2_goal_info["type"]
-        agent3_type = agent3_goal_info["type"]
-        planner = AStarPlanner(GoalManhattan())
-        blue_wizards_agent2 = [w for w in PDDL.get_objects(state_agent2, :wizard) if state_agent2[pddl"(iscolor $w blue)"]]
-        blue_wizards_agent3 = [w for w in PDDL.get_objects(state_agent3, :wizard) if state_agent3[pddl"(iscolor $w blue)"]]
-        observed_plan_agent2 = agent2_type == "naive" ?
-            generate_naive_plan(domain_agent2, state_agent2, goals_agent2[agent2_gem], blue_wizards_agent2, :agent2, planner) :
-            collect(planner(domain_agent2, state_agent2, goals_agent2[agent2_gem]))
-        observed_plan_agent3 = agent3_type == "naive" ?
-            generate_naive_plan(domain_agent3, state_agent3, goals_agent3[agent3_gem], blue_wizards_agent3, :agent3, planner) :
-            collect(planner(domain_agent3, state_agent3, goals_agent3[agent3_gem]))
+        observed_plan_agent2 = collect(AStarPlanner(GoalManhattan())(domain_agent2, state_agent2, goals_agent2[agent_goals["agent2"][scenario]]))
+        observed_plan_agent3 = collect(AStarPlanner(GoalManhattan())(domain_agent3, state_agent3, goals_agent3[agent_goals["agent3"][scenario]]))
 
         should_observe_agent2, T_agent2 = agent_cost_comparison(
             domain_render, domain_path, PROBLEM_DIR, map_id, observed_plan_agent2, action_cost)
@@ -274,16 +270,14 @@ println("Total time: $(round(total_elapsed, digits=2))s")
 println("Average per map: $(round(mean(collect(Float64, values(map_times))), digits=2))s")
 
 # Save results
-output_filename = "step_dict_nonmentalize_exp4_v2.json"
-open(output_filename, "w") do f
-    JSON.print(f, steps_dict, 4)
-end
+output_filename = "step_dict_nonmentalize_exp3_v2.json"
+canonical_output_path = joinpath(OUTPUT_DIR, "step_dict_$(model_label).json")
+write_json_to_paths((canonical_output_path,), steps_dict)
 
-replay_trace_filename = "replay_trace_nonmentalize_exp4_v2.json"
-open(replay_trace_filename, "w") do f
-    JSON.print(f, replay_trace_dict, 4)
-end
+replay_trace_filename = "replay_trace_nonmentalize_exp3_v2.json"
+canonical_replay_trace_path = joinpath(OUTPUT_DIR, "replay_trace_$(model_label).json")
+write_json_to_paths((canonical_replay_trace_path,), replay_trace_dict)
 
 println("\n=== Experiment Complete ===")
-println("Results saved to: $output_filename")
-println("Replay trace saved to: $replay_trace_filename")
+println("Results saved to: $canonical_output_path")
+println("Replay trace saved to: $canonical_replay_trace_path")

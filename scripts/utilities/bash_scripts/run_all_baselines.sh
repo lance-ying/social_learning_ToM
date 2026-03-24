@@ -17,8 +17,8 @@ Usage:
 Runs the 12 active baseline generators:
   - exp1: mentalize, non_mentalizing, naive
   - exp2: mentalize, non_mentalizing, naive
-  - exp3: mentalize_v2, non_mentalizing_v2, naive
-  - exp4: mentalize_v2, non_mentalizing_v2, naive
+  - exp3: mentalize, non_mentalizing, naive
+  - exp4: mentalize, non_mentalizing, naive
 EOF
 }
 
@@ -73,44 +73,44 @@ run_baseline_in_dir() {
 }
 
 run_baseline_in_dir "exp1 / social_mentalizing" "scripts/baselines/exp1" "baseline_mentalize_exp1.jl"
-copy_output "scripts/baselines/exp1/step_dict_mentalize_exp1.json" "$RUN_OUTPUT_DIR/exp1/social_mentalizing/steps_dict.json"
-copy_output "scripts/baselines/exp1/replay_trace_mentalize_exp1.json" "$RUN_OUTPUT_DIR/exp1/social_mentalizing/replay_trace.json"
+copy_output "scripts/baselines/outputs/exp1/step_dict_social_mentalizing.json" "$RUN_OUTPUT_DIR/exp1/social_mentalizing/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp1/replay_trace_social_mentalizing.json" "$RUN_OUTPUT_DIR/exp1/social_mentalizing/replay_trace.json"
 run_baseline_in_dir "exp1 / rational_non_mentalizing" "scripts/baselines/exp1" "baseline_non_mentalizing_exp1.jl"
-copy_output "scripts/baselines/exp1/step_dict_nonmentalize_exp1.json" "$RUN_OUTPUT_DIR/exp1/rational_non_mentalizing/steps_dict.json"
-copy_output "scripts/baselines/exp1/replay_trace_nonmentalize_exp1.json" "$RUN_OUTPUT_DIR/exp1/rational_non_mentalizing/replay_trace.json"
+copy_output "scripts/baselines/outputs/exp1/step_dict_rational_non_mentalizing.json" "$RUN_OUTPUT_DIR/exp1/rational_non_mentalizing/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp1/replay_trace_rational_non_mentalizing.json" "$RUN_OUTPUT_DIR/exp1/rational_non_mentalizing/replay_trace.json"
 run_baseline_in_dir "exp1 / naive_observer" "scripts/baselines/exp1" "baseline_naive_exp1.jl"
-copy_output "scripts/baselines/exp1/step_dict_naive_exp1.json" "$RUN_OUTPUT_DIR/exp1/naive_observer/steps_dict.json"
-copy_output "scripts/baselines/exp1/replay_trace_naive_exp1.json" "$RUN_OUTPUT_DIR/exp1/naive_observer/replay_trace.json"
+copy_output "scripts/baselines/outputs/exp1/step_dict_naive_observer.json" "$RUN_OUTPUT_DIR/exp1/naive_observer/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp1/replay_trace_naive_observer.json" "$RUN_OUTPUT_DIR/exp1/naive_observer/replay_trace.json"
 
 run_baseline_in_dir "exp2 / social_mentalizing" "scripts/baselines/exp2" "baseline_mentalize_exp2.jl"
-copy_output "scripts/baselines/exp2/step_dict_mentalize_exp2.json" "$RUN_OUTPUT_DIR/exp2/social_mentalizing/steps_dict.json"
-copy_output "scripts/baselines/exp2/replay_trace_mentalize_exp2.json" "$RUN_OUTPUT_DIR/exp2/social_mentalizing/replay_trace.json"
+copy_output "scripts/baselines/outputs/exp2/step_dict_social_mentalizing.json" "$RUN_OUTPUT_DIR/exp2/social_mentalizing/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp2/replay_trace_social_mentalizing.json" "$RUN_OUTPUT_DIR/exp2/social_mentalizing/replay_trace.json"
 run_baseline_in_dir "exp2 / rational_non_mentalizing" "scripts/baselines/exp2" "baseline_non_mentalizing_exp2.jl"
-copy_output "scripts/baselines/exp2/step_dict_nonmentalize_exp2.json" "$RUN_OUTPUT_DIR/exp2/rational_non_mentalizing/steps_dict.json"
-copy_output "scripts/baselines/exp2/replay_trace_nonmentalize_exp2.json" "$RUN_OUTPUT_DIR/exp2/rational_non_mentalizing/replay_trace.json"
+copy_output "scripts/baselines/outputs/exp2/step_dict_rational_non_mentalizing.json" "$RUN_OUTPUT_DIR/exp2/rational_non_mentalizing/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp2/replay_trace_rational_non_mentalizing.json" "$RUN_OUTPUT_DIR/exp2/rational_non_mentalizing/replay_trace.json"
 run_baseline_in_dir "exp2 / naive_observer" "scripts/baselines/exp2" "baseline_naive_exp2.jl"
-copy_output "scripts/baselines/exp2/step_dict_naive_exp2.json" "$RUN_OUTPUT_DIR/exp2/naive_observer/steps_dict.json"
-copy_output "scripts/baselines/exp2/replay_trace_naive_exp2.json" "$RUN_OUTPUT_DIR/exp2/naive_observer/replay_trace.json"
+copy_output "scripts/baselines/outputs/exp2/step_dict_naive_observer.json" "$RUN_OUTPUT_DIR/exp2/naive_observer/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp2/replay_trace_naive_observer.json" "$RUN_OUTPUT_DIR/exp2/naive_observer/replay_trace.json"
 
-run_baseline_in_dir "exp3 / social_mentalizing" "scripts/baselines/exp3" "baseline_mentalize_exp3_v2.jl"
-copy_output "scripts/baselines/exp3/step_dict_mentalize_exp3.json" "$RUN_OUTPUT_DIR/exp3/social_mentalizing/steps_dict.json"
-copy_output "scripts/baselines/exp3/replay_trace_mentalize_exp3.json" "$RUN_OUTPUT_DIR/exp3/social_mentalizing/replay_trace.json"
-run_baseline_in_dir "exp3 / rational_non_mentalizing" "scripts/baselines/exp3" "baseline_non_mentalizing_exp3_v2.jl"
-copy_output "scripts/baselines/exp3/step_dict_nonmentalize_exp3_v2.json" "$RUN_OUTPUT_DIR/exp3/rational_non_mentalizing/steps_dict.json"
-copy_output "scripts/baselines/exp3/replay_trace_nonmentalize_exp3_v2.json" "$RUN_OUTPUT_DIR/exp3/rational_non_mentalizing/replay_trace.json"
+run_baseline_in_dir "exp3 / social_mentalizing" "scripts/baselines/exp3" "baseline_mentalize_exp3.jl"
+copy_output "scripts/baselines/outputs/exp3/step_dict_social_mentalizing.json" "$RUN_OUTPUT_DIR/exp3/social_mentalizing/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp3/replay_trace_social_mentalizing.json" "$RUN_OUTPUT_DIR/exp3/social_mentalizing/replay_trace.json"
+run_baseline_in_dir "exp3 / rational_non_mentalizing" "scripts/baselines/exp3" "baseline_non_mentalizing_exp3.jl"
+copy_output "scripts/baselines/outputs/exp3/step_dict_rational_non_mentalizing.json" "$RUN_OUTPUT_DIR/exp3/rational_non_mentalizing/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp3/replay_trace_rational_non_mentalizing.json" "$RUN_OUTPUT_DIR/exp3/rational_non_mentalizing/replay_trace.json"
 run_baseline_in_dir "exp3 / naive_observer" "scripts/baselines/exp3" "baseline_naive_exp3.jl"
-copy_output "scripts/baselines/exp3/step_dict_naive_exp3.json" "$RUN_OUTPUT_DIR/exp3/naive_observer/steps_dict.json"
-copy_output "scripts/baselines/exp3/replay_trace_naive_exp3.json" "$RUN_OUTPUT_DIR/exp3/naive_observer/replay_trace.json"
+copy_output "scripts/baselines/outputs/exp3/step_dict_naive_observer.json" "$RUN_OUTPUT_DIR/exp3/naive_observer/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp3/replay_trace_naive_observer.json" "$RUN_OUTPUT_DIR/exp3/naive_observer/replay_trace.json"
 
-run_baseline_in_dir "exp4 / social_mentalizing" "scripts/baselines/exp4" "baseline_mentalize_exp4_v2.jl"
-copy_output "scripts/baselines/exp4/step_dict_mentalize_exp4_v2.json" "$RUN_OUTPUT_DIR/exp4/social_mentalizing/steps_dict.json"
-copy_output "scripts/baselines/exp4/replay_trace_mentalize_exp4_v2.json" "$RUN_OUTPUT_DIR/exp4/social_mentalizing/replay_trace.json"
-run_baseline_in_dir "exp4 / rational_non_mentalizing" "scripts/baselines/exp4" "baseline_non_mentalizing_exp4_v2.jl"
-copy_output "scripts/baselines/exp4/step_dict_nonmentalize_exp4_v2.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing/steps_dict.json"
-copy_output "scripts/baselines/exp4/replay_trace_nonmentalize_exp4_v2.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing/replay_trace.json"
+run_baseline_in_dir "exp4 / social_mentalizing" "scripts/baselines/exp4" "baseline_mentalize_exp4.jl"
+copy_output "scripts/baselines/outputs/exp4/step_dict_social_mentalizing.json" "$RUN_OUTPUT_DIR/exp4/social_mentalizing/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp4/replay_trace_social_mentalizing.json" "$RUN_OUTPUT_DIR/exp4/social_mentalizing/replay_trace.json"
+run_baseline_in_dir "exp4 / rational_non_mentalizing" "scripts/baselines/exp4" "baseline_non_mentalizing_exp4.jl"
+copy_output "scripts/baselines/outputs/exp4/step_dict_rational_non_mentalizing.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp4/replay_trace_rational_non_mentalizing.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing/replay_trace.json"
 run_baseline_in_dir "exp4 / naive_observer" "scripts/baselines/exp4" "baseline_naive_exp4.jl"
-copy_output "scripts/baselines/exp4/step_dict_naive_exp4.json" "$RUN_OUTPUT_DIR/exp4/naive_observer/steps_dict.json"
-copy_output "scripts/baselines/exp4/replay_trace_naive_exp4.json" "$RUN_OUTPUT_DIR/exp4/naive_observer/replay_trace.json"
+copy_output "scripts/baselines/outputs/exp4/step_dict_naive_observer.json" "$RUN_OUTPUT_DIR/exp4/naive_observer/steps_dict.json"
+copy_output "scripts/baselines/outputs/exp4/replay_trace_naive_observer.json" "$RUN_OUTPUT_DIR/exp4/naive_observer/replay_trace.json"
 
 echo "Organized outputs: $RUN_OUTPUT_DIR"
 echo "Done."

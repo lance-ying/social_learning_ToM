@@ -8,31 +8,35 @@ script_dir = Path(__file__).parent  # data_processing/scripts/
 data_processing_dir = script_dir.parent  # data_processing/
 workspace_root = script_dir.parent.parent  # workspace root
 
+
+def baseline_step_path(exp: str, model: str) -> Path:
+    return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
+
 # Load model predictions
-with open(data_processing_dir / 'data_raw/steps.dict.json', 'r') as f:
+with open(workspace_root / 'scripts/experiments/outputs/exp1/steps_dict.json', 'r') as f:
     steps_dict = json.load(f)
 
-with open(data_processing_dir / 'data_raw/steps_exp2.json', 'r') as f:
+with open(workspace_root / 'scripts/experiments/outputs/exp2/steps_dict.json', 'r') as f:
     steps_dict_exp2 = json.load(f)
 
 # Load baseline predictions for exp1
-with open(workspace_root / 'scripts/baselines/exp1/step_dict_naive_exp1.json', 'r') as f:
+with open(baseline_step_path('exp1', 'naive_observer'), 'r') as f:
     baseline_naive_exp1 = json.load(f)
 
-with open(workspace_root / 'scripts/baselines/exp1/step_dict_mentalize_exp1.json', 'r') as f:
+with open(baseline_step_path('exp1', 'social_mentalizing'), 'r') as f:
     baseline_mentalize_exp1 = json.load(f)
 
-with open(workspace_root / 'scripts/baselines/exp1/step_dict_nonmentalize_exp1.json', 'r') as f:
+with open(baseline_step_path('exp1', 'rational_non_mentalizing'), 'r') as f:
     baseline_nonmentalize_exp1 = json.load(f)
 
 # Load baseline predictions for exp2
-with open(workspace_root / 'scripts/baselines/exp2/step_dict_naive_exp2.json', 'r') as f:
+with open(baseline_step_path('exp2', 'naive_observer'), 'r') as f:
     baseline_naive_exp2 = json.load(f)
 
-with open(workspace_root / 'scripts/baselines/exp2/step_dict_mentalize_exp2.json', 'r') as f:
+with open(baseline_step_path('exp2', 'social_mentalizing'), 'r') as f:
     baseline_mentalize_exp2 = json.load(f)
 
-with open(workspace_root / 'scripts/baselines/exp2/step_dict_nonmentalize_exp2.json', 'r') as f:
+with open(baseline_step_path('exp2', 'rational_non_mentalizing'), 'r') as f:
     baseline_nonmentalize_exp2 = json.load(f)
 
 # Load human data from results/current

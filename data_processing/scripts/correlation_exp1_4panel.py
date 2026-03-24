@@ -25,8 +25,13 @@ def first_existing(*paths: Path) -> Path:
             return path
     raise FileNotFoundError(f"No candidate file exists: {paths}")
 
+
+def baseline_step_path(exp: str, model: str) -> Path:
+    return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
+
 # ── load model / baseline JSONs ───────────────────────────────────────────
 model_json = first_existing(
+    workspace_root / 'scripts/experiments/outputs/exp1/steps_dict.json',
     workspace_root / 'scripts/experiments/experiment_outputs/steps_dict_exp1.json',
     workspace_root / 'steps.dict.json',
 )
@@ -34,13 +39,13 @@ model_json = first_existing(
 with open(model_json) as f:
     steps_dict = json.load(f)
 
-with open(workspace_root / 'scripts/baselines/exp1/step_dict_naive_exp1.json') as f:
+with open(baseline_step_path('exp1', 'naive_observer')) as f:
     baseline_naive = json.load(f)
 
-with open(workspace_root / 'scripts/baselines/exp1/step_dict_nonmentalize_exp1.json') as f:
+with open(baseline_step_path('exp1', 'rational_non_mentalizing')) as f:
     baseline_nonmentalize = json.load(f)
 
-with open(workspace_root / 'scripts/baselines/exp1/step_dict_mentalize_exp1.json') as f:
+with open(baseline_step_path('exp1', 'social_mentalizing')) as f:
     baseline_mentalize = json.load(f)
 
 # ── load human data ───────────────────────────────────────────────────────

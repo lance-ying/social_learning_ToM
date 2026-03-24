@@ -50,8 +50,18 @@ end
 experiment_id = "exp3"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
-OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
-mkpath(OUTPUT_DIR)  # Create output directory if it doesn't exist
+LEGACY_OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
+CANONICAL_OUTPUT_DIR = joinpath(@__DIR__, "outputs", experiment_id)
+mkpath(LEGACY_OUTPUT_DIR)
+mkpath(CANONICAL_OUTPUT_DIR)
+
+function write_json_to_paths(paths, payload; indent::Int=4)
+    for path in paths
+        open(path, "w") do io
+            JSON.print(io, payload, indent)
+        end
+    end
+end
 
 #--- Initial Setup ---#
 metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
@@ -616,16 +626,16 @@ println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
 output_filename = "step_dict_3_031625.json"
-output_path = joinpath(OUTPUT_DIR, output_filename)
-open(output_path, "w") do io
-    JSON.print(io, steps_dict, 4)
-end
+legacy_output_path = joinpath(LEGACY_OUTPUT_DIR, output_filename)
+canonical_output_path = joinpath(CANONICAL_OUTPUT_DIR, "steps_dict.json")
+write_json_to_paths((legacy_output_path, canonical_output_path), steps_dict)
 
-println("\nResults saved to: $output_path")
+println("\nResults saved to: $canonical_output_path")
+println("Legacy compatibility copy: $legacy_output_path")
 
 replay_trace_filename = replace(output_filename, "step_dict" => "replay_trace")
-replay_trace_path = joinpath(OUTPUT_DIR, replay_trace_filename)
-open(replay_trace_path, "w") do io
-    JSON.print(io, replay_trace_dict, 4)
-end
-println("Replay trace saved to: $replay_trace_path")
+legacy_replay_trace_path = joinpath(LEGACY_OUTPUT_DIR, replay_trace_filename)
+canonical_replay_trace_path = joinpath(CANONICAL_OUTPUT_DIR, "replay_trace.json")
+write_json_to_paths((legacy_replay_trace_path, canonical_replay_trace_path), replay_trace_dict)
+println("Replay trace saved to: $canonical_replay_trace_path")
+println("Legacy compatibility copy: $legacy_replay_trace_path")
