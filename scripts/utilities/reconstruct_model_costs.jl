@@ -895,6 +895,28 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
         )
     end
 
+    function interaction_outcome_local(state_before, state_after, agent_sym::Symbol, action::Term)
+        if action.name != :interact
+            return "none"
+        end
+
+        function agent_has_blue_item_local(state, agent_sym::Symbol)
+            agent_term = Const(agent_sym)
+            for item_type in (:key, :gem)
+                for item in PDDL.get_objects(state, item_type)
+                    if state[pddl"(has $agent_term $item)"] && state[pddl"(iscolor $item blue)"]
+                        return true
+                    end
+                end
+            end
+            return false
+        end
+
+        had_blue_before = agent_has_blue_item_local(state_before, agent_sym)
+        has_blue_after = agent_has_blue_item_local(state_after, agent_sym)
+        return (!had_blue_before && has_blue_after) ? "blue_amulet_present" : "blue_amulet_absent"
+    end
+
     if isempty(hypotheses)
         exhaustion_error("No latent-state hypothesis available at initialization.")
     else
@@ -977,13 +999,18 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
         action_kind = classify_action(action)
         planning_action_counts[action_kind] += 1
 
+        true_state_before = copy(true_state)
+        curr_state_before = copy(curr_state)
         true_state = PDDL.execute(domain, true_state, action)
         curr_state = PDDL.execute(domain, curr_state, action)
         next_hypotheses = typeof(hypotheses)(undef, 0)
+        hypothesis_pairs = Tuple{Any, Any}[]
         pruned_hypotheses = 0
         for hypothesis in hypotheses
             if PDDL.available(domain, hypothesis, action)
-                push!(next_hypotheses, PDDL.execute(domain, hypothesis, action))
+                hypothesis_after = PDDL.execute(domain, hypothesis, action)
+                push!(next_hypotheses, hypothesis_after)
+                push!(hypothesis_pairs, (copy(hypothesis), hypothesis_after))
             else
                 pruned_hypotheses += 1
             end
@@ -995,20 +1022,25 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
         end
 
         if action.name == :interact
-            consistent_hypotheses = Any[
-                copy(hypothesis) for hypothesis in hypotheses
-                if equivalent_plan_state(hypothesis, true_state)
-            ]
+            agent_sym = Symbol(string(action.args[1]))
+            true_outcome = interaction_outcome_local(true_state_before, true_state, agent_sym, action)
+            consistent_hypotheses = Any[]
+            for (hypothesis_before, hypothesis_after) in hypothesis_pairs
+                hypothesis_outcome = interaction_outcome_local(hypothesis_before, hypothesis_after, agent_sym, action)
+                if hypothesis_outcome == true_outcome
+                    push!(consistent_hypotheses, copy(hypothesis_after))
+                end
+            end
             pruned_by_interaction = length(hypotheses) - length(consistent_hypotheses)
             if pruned_by_interaction > 0
                 hypotheses = consistent_hypotheses
                 explored_state_ids = Set{Int}()
-                push!(warnings, "Pruned $pruned_by_interaction latent-state hypotheses after interaction outcome.")
+                push!(warnings, "Pruned $pruned_by_interaction latent-state hypotheses after interaction evidence ($true_outcome).")
             end
 
             if isempty(hypotheses)
                 exhaustion_error("Interaction outcome ruled out all latent-state hypotheses.")
-            elseif !equivalent_plan_state(true_state, curr_state)
+            elseif interaction_outcome_local(curr_state_before, curr_state, agent_sym, action) != true_outcome
                 best_idx, plan = timed_choose_shortest_plan(hypotheses, Set{Int}(), :replan)
                 replan_count += 1
                 if best_idx > 0

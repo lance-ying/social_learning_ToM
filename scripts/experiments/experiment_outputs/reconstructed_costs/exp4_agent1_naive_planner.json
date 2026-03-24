@@ -88,7 +88,7 @@
       "t_recorded": 7,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 8.016058921813965,
+      "replay_elapsed": 7.1771769523620605,
       "t_replayed": 7,
       "observations_count": 7,
       "observation_source": "sequence",
@@ -137,7 +137,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 8.706338167190552,
+      "posterior_filter_time": 7.767873048782349,
       "total_steps": 67,
       "observation_trace": [
         "agent2",
@@ -220,9 +220,9 @@
         "interact": 4
       },
       "planning_cost": 188.0,
-      "replay_nonplanning_time": 0.002547025680541992,
+      "replay_nonplanning_time": 0.0022079944610595703,
       "total_cost": 195.0,
-      "initial_plan_time": 8.013511896133423,
+      "initial_plan_time": 7.174968957901001,
       "warnings": []
     },
     "sm541_scenario1": {
@@ -230,7 +230,7 @@
       "t_recorded": 10,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.580618143081665,
+      "replay_elapsed": 1.432171106338501,
       "t_replayed": 10,
       "observations_count": 10,
       "observation_source": "sequence",
@@ -297,7 +297,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.5806689262390137,
+      "posterior_filter_time": 1.4322080612182617,
       "total_steps": 42,
       "observation_trace": [
         "agent2",
@@ -355,9 +355,9 @@
         "interact": 1
       },
       "planning_cost": 98.0,
-      "replay_nonplanning_time": 7.009506225585938e-5,
+      "replay_nonplanning_time": 4.9114227294921875e-5,
       "total_cost": 108.0,
-      "initial_plan_time": 1.5805480480194092,
+      "initial_plan_time": 1.432121992111206,
       "warnings": []
     },
     "sm611_scenario1": {
@@ -365,7 +365,7 @@
       "t_recorded": 9,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.8244359493255615,
+      "replay_elapsed": 1.686142921447754,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -426,7 +426,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.824470043182373,
+      "posterior_filter_time": 1.6861779689788818,
       "total_steps": 37,
       "observation_trace": [
         "agent2",
@@ -479,9 +479,9 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.0001361370086669922,
+      "replay_nonplanning_time": 4.291534423828125e-5,
       "total_cost": 95.0,
-      "initial_plan_time": 1.8242998123168945,
+      "initial_plan_time": 1.6861000061035156,
       "warnings": []
     },
     "sm341_scenario1": {
@@ -489,7 +489,7 @@
       "t_recorded": 5,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 0.07101202011108398,
+      "replay_elapsed": 0.05461716651916504,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -526,7 +526,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.0710442066192627,
+      "posterior_filter_time": 0.0546422004699707,
       "total_steps": 33,
       "observation_trace": [
         "agent2",
@@ -575,9 +575,9 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 3.981590270996094e-5,
+      "replay_nonplanning_time": 3.409385681152344e-5,
       "total_cost": 91.0,
-      "initial_plan_time": 0.07097220420837402,
+      "initial_plan_time": 0.054583072662353516,
       "warnings": []
     },
     "sm421_scenario1": {
@@ -585,7 +585,7 @@
       "t_recorded": 20,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 5.215827941894531,
+      "replay_elapsed": 4.797498941421509,
       "t_replayed": 20,
       "observations_count": 20,
       "observation_source": "sequence",
@@ -712,7 +712,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 5.215860843658447,
+      "posterior_filter_time": 4.797524929046631,
       "total_steps": 77,
       "observation_trace": [
         "agent2",
@@ -805,9 +805,9 @@
         "interact": 4
       },
       "planning_cost": 179.0,
-      "replay_nonplanning_time": 7.486343383789062e-5,
+      "replay_nonplanning_time": 6.198883056640625e-5,
       "total_cost": 199.0,
-      "initial_plan_time": 5.215753078460693,
+      "initial_plan_time": 4.797436952590942,
       "warnings": []
     },
     "sm531_scenario1": {
@@ -815,7 +815,7 @@
       "t_recorded": 6,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 0.8743369579315186,
+      "replay_elapsed": 0.7936961650848389,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -858,7 +858,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.8743650913238525,
+      "posterior_filter_time": 0.7937250137329102,
       "total_steps": 45,
       "observation_trace": [
         "agent2",
@@ -919,9 +919,9 @@
         "interact": 2
       },
       "planning_cost": 121.0,
-      "replay_nonplanning_time": 4.792213439941406e-5,
+      "replay_nonplanning_time": 4.410743713378906e-5,
       "total_cost": 127.0,
-      "initial_plan_time": 0.8742890357971191,
+      "initial_plan_time": 0.7936520576477051,
       "warnings": []
     },
     "sm611_scenario2": {
@@ -929,7 +929,7 @@
       "t_recorded": 6,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.9317750930786133,
+      "replay_elapsed": 1.610119104385376,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -972,7 +972,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.931812047958374,
+      "posterior_filter_time": 1.6101489067077637,
       "total_steps": 34,
       "observation_trace": [
         "agent2",
@@ -1024,7 +1024,7 @@
       "planning_cost": 86.0,
       "replay_nonplanning_time": 3.409385681152344e-5,
       "total_cost": 92.0,
-      "initial_plan_time": 1.9317409992218018,
+      "initial_plan_time": 1.6100850105285645,
       "warnings": []
     },
     "sm543_scenario2": {
@@ -1032,7 +1032,7 @@
       "t_recorded": 32,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 2.5800609588623047,
+      "replay_elapsed": 2.398850917816162,
       "t_replayed": 32,
       "observations_count": 32,
       "observation_source": "sequence",
@@ -1231,7 +1231,7 @@
           "observed_agent": "agent3"
         }
       ],
-      "posterior_filter_time": 2.580087900161743,
+      "posterior_filter_time": 2.3988800048828125,
       "total_steps": 51,
       "observation_trace": [
         "agent2",
@@ -1298,9 +1298,9 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 3.0994415283203125e-5,
+      "replay_nonplanning_time": 2.9087066650390625e-5,
       "total_cost": 93.0,
-      "initial_plan_time": 2.5800299644470215,
+      "initial_plan_time": 2.3988218307495117,
       "warnings": []
     },
     "sm311_scenario1": {
@@ -1308,7 +1308,7 @@
       "t_recorded": 7,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.1723170280456543,
+      "replay_elapsed": 1.0845298767089844,
       "t_replayed": 7,
       "observations_count": 7,
       "observation_source": "sequence",
@@ -1357,7 +1357,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.1723461151123047,
+      "posterior_filter_time": 1.0845568180084229,
       "total_steps": 48,
       "observation_trace": [
         "agent2",
@@ -1421,9 +1421,9 @@
         "interact": 1
       },
       "planning_cost": 125.0,
-      "replay_nonplanning_time": 6.008148193359375e-5,
+      "replay_nonplanning_time": 4.100799560546875e-5,
       "total_cost": 132.0,
-      "initial_plan_time": 1.1722569465637207,
+      "initial_plan_time": 1.084488868713379,
       "warnings": []
     },
     "sm321_scenario1": {
@@ -1431,7 +1431,7 @@
       "t_recorded": 29,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 2.2756400108337402,
+      "replay_elapsed": 2.0870118141174316,
       "t_replayed": 29,
       "observations_count": 29,
       "observation_source": "sequence",
@@ -1612,7 +1612,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 2.275674819946289,
+      "posterior_filter_time": 2.0870370864868164,
       "total_steps": 80,
       "observation_trace": [
         "agent2",
@@ -1708,9 +1708,9 @@
         "interact": 3
       },
       "planning_cost": 159.0,
-      "replay_nonplanning_time": 8.511543273925781e-5,
+      "replay_nonplanning_time": 6.389617919921875e-5,
       "total_cost": 188.0,
-      "initial_plan_time": 2.275554895401001,
+      "initial_plan_time": 2.0869479179382324,
       "warnings": []
     },
     "sm351_scenario1": {
@@ -1718,7 +1718,7 @@
       "t_recorded": 12,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.4664759635925293,
+      "replay_elapsed": 1.3449029922485352,
       "t_replayed": 12,
       "observations_count": 12,
       "observation_source": "sequence",
@@ -1797,7 +1797,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.4665210247039795,
+      "posterior_filter_time": 1.3449351787567139,
       "total_steps": 50,
       "observation_trace": [
         "agent2",
@@ -1863,9 +1863,9 @@
         "interact": 1
       },
       "planning_cost": 116.0,
-      "replay_nonplanning_time": 4.9114227294921875e-5,
+      "replay_nonplanning_time": 3.981590270996094e-5,
       "total_cost": 128.0,
-      "initial_plan_time": 1.4664268493652344,
+      "initial_plan_time": 1.3448631763458252,
       "warnings": []
     },
     "sm361_scenario2": {
@@ -1873,7 +1873,7 @@
       "t_recorded": 9,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 2.327316999435425,
+      "replay_elapsed": 2.1337850093841553,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -1934,7 +1934,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 2.3273510932922363,
+      "posterior_filter_time": 2.1338131427764893,
       "total_steps": 40,
       "observation_trace": [
         "agent2",
@@ -1990,9 +1990,9 @@
         "interact": 2
       },
       "planning_cost": 97.0,
-      "replay_nonplanning_time": 6.198883056640625e-5,
+      "replay_nonplanning_time": 3.886222839355469e-5,
       "total_cost": 106.0,
-      "initial_plan_time": 2.3272550106048584,
+      "initial_plan_time": 2.1337461471557617,
       "warnings": []
     },
     "sm361_scenario1": {
@@ -2000,7 +2000,7 @@
       "t_recorded": 12,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 2.5108940601348877,
+      "replay_elapsed": 2.275609016418457,
       "t_replayed": 12,
       "observations_count": 12,
       "observation_source": "sequence",
@@ -2079,7 +2079,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 2.510941982269287,
+      "posterior_filter_time": 2.275639057159424,
       "total_steps": 43,
       "observation_trace": [
         "agent2",
@@ -2138,9 +2138,9 @@
         "interact": 2
       },
       "planning_cost": 97.0,
-      "replay_nonplanning_time": 4.696846008300781e-5,
+      "replay_nonplanning_time": 3.695487976074219e-5,
       "total_cost": 109.0,
-      "initial_plan_time": 2.5108470916748047,
+      "initial_plan_time": 2.2755720615386963,
       "warnings": []
     },
     "sm421_scenario2": {
@@ -2148,7 +2148,7 @@
       "t_recorded": 14,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 5.2517969608306885,
+      "replay_elapsed": 4.7735090255737305,
       "t_replayed": 14,
       "observations_count": 14,
       "observation_source": "sequence",
@@ -2239,7 +2239,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 5.251834869384766,
+      "posterior_filter_time": 4.773547172546387,
       "total_steps": 71,
       "observation_trace": [
         "agent2",
@@ -2326,9 +2326,9 @@
         "interact": 4
       },
       "planning_cost": 179.0,
-      "replay_nonplanning_time": 0.00010895729064941406,
+      "replay_nonplanning_time": 7.414817810058594e-5,
       "total_cost": 193.0,
-      "initial_plan_time": 5.251688003540039,
+      "initial_plan_time": 4.77343487739563,
       "warnings": []
     },
     "sm531_scenario2": {
@@ -2336,7 +2336,7 @@
       "t_recorded": 6,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 0.8727240562438965,
+      "replay_elapsed": 0.8079140186309814,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -2379,7 +2379,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.8727610111236572,
+      "posterior_filter_time": 0.807945966720581,
       "total_steps": 45,
       "observation_trace": [
         "agent2",
@@ -2440,9 +2440,9 @@
         "interact": 2
       },
       "planning_cost": 121.0,
-      "replay_nonplanning_time": 4.601478576660156e-5,
+      "replay_nonplanning_time": 4.506111145019531e-5,
       "total_cost": 127.0,
-      "initial_plan_time": 0.8726780414581299,
+      "initial_plan_time": 0.8078689575195312,
       "warnings": []
     },
     "sm331_scenario1": {
@@ -2450,7 +2450,7 @@
       "t_recorded": 5,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 2.800185203552246,
+      "replay_elapsed": 2.6127688884735107,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -2487,7 +2487,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 2.800215005874634,
+      "posterior_filter_time": 2.6128008365631104,
       "total_steps": 39,
       "observation_trace": [
         "agent2",
@@ -2542,9 +2542,9 @@
         "interact": 3
       },
       "planning_cost": 108.0,
-      "replay_nonplanning_time": 4.410743713378906e-5,
+      "replay_nonplanning_time": 5.0067901611328125e-5,
       "total_cost": 113.0,
-      "initial_plan_time": 2.8001410961151123,
+      "initial_plan_time": 2.6127188205718994,
       "warnings": []
     },
     "sm543_scenario1": {
@@ -2552,7 +2552,7 @@
       "t_recorded": 32,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 2.8050830364227295,
+      "replay_elapsed": 2.549410104751587,
       "t_replayed": 32,
       "observations_count": 32,
       "observation_source": "sequence",
@@ -2751,7 +2751,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 2.805114984512329,
+      "posterior_filter_time": 2.5494401454925537,
       "total_steps": 51,
       "observation_trace": [
         "agent2",
@@ -2818,9 +2818,9 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 3.218650817871094e-5,
+      "replay_nonplanning_time": 3.0994415283203125e-5,
       "total_cost": 93.0,
-      "initial_plan_time": 2.805050849914551,
+      "initial_plan_time": 2.5493791103363037,
       "warnings": []
     },
     "sm432_scenario1": {
@@ -2828,7 +2828,7 @@
       "t_recorded": 21,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.297947883605957,
+      "replay_elapsed": 1.2034108638763428,
       "t_replayed": 21,
       "observations_count": 21,
       "observation_source": "sequence",
@@ -2961,7 +2961,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.297978162765503,
+      "posterior_filter_time": 1.2034389972686768,
       "total_steps": 59,
       "observation_trace": [
         "agent2",
@@ -3036,9 +3036,9 @@
         "interact": 1
       },
       "planning_cost": 116.0,
-      "replay_nonplanning_time": 4.506111145019531e-5,
+      "replay_nonplanning_time": 4.38690185546875e-5,
       "total_cost": 137.0,
-      "initial_plan_time": 1.2979028224945068,
+      "initial_plan_time": 1.203366994857788,
       "warnings": []
     },
     "sm331_scenario2": {
@@ -3046,7 +3046,7 @@
       "t_recorded": 16,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 2.960742950439453,
+      "replay_elapsed": 2.724432945251465,
       "t_replayed": 16,
       "observations_count": 16,
       "observation_source": "sequence",
@@ -3149,7 +3149,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 2.9607789516448975,
+      "posterior_filter_time": 2.7244648933410645,
       "total_steps": 50,
       "observation_trace": [
         "agent2",
@@ -3215,9 +3215,9 @@
         "interact": 3
       },
       "planning_cost": 108.0,
-      "replay_nonplanning_time": 4.291534423828125e-5,
+      "replay_nonplanning_time": 3.910064697265625e-5,
       "total_cost": 124.0,
-      "initial_plan_time": 2.960700035095215,
+      "initial_plan_time": 2.724393844604492,
       "warnings": []
     },
     "sm371_scenario1": {
@@ -3225,7 +3225,7 @@
       "t_recorded": 27,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 0.4172961711883545,
+      "replay_elapsed": 0.37038707733154297,
       "t_replayed": 27,
       "observations_count": 27,
       "observation_source": "sequence",
@@ -3394,7 +3394,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.4173269271850586,
+      "posterior_filter_time": 0.37041783332824707,
       "total_steps": 46,
       "observation_trace": [
         "agent2",
@@ -3456,9 +3456,9 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 4.9114227294921875e-5,
+      "replay_nonplanning_time": 4.506111145019531e-5,
       "total_cost": 88.0,
-      "initial_plan_time": 0.41724705696105957,
+      "initial_plan_time": 0.3703420162200928,
       "warnings": []
     },
     "sm321_scenario2": {
@@ -3466,7 +3466,7 @@
       "t_recorded": 5,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 2.064065933227539,
+      "replay_elapsed": 1.9208788871765137,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -3503,7 +3503,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 2.0641050338745117,
+      "posterior_filter_time": 1.920915126800537,
       "total_steps": 56,
       "observation_trace": [
         "agent2",
@@ -3575,9 +3575,9 @@
         "interact": 3
       },
       "planning_cost": 159.0,
-      "replay_nonplanning_time": 6.914138793945312e-5,
+      "replay_nonplanning_time": 5.2928924560546875e-5,
       "total_cost": 164.0,
-      "initial_plan_time": 2.0639967918395996,
+      "initial_plan_time": 1.9208259582519531,
       "warnings": []
     },
     "sm612_scenario2": {
@@ -3585,7 +3585,7 @@
       "t_recorded": 13,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 2.800004005432129,
+      "replay_elapsed": 2.7476189136505127,
       "t_replayed": 13,
       "observations_count": 13,
       "observation_source": "sequence",
@@ -3670,7 +3670,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 2.8000330924987793,
+      "posterior_filter_time": 2.747648000717163,
       "total_steps": 58,
       "observation_trace": [
         "agent2",
@@ -3744,9 +3744,9 @@
         "interact": 3
       },
       "planning_cost": 141.0,
-      "replay_nonplanning_time": 5.1021575927734375e-5,
+      "replay_nonplanning_time": 4.482269287109375e-5,
       "total_cost": 154.0,
-      "initial_plan_time": 2.799952983856201,
+      "initial_plan_time": 2.7475740909576416,
       "warnings": []
     },
     "sm221_scenario1": {
@@ -3754,7 +3754,7 @@
       "t_recorded": 20,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.765521764755249,
+      "replay_elapsed": 1.4548110961914062,
       "t_replayed": 20,
       "observations_count": 20,
       "observation_source": "sequence",
@@ -3881,7 +3881,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.7655489444732666,
+      "posterior_filter_time": 1.4548380374908447,
       "total_steps": 55,
       "observation_trace": [
         "agent2",
@@ -3952,9 +3952,9 @@
         "interact": 2
       },
       "planning_cost": 109.0,
-      "replay_nonplanning_time": 4.57763671875e-5,
+      "replay_nonplanning_time": 4.100799560546875e-5,
       "total_cost": 129.0,
-      "initial_plan_time": 1.7654759883880615,
+      "initial_plan_time": 1.4547700881958008,
       "warnings": []
     },
     "sm431_scenario1": {
@@ -3962,7 +3962,7 @@
       "t_recorded": 11,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.3330590724945068,
+      "replay_elapsed": 1.2107551097869873,
       "t_replayed": 11,
       "observations_count": 11,
       "observation_source": "sequence",
@@ -4035,7 +4035,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.3330879211425781,
+      "posterior_filter_time": 1.2107810974121094,
       "total_steps": 48,
       "observation_trace": [
         "agent2",
@@ -4099,9 +4099,9 @@
         "interact": 1
       },
       "planning_cost": 113.0,
-      "replay_nonplanning_time": 4.410743713378906e-5,
+      "replay_nonplanning_time": 4.315376281738281e-5,
       "total_cost": 124.0,
-      "initial_plan_time": 1.333014965057373,
+      "initial_plan_time": 1.21071195602417,
       "warnings": []
     },
     "sm221_scenario2": {
@@ -4109,7 +4109,7 @@
       "t_recorded": 5,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.593048095703125,
+      "replay_elapsed": 1.441802978515625,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -4146,7 +4146,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.5930910110473633,
+      "posterior_filter_time": 1.4418320655822754,
       "total_steps": 40,
       "observation_trace": [
         "agent2",
@@ -4202,9 +4202,9 @@
         "interact": 2
       },
       "planning_cost": 109.0,
-      "replay_nonplanning_time": 6.890296936035156e-5,
+      "replay_nonplanning_time": 3.886222839355469e-5,
       "total_cost": 114.0,
-      "initial_plan_time": 1.5929791927337646,
+      "initial_plan_time": 1.4417641162872314,
       "warnings": []
     },
     "sm612_scenario1": {
@@ -4212,7 +4212,7 @@
       "t_recorded": 9,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 2.950644016265869,
+      "replay_elapsed": 2.7161550521850586,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -4273,7 +4273,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 2.9506888389587402,
+      "posterior_filter_time": 2.7161829471588135,
       "total_steps": 54,
       "observation_trace": [
         "agent2",
@@ -4343,9 +4343,9 @@
         "interact": 3
       },
       "planning_cost": 141.0,
-      "replay_nonplanning_time": 5.0067901611328125e-5,
+      "replay_nonplanning_time": 4.506111145019531e-5,
       "total_cost": 150.0,
-      "initial_plan_time": 2.950593948364258,
+      "initial_plan_time": 2.7161099910736084,
       "warnings": []
     },
     "sm432_scenario2": {
@@ -4353,7 +4353,7 @@
       "t_recorded": 4,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.2767109870910645,
+      "replay_elapsed": 1.1992888450622559,
       "t_replayed": 4,
       "observations_count": 4,
       "observation_source": "sequence",
@@ -4384,7 +4384,7 @@
           "observed_agent": "agent3"
         }
       ],
-      "posterior_filter_time": 1.2767441272735596,
+      "posterior_filter_time": 1.1993179321289062,
       "total_steps": 42,
       "observation_trace": [
         "agent2",
@@ -4442,9 +4442,9 @@
         "interact": 1
       },
       "planning_cost": 116.0,
-      "replay_nonplanning_time": 4.506111145019531e-5,
+      "replay_nonplanning_time": 4.291534423828125e-5,
       "total_cost": 120.0,
-      "initial_plan_time": 1.2766659259796143,
+      "initial_plan_time": 1.1992459297180176,
       "warnings": []
     },
     "sm511_scenario1": {
@@ -4452,7 +4452,7 @@
       "t_recorded": 3,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 3.1967058181762695,
+      "replay_elapsed": 3.073016881942749,
       "t_replayed": 3,
       "observations_count": 3,
       "observation_source": "sequence",
@@ -4477,7 +4477,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 3.1967430114746094,
+      "posterior_filter_time": 3.0730459690093994,
       "total_steps": 49,
       "observation_trace": [
         "agent2",
@@ -4542,9 +4542,9 @@
         "interact": 2
       },
       "planning_cost": 142.0,
-      "replay_nonplanning_time": 9.179115295410156e-5,
+      "replay_nonplanning_time": 6.103515625e-5,
       "total_cost": 145.0,
-      "initial_plan_time": 3.1966140270233154,
+      "initial_plan_time": 3.072955846786499,
       "warnings": []
     },
     "sm521_scenario2": {
@@ -4552,7 +4552,7 @@
       "t_recorded": 20,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 12.080265998840332,
+      "replay_elapsed": 10.924950122833252,
       "t_replayed": 20,
       "observations_count": 20,
       "observation_source": "sequence",
@@ -4679,7 +4679,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 12.080300092697144,
+      "posterior_filter_time": 10.924976825714111,
       "total_steps": 80,
       "observation_trace": [
         "agent2",
@@ -4775,9 +4775,9 @@
         "interact": 5
       },
       "planning_cost": 190.0,
-      "replay_nonplanning_time": 0.00010895729064941406,
+      "replay_nonplanning_time": 7.009506225585938e-5,
       "total_cost": 210.0,
-      "initial_plan_time": 12.080157041549683,
+      "initial_plan_time": 10.924880027770996,
       "warnings": []
     },
     "sm371_scenario2": {
@@ -4785,7 +4785,7 @@
       "t_recorded": 33,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 0.3491652011871338,
+      "replay_elapsed": 0.42713212966918945,
       "t_replayed": 33,
       "observations_count": 33,
       "observation_source": "sequence",
@@ -4990,7 +4990,7 @@
           "observed_agent": "agent3"
         }
       ],
-      "posterior_filter_time": 0.349200963973999,
+      "posterior_filter_time": 0.42716002464294434,
       "total_steps": 52,
       "observation_trace": [
         "agent2",
@@ -5058,9 +5058,9 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 2.8133392333984375e-5,
+      "replay_nonplanning_time": 2.7179718017578125e-5,
       "total_cost": 94.0,
-      "initial_plan_time": 0.3491370677947998,
+      "initial_plan_time": 0.4271049499511719,
       "warnings": []
     },
     "sm431_scenario2": {
@@ -5068,7 +5068,7 @@
       "t_recorded": 14,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.4815189838409424,
+      "replay_elapsed": 1.2181470394134521,
       "t_replayed": 14,
       "observations_count": 14,
       "observation_source": "sequence",
@@ -5159,7 +5159,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.4815549850463867,
+      "posterior_filter_time": 1.2181811332702637,
       "total_steps": 51,
       "observation_trace": [
         "agent2",
@@ -5226,9 +5226,9 @@
         "interact": 1
       },
       "planning_cost": 113.0,
-      "replay_nonplanning_time": 4.506111145019531e-5,
+      "replay_nonplanning_time": 4.1961669921875e-5,
       "total_cost": 127.0,
-      "initial_plan_time": 1.4814739227294922,
+      "initial_plan_time": 1.2181050777435303,
       "warnings": []
     },
     "sm341_scenario2": {
@@ -5236,7 +5236,7 @@
       "t_recorded": 12,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 0.07075214385986328,
+      "replay_elapsed": 0.05379199981689453,
       "t_replayed": 12,
       "observations_count": 12,
       "observation_source": "sequence",
@@ -5315,7 +5315,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.07079005241394043,
+      "posterior_filter_time": 0.05381894111633301,
       "total_steps": 40,
       "observation_trace": [
         "agent2",
@@ -5371,9 +5371,9 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 3.600120544433594e-5,
+      "replay_nonplanning_time": 3.1948089599609375e-5,
       "total_cost": 98.0,
-      "initial_plan_time": 0.07071614265441895,
+      "initial_plan_time": 0.05376005172729492,
       "warnings": []
     },
     "sm211_scenario2": {
@@ -5381,7 +5381,7 @@
       "t_recorded": 23,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 0.5982370376586914,
+      "replay_elapsed": 0.5485410690307617,
       "t_replayed": 23,
       "observations_count": 23,
       "observation_source": "sequence",
@@ -5526,7 +5526,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.5982651710510254,
+      "posterior_filter_time": 0.5485658645629883,
       "total_steps": 65,
       "observation_trace": [
         "agent2",
@@ -5607,9 +5607,9 @@
         "interact": 1
       },
       "planning_cost": 128.0,
-      "replay_nonplanning_time": 5.507469177246094e-5,
+      "replay_nonplanning_time": 4.696846008300781e-5,
       "total_cost": 151.0,
-      "initial_plan_time": 0.598181962966919,
+      "initial_plan_time": 0.5484941005706787,
       "warnings": []
     },
     "sm311_scenario2": {
@@ -5617,7 +5617,7 @@
       "t_recorded": 13,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.1733980178833008,
+      "replay_elapsed": 1.0937609672546387,
       "t_replayed": 13,
       "observations_count": 13,
       "observation_source": "sequence",
@@ -5702,7 +5702,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.173426866531372,
+      "posterior_filter_time": 1.0937910079956055,
       "total_steps": 54,
       "observation_trace": [
         "agent2",
@@ -5772,9 +5772,9 @@
         "interact": 1
       },
       "planning_cost": 125.0,
-      "replay_nonplanning_time": 5.412101745605469e-5,
+      "replay_nonplanning_time": 3.910064697265625e-5,
       "total_cost": 138.0,
-      "initial_plan_time": 1.1733438968658447,
+      "initial_plan_time": 1.093721866607666,
       "warnings": []
     },
     "sm521_scenario1": {
@@ -5782,7 +5782,7 @@
       "t_recorded": 14,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 11.973729848861694,
+      "replay_elapsed": 10.903120040893555,
       "t_replayed": 14,
       "observations_count": 14,
       "observation_source": "sequence",
@@ -5873,7 +5873,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 11.973761796951294,
+      "posterior_filter_time": 10.903150081634521,
       "total_steps": 74,
       "observation_trace": [
         "agent2",
@@ -5963,9 +5963,9 @@
         "interact": 5
       },
       "planning_cost": 190.0,
-      "replay_nonplanning_time": 5.984306335449219e-5,
+      "replay_nonplanning_time": 5.793571472167969e-5,
       "total_cost": 204.0,
-      "initial_plan_time": 11.97367000579834,
+      "initial_plan_time": 10.903062105178833,
       "warnings": []
     },
     "sm511_scenario2": {
@@ -5973,7 +5973,7 @@
       "t_recorded": 15,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 3.1573758125305176,
+      "replay_elapsed": 3.017242908477783,
       "t_replayed": 15,
       "observations_count": 15,
       "observation_source": "sequence",
@@ -6070,7 +6070,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 3.1574158668518066,
+      "posterior_filter_time": 3.01727294921875,
       "total_steps": 61,
       "observation_trace": [
         "agent2",
@@ -6147,9 +6147,9 @@
         "interact": 2
       },
       "planning_cost": 142.0,
-      "replay_nonplanning_time": 5.3882598876953125e-5,
+      "replay_nonplanning_time": 4.696846008300781e-5,
       "total_cost": 157.0,
-      "initial_plan_time": 3.1573219299316406,
+      "initial_plan_time": 3.0171959400177,
       "warnings": []
     },
     "sm541_scenario2": {
@@ -6157,7 +6157,7 @@
       "t_recorded": 7,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.6818268299102783,
+      "replay_elapsed": 1.395395040512085,
       "t_replayed": 7,
       "observations_count": 7,
       "observation_source": "sequence",
@@ -6206,7 +6206,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.6818621158599854,
+      "posterior_filter_time": 1.3954238891601562,
       "total_steps": 39,
       "observation_trace": [
         "agent2",
@@ -6261,9 +6261,9 @@
         "interact": 1
       },
       "planning_cost": 98.0,
-      "replay_nonplanning_time": 4.601478576660156e-5,
+      "replay_nonplanning_time": 3.695487976074219e-5,
       "total_cost": 105.0,
-      "initial_plan_time": 1.6817808151245117,
+      "initial_plan_time": 1.3953580856323242,
       "warnings": []
     },
     "sm411_scenario2": {
@@ -6271,7 +6271,7 @@
       "t_recorded": 13,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 5.168647050857544,
+      "replay_elapsed": 4.875499963760376,
       "t_replayed": 13,
       "observations_count": 13,
       "observation_source": "sequence",
@@ -6356,7 +6356,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 5.168680191040039,
+      "posterior_filter_time": 4.87552809715271,
       "total_steps": 73,
       "observation_trace": [
         "agent2",
@@ -6445,9 +6445,9 @@
         "interact": 4
       },
       "planning_cost": 188.0,
-      "replay_nonplanning_time": 7.510185241699219e-5,
+      "replay_nonplanning_time": 6.604194641113281e-5,
       "total_cost": 201.0,
-      "initial_plan_time": 5.168571949005127,
+      "initial_plan_time": 4.875433921813965,
       "warnings": []
     },
     "sm351_scenario2": {
@@ -6455,7 +6455,7 @@
       "t_recorded": 17,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 1.6751751899719238,
+      "replay_elapsed": 1.5366871356964111,
       "t_replayed": 17,
       "observations_count": 17,
       "observation_source": "sequence",
@@ -6564,7 +6564,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 1.6752309799194336,
+      "posterior_filter_time": 1.5367138385772705,
       "total_steps": 55,
       "observation_trace": [
         "agent2",
@@ -6635,9 +6635,9 @@
         "interact": 1
       },
       "planning_cost": 116.0,
-      "replay_nonplanning_time": 7.009506225585938e-5,
+      "replay_nonplanning_time": 5.793571472167969e-5,
       "total_cost": 133.0,
-      "initial_plan_time": 1.675105094909668,
+      "initial_plan_time": 1.5366291999816895,
       "warnings": []
     },
     "sm211_scenario1": {
@@ -6645,7 +6645,7 @@
       "t_recorded": 5,
       "model_update_mode": "agent1_naive_planner",
       "posterior_candidates": [],
-      "replay_elapsed": 0.6085360050201416,
+      "replay_elapsed": 0.5455582141876221,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -6682,7 +6682,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.6085669994354248,
+      "posterior_filter_time": 0.5455870628356934,
       "total_steps": 47,
       "observation_trace": [
         "agent2",
@@ -6745,9 +6745,9 @@
         "interact": 1
       },
       "planning_cost": 128.0,
-      "replay_nonplanning_time": 4.792213439941406e-5,
+      "replay_nonplanning_time": 4.8160552978515625e-5,
       "total_cost": 133.0,
-      "initial_plan_time": 0.6084880828857422,
+      "initial_plan_time": 0.5455100536346436,
       "warnings": []
     }
   },

@@ -13,19 +13,19 @@
   "reconstruction_mode": "model_faithful_replay",
   "replay_plan_cache_stats": {
     "hits": 26,
-    "hit_rate": 0.32098765432098764,
-    "misses": 55,
-    "entries": 55
+    "hit_rate": 0.2765957446808511,
+    "misses": 68,
+    "entries": 68
   },
   "summary": {
     "mean_observe_steps": 9.75,
     "n_cases": 40,
-    "mean_planning_steps": 35.475,
-    "mean_total_steps": 45.225,
+    "mean_planning_steps": 35.85,
+    "mean_total_steps": 45.6,
     "mean_observe_cost": 9.75,
-    "mean_total_cost": 119.025,
+    "mean_total_cost": 120.4,
     "cases_with_warnings": 40,
-    "mean_planning_cost": 109.275
+    "mean_planning_cost": 110.65
   },
   "exp": "exp4",
   "human_level_filter": {
@@ -92,7 +92,7 @@
         "wizard3",
         "wizard4"
       ],
-      "replay_elapsed": 2.904200792312622,
+      "replay_elapsed": 2.484929084777832,
       "t_replayed": 7,
       "observations_count": 7,
       "observation_source": "sequence",
@@ -141,8 +141,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 3.9054770469665527,
-      "total_steps": 53,
+      "posterior_filter_time": 3.372865915298462,
+      "total_steps": 56,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -153,7 +153,7 @@
         "agent2"
       ],
       "observe_steps": 7,
-      "replan_time_total": 0.09472203254699707,
+      "replan_time_total": 0.14859461784362793,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(down agent1)",
@@ -174,6 +174,9 @@
         "(down agent1)",
         "(right agent1)",
         "(right agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
         "(right agent1)",
         "(right agent1)",
         "(right agent1)",
@@ -203,20 +206,21 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 46,
+      "planning_steps": 49,
       "planning_action_counts": {
         "observe": 0,
-        "move": 44,
-        "interact": 2
+        "move": 46,
+        "interact": 3
       },
-      "planning_cost": 142.0,
-      "replay_nonplanning_time": 0.28768062591552734,
-      "total_cost": 149.0,
-      "initial_plan_time": 2.5217981338500977,
+      "planning_cost": 153.0,
+      "replay_nonplanning_time": 0.16848039627075195,
+      "total_cost": 160.0,
+      "initial_plan_time": 2.167854070663452,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 3 blue wizards.",
         "Projected hypotheses into reduced planning world with 3 candidate states.",
-        "Pruned 2 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm541_scenario1": {
@@ -226,7 +230,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.1772749423980713,
+      "replay_elapsed": 0.1369030475616455,
       "t_replayed": 10,
       "observations_count": 10,
       "observation_source": "sequence",
@@ -293,7 +297,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.18051886558532715,
+      "posterior_filter_time": 0.13954687118530273,
       "total_steps": 42,
       "observation_trace": [
         "agent2",
@@ -351,9 +355,9 @@
         "interact": 1
       },
       "planning_cost": 98.0,
-      "replay_nonplanning_time": 0.030292034149169922,
+      "replay_nonplanning_time": 0.00788116455078125,
       "total_cost": 108.0,
-      "initial_plan_time": 0.14698290824890137,
+      "initial_plan_time": 0.12902188301086426,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -366,7 +370,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.13437485694885254,
+      "replay_elapsed": 0.10241508483886719,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -427,7 +431,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.13531088829040527,
+      "posterior_filter_time": 0.1033010482788086,
       "total_steps": 37,
       "observation_trace": [
         "agent2",
@@ -480,9 +484,9 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.02077484130859375,
+      "replay_nonplanning_time": 0.006700992584228516,
       "total_cost": 95.0,
-      "initial_plan_time": 0.11360001564025879,
+      "initial_plan_time": 0.09571409225463867,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -496,7 +500,7 @@
         "wizard1",
         "wizard4"
       ],
-      "replay_elapsed": 0.16353297233581543,
+      "replay_elapsed": 0.13706398010253906,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -533,7 +537,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.1641850471496582,
+      "posterior_filter_time": 0.1376039981842041,
       "total_steps": 44,
       "observation_trace": [
         "agent2",
@@ -543,7 +547,7 @@
         "agent2"
       ],
       "observe_steps": 5,
-      "replan_time_total": 0.046038150787353516,
+      "replan_time_total": 0.0504300594329834,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(right agent1)",
@@ -593,13 +597,13 @@
         "interact": 2
       },
       "planning_cost": 121.0,
-      "replay_nonplanning_time": 0.02884984016418457,
+      "replay_nonplanning_time": 0.010703086853027344,
       "total_cost": 126.0,
-      "initial_plan_time": 0.08864498138427734,
+      "initial_plan_time": 0.07593083381652832,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
         "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm421_scenario1": {
@@ -609,7 +613,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.2768211364746094,
+      "replay_elapsed": 0.24426507949829102,
       "t_replayed": 20,
       "observations_count": 20,
       "observation_source": "sequence",
@@ -736,7 +740,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.2787771224975586,
+      "posterior_filter_time": 0.24616408348083496,
       "total_steps": 68,
       "observation_trace": [
         "agent2",
@@ -820,9 +824,9 @@
         "interact": 1
       },
       "planning_cost": 146.0,
-      "replay_nonplanning_time": 0.0240781307220459,
+      "replay_nonplanning_time": 0.017119169235229492,
       "total_cost": 166.0,
-      "initial_plan_time": 0.2527430057525635,
+      "initial_plan_time": 0.22714591026306152,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -835,7 +839,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.033471107482910156,
+      "replay_elapsed": 0.024168014526367188,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -878,7 +882,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.034147024154663086,
+      "posterior_filter_time": 0.024775981903076172,
       "total_steps": 34,
       "observation_trace": [
         "agent2",
@@ -928,9 +932,9 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.007853984832763672,
+      "replay_nonplanning_time": 0.0071868896484375,
       "total_cost": 92.0,
-      "initial_plan_time": 0.025617122650146484,
+      "initial_plan_time": 0.016981124877929688,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -943,7 +947,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.042732954025268555,
+      "replay_elapsed": 0.0321660041809082,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -986,7 +990,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.04343104362487793,
+      "posterior_filter_time": 0.03287196159362793,
       "total_steps": 34,
       "observation_trace": [
         "agent2",
@@ -1036,9 +1040,9 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.0070040225982666016,
+      "replay_nonplanning_time": 0.006479024887084961,
       "total_cost": 92.0,
-      "initial_plan_time": 0.03572893142700195,
+      "initial_plan_time": 0.025686979293823242,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1049,17 +1053,17 @@
       "t_recorded": 0,
       "model_update_mode": "direct_observation_evidence",
       "posterior_candidates": [],
-      "replay_elapsed": 0.08562397956848145,
+      "replay_elapsed": 0.05554389953613281,
       "t_replayed": 0,
       "observations_count": 0,
       "observation_source": "sequence",
       "reconstruction_mode": "model_faithful_replay",
       "observation_events": [],
-      "posterior_filter_time": 0.20104694366455078,
+      "posterior_filter_time": 0.17837095260620117,
       "total_steps": 19,
       "observation_trace": [],
       "observe_steps": 0,
-      "replan_time_total": 0.012827157974243164,
+      "replan_time_total": 0.012601137161254883,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -1089,11 +1093,11 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 0.018545866012573242,
+      "replay_nonplanning_time": 0.005249738693237305,
       "total_cost": 61.0,
-      "initial_plan_time": 0.05425095558166504,
+      "initial_plan_time": 0.037693023681640625,
       "warnings": [
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm311_scenario1": {
@@ -1104,7 +1108,7 @@
         "wizard2",
         "wizard3"
       ],
-      "replay_elapsed": 0.216933012008667,
+      "replay_elapsed": 0.1710529327392578,
       "t_replayed": 7,
       "observations_count": 7,
       "observation_source": "sequence",
@@ -1153,7 +1157,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.21777987480163574,
+      "posterior_filter_time": 0.17176508903503418,
       "total_steps": 51,
       "observation_trace": [
         "agent2",
@@ -1165,7 +1169,7 @@
         "agent2"
       ],
       "observe_steps": 7,
-      "replan_time_total": 0.05056595802307129,
+      "replan_time_total": 0.04533696174621582,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -1220,13 +1224,13 @@
         "interact": 2
       },
       "planning_cost": 136.0,
-      "replay_nonplanning_time": 0.035712242126464844,
+      "replay_nonplanning_time": 0.012588977813720703,
       "total_cost": 143.0,
-      "initial_plan_time": 0.13065481185913086,
+      "initial_plan_time": 0.11312699317932129,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
         "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm321_scenario1": {
@@ -1237,7 +1241,7 @@
         "wizard1",
         "wizard2"
       ],
-      "replay_elapsed": 0.27801513671875,
+      "replay_elapsed": 0.2249760627746582,
       "t_replayed": 2,
       "observations_count": 2,
       "observation_source": "sequence",
@@ -1256,14 +1260,14 @@
           "observed_agent": "agent3"
         }
       ],
-      "posterior_filter_time": 0.2782759666442871,
+      "posterior_filter_time": 0.22522783279418945,
       "total_steps": 50,
       "observation_trace": [
         "agent3",
         "agent3"
       ],
       "observe_steps": 2,
-      "replan_time_total": 0.0414118766784668,
+      "replan_time_total": 0.03793692588806152,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(right agent1)",
@@ -1322,13 +1326,13 @@
         "interact": 2
       },
       "planning_cost": 148.0,
-      "replay_nonplanning_time": 0.041126251220703125,
+      "replay_nonplanning_time": 0.015236139297485352,
       "total_cost": 150.0,
-      "initial_plan_time": 0.19547700881958008,
+      "initial_plan_time": 0.17180299758911133,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
         "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm351_scenario1": {
@@ -1339,7 +1343,7 @@
         "wizard2",
         "wizard3"
       ],
-      "replay_elapsed": 0.23901677131652832,
+      "replay_elapsed": 0.21398305892944336,
       "t_replayed": 12,
       "observations_count": 12,
       "observation_source": "sequence",
@@ -1418,7 +1422,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.24046993255615234,
+      "posterior_filter_time": 0.2151651382446289,
       "total_steps": 53,
       "observation_trace": [
         "agent2",
@@ -1435,7 +1439,7 @@
         "agent2"
       ],
       "observe_steps": 12,
-      "replan_time_total": 0.04291105270385742,
+      "replan_time_total": 0.04166293144226074,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -1487,13 +1491,13 @@
         "interact": 2
       },
       "planning_cost": 127.0,
-      "replay_nonplanning_time": 0.013197898864746094,
+      "replay_nonplanning_time": 0.012284994125366211,
       "total_cost": 139.0,
-      "initial_plan_time": 0.1829078197479248,
+      "initial_plan_time": 0.1600351333618164,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
         "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm361_scenario2": {
@@ -1503,7 +1507,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.04324603080749512,
+      "replay_elapsed": 0.04476308822631836,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -1564,7 +1568,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.04414701461791992,
+      "posterior_filter_time": 0.04565095901489258,
       "total_steps": 35,
       "observation_trace": [
         "agent2",
@@ -1615,9 +1619,9 @@
         "interact": 1
       },
       "planning_cost": 80.0,
-      "replay_nonplanning_time": 0.0068171024322509766,
+      "replay_nonplanning_time": 0.006495952606201172,
       "total_cost": 89.0,
-      "initial_plan_time": 0.03642892837524414,
+      "initial_plan_time": 0.03826713562011719,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1631,7 +1635,7 @@
         "wizard1",
         "wizard3"
       ],
-      "replay_elapsed": 0.22457218170166016,
+      "replay_elapsed": 0.19868993759155273,
       "t_replayed": 12,
       "observations_count": 12,
       "observation_source": "sequence",
@@ -1710,7 +1714,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.2260429859161377,
+      "posterior_filter_time": 0.19990015029907227,
       "total_steps": 38,
       "observation_trace": [
         "agent2",
@@ -1764,13 +1768,13 @@
         "interact": 1
       },
       "planning_cost": 80.0,
-      "replay_nonplanning_time": 0.007837057113647461,
+      "replay_nonplanning_time": 0.007405996322631836,
       "total_cost": 92.0,
-      "initial_plan_time": 0.2167351245880127,
+      "initial_plan_time": 0.1912839412689209,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
         "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_present)."
       ]
     },
     "sm421_scenario2": {
@@ -1782,7 +1786,7 @@
         "wizard2",
         "wizard3"
       ],
-      "replay_elapsed": 0.3701951503753662,
+      "replay_elapsed": 0.3792729377746582,
       "t_replayed": 14,
       "observations_count": 14,
       "observation_source": "sequence",
@@ -1873,8 +1877,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.37165307998657227,
-      "total_steps": 65,
+      "posterior_filter_time": 0.38069581985473633,
+      "total_steps": 68,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -1892,7 +1896,7 @@
         "agent2"
       ],
       "observe_steps": 14,
-      "replan_time_total": 0.0865480899810791,
+      "replan_time_total": 0.13880491256713867,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(right agent1)",
@@ -1910,6 +1914,9 @@
         "(left agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(right agent1)",
+        "(interact agent1 wizard2)",
+        "(left agent1)",
         "(up agent1)",
         "(up agent1)",
         "(left agent1)",
@@ -1947,20 +1954,21 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 51,
+      "planning_steps": 54,
       "planning_action_counts": {
         "observe": 0,
-        "move": 49,
-        "interact": 2
+        "move": 51,
+        "interact": 3
       },
-      "planning_cost": 157.0,
-      "replay_nonplanning_time": 0.02618098258972168,
-      "total_cost": 171.0,
-      "initial_plan_time": 0.25746607780456543,
+      "planning_cost": 168.0,
+      "replay_nonplanning_time": 0.014600038528442383,
+      "total_cost": 182.0,
+      "initial_plan_time": 0.22586798667907715,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 3 blue wizards.",
         "Projected hypotheses into reduced planning world with 3 candidate states.",
-        "Pruned 2 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm531_scenario2": {
@@ -1970,7 +1978,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.026678800582885742,
+      "replay_elapsed": 0.02507305145263672,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -2013,7 +2021,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.027475833892822266,
+      "posterior_filter_time": 0.025722980499267578,
       "total_steps": 34,
       "observation_trace": [
         "agent2",
@@ -2063,9 +2071,9 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.007879972457885742,
+      "replay_nonplanning_time": 0.0073049068450927734,
       "total_cost": 92.0,
-      "initial_plan_time": 0.018798828125,
+      "initial_plan_time": 0.017768144607543945,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -2078,7 +2086,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.0408787727355957,
+      "replay_elapsed": 0.0338590145111084,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -2115,7 +2123,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.041500091552734375,
+      "posterior_filter_time": 0.03438901901245117,
       "total_steps": 29,
       "observation_trace": [
         "agent2",
@@ -2160,9 +2168,9 @@
         "interact": 1
       },
       "planning_cost": 74.0,
-      "replay_nonplanning_time": 0.006279945373535156,
+      "replay_nonplanning_time": 0.00608515739440918,
       "total_cost": 79.0,
-      "initial_plan_time": 0.03459882736206055,
+      "initial_plan_time": 0.02777385711669922,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -2173,17 +2181,17 @@
       "t_recorded": 0,
       "model_update_mode": "direct_observation_evidence",
       "posterior_candidates": [],
-      "replay_elapsed": 0.0827019214630127,
+      "replay_elapsed": 0.0721900463104248,
       "t_replayed": 0,
       "observations_count": 0,
       "observation_source": "sequence",
       "reconstruction_mode": "model_faithful_replay",
       "observation_events": [],
-      "posterior_filter_time": 0.08279800415039062,
+      "posterior_filter_time": 0.07224416732788086,
       "total_steps": 19,
       "observation_trace": [],
       "observe_steps": 0,
-      "replan_time_total": 0.019826889038085938,
+      "replan_time_total": 0.011170148849487305,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -2213,11 +2221,11 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 0.0051348209381103516,
+      "replay_nonplanning_time": 0.0046710968017578125,
       "total_cost": 61.0,
-      "initial_plan_time": 0.057740211486816406,
+      "initial_plan_time": 0.05634880065917969,
       "warnings": [
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm432_scenario1": {
@@ -2227,7 +2235,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.09099698066711426,
+      "replay_elapsed": 0.07994198799133301,
       "t_replayed": 21,
       "observations_count": 21,
       "observation_source": "sequence",
@@ -2360,7 +2368,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.0931088924407959,
+      "posterior_filter_time": 0.0819239616394043,
       "total_steps": 59,
       "observation_trace": [
         "agent2",
@@ -2435,9 +2443,9 @@
         "interact": 1
       },
       "planning_cost": 116.0,
-      "replay_nonplanning_time": 0.010617971420288086,
+      "replay_nonplanning_time": 0.009919166564941406,
       "total_cost": 137.0,
-      "initial_plan_time": 0.08037900924682617,
+      "initial_plan_time": 0.0700228214263916,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -2450,7 +2458,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.031301021575927734,
+      "replay_elapsed": 0.027906179428100586,
       "t_replayed": 16,
       "observations_count": 16,
       "observation_source": "sequence",
@@ -2553,7 +2561,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.032952070236206055,
+      "posterior_filter_time": 0.029469013214111328,
       "total_steps": 40,
       "observation_trace": [
         "agent2",
@@ -2609,9 +2617,9 @@
         "interact": 1
       },
       "planning_cost": 74.0,
-      "replay_nonplanning_time": 0.006706953048706055,
+      "replay_nonplanning_time": 0.006173133850097656,
       "total_cost": 90.0,
-      "initial_plan_time": 0.02459406852722168,
+      "initial_plan_time": 0.02173304557800293,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -2622,17 +2630,17 @@
       "t_recorded": 0,
       "model_update_mode": "direct_observation_evidence",
       "posterior_candidates": [],
-      "replay_elapsed": 0.12813997268676758,
+      "replay_elapsed": 0.09651303291320801,
       "t_replayed": 0,
       "observations_count": 0,
       "observation_source": "sequence",
       "reconstruction_mode": "model_faithful_replay",
       "observation_events": [],
-      "posterior_filter_time": 0.12819409370422363,
+      "posterior_filter_time": 0.09655904769897461,
       "total_steps": 19,
       "observation_trace": [],
       "observe_steps": 0,
-      "replan_time_total": 0.00790715217590332,
+      "replan_time_total": 0.006879091262817383,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(up agent1)",
@@ -2662,11 +2670,11 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 0.032782793045043945,
+      "replay_nonplanning_time": 0.004055976867675781,
       "total_cost": 61.0,
-      "initial_plan_time": 0.08745002746582031,
+      "initial_plan_time": 0.08557796478271484,
       "warnings": [
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm321_scenario2": {
@@ -2677,7 +2685,7 @@
         "wizard1",
         "wizard2"
       ],
-      "replay_elapsed": 0.19177603721618652,
+      "replay_elapsed": 0.17076802253723145,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -2714,7 +2722,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.1923689842224121,
+      "posterior_filter_time": 0.17135906219482422,
       "total_steps": 53,
       "observation_trace": [
         "agent2",
@@ -2724,7 +2732,7 @@
         "agent2"
       ],
       "observe_steps": 5,
-      "replan_time_total": 0.047940969467163086,
+      "replan_time_total": 0.042922019958496094,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(right agent1)",
@@ -2783,13 +2791,13 @@
         "interact": 2
       },
       "planning_cost": 148.0,
-      "replay_nonplanning_time": 0.012226104736328125,
+      "replay_nonplanning_time": 0.011538028717041016,
       "total_cost": 153.0,
-      "initial_plan_time": 0.1316089630126953,
+      "initial_plan_time": 0.11630797386169434,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
         "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm612_scenario2": {
@@ -2800,7 +2808,7 @@
         "wizard1",
         "wizard3"
       ],
-      "replay_elapsed": 0.1082150936126709,
+      "replay_elapsed": 0.10249710083007812,
       "t_replayed": 13,
       "observations_count": 13,
       "observation_source": "sequence",
@@ -2885,7 +2893,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.10951900482177734,
+      "posterior_filter_time": 0.10369586944580078,
       "total_steps": 51,
       "observation_trace": [
         "agent2",
@@ -2903,7 +2911,7 @@
         "agent2"
       ],
       "observe_steps": 13,
-      "replan_time_total": 0.027608156204223633,
+      "replan_time_total": 0.025677919387817383,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -2952,13 +2960,13 @@
         "interact": 2
       },
       "planning_cost": 118.0,
-      "replay_nonplanning_time": 0.011601924896240234,
+      "replay_nonplanning_time": 0.016063213348388672,
       "total_cost": 131.0,
-      "initial_plan_time": 0.06900501251220703,
+      "initial_plan_time": 0.06075596809387207,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
         "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm221_scenario1": {
@@ -2968,7 +2976,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.0410311222076416,
+      "replay_elapsed": 0.030137062072753906,
       "t_replayed": 20,
       "observations_count": 20,
       "observation_source": "sequence",
@@ -3095,7 +3103,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.04296612739562988,
+      "posterior_filter_time": 0.03200387954711914,
       "total_steps": 46,
       "observation_trace": [
         "agent2",
@@ -3157,9 +3165,9 @@
         "interact": 1
       },
       "planning_cost": 80.0,
-      "replay_nonplanning_time": 0.01536417007446289,
+      "replay_nonplanning_time": 0.00662994384765625,
       "total_cost": 100.0,
-      "initial_plan_time": 0.02566695213317871,
+      "initial_plan_time": 0.023507118225097656,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -3172,7 +3180,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.11417007446289062,
+      "replay_elapsed": 0.10000205039978027,
       "t_replayed": 11,
       "observations_count": 11,
       "observation_source": "sequence",
@@ -3245,7 +3253,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.1152338981628418,
+      "posterior_filter_time": 0.10102987289428711,
       "total_steps": 48,
       "observation_trace": [
         "agent2",
@@ -3309,9 +3317,9 @@
         "interact": 1
       },
       "planning_cost": 113.0,
-      "replay_nonplanning_time": 0.010363101959228516,
+      "replay_nonplanning_time": 0.009214162826538086,
       "total_cost": 124.0,
-      "initial_plan_time": 0.10380697250366211,
+      "initial_plan_time": 0.09078788757324219,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -3324,7 +3332,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.03771209716796875,
+      "replay_elapsed": 0.03342294692993164,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -3361,7 +3369,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.03847002983093262,
+      "posterior_filter_time": 0.03397989273071289,
       "total_steps": 31,
       "observation_trace": [
         "agent2",
@@ -3408,9 +3416,9 @@
         "interact": 1
       },
       "planning_cost": 80.0,
-      "replay_nonplanning_time": 0.012321949005126953,
+      "replay_nonplanning_time": 0.006524085998535156,
       "total_cost": 85.0,
-      "initial_plan_time": 0.025390148162841797,
+      "initial_plan_time": 0.026898860931396484,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -3423,7 +3431,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.041638851165771484,
+      "replay_elapsed": 0.04257798194885254,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -3484,7 +3492,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.04262495040893555,
+      "posterior_filter_time": 0.04352211952209473,
       "total_steps": 40,
       "observation_trace": [
         "agent2",
@@ -3540,9 +3548,9 @@
         "interact": 1
       },
       "planning_cost": 95.0,
-      "replay_nonplanning_time": 0.00859379768371582,
+      "replay_nonplanning_time": 0.011847972869873047,
       "total_cost": 104.0,
-      "initial_plan_time": 0.033045053482055664,
+      "initial_plan_time": 0.030730009078979492,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -3556,7 +3564,7 @@
         "wizard2",
         "wizard3"
       ],
-      "replay_elapsed": 0.1718761920928955,
+      "replay_elapsed": 0.1660628318786621,
       "t_replayed": 4,
       "observations_count": 4,
       "observation_source": "sequence",
@@ -3587,7 +3595,7 @@
           "observed_agent": "agent3"
         }
       ],
-      "posterior_filter_time": 0.17251110076904297,
+      "posterior_filter_time": 0.1665341854095459,
       "total_steps": 45,
       "observation_trace": [
         "agent2",
@@ -3596,7 +3604,7 @@
         "agent3"
       ],
       "observe_steps": 4,
-      "replan_time_total": 0.03640413284301758,
+      "replan_time_total": 0.027873992919921875,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -3648,13 +3656,13 @@
         "interact": 2
       },
       "planning_cost": 127.0,
-      "replay_nonplanning_time": 0.013334035873413086,
+      "replay_nonplanning_time": 0.01628279685974121,
       "total_cost": 131.0,
-      "initial_plan_time": 0.12213802337646484,
+      "initial_plan_time": 0.12190604209899902,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
         "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm511_scenario1": {
@@ -3667,7 +3675,7 @@
         "wizard4",
         "wizard5"
       ],
-      "replay_elapsed": 0.7183148860931396,
+      "replay_elapsed": 0.84999680519104,
       "t_replayed": 3,
       "observations_count": 3,
       "observation_source": "sequence",
@@ -3692,15 +3700,15 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.7187008857727051,
-      "total_steps": 47,
+      "posterior_filter_time": 0.8504159450531006,
+      "total_steps": 50,
       "observation_trace": [
         "agent2",
         "agent3",
         "agent2"
       ],
       "observe_steps": 3,
-      "replan_time_total": 0.08608198165893555,
+      "replan_time_total": 0.300199031829834,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -3721,6 +3729,9 @@
         "(right agent1)",
         "(right agent1)",
         "(right agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard3)",
+        "(down agent1)",
         "(right agent1)",
         "(right agent1)",
         "(right agent1)",
@@ -3748,20 +3759,22 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 44,
+      "planning_steps": 47,
       "planning_action_counts": {
         "observe": 0,
-        "move": 42,
-        "interact": 2
+        "move": 44,
+        "interact": 3
       },
-      "planning_cost": 136.0,
-      "replay_nonplanning_time": 0.03763985633850098,
-      "total_cost": 139.0,
-      "initial_plan_time": 0.5945930480957031,
+      "planning_cost": 147.0,
+      "replay_nonplanning_time": 0.018533945083618164,
+      "total_cost": 150.0,
+      "initial_plan_time": 0.5312638282775879,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 4 blue wizards.",
         "Projected hypotheses into reduced planning world with 4 candidate states.",
-        "Pruned 3 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_present)."
       ]
     },
     "sm521_scenario2": {
@@ -3771,7 +3784,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.561643123626709,
+      "replay_elapsed": 0.3863101005554199,
       "t_replayed": 20,
       "observations_count": 20,
       "observation_source": "sequence",
@@ -3898,7 +3911,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.5636131763458252,
+      "posterior_filter_time": 0.3881969451904297,
       "total_steps": 68,
       "observation_trace": [
         "agent2",
@@ -3982,9 +3995,9 @@
         "interact": 1
       },
       "planning_cost": 146.0,
-      "replay_nonplanning_time": 0.02493000030517578,
+      "replay_nonplanning_time": 0.01985621452331543,
       "total_cost": 166.0,
-      "initial_plan_time": 0.5367131233215332,
+      "initial_plan_time": 0.3664538860321045,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -3995,17 +4008,17 @@
       "t_recorded": 0,
       "model_update_mode": "direct_observation_evidence",
       "posterior_candidates": [],
-      "replay_elapsed": 0.043910980224609375,
+      "replay_elapsed": 0.03970503807067871,
       "t_replayed": 0,
       "observations_count": 0,
       "observation_source": "sequence",
       "reconstruction_mode": "model_faithful_replay",
       "observation_events": [],
-      "posterior_filter_time": 0.04395794868469238,
+      "posterior_filter_time": 0.0397491455078125,
       "total_steps": 19,
       "observation_trace": [],
       "observe_steps": 0,
-      "replan_time_total": 0.007243156433105469,
+      "replan_time_total": 0.006819009780883789,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(up agent1)",
@@ -4035,11 +4048,11 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 0.004681825637817383,
+      "replay_nonplanning_time": 0.003993988037109375,
       "total_cost": 61.0,
-      "initial_plan_time": 0.03198599815368652,
+      "initial_plan_time": 0.028892040252685547,
       "warnings": [
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm431_scenario2": {
@@ -4050,7 +4063,7 @@
         "wizard2",
         "wizard3"
       ],
-      "replay_elapsed": 0.21551299095153809,
+      "replay_elapsed": 0.19216394424438477,
       "t_replayed": 14,
       "observations_count": 14,
       "observation_source": "sequence",
@@ -4141,7 +4154,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.21692395210266113,
+      "posterior_filter_time": 0.19354891777038574,
       "total_steps": 54,
       "observation_trace": [
         "agent2",
@@ -4160,7 +4173,7 @@
         "agent2"
       ],
       "observe_steps": 14,
-      "replan_time_total": 0.03073906898498535,
+      "replan_time_total": 0.026916980743408203,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -4211,13 +4224,13 @@
         "interact": 2
       },
       "planning_cost": 124.0,
-      "replay_nonplanning_time": 0.012976884841918945,
+      "replay_nonplanning_time": 0.01874399185180664,
       "total_cost": 138.0,
-      "initial_plan_time": 0.1717970371246338,
+      "initial_plan_time": 0.14650297164916992,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
         "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm341_scenario2": {
@@ -4227,7 +4240,7 @@
       "posterior_candidates": [
         "wizard4"
       ],
-      "replay_elapsed": 0.060942888259887695,
+      "replay_elapsed": 0.044203996658325195,
       "t_replayed": 12,
       "observations_count": 12,
       "observation_source": "sequence",
@@ -4306,7 +4319,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.06221604347229004,
+      "posterior_filter_time": 0.045391082763671875,
       "total_steps": 40,
       "observation_trace": [
         "agent2",
@@ -4362,9 +4375,9 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.007040977478027344,
+      "replay_nonplanning_time": 0.006608009338378906,
       "total_cost": 98.0,
-      "initial_plan_time": 0.05390191078186035,
+      "initial_plan_time": 0.03759598731994629,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -4377,7 +4390,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.07111191749572754,
+      "replay_elapsed": 0.05557084083557129,
       "t_replayed": 23,
       "observations_count": 23,
       "observation_source": "sequence",
@@ -4522,7 +4535,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.0735938549041748,
+      "posterior_filter_time": 0.057852983474731445,
       "total_steps": 65,
       "observation_trace": [
         "agent2",
@@ -4603,9 +4616,9 @@
         "interact": 1
       },
       "planning_cost": 128.0,
-      "replay_nonplanning_time": 0.021132946014404297,
+      "replay_nonplanning_time": 0.01075887680053711,
       "total_cost": 151.0,
-      "initial_plan_time": 0.04997897148132324,
+      "initial_plan_time": 0.04481196403503418,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -4618,7 +4631,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.11227798461914062,
+      "replay_elapsed": 0.10893106460571289,
       "t_replayed": 13,
       "observations_count": 13,
       "observation_source": "sequence",
@@ -4703,7 +4716,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.1136178970336914,
+      "posterior_filter_time": 0.11019492149353027,
       "total_steps": 54,
       "observation_trace": [
         "agent2",
@@ -4773,9 +4786,9 @@
         "interact": 1
       },
       "planning_cost": 125.0,
-      "replay_nonplanning_time": 0.011523008346557617,
+      "replay_nonplanning_time": 0.016025066375732422,
       "total_cost": 138.0,
-      "initial_plan_time": 0.10075497627258301,
+      "initial_plan_time": 0.09290599822998047,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -4791,7 +4804,7 @@
         "wizard3",
         "wizard4"
       ],
-      "replay_elapsed": 0.6816389560699463,
+      "replay_elapsed": 0.8013510704040527,
       "t_replayed": 14,
       "observations_count": 14,
       "observation_source": "sequence",
@@ -4882,8 +4895,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.6831221580505371,
-      "total_steps": 65,
+      "posterior_filter_time": 0.8028411865234375,
+      "total_steps": 71,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -4901,7 +4914,7 @@
         "agent2"
       ],
       "observe_steps": 14,
-      "replan_time_total": 0.1642460823059082,
+      "replan_time_total": 0.345656156539917,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(right agent1)",
@@ -4919,8 +4932,14 @@
         "(left agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(right agent1)",
+        "(interact agent1 wizard3)",
+        "(left agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(right agent1)",
+        "(interact agent1 wizard2)",
+        "(left agent1)",
         "(left agent1)",
         "(left agent1)",
         "(left agent1)",
@@ -4956,20 +4975,22 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 51,
+      "planning_steps": 57,
       "planning_action_counts": {
         "observe": 0,
-        "move": 49,
-        "interact": 2
+        "move": 53,
+        "interact": 4
       },
-      "planning_cost": 157.0,
-      "replay_nonplanning_time": 0.029129981994628906,
-      "total_cost": 171.0,
-      "initial_plan_time": 0.4882628917694092,
+      "planning_cost": 179.0,
+      "replay_nonplanning_time": 0.017964839935302734,
+      "total_cost": 193.0,
+      "initial_plan_time": 0.437730073928833,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 4 blue wizards.",
         "Projected hypotheses into reduced planning world with 4 candidate states.",
-        "Pruned 3 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm511_scenario2": {
@@ -4979,7 +5000,7 @@
       "posterior_candidates": [
         "wizard4"
       ],
-      "replay_elapsed": 0.21985316276550293,
+      "replay_elapsed": 0.20002985000610352,
       "t_replayed": 15,
       "observations_count": 15,
       "observation_source": "sequence",
@@ -5076,7 +5097,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.22148609161376953,
+      "posterior_filter_time": 0.20150017738342285,
       "total_steps": 56,
       "observation_trace": [
         "agent2",
@@ -5148,9 +5169,9 @@
         "interact": 1
       },
       "planning_cost": 125.0,
-      "replay_nonplanning_time": 0.01200413703918457,
+      "replay_nonplanning_time": 0.011263847351074219,
       "total_cost": 140.0,
-      "initial_plan_time": 0.20784902572631836,
+      "initial_plan_time": 0.1887660026550293,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -5164,7 +5185,7 @@
         "wizard1",
         "wizard3"
       ],
-      "replay_elapsed": 0.14016413688659668,
+      "replay_elapsed": 0.1293630599975586,
       "t_replayed": 7,
       "observations_count": 7,
       "observation_source": "sequence",
@@ -5213,7 +5234,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.14097881317138672,
+      "posterior_filter_time": 0.13012003898620605,
       "total_steps": 46,
       "observation_trace": [
         "agent2",
@@ -5225,7 +5246,7 @@
         "agent2"
       ],
       "observe_steps": 7,
-      "replan_time_total": 0.025035858154296875,
+      "replan_time_total": 0.023005008697509766,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(down agent1)",
@@ -5275,13 +5296,13 @@
         "interact": 2
       },
       "planning_cost": 121.0,
-      "replay_nonplanning_time": 0.011808156967163086,
+      "replay_nonplanning_time": 0.01091909408569336,
       "total_cost": 128.0,
-      "initial_plan_time": 0.10332012176513672,
+      "initial_plan_time": 0.09543895721435547,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
         "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction outcome."
+        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
       ]
     },
     "sm411_scenario2": {
@@ -5291,7 +5312,7 @@
       "posterior_candidates": [
         "wizard4"
       ],
-      "replay_elapsed": 0.23441481590270996,
+      "replay_elapsed": 0.2180330753326416,
       "t_replayed": 13,
       "observations_count": 13,
       "observation_source": "sequence",
@@ -5376,7 +5397,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.23610305786132812,
+      "posterior_filter_time": 0.21932482719421387,
       "total_steps": 56,
       "observation_trace": [
         "agent2",
@@ -5448,9 +5469,9 @@
         "interact": 1
       },
       "planning_cost": 131.0,
-      "replay_nonplanning_time": 0.011909961700439453,
+      "replay_nonplanning_time": 0.011697053909301758,
       "total_cost": 144.0,
-      "initial_plan_time": 0.2225048542022705,
+      "initial_plan_time": 0.20633602142333984,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -5463,7 +5484,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.21169805526733398,
+      "replay_elapsed": 0.2718651294708252,
       "t_replayed": 17,
       "observations_count": 17,
       "observation_source": "sequence",
@@ -5572,7 +5593,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.21344995498657227,
+      "posterior_filter_time": 0.273468017578125,
       "total_steps": 55,
       "observation_trace": [
         "agent2",
@@ -5643,9 +5664,9 @@
         "interact": 1
       },
       "planning_cost": 116.0,
-      "replay_nonplanning_time": 0.03484916687011719,
+      "replay_nonplanning_time": 0.010136127471923828,
       "total_cost": 133.0,
-      "initial_plan_time": 0.1768488883972168,
+      "initial_plan_time": 0.26172900199890137,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -5658,7 +5679,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.060994863510131836,
+      "replay_elapsed": 0.06427001953125,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -5695,7 +5716,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.06165885925292969,
+      "posterior_filter_time": 0.06484389305114746,
       "total_steps": 47,
       "observation_trace": [
         "agent2",
@@ -5758,9 +5779,9 @@
         "interact": 1
       },
       "planning_cost": 128.0,
-      "replay_nonplanning_time": 0.01131296157836914,
+      "replay_nonplanning_time": 0.010468006134033203,
       "total_cost": 133.0,
-      "initial_plan_time": 0.049681901931762695,
+      "initial_plan_time": 0.0538020133972168,
       "warnings": [
         "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
         "Projected hypotheses into reduced planning world with 1 candidate states."

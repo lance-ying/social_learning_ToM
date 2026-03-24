@@ -1,0 +1,1252 @@
+{
+  "exp": "exp2",
+  "level": "s521_2",
+  "n_runs": 19,
+  "mean_total_cost": 205.21052631578948,
+  "median_total_cost": 215,
+  "mean_planning_cost": 202.42105263157896,
+  "median_planning_cost": 214,
+  "mean_move_steps": 60.10526315789474,
+  "mean_observe_steps": 2.789473684210526,
+  "mean_interaction_steps": 4.421052631578948,
+  "top_wizard_sequences_by_position": [
+    {
+      "count": 4,
+      "sequence": [
+        [
+          "9.0",
+          "9.0"
+        ],
+        [
+          "9.0",
+          "7.0"
+        ],
+        [
+          "9.0",
+          "5.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ]
+    },
+    {
+      "count": 2,
+      "sequence": [
+        [
+          "9.0",
+          "9.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ]
+    },
+    {
+      "count": 1,
+      "sequence": [
+        [
+          "0.0",
+          "2.0"
+        ]
+      ]
+    },
+    {
+      "count": 1,
+      "sequence": [
+        [
+          "9.0",
+          "5.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ]
+    },
+    {
+      "count": 1,
+      "sequence": [
+        [
+          "8.0",
+          "9.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ]
+    },
+    {
+      "count": 1,
+      "sequence": [
+        [
+          "10.0",
+          "1.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ]
+    },
+    {
+      "count": 1,
+      "sequence": [
+        [
+          "8.0",
+          "7.0"
+        ],
+        [
+          "9.0",
+          "5.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ]
+    },
+    {
+      "count": 1,
+      "sequence": [
+        [
+          "8.0",
+          "9.0"
+        ],
+        [
+          "8.0",
+          "5.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ]
+    },
+    {
+      "count": 1,
+      "sequence": [
+        [
+          "9.0",
+          "9.0"
+        ],
+        [
+          "8.0",
+          "7.0"
+        ],
+        [
+          "9.0",
+          "5.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ]
+    },
+    {
+      "count": 1,
+      "sequence": [
+        [
+          "9.0",
+          "7.0"
+        ],
+        [
+          "9.0",
+          "5.0"
+        ],
+        [
+          "10.0",
+          "1.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ]
+    }
+  ],
+  "top_wizard_sequences_by_detail": [
+    {
+      "count": 9,
+      "sequence": [
+        "",
+        "",
+        "",
+        "blueAmulet"
+      ]
+    },
+    {
+      "count": 5,
+      "sequence": [
+        "",
+        "blueAmulet"
+      ]
+    },
+    {
+      "count": 2,
+      "sequence": [
+        "",
+        "",
+        "blueAmulet"
+      ]
+    },
+    {
+      "count": 2,
+      "sequence": [
+        "",
+        "",
+        "",
+        "",
+        "blueAmulet"
+      ]
+    },
+    {
+      "count": 1,
+      "sequence": [
+        "blueAmulet"
+      ]
+    }
+  ],
+  "representative_runs": {
+    "min_cost": {
+      "file": "u1760838534176.csv",
+      "total_cost": 110,
+      "planning_cost": 109,
+      "observe_cost": 1,
+      "move_steps": 33,
+      "observe_steps": 1,
+      "interaction_steps": 2,
+      "wizard_sequence_positions": [
+        [
+          "0.0",
+          "2.0"
+        ]
+      ],
+      "wizard_sequence_details": [
+        "blueAmulet"
+      ],
+      "condensed_trace": [
+        {
+          "event": "observe",
+          "player_pos": [
+            "0.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "0.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "1.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "2.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "3.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "8.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "6.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "4.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "4.0",
+            "3.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "3.0",
+            "3.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "2.0",
+            "3.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "1.0",
+            "3.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "0.0",
+            "3.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "0.0",
+            "2.0"
+          ]
+        },
+        {
+          "event": "wizard_interaction",
+          "player_pos": [
+            "0.0",
+            "2.0"
+          ],
+          "detail": "blueAmulet"
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "0.0",
+            "1.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "down",
+          "player_pos": [
+            "0.0",
+            "1.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "down",
+          "player_pos": [
+            "0.0",
+            "2.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "0.0",
+            "3.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "1.0",
+            "3.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "2.0",
+            "3.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "3.0",
+            "3.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "down",
+          "player_pos": [
+            "4.0",
+            "3.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "down",
+          "player_pos": [
+            "4.0",
+            "4.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "down",
+          "player_pos": [
+            "4.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "down",
+          "player_pos": [
+            "4.0",
+            "6.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "down",
+          "player_pos": [
+            "4.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "down",
+          "player_pos": [
+            "4.0",
+            "8.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "4.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "3.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "2.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "1.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "down",
+          "player_pos": [
+            "0.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "treasure_interaction",
+          "player_pos": [
+            "0.0",
+            "9.0"
+          ],
+          "detail": "B"
+        },
+        {
+          "event": "move",
+          "action": "down",
+          "player_pos": [
+            "0.0",
+            "10.0"
+          ]
+        }
+      ]
+    },
+    "median_cost": {
+      "file": "u1760993963665.csv",
+      "total_cost": 215,
+      "planning_cost": 214,
+      "observe_cost": 1,
+      "move_steps": 63,
+      "observe_steps": 1,
+      "interaction_steps": 5,
+      "wizard_sequence_positions": [
+        [
+          "9.0",
+          "9.0"
+        ],
+        [
+          "9.0",
+          "7.0"
+        ],
+        [
+          "9.0",
+          "5.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ],
+      "wizard_sequence_details": [
+        "",
+        "",
+        "",
+        "blueAmulet"
+      ],
+      "condensed_trace": [
+        {
+          "event": "observe",
+          "player_pos": [
+            "0.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "0.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "1.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "2.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "3.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "4.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "5.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "6.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "7.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "8.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "9.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "wizard_interaction",
+          "player_pos": [
+            "9.0",
+            "9.0"
+          ],
+          "detail": ""
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "9.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "8.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "7.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "6.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "5.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "8.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "4.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "5.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "6.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "7.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "8.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "9.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "wizard_interaction",
+          "player_pos": [
+            "9.0",
+            "7.0"
+          ],
+          "detail": ""
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "9.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "8.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "7.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "6.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "5.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "6.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "4.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "5.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "6.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "7.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "8.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "9.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "wizard_interaction",
+          "player_pos": [
+            "9.0",
+            "5.0"
+          ],
+          "detail": ""
+        }
+      ]
+    },
+    "max_cost": {
+      "file": "u1760823090520.csv",
+      "total_cost": 268,
+      "planning_cost": 267,
+      "observe_cost": 1,
+      "move_steps": 79,
+      "observe_steps": 1,
+      "interaction_steps": 6,
+      "wizard_sequence_positions": [
+        [
+          "9.0",
+          "9.0"
+        ],
+        [
+          "9.0",
+          "7.0"
+        ],
+        [
+          "9.0",
+          "5.0"
+        ],
+        [
+          "10.0",
+          "1.0"
+        ],
+        [
+          "0.0",
+          "1.0"
+        ]
+      ],
+      "wizard_sequence_details": [
+        "",
+        "",
+        "",
+        "",
+        "blueAmulet"
+      ],
+      "condensed_trace": [
+        {
+          "event": "observe",
+          "player_pos": [
+            "0.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "0.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "1.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "2.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "3.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "4.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "5.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "6.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "7.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "8.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "9.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "wizard_interaction",
+          "player_pos": [
+            "9.0",
+            "9.0"
+          ],
+          "detail": ""
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "9.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "8.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "7.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "6.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "5.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "9.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "8.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "4.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "5.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "6.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "7.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "8.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "9.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "wizard_interaction",
+          "player_pos": [
+            "9.0",
+            "7.0"
+          ],
+          "detail": ""
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "9.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "8.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "7.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "6.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "left",
+          "player_pos": [
+            "5.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "7.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "up",
+          "player_pos": [
+            "4.0",
+            "6.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "4.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "5.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "6.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "7.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "8.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "move",
+          "action": "right",
+          "player_pos": [
+            "9.0",
+            "5.0"
+          ]
+        },
+        {
+          "event": "wizard_interaction",
+          "player_pos": [
+            "9.0",
+            "5.0"
+          ],
+          "detail": ""
+        }
+      ]
+    }
+  }
+}

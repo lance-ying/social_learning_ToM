@@ -14,8 +14,8 @@
   "replay_plan_cache_stats": {
     "hits": 0,
     "hit_rate": 0.0,
-    "misses": 23,
-    "entries": 23
+    "misses": 22,
+    "entries": 22
   },
   "summary": {
     "mean_observe_steps": 7.4,
@@ -24,7 +24,7 @@
     "mean_total_steps": 37.3,
     "mean_observe_cost": 7.4,
     "mean_total_cost": 99.4,
-    "cases_with_warnings": 20,
+    "cases_with_warnings": 19,
     "mean_planning_cost": 92.0
   },
   "exp": "exp1",
@@ -70,7 +70,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 2.408937931060791,
+      "replay_elapsed": 1.9718570709228516,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -156,9 +156,9 @@
         "interact": 1
       },
       "planning_cost": 89.0,
-      "replay_nonplanning_time": 0.17738676071166992,
+      "replay_nonplanning_time": 0.13446307182312012,
       "total_cost": 94.0,
-      "initial_plan_time": 2.231551170349121,
+      "initial_plan_time": 1.8373939990997314,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -171,7 +171,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.38660597801208496,
+      "replay_elapsed": 0.31932616233825684,
       "t_replayed": 10,
       "observations_count": 10,
       "observation_source": "sequence",
@@ -315,9 +315,9 @@
         "interact": 2
       },
       "planning_cost": 160.0,
-      "replay_nonplanning_time": 0.03961491584777832,
+      "replay_nonplanning_time": 0.012734174728393555,
       "total_cost": 170.0,
-      "initial_plan_time": 0.34699106216430664,
+      "initial_plan_time": 0.3065919876098633,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -330,7 +330,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.0945441722869873,
+      "replay_elapsed": 0.0727090835571289,
       "t_replayed": 16,
       "observations_count": 16,
       "observation_source": "sequence",
@@ -478,9 +478,9 @@
         "interact": 1
       },
       "planning_cost": 44.0,
-      "replay_nonplanning_time": 0.013339042663574219,
+      "replay_nonplanning_time": 0.003348112106323242,
       "total_cost": 60.0,
-      "initial_plan_time": 0.08120512962341309,
+      "initial_plan_time": 0.06936097145080566,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -495,7 +495,7 @@
         "wizard2",
         "wizard4"
       ],
-      "replay_elapsed": 0.2865779399871826,
+      "replay_elapsed": 0.1496419906616211,
       "t_replayed": 1,
       "observations_count": 1,
       "observation_source": "sequence",
@@ -513,7 +513,7 @@
       "observation_trace": [
         "agent2"
       ],
-      "replan_time_total": 0.0785820484161377,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(up agent1)",
@@ -548,12 +548,10 @@
         "interact": 1
       },
       "planning_cost": 74.0,
-      "replay_nonplanning_time": 0.051570892333984375,
+      "replay_nonplanning_time": 0.009292125701904297,
       "total_cost": 75.0,
-      "initial_plan_time": 0.15642499923706055,
-      "warnings": [
-        "Pruned 2 latent-state hypotheses after interaction outcome."
-      ]
+      "initial_plan_time": 0.1403498649597168,
+      "warnings": []
     },
     "s211": {
       "observe_cost": 4.0,
@@ -562,7 +560,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.06495094299316406,
+      "replay_elapsed": 0.0574040412902832,
       "t_replayed": 4,
       "observations_count": 4,
       "observation_source": "sequence",
@@ -648,9 +646,9 @@
         "interact": 1
       },
       "planning_cost": 110.0,
-      "replay_nonplanning_time": 0.008098840713500977,
+      "replay_nonplanning_time": 0.007528066635131836,
       "total_cost": 114.0,
-      "initial_plan_time": 0.056852102279663086,
+      "initial_plan_time": 0.04987597465515137,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -663,7 +661,7 @@
       "posterior_candidates": [
         "wizard6"
       ],
-      "replay_elapsed": 0.1532590389251709,
+      "replay_elapsed": 0.12893891334533691,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -774,9 +772,9 @@
         "interact": 1
       },
       "planning_cost": 80.0,
-      "replay_nonplanning_time": 0.019932031631469727,
+      "replay_nonplanning_time": 0.007452964782714844,
       "total_cost": 89.0,
-      "initial_plan_time": 0.13332700729370117,
+      "initial_plan_time": 0.12148594856262207,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -789,7 +787,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.2076740264892578,
+      "replay_elapsed": 0.1714479923248291,
       "t_replayed": 3,
       "observations_count": 3,
       "observation_source": "sequence",
@@ -869,9 +867,9 @@
         "interact": 2
       },
       "planning_cost": 115.0,
-      "replay_nonplanning_time": 0.029732942581176758,
+      "replay_nonplanning_time": 0.008926868438720703,
       "total_cost": 118.0,
-      "initial_plan_time": 0.17794108390808105,
+      "initial_plan_time": 0.1625211238861084,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -884,7 +882,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.12371087074279785,
+      "replay_elapsed": 0.10756707191467285,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -987,9 +985,9 @@
         "interact": 2
       },
       "planning_cost": 121.0,
-      "replay_nonplanning_time": 0.009822845458984375,
+      "replay_nonplanning_time": 0.012244939804077148,
       "total_cost": 127.0,
-      "initial_plan_time": 0.11388802528381348,
+      "initial_plan_time": 0.0953221321105957,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1002,7 +1000,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.0430300235748291,
+      "replay_elapsed": 0.047736167907714844,
       "t_replayed": 4,
       "observations_count": 4,
       "observation_source": "sequence",
@@ -1088,9 +1086,9 @@
         "interact": 1
       },
       "planning_cost": 110.0,
-      "replay_nonplanning_time": 0.007829904556274414,
+      "replay_nonplanning_time": 0.01136016845703125,
       "total_cost": 114.0,
-      "initial_plan_time": 0.03520011901855469,
+      "initial_plan_time": 0.036375999450683594,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1103,7 +1101,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.0201570987701416,
+      "replay_elapsed": 0.01814103126525879,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -1184,9 +1182,9 @@
         "interact": 1
       },
       "planning_cost": 74.0,
-      "replay_nonplanning_time": 0.0050160884857177734,
+      "replay_nonplanning_time": 0.004991054534912109,
       "total_cost": 79.0,
-      "initial_plan_time": 0.015141010284423828,
+      "initial_plan_time": 0.01314997673034668,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1199,7 +1197,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.09396195411682129,
+      "replay_elapsed": 0.08988404273986816,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -1292,9 +1290,9 @@
         "interact": 1
       },
       "planning_cost": 110.0,
-      "replay_nonplanning_time": 0.00843191146850586,
+      "replay_nonplanning_time": 0.0077381134033203125,
       "total_cost": 115.0,
-      "initial_plan_time": 0.08553004264831543,
+      "initial_plan_time": 0.08214592933654785,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1307,7 +1305,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.05932116508483887,
+      "replay_elapsed": 0.05212593078613281,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -1395,9 +1393,9 @@
         "interact": 1
       },
       "planning_cost": 95.0,
-      "replay_nonplanning_time": 0.01047205924987793,
+      "replay_nonplanning_time": 0.007021903991699219,
       "total_cost": 100.0,
-      "initial_plan_time": 0.04884910583496094,
+      "initial_plan_time": 0.045104026794433594,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1410,7 +1408,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.03501701354980469,
+      "replay_elapsed": 0.03699207305908203,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -1502,9 +1500,9 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.006615877151489258,
+      "replay_nonplanning_time": 0.006123065948486328,
       "total_cost": 92.0,
-      "initial_plan_time": 0.02840113639831543,
+      "initial_plan_time": 0.030869007110595703,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1517,7 +1515,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.0918281078338623,
+      "replay_elapsed": 0.06501102447509766,
       "t_replayed": 17,
       "observations_count": 17,
       "observation_source": "sequence",
@@ -1674,9 +1672,9 @@
         "interact": 1
       },
       "planning_cost": 50.0,
-      "replay_nonplanning_time": 0.010780096054077148,
+      "replay_nonplanning_time": 0.0031938552856445312,
       "total_cost": 67.0,
-      "initial_plan_time": 0.08104801177978516,
+      "initial_plan_time": 0.061817169189453125,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1689,7 +1687,7 @@
       "posterior_candidates": [
         "wizard6"
       ],
-      "replay_elapsed": 0.0972449779510498,
+      "replay_elapsed": 0.09203100204467773,
       "t_replayed": 7,
       "observations_count": 7,
       "observation_source": "sequence",
@@ -1790,9 +1788,9 @@
         "interact": 1
       },
       "planning_cost": 92.0,
-      "replay_nonplanning_time": 0.00765681266784668,
+      "replay_nonplanning_time": 0.0066680908203125,
       "total_cost": 99.0,
-      "initial_plan_time": 0.08958816528320312,
+      "initial_plan_time": 0.08536291122436523,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1805,7 +1803,7 @@
       "posterior_candidates": [
         "wizard4"
       ],
-      "replay_elapsed": 0.16780686378479004,
+      "replay_elapsed": 0.14728093147277832,
       "t_replayed": 12,
       "observations_count": 12,
       "observation_source": "sequence",
@@ -1947,9 +1945,9 @@
         "interact": 1
       },
       "planning_cost": 110.0,
-      "replay_nonplanning_time": 0.008557796478271484,
+      "replay_nonplanning_time": 0.008352041244506836,
       "total_cost": 122.0,
-      "initial_plan_time": 0.15924906730651855,
+      "initial_plan_time": 0.13892889022827148,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -1962,7 +1960,7 @@
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.06007719039916992,
+      "replay_elapsed": 0.05399489402770996,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -2078,9 +2076,9 @@
         "interact": 1
       },
       "planning_cost": 95.0,
-      "replay_nonplanning_time": 0.014988183975219727,
+      "replay_nonplanning_time": 0.006842851638793945,
       "total_cost": 104.0,
-      "initial_plan_time": 0.045089006423950195,
+      "initial_plan_time": 0.047152042388916016,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -2093,7 +2091,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.012135028839111328,
+      "replay_elapsed": 0.010460138320922852,
       "t_replayed": 14,
       "observations_count": 14,
       "observation_source": "sequence",
@@ -2226,9 +2224,9 @@
         "interact": 1
       },
       "planning_cost": 41.0,
-      "replay_nonplanning_time": 0.002978086471557617,
+      "replay_nonplanning_time": 0.0027501583099365234,
       "total_cost": 55.0,
-      "initial_plan_time": 0.009156942367553711,
+      "initial_plan_time": 0.007709980010986328,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -2241,7 +2239,7 @@
       "posterior_candidates": [
         "wizard2"
       ],
-      "replay_elapsed": 0.019426822662353516,
+      "replay_elapsed": 0.02561807632446289,
       "t_replayed": 2,
       "observations_count": 2,
       "observation_source": "sequence",
@@ -2301,9 +2299,9 @@
         "interact": 1
       },
       "planning_cost": 74.0,
-      "replay_nonplanning_time": 0.005075693130493164,
+      "replay_nonplanning_time": 0.00492405891418457,
       "total_cost": 76.0,
-      "initial_plan_time": 0.014351129531860352,
+      "initial_plan_time": 0.02069401741027832,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
@@ -2316,7 +2314,7 @@
       "posterior_candidates": [
         "wizard1"
       ],
-      "replay_elapsed": 0.12307620048522949,
+      "replay_elapsed": 0.10807394981384277,
       "t_replayed": 8,
       "observations_count": 8,
       "observation_source": "sequence",
@@ -2430,9 +2428,9 @@
         "interact": 1
       },
       "planning_cost": 110.0,
-      "replay_nonplanning_time": 0.01827216148376465,
+      "replay_nonplanning_time": 0.015539884567260742,
       "total_cost": 118.0,
-      "initial_plan_time": 0.10480403900146484,
+      "initial_plan_time": 0.09253406524658203,
       "warnings": [
         "Filtered hypotheses after observations to 1 candidate states using posterior rule prob_threshold (threshold=0.9).",
         "Projected hypotheses into reduced planning world with 1 candidate states."
