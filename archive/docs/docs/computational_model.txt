@@ -1,0 +1,91 @@
+Computational Model
+
+The core problem facing the observer is simple: at every moment, should I act toward my own goal, or should I pause and watch someone else? Watching costs time, but it can be valuable if the other agent's behavior reveals something about the world that the observer does not yet know — in our task, which wizard holds the key. The value of watching depends on what the observer thinks the other agent knows, wants, and is likely to do next. Our model formalizes this tradeoff by combining a Theory of Mind model of the observed agent with a cost-benefit analysis of observation versus action.
+
+The model has three components. First, a forward model specifies how the observed agent is expected to behave given a goal and beliefs about the world. Second, an inverse planning procedure uses the observed agent's actions to infer their goal and beliefs. Third, a decision model compares the expected cost of continued observation against the expected cost of acting immediately.
+
+
+1. Forward Model of the Observed Agent
+
+We model the observed agent o as a near-optimal planner operating in a partially observable environment. The observer does not know o's goal g^o (which treasure chest o is seeking) or o's beliefs about the world state b_0^o (which wizard o thinks holds the key). The forward model specifies a joint distribution over these latent variables and the resulting action sequence.
+
+Goal prior. The observer assumes a uniform prior over o's possible goals:
+
+  P(g^o) = 1/|G|                                                    (1)
+
+where G is the set of treasure chests in the environment.
+
+Belief prior. Each agent is uncertain about which wizard holds the key. We represent this uncertainty as a set of possible world states {s_1, ..., s_K}, one per blue wizard, where s_k is the state in which wizard k holds the key. The prior over o's initial beliefs is uniform across these states:
+
+  P(b_0^o = s_k) = 1/K                                              (2)
+
+Action model. Given a goal g^o and world state s, the observed agent selects actions according to a Boltzmann (softmax) policy over the Q-values of an optimal planner:
+
+  P(a_t^o | s_{t-1}, g^o) ∝ exp(−Q*(s_{t-1}, a_t, g^o) / τ)       (3)
+
+Here Q*(s, a, g) is the cost-to-go — the estimated cost of executing the optimal plan from the state reached by taking action a in state s toward goal g. This is computed via A* search over the gridworld using a Manhattan distance heuristic. The temperature parameter τ controls how closely the agent follows the optimal plan; we set τ = 0.5, which produces near-optimal but not perfectly deterministic behavior. This stochastic policy is used for inference (see Equation 6 below); it allows the model to assign non-zero likelihood to suboptimal observed actions, which is necessary for robust Bayesian inversion. In contrast, the observer's own planning (Equation 7) uses a deterministic A* planner, since the observer is modeled as acting optimally once they decide to stop observing.
+
+State transitions. The environment evolves deterministically:
+
+  s_t = f(s_{t-1}, a_t)                                             (4)
+
+Actions include movement on the grid (up, down, left, right) and interacting with a wizard to receive a key.
+
+
+2. Inverse Planning
+
+Given a sequence of observed actions a_{1:t}^o, the observer infers the joint posterior over the observed agent's goal and initial beliefs via Bayes' rule:
+
+  P(g^o, b_0^o | a_{1:t}^o) ∝ P(a_{1:t}^o | g^o, b_0^o) · P(g^o) · P(b_0^o)   (5)
+
+The likelihood P(a_{1:t}^o | g^o, b_0^o) is the product of action probabilities under the Boltzmann policy (Equation 3), evaluated by rolling forward the planner from initial state b_0^o toward goal g^o and scoring each observed action against the predicted distribution.
+
+We compute this posterior using Sequential Inverse Plan Search (SIPS; Zhi-Xuan et al., 2020), a sequential Monte Carlo algorithm designed for online Bayesian goal inference over boundedly-rational planning agents. SIPS exploits the assumption that agents interleave planning with execution: rather than precomputing a full policy for every possible goal, each particle maintains a partial plan that is incrementally extended only when new observations arrive. This makes inference efficient even in large state spaces. Each particle represents a hypothesis about the observed agent's goal and initial world state, and is initialized via stratified sampling so that every (goal, world state) combination is represented. As each action is observed, particles are extended and reweighted by the likelihood of that action under the particle's hypothesis. This yields time-varying posterior distributions over o's goal and world state: P(g^o | a_{1:t}^o) and P(b_0^o | a_{1:t}^o).
+
+Crucially, this inference gives the observer indirect information about the world. For example, if the observer infers that o is heading toward wizard 2 (because o's path is most consistent with a plan that requires wizard 2's key), this tells the observer something about which wizard likely holds the key — not from direct observation, but from reasoning about why o is behaving as they are.
+
+
+3. Observer's Decision Model
+
+At each timestep t, the observer compares two options: observe for longer, or stop and act. The decision depends on two Q-values.
+
+Cost of acting now. If the observer stops observing and acts immediately, their expected cost is determined by their current uncertainty about which wizard holds the key. Let W_t denote the observer's current set of candidate wizards — those not yet ruled out by observation. The cost of acting is the expected cost of visiting these wizards to find the key, then navigating to the goal treasure chest:
+
+  Q_act(W_t) = Σ_{w ∈ W_t} C_move · d(pos_w, pos_{w-1}) + |W_t| · C_interact + C_move · d(pos_{last}, pos_chest)   (7)
+
+where d(·,·) denotes the shortest-path distance on the grid (computed via A*), C_move is the cost per grid step, and C_interact is the cost of interacting with a wizard. The observer plans to visit wizards in nearest-first order from their current position. In our experiments, C_move = 2 (Experiment 1) or 3 (Experiments 3–4), and C_interact = 5.
+
+Cost of observing. If the observer continues watching agent o, they pay a per-step observation cost C_obs = 1 but may reduce their future action cost by narrowing down which wizard holds the key. To estimate this, the observer considers each plausible hypothesis (g, i) about o's goal and world state, weighted by the current posterior:
+
+  Q_obs(t) = (1/Z) Σ_{g,i} P(g^o | a_{1:t}) · P(b_0^o = i | a_{1:t}) · [Q_act(W_{g,i,T}) + C_obs · T_{g,i}]   (8)
+
+where:
+- T_{g,i} is the estimated number of additional observation steps needed for the posterior to converge under hypothesis (g, i). Convergence is defined as the earliest timestep at which some world-state hypothesis exceeds probability 0.95 — that is, the point at which watching o effectively reveals which wizard holds the key.
+- W_{g,i,T} is the reduced set of candidate wizards after observing for T_{g,i} steps under hypothesis (g, i), derived from the converged posterior over world states.
+- Z normalizes over plausible hypotheses.
+
+The benefit of observation is thus a reduction in expected plan cost: by watching o for T more steps, the observer expects to narrow W_t down to W_{g,i,T} (often a single wizard), which substantially reduces the cost of self-exploration. The observer stops when this reduction no longer offsets the observation cost.
+
+Decision rule. The observer stops and acts when Q_act(W_t) ≤ Q_obs(t); otherwise they observe for one additional step, update their beliefs, and re-evaluate.
+
+Belief update after observation. After each observation step, the observer updates their set of candidate wizards W_t by marginalizing over the posterior:
+
+  P(wizard_j holds key | a_{1:t}^o) = Σ_{g,i} P(g^o | a_{1:t}) · P(b_0^o = i | a_{1:t}) · P(wizard_j | g, i, a_{1:t})
+
+Wizards whose marginal probability falls below a threshold (0.1) are eliminated from W_t. This reflects the observer translating their inferences about the other agent's mental states into updated beliefs about the physical world.
+
+
+4. Multi-Agent Extension
+
+In Experiments 3 and 4, the observer can watch one of two agents (agent X or agent Y) at each timestep. The model extends naturally: the observer computes Q_obs for each available agent independently, then selects the action with the lowest expected cost:
+
+  action* = argmin { Q_obs(agent X), Q_obs(agent Y), Q_act(W_t) }
+
+If Q_act is lowest, the observer stops and acts. Otherwise, they observe whichever agent offers the greatest expected cost reduction. This allows the model to capture strategic choices about whom to observe — for example, preferring an agent whose path is more likely to pass near a blue wizard, or switching between agents as new information arrives.
+
+
+5. Modeling Naive Agents (Experiment 4)
+
+Experiment 4 introduces a distinction between "naive" and "optimal" agents. An optimal agent plans the shortest path to their goal (as described above). A naive agent does not know which wizard holds the key and visits blue wizards in nearest-first order until they find it, then plans optimally to their goal.
+
+The observer knows each agent's type (naive or optimal) but not their goal. This knowledge is incorporated into the forward model: when modeling a naive agent, the planner in Equation 3 is replaced with a naive planning policy that greedily visits the nearest unvisited wizard. The inference procedure (Equation 5) then uses this modified likelihood, so that the same observed action sequence produces different posteriors depending on the assumed agent type.

@@ -1,0 +1,365 @@
+Model-Code Connection: Social Learning with Theory of Mind
+===========================================================
+
+This document maps the computational model components to specific source files
+and functions in the codebase. The model describes an observer (agent1/M) in a
+partially-observable gridworld who decides whether to watch other agents (agent2/X,
+agent3/Y) to learn which wizard holds the blue key before acting on their own goal.
+
+OVERVIEW OF THE PIPELINE
+--------------------------
+The codebase implements a two-stage pipeline:
+
+Stage 1 — INFERENCE (offline precomputation)
+  Runs the forward model generatively to produce, for every (agent, map, scenario,
+  hypothesis goal g, hypothesis initial-state i), the time-series of posterior
+  distributions P(goal | a_{1:T}) and P(world-state | a_{1:T}).
+  Files: scripts/utilities/inference.jl          (Exp 1, single agent)
+         scripts/utilities/inference_multi.jl    (Exp 3, multi-agent)
+         scripts/utilities/inference_multi_exp4.jl (Exp 4, naive vs. optimal agents)
+  Outputs: .jld2 files stored in data/inference/
+
+Stage 2 — DECISION (online experiment simulation)
+  Loads the precomputed inference tables and runs the Q-value comparison loop to
+  decide how many steps to observe each agent and when to stop.
+  Files: scripts/experiments/run_experiment_exp1.jl
+         scripts/experiments/run_experiment_exp3.jl
+         scripts/experiments/run_experiment_exp4.jl
+  Outputs: steps_dict JSON files in scripts/experiments/experiment_outputs/
+
+
+COMPONENT 1: STATE SPACE AND WORLD MODEL
+-----------------------------------------
+Conceptual: A partially observable world s ∈ S where the observer cannot see which
+wizard holds the blue key. Possible worlds differ only in which wizard holds the key.
+
+Code mapping:
+• enumerate_beliefs()  [src/beliefs.jl, lines 7-32]
+  Creates the finite set of possible initial states (belief_states), one per blue
+  wizard — each state is an identical copy of the compiled PDDL state except that
+  the blue key is assigned to a different wizard via assign!(). This is the explicit
+  enumeration of the belief state space B.
+
+• assign!(state, wizard)  [src/utils.jl, lines 75-89]
+  Mutates a state so that the designated wizard holds the blue key, implementing the
+  world-state hypotheses.
+
+• belief_probs  [beliefs.jl line 27]
+  Set to 1/N (uniform) across all N blue wizards. This is the prior P(b_0^m) the
+  observer holds about the world before any observation.
+
+• check_equal_state()  [src/utils.jl, lines 251-260]
+  Matches the compiled initial state to the enumerated hypothesis states by comparing
+  wizard-key assignments. Used to find s_id (the index of the true world state among
+  the hypotheses).
+
+
+COMPONENT 2: OBSERVED AGENT FORWARD MODEL (Equations 1–5)
+-----------------------------------------------------------
+Conceptual: A generative model of how another agent (agent2 or agent3) behaves given
+their (latent) goal g^o and (latent) initial beliefs b_0^o. The model predicts their
+action sequence a_{1:T}^o.
+
+The forward model has three parts:
+  (a) Prior over goals
+  (b) Prior over initial world states (the observed agent's uncertainty)
+  (c) Action generation: stochastic Boltzmann policy over A*-planned Q-values
+
+Code mapping:
+
+(a) Goal prior [inference*.jl, ~line 87 in inference.jl]
+  @gen function goal_prior()
+      goal_id ~ uniform_discrete(1, length(goals))
+      return Specification(goals[goal_id])
+  end
+  Implements: P(g^o) = Uniform{1,...,|G|}
+  goals are populated by initialize_goals() [src/utils.jl, lines 269-279], which
+  enumerates (has agent_name gem_i) for every gem in the domain.
+
+(b) State prior [inference*.jl, ~line 102 in inference.jl]
+  @gen function state_prior()
+      state_id ~ categorical(belief_probs)
+      return initial_states[state_id]
+  end
+  Implements: P(b_0^o) = Categorical(belief_probs)
+  initial_states are the enumerated belief states from enumerate_beliefs().
+
+(c) Planner and action noise model [inference*.jl, ~lines 115-139 in inference.jl]
+  heuristic = GoalManhattan()
+  planner = RTHS(heuristic, n_iters=2, max_nodes=2^18)   [Exp 1/3]
+  planner = NaivePlanner(...)                              [Exp 4, naive agents]
+  act_config = BoltzmannActConfig(temperatures)           [temperature = 0.5]
+
+  The planner computes Q-values (estimated plan cost from each state toward the goal).
+  BoltzmannActConfig wraps these Q-values in a softmax:
+    P(a_t^o | state, goal) ∝ exp(-Q(state, a_t^o) / temperature)
+  This is the stochastic Boltzmann policy in Equation 2 of the paper.
+
+(d) AgentConfig and WorldConfig [inference*.jl, ~lines 126-145]
+  agent_config = AgentConfig(domain, planner; goal_config, replan_args, act_config)
+  world_config = WorldConfig(agent_config=agent_config, env_config=PDDLEnvConfig(...))
+  These wire the goal prior, state prior, planner, and action model into the
+  InversePlanning.jl generative model (built on Gen.jl).
+
+
+COMPONENT 3: NAIVE AGENT MODEL (Experiment 4 only)
+---------------------------------------------------
+Conceptual: A "naive" agent does not know which wizard holds the key. They visit
+blue wizards in greedy nearest-first order rather than optimally.
+
+Code mapping:
+• NaivePlanner struct  [src/planners.jl, lines 13-18]
+  Wraps a fallback AStarPlanner. Has blue_wizards, agent_name, domain fields.
+
+• generate_naive_plan()  [src/planners.jl, lines 293-367]
+  Generates the full trajectory: greedily visits nearest unvisited blue wizard,
+  interacts, checks if key obtained, then moves to the next nearest, until the key
+  is found, then plans optimally to the goal.
+
+• compute_naive_action()  [src/planners.jl, lines 66-150]
+  Called at inference time to return the single next action from any state. This is
+  the policy used instead of A*/RTHS when the observer models a naive agent.
+
+• get_action_values()  [src/planners.jl, lines 206-244]
+  Returns Q-values for Boltzmann sampling: the naive action gets value 0.0,
+  all other actions get -1.0. Combined with BoltzmannActConfig(0.5), this gives the
+  naive action high (but not absolute) probability, which is correct because the
+  particle filter needs non-zero probability for all observed actions.
+
+
+COMPONENT 4: INFERENCE — INVERTING THE FORWARD MODEL (Equation 6)
+-------------------------------------------------------------------
+Conceptual: Given observed action sequence a_{1:t}^o, compute the posterior
+P(g^o, b_0^o | a_{1:t}^o) via Bayes' rule over the generative model.
+
+Code mapping:
+• SIPS particle filter [inference*.jl, ~lines 183-192]
+  sips = SIPS(world_config, resample_cond=:none, rejuv_cond=:none)
+  pf_state = sips(n_samples, t_obs_iter; init_args=(init_strata=init_strata,), callback=callback)
+
+  SIPS (Sequential Importance Particle Sampling) is the Gen.jl particle filter from
+  GenParticleFilters.jl. It maintains a weighted particle set over (g^o, b_0^o) pairs
+  and updates weights as each observed action a_t is processed.
+
+• Stratified initialization [inference*.jl, ~lines 108-113]
+  init_strata = choiceproduct(
+      (goal_addr, 1:length(goals)),
+      (init_state_addr, 1:length(initial_states))
+  )
+  Every (goal, initial_state) pair gets at least one particle, preventing
+  particle degeneracy at initialization.
+
+• Conditioned inference loop [inference*.jl, ~lines 147-202]
+  for g in 1:length(goals)
+    for i in 1:length(initial_states)
+      plan = planner(domain, initial_states[i], goals[g])   # hypothetical plan
+      t_obs_iter = act_choicemap_pairs(collect(plan))
+      pf_state = sips(n_samples, t_obs_iter; ...)
+
+  CRITICAL: The inference is run for every (g,i) pair separately. For hypothesis
+  (g,i), the "observed" sequence is the plan an agent with goal g and initial
+  state i would execute. This produces a library of conditional posteriors:
+    goal_probs_conditioned_dict[agent][map][scenario][g][i][t]  — P(goal | actions, g, i)
+    state_probs_conditioned_dict[agent][map][scenario][g][i][t] — P(state | actions, g, i)
+
+• DataLoggerCallback [inference*.jl, ~lines 169-174]
+  Extracts probvec(pf, goal_addr, 1:n_goals) and probvec(pf, init_state_addr, ...)
+  at every timestep, producing the time series of posteriors.
+
+
+COMPONENT 5: Q-FUNCTION FOR SELF-EXPLORATION (Equation 7)
+----------------------------------------------------------
+Conceptual: Q(b^m, wizard_candidates) = expected cost for agent1 to self-explore all
+remaining wizard candidates and then reach the goal gem.
+
+Code mapping:
+• estimate_self_exploration_cost()  [src/utils.jl, lines 148-248]
+  Greedy nearest-wizard algorithm:
+  1. For each remaining wizard in wizard_candidates (in order of proximity):
+     - Plan to the nearest wizard using AStarPlanner + GoalManhattan heuristic
+     - Add plan cost (move actions × move_cost + interact_cost)
+     - Virtually move agent1 to that wizard's location
+  2. After visiting all candidates, plan from last wizard to goal gem
+  3. Subtract (2*num_wizards - 1) * move_cost correction to avoid double-counting
+     move steps (since each wizard visit's start is the previous wizard's location)
+
+  action_cost = Dict(:move => 2/3, :interact => 5, :observe => 1.0)
+  [different costs across experiments; Exp1: move=2, Exp3/4: move=3]
+
+• GoalManhattan heuristic  [src/heuristics.jl]
+  Manhattan-distance-to-goal heuristic for AStarPlanner. Provides admissible
+  lower bound used in Q-value estimation.
+
+
+COMPONENT 6: UTILITY OF OBSERVING — COMPUTING T (finding convergence)
+----------------------------------------------------------------------
+Conceptual: T is the number of steps the observer needs to watch agent^o before
+their posterior P(b^o | a^o) converges to a useful belief update.
+
+Code mapping [run_experiment_exp1.jl lines 176-195, same pattern in exp3/exp4]:
+  T = -1
+  # Primary: find T where state probability converges (>0.95 = high confidence)
+  for val in 1:length(state_probs_conditioned_dict[...][g][i][1,:])
+      if any(x -> x>0.95, state_probs_conditioned_dict[...][g][i][:,val])
+          T = val
+          break
+      end
+  end
+
+  # Fallback: find T where some goal prob drops below 0.1 (goal is ruled out)
+  if T == -1
+      for val in 1:length(goal_probs_conditioned_dict[...][g][i][1,:])
+          if any(x -> x<0.1, goal_probs_conditioned_dict[...][g][i][:,val])
+              T = val
+              break
+          end
+      end
+  end
+
+  "State convergence" (primary): one wizard hypothesis gets probability > 0.95.
+  This is the timestep at which watching the observed agent fully resolves observer's
+  uncertainty about which wizard has the key.
+  "Goal convergence" (fallback): some gem goal becomes unlikely, which may also
+  partially reduce wizard uncertainty.
+
+  In Exp4, only T found via state convergence (T_from_state=true) is used to filter
+  wizard candidates; goal-convergence T is treated as uninformative about wizard identity.
+
+
+COMPONENT 7: Q_OBSERVE — EXPECTED COST IF OBSERVER WATCHES (Equation 8)
+------------------------------------------------------------------------
+Conceptual: Q_observe(agent^o) = E_{g^o, b_0^o}[Q(b_T^m) + C_obs * T | a_{1:t}^o]
+The expected total cost = (cost of self-exploration after observation converges) +
+(observation cost × steps to convergence), averaged over plausible goal/state hypotheses
+weighted by current posterior.
+
+Code mapping [run_experiment_exp1.jl lines 163-215, run_experiment_exp3.jl lines 239-310]:
+  Q_observe = 0
+  total_probs = 0
+
+  for g in 1:length(goals)                              # sum over goal hypotheses
+      if goal_probs[g, t+1] < 0.1: continue            # skip implausible goals
+      for i in 1:length(initial_states)                 # sum over state hypotheses
+          if state_probs[i, t+1] < 0.1: continue       # skip implausible states
+
+          T = find_convergence_timestep(g, i)            # as above
+
+          new_wizard_candidates = [w for w in blue_wizards
+                                   if state_probs_conditioned[g][i][j,T] > 0.1]
+
+          Q_T = estimate_self_exploration_cost(domain_render, new_state,
+                    problem.goal, new_wizard_candidates, action_cost)
+
+          obs_cost = action_cost[:observe] * max(T, 1)   # C_obs * T
+
+          Q_observe += goal_probs[g, t+1] * state_probs[i, t+1] * (Q_T + obs_cost)
+          total_probs += goal_probs[g, t+1] * state_probs[i, t+1]
+
+  Q_observe /= total_probs                              # normalize (expected value)
+
+  In Exp4, remaining_T = max(T - current_t + 1, 1) is used instead of T, so that the
+  observation cost reflects only the remaining steps needed, not total steps from t=0.
+
+  Multi-agent version (Exp3/4):
+  Q_observe is computed in parallel for agent2 and agent3 using Threads.@spawn,
+  then both values + Q_not_observe are compared.
+
+
+COMPONENT 8: Q_NOT_OBSERVE — COST OF ACTING WITHOUT OBSERVATION
+----------------------------------------------------------------
+Conceptual: Q_not_observe = Q(b_t^m, current_wizard_candidates)
+The cost of self-exploring all current wizard candidates without any further observation.
+
+Code mapping [run_experiment_exp1.jl line 217, run_experiment_exp3.jl line 398]:
+  Q_not_observe = estimate_self_exploration_cost(domain_render, new_state,
+                      problem.goal, wizard_candicates, action_cost)
+
+  wizard_candicates starts as all blue wizards and gets updated after each observation.
+
+
+COMPONENT 9: DECISION RULE AND OBSERVATION LOOP
+------------------------------------------------
+Conceptual: At each timestep t, compare Q_observe vs Q_not_observe.
+Stop observing when not observing is at least as cheap as observing.
+
+Code mapping:
+• Single-agent Exp1 [run_experiment_exp1.jl, lines 146-237]:
+  while !goal_satisfied:
+      Q_observe = compute Q for the one available agent
+      Q_not_observe = estimate_self_exploration_cost(...)
+      if Q_observe + 0.3 < Q_not_observe:
+          t += 1  # observe one more step
+          update wizard_candidates from new state_probs
+      else:
+          record t, break  # stop observing
+
+  Note: The +0.3 bias term favors observing slightly (conservative stopping criterion).
+
+• Multi-agent Exp3/4 [run_experiment_exp3.jl, run_experiment_exp4.jl]:
+  while not goal_satisfied:
+      Q_agent2, Q_agent3 = parallel computation (Threads.@spawn)
+      Q_not_observe = estimate_self_exploration_cost(...)
+
+      best = argmin([Q_agent2, Q_agent3, Q_not_observe])
+
+      if best == 1: observe agent2, t += 1, update wizard_candidates
+      elif best == 2: observe agent3, t += 1, update wizard_candidates
+      else: record t, break  # stop observing
+
+  The choice of WHOM to observe (agent2 vs agent3 vs stop) is modeled as selecting
+  the action with minimum expected cost.
+
+
+COMPONENT 10: BELIEF UPDATE AFTER OBSERVATION
+---------------------------------------------
+Conceptual: After observing agent^o for t steps, observer updates their own beliefs
+about the wizard locations b_T^m.
+
+Code mapping [run_experiment_exp3.jl lines 412-472, run_experiment_exp4.jl lines 504-521]:
+  After deciding to observe agent^o:
+  wizard_candicates = []
+
+  Exp3 (complex version):
+    wizard_probs = zeros(n_wizards)
+    for g in goals, for i in states:
+        joint_prob = goal_probs[g, t+1] * state_probs[i, t+1]
+        if joint_prob > 0.01:
+            time_idx = T (convergence timestep for this g,i)
+            if max_wizard_prob at time_idx > 0.5:  # converged
+                wizard_probs[j] += joint_prob * state_probs_conditioned[g][i][j, time_idx]
+    wizard_candicates = [w for w,prob in wizard_probs if prob > 0.1]
+
+  Exp4 (simplified version):
+    for j in blue_wizards:
+        if state_probs_agent[j, t+1] > 0.1:
+            push!(wizard_candicates, blue_wizards[j])
+
+  This directly updates the observer's belief about which wizard has the key,
+  implementing b_{t+T}^m from the model equation.
+
+
+EXPERIMENT DIFFERENCES
+-----------------------
+Exp1: 1 observable agent, 1 scenario per map, goal always gem1
+Exp2: (not in this codebase, uses inference.jl with exp2 problems)
+Exp3: 2 observable agents (agent2, agent3), 2 scenarios, both agents are optimal
+Exp4: 2 observable agents, 2 scenarios, agents can be "naive" (greedy wizard search)
+      or "actual" (optimal A* planning). Observer knows the type but not the goal.
+      NaivePlanner is used in inference for naive agents; RTHS for optimal agents.
+
+
+KEY FILES SUMMARY
+-----------------
+src/beliefs.jl              — enumerate_beliefs(): belief state initialization
+src/utils.jl                — estimate_self_exploration_cost(): Q-function
+                            — initialize_goals(): goal enumeration
+                            — check_equal_state(): state matching
+src/planners.jl             — NaivePlanner, NaivePlannerSolution, compute_naive_action()
+scripts/utilities/
+  inference.jl              — Exp1 inference precomputation
+  inference_multi.jl        — Exp3 inference precomputation
+  inference_multi_exp4.jl   — Exp4 inference precomputation (type-aware)
+scripts/experiments/
+  run_experiment_exp1.jl    — Exp1 decision loop (single agent)
+  run_experiment_exp3.jl    — Exp3 decision loop (multi-agent, parallel)
+  run_experiment_exp4.jl    — Exp4 decision loop (multi-agent, naive vs. optimal)
