@@ -224,7 +224,7 @@ def plot_row(ax_row, row_index, row_label, pairs, bottom_row_index):
 
 
 # Exp1
-model_exp1 = load_json(workspace_root / "scripts/experiments/outputs/exp1/steps_dict.json")
+model_exp1 = load_json(workspace_root / "model_outputs/experiments/exp1/steps_dict.json")
 naive_exp1 = load_json(baseline_step_path("exp1", "naive_observer"))
 nonmentalize_exp1 = load_json(baseline_step_path("exp1", "rational_non_mentalizing"))
 mentalize_exp1 = load_json(baseline_step_path("exp1", "social_mentalizing"))
@@ -243,7 +243,7 @@ pairs_exp1 = {
 }
 
 # Exp2
-model_exp2 = load_json(workspace_root / "scripts/experiments/outputs/exp2/steps_dict.json")
+model_exp2 = load_json(workspace_root / "model_outputs/experiments/exp2/steps_dict.json")
 naive_exp2 = load_json(baseline_step_path("exp2", "naive_observer"))
 nonmentalize_exp2 = load_json(baseline_step_path("exp2", "rational_non_mentalizing"))
 mentalize_exp2 = load_json(baseline_step_path("exp2", "social_mentalizing"))
@@ -259,7 +259,7 @@ pairs_exp2 = {
 }
 
 # Exp3
-model_exp3 = load_json(workspace_root / "scripts/experiments/outputs/exp3/steps_dict.json")
+model_exp3 = load_json(workspace_root / "model_outputs/experiments/exp3/steps_dict.json")
 naive_exp3 = load_json(baseline_step_path("exp3", "naive_observer"))
 nonmentalize_exp3 = load_json(baseline_step_path("exp3", "rational_non_mentalizing"))
 mentalize_exp3 = load_json(baseline_step_path("exp3", "social_mentalizing"))
@@ -273,7 +273,7 @@ pairs_exp3_combined = {
 }
 
 # Exp4
-model_exp4 = load_json(workspace_root / "scripts/experiments/outputs/exp4/steps_dict.json")
+model_exp4 = load_json(workspace_root / "model_outputs/experiments/exp4/steps_dict.json")
 naive_exp4 = load_json(baseline_step_path("exp4", "naive_observer"))
 nonmentalize_exp4 = load_json(baseline_step_path("exp4", "rational_non_mentalizing"))
 mentalize_exp4 = load_json(baseline_step_path("exp4", "social_mentalizing"))

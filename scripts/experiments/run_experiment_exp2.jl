@@ -55,12 +55,11 @@ end
 # include("paths_new.jl")
 # Define directory paths
 experiment_id = "exp2"
+REPO_ROOT = normpath(joinpath(@__DIR__, "..", ".."))
 
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
-LEGACY_OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
-CANONICAL_OUTPUT_DIR = joinpath(@__DIR__, "outputs", experiment_id)
-mkpath(LEGACY_OUTPUT_DIR)
-mkpath(CANONICAL_OUTPUT_DIR)
+PROBLEM_DIR = joinpath(REPO_ROOT, "dataset", "problems_$experiment_id")
+OUTPUT_DIR = joinpath(REPO_ROOT, "model_outputs", "experiments", experiment_id)
+mkpath(OUTPUT_DIR)
 
 function write_json_to_paths(paths, payload; indent::Int=4)
     for path in paths
@@ -84,9 +83,9 @@ replay_trace_dict = Dict()
 
 # steps_dict = JSON.parsefile("/Users/lance/Documents/GitHub/ObserveMove/step_dict.json") 
 
-goal_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "goal")
-state_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "state")
-possible_worlds = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "worlds")
+goal_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "inference", "inference_data_$experiment_id.jld2"), "goal")
+state_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "inference", "inference_data_$experiment_id.jld2"), "state")
+possible_worlds = load(joinpath(@__DIR__, "..", "..", "inference", "inference_data_$experiment_id.jld2"), "worlds")
 
 
 domain_render = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain_render.pddl"))
@@ -348,14 +347,10 @@ for (map_id, v) in metadata
 end
 
 
-legacy_steps_path = joinpath(LEGACY_OUTPUT_DIR, "steps_dict_$experiment_id.json")
-canonical_steps_path = joinpath(CANONICAL_OUTPUT_DIR, "steps_dict.json")
-write_json_to_paths((legacy_steps_path, canonical_steps_path), steps_dict)
-println("Results saved to: $canonical_steps_path")
-println("Legacy compatibility copy: $legacy_steps_path")
+steps_path = joinpath(OUTPUT_DIR, "steps_dict.json")
+write_json_to_paths((steps_path,), steps_dict)
+println("Results saved to: $steps_path")
 
-legacy_replay_trace_path = joinpath(LEGACY_OUTPUT_DIR, "replay_trace_$experiment_id.json")
-canonical_replay_trace_path = joinpath(CANONICAL_OUTPUT_DIR, "replay_trace.json")
-write_json_to_paths((legacy_replay_trace_path, canonical_replay_trace_path), replay_trace_dict)
-println("Replay trace saved to: $canonical_replay_trace_path")
-println("Legacy compatibility copy: $legacy_replay_trace_path")
+replay_trace_path = joinpath(OUTPUT_DIR, "replay_trace.json")
+write_json_to_paths((replay_trace_path,), replay_trace_dict)
+println("Replay trace saved to: $replay_trace_path")

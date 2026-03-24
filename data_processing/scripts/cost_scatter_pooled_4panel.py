@@ -80,7 +80,7 @@ def human_candidates(exp: str, model_key: str) -> list[str]:
 
 
 def collect_pairs(repo_root: Path, exp: str, model_name: str, metric: str) -> tuple[np.ndarray, np.ndarray]:
-    model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs"
+    model_dir = repo_root / "model_outputs" / "reconstructed_costs"
     if not model_dir.exists():
         model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
 

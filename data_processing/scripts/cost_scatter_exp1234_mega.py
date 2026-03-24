@@ -141,7 +141,7 @@ def collect_pairs(
 def build_row_pairs(
     repo_root: Path, exp: str, metric: str, human_aggregate: str
 ) -> dict[str, tuple[np.ndarray, np.ndarray, np.ndarray, list[str]]]:
-    model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs"
+    model_dir = repo_root / "model_outputs" / "reconstructed_costs"
     if not model_dir.exists():
         model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
     human_path = human_costs_path(repo_root, exp)

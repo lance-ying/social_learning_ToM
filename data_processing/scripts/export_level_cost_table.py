@@ -75,7 +75,7 @@ def build_table(exp: str, repo_root: Path) -> str:
     )["per_case"]
     model_data = {
         label: load_json(
-            repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json"
+            repo_root / "model_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json"
         )["per_case"]
         for label, model_name in MODEL_COLUMNS
     }

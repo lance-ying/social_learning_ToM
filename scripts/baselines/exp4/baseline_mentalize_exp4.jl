@@ -26,7 +26,7 @@ output_experiment_id = "exp4"
 model_label = "social_mentalizing"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_$experiment_id")
-OUTPUT_DIR = joinpath(@__DIR__, "..", "outputs", output_experiment_id)
+OUTPUT_DIR = joinpath(@__DIR__, "..", "..", "..", "model_outputs", "baselines", output_experiment_id)
 mkpath(OUTPUT_DIR)
 
 function write_json_to_paths(paths, payload; indent::Int=4)
@@ -45,7 +45,7 @@ steps_dict = Dict()
 replay_trace_dict = Dict()
 
 # Load inference data for both agents (agent2=X, agent3=Y)
-data = load(joinpath(@__DIR__, "..", "..", "..", "data", "inference", inference_file))
+data = load(joinpath(@__DIR__, "..", "..", "..", "inference", inference_file))
 goal_probs_conditioned_dict = data["goal"]
 state_probs_conditioned_dict = data["state"]
 possible_worlds = data["worlds"]

@@ -25,7 +25,7 @@ def baseline_step_path(exp: str, model: str) -> Path:
     return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
 
 # ── load model / baseline JSONs ───────────────────────────────────────────
-with open(workspace_root / 'scripts/experiments/outputs/exp3/steps_dict.json') as f:
+with open(workspace_root / 'model_outputs/experiments/exp3/steps_dict.json') as f:
     model_dict = json.load(f)
 
 with open(baseline_step_path('exp3', 'naive_observer')) as f:

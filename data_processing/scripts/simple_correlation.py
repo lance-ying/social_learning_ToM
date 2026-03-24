@@ -13,10 +13,10 @@ def baseline_step_path(exp: str, model: str) -> Path:
     return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
 
 # Load model predictions
-with open(workspace_root / 'scripts/experiments/outputs/exp1/steps_dict.json', 'r') as f:
+with open(workspace_root / 'model_outputs/experiments/exp1/steps_dict.json', 'r') as f:
     steps_dict = json.load(f)
 
-with open(workspace_root / 'scripts/experiments/outputs/exp2/steps_dict.json', 'r') as f:
+with open(workspace_root / 'model_outputs/experiments/exp2/steps_dict.json', 'r') as f:
     steps_dict_exp2 = json.load(f)
 
 # Load baseline predictions for exp1

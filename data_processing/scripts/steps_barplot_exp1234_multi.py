@@ -60,7 +60,7 @@ def human_candidates(exp: str, label: str, model_key: str) -> list[str]:
 
 
 def common_matched_keys(repo_root: Path, exp: str) -> tuple[dict[str, dict[str, float]], dict]:
-    model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs"
+    model_dir = repo_root / "model_outputs" / "reconstructed_costs"
     if not model_dir.exists():
         model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
     human_per_case = load_json(human_costs_path(repo_root, exp))["per_case"]

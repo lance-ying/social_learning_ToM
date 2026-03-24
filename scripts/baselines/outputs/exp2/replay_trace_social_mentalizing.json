@@ -1,0 +1,5874 @@
+{
+    "s211_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 4,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s361_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 7,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s441_2": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ]
+    },
+    "s342_1": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard3)",
+                "interaction_outcome": "blue_amulet_present",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 4,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(interact agent2 wizard3)",
+                "observation_index": 4,
+                "interaction_outcome": "blue_amulet_present",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s543_1": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard2)",
+                "interaction_outcome": "blue_amulet_present",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 18,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 11,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 12,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 13,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 14,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 15,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 16,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 17,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(interact agent2 wizard2)",
+                "observation_index": 18,
+                "interaction_outcome": "blue_amulet_present",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s531_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 6,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s331_2": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 5,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s442_1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 7,
+        "final_candidates": [
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard4"
+                ]
+            }
+        ]
+    },
+    "s342_2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard2",
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s442_2": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ]
+    },
+    "s371_2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 8,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s544_1": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 14,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 11,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 12,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 13,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 14,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1"
+                ]
+            }
+        ]
+    },
+    "s351_1": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 5,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s531_2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s371_1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard2)",
+                "interaction_outcome": "blue_amulet_present",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 18,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 11,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 12,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 13,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 14,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 15,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 16,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 17,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(interact agent2 wizard2)",
+                "observation_index": 18,
+                "interaction_outcome": "blue_amulet_present",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s341_2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s321_2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s421_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 6,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1"
+                ]
+            }
+        ]
+    },
+    "s432_1": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 15,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 11,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 12,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 13,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 14,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 15,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s211_2": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s351_2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 2,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s221_1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 2,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1"
+                ]
+            }
+        ]
+    },
+    "s521_2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4",
+            "wizard5"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4",
+            "wizard5"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            }
+        ]
+    },
+    "s441_1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 5,
+        "final_candidates": [
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard4"
+                ]
+            }
+        ]
+    },
+    "s432_2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ]
+    },
+    "s542_2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s331_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 15,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 11,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 12,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 13,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 14,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 15,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s311_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 5,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s221_2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s361_2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s511_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4",
+            "wizard6"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 12,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 11,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 12,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s321_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 4,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1"
+                ]
+            }
+        ]
+    },
+    "s341_1": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 5,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s511_2": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4",
+            "wizard6"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4",
+            "wizard6"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard6"
+                ]
+            }
+        ]
+    },
+    "s311_2": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s541_2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ]
+    },
+    "s421_2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ]
+    },
+    "s431_1": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 10,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s532_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 8,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s332_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 5,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s332_2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s544_2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 10,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s541_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 5,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1"
+                ]
+            }
+        ]
+    },
+    "s411_2": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ]
+    },
+    "s521_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4",
+            "wizard5"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 8,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard4",
+                    "wizard5"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard5"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard4",
+                    "wizard5"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard5"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard5"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard5"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1"
+                ]
+            }
+        ]
+    },
+    "s411_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 8,
+        "final_candidates": [
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2",
+                    "wizard3"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard3"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s542_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard2)",
+                "interaction_outcome": "blue_amulet_present",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 3,
+        "final_candidates": [
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard2"
+                ],
+                "action": "(interact agent2 wizard2)",
+                "observation_index": 3,
+                "interaction_outcome": "blue_amulet_present",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s532_2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 1,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3"
+                ]
+            }
+        ]
+    },
+    "s543_2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 10,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(up agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "action": "(right agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s431_2": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "stop_reason": "state_divergence",
+        "t": 3,
+        "final_candidates": [
+            "wizard1",
+            "wizard2",
+            "wizard3",
+            "wizard4"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ],
+                "action": "(down agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2",
+                    "wizard3",
+                    "wizard4"
+                ]
+            }
+        ]
+    }
+}

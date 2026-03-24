@@ -31,7 +31,7 @@ def baseline_step_path(exp: str, model: str) -> Path:
 
 # ── load model / baseline JSONs ───────────────────────────────────────────
 model_json = first_existing(
-    workspace_root / 'scripts/experiments/outputs/exp1/steps_dict.json',
+    workspace_root / 'model_outputs/experiments/exp1/steps_dict.json',
     workspace_root / 'scripts/experiments/experiment_outputs/steps_dict_exp1.json',
     workspace_root / 'steps.dict.json',
 )

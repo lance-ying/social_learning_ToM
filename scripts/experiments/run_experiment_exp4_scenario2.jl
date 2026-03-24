@@ -72,12 +72,13 @@ else
     output_prefix = "steps_dict_exp4_012626"
 end
 selected_maps = length(ARGS) >= 4 && !isempty(ARGS[4]) ? split(ARGS[4], ",") : String[]
+REPO_ROOT = normpath(joinpath(@__DIR__, "..", ".."))
 
 # Define directory paths
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
-OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
+PROBLEM_DIR = joinpath(REPO_ROOT, "dataset", "problems_$experiment_id")
+OUTPUT_DIR = joinpath(REPO_ROOT, "model_outputs", "experiments", "exp4")
 mkpath(OUTPUT_DIR)  # Create output directory if it doesn't exist
-CANONICAL_OUTPUT_DIR = joinpath(@__DIR__, "outputs", "exp4", "scenario2")
+CANONICAL_OUTPUT_DIR = joinpath(OUTPUT_DIR, "scenario2")
 mkpath(CANONICAL_OUTPUT_DIR)
 
 # Open debug log file
@@ -98,7 +99,7 @@ steps_dict = Dict()
 replay_trace_dict = Dict()
 
 # Load inference data for both agents (agent2=X, agent3=Y)
-data = load(joinpath(@__DIR__, "..", "..", "data", "inference", inference_file))
+data = load(joinpath(@__DIR__, "..", "..", "inference", inference_file))
 goal_probs_conditioned_dict = data["goal"]
 state_probs_conditioned_dict = data["state"]
 possible_worlds = data["worlds"]

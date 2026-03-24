@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
+ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
 BOOTSTRAP_ENV="${BOOTSTRAP_ENV:-1}"
@@ -68,24 +68,24 @@ run_experiment() {
 }
 
 run_experiment "exp1 / full experiment" "scripts/experiments/run_experiment_exp1.jl"
-copy_output "scripts/experiments/outputs/exp1/steps_dict.json" "$RUN_OUTPUT_DIR/exp1/steps_dict.json"
-copy_output "scripts/experiments/outputs/exp1/replay_trace.json" "$RUN_OUTPUT_DIR/exp1/replay_trace.json"
+copy_output "model_outputs/experiments/exp1/steps_dict.json" "$RUN_OUTPUT_DIR/exp1/steps_dict.json"
+copy_output "model_outputs/experiments/exp1/replay_trace.json" "$RUN_OUTPUT_DIR/exp1/replay_trace.json"
 
 run_experiment "exp2 / full experiment" "scripts/experiments/run_experiment_exp2.jl"
-copy_output "scripts/experiments/outputs/exp2/steps_dict.json" "$RUN_OUTPUT_DIR/exp2/steps_dict.json"
-copy_output "scripts/experiments/outputs/exp2/replay_trace.json" "$RUN_OUTPUT_DIR/exp2/replay_trace.json"
+copy_output "model_outputs/experiments/exp2/steps_dict.json" "$RUN_OUTPUT_DIR/exp2/steps_dict.json"
+copy_output "model_outputs/experiments/exp2/replay_trace.json" "$RUN_OUTPUT_DIR/exp2/replay_trace.json"
 
 run_experiment "exp3 / full experiment" "scripts/experiments/run_experiment_exp3.jl"
-copy_output "scripts/experiments/outputs/exp3/steps_dict.json" "$RUN_OUTPUT_DIR/exp3/steps_dict.json"
-copy_output "scripts/experiments/outputs/exp3/replay_trace.json" "$RUN_OUTPUT_DIR/exp3/replay_trace.json"
+copy_output "model_outputs/experiments/exp3/steps_dict.json" "$RUN_OUTPUT_DIR/exp3/steps_dict.json"
+copy_output "model_outputs/experiments/exp3/replay_trace.json" "$RUN_OUTPUT_DIR/exp3/replay_trace.json"
 
 run_experiment "exp4 / wrapper" "scripts/experiments/run_experiment_exp4_wrapper.jl"
-copy_output "scripts/experiments/outputs/exp4/steps_dict.json" "$RUN_OUTPUT_DIR/exp4/steps_dict.json"
-copy_output "scripts/experiments/outputs/exp4/scenario1/steps_dict.json" "$RUN_OUTPUT_DIR/exp4/scenario1_steps_dict.json"
-copy_output "scripts/experiments/outputs/exp4/scenario2/steps_dict.json" "$RUN_OUTPUT_DIR/exp4/scenario2_steps_dict.json"
-copy_output "scripts/experiments/outputs/exp4/replay_trace.json" "$RUN_OUTPUT_DIR/exp4/replay_trace.json"
-copy_output "scripts/experiments/outputs/exp4/scenario1/replay_trace.json" "$RUN_OUTPUT_DIR/exp4/scenario1_replay_trace.json"
-copy_output "scripts/experiments/outputs/exp4/scenario2/replay_trace.json" "$RUN_OUTPUT_DIR/exp4/scenario2_replay_trace.json"
+copy_output "model_outputs/experiments/exp4/steps_dict.json" "$RUN_OUTPUT_DIR/exp4/steps_dict.json"
+copy_output "model_outputs/experiments/exp4/scenario1/steps_dict.json" "$RUN_OUTPUT_DIR/exp4/scenario1_steps_dict.json"
+copy_output "model_outputs/experiments/exp4/scenario2/steps_dict.json" "$RUN_OUTPUT_DIR/exp4/scenario2_steps_dict.json"
+copy_output "model_outputs/experiments/exp4/replay_trace.json" "$RUN_OUTPUT_DIR/exp4/replay_trace.json"
+copy_output "model_outputs/experiments/exp4/scenario1/replay_trace.json" "$RUN_OUTPUT_DIR/exp4/scenario1_replay_trace.json"
+copy_output "model_outputs/experiments/exp4/scenario2/replay_trace.json" "$RUN_OUTPUT_DIR/exp4/scenario2_replay_trace.json"
 
 echo "Organized outputs: $RUN_OUTPUT_DIR"
 echo "Done."

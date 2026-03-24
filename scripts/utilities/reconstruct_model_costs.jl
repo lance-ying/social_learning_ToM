@@ -134,26 +134,26 @@ end
 function default_paths(exp::String)
     if exp == "exp1"
         return (
-            steps_file = joinpath(ROOT, "scripts", "experiments", "experiment_outputs", "steps_dict_exp1.json"),
-            inference_file = joinpath(ROOT, "data", "inference", "inference_data_exp1.jld2"),
+            steps_file = joinpath(ROOT, "model_outputs", "experiments", "exp1", "steps_dict.json"),
+            inference_file = joinpath(ROOT, "inference", "inference_data_exp1.jld2"),
             problem_dir = joinpath(ROOT, "dataset", "problems_exp1"),
         )
     elseif exp == "exp2"
         return (
-            steps_file = joinpath(ROOT, "scripts", "experiments", "experiment_outputs", "steps_dict_exp2.json"),
-            inference_file = joinpath(ROOT, "data", "inference", "inference_data_exp2.jld2"),
+            steps_file = joinpath(ROOT, "model_outputs", "experiments", "exp2", "steps_dict.json"),
+            inference_file = joinpath(ROOT, "inference", "inference_data_exp2.jld2"),
             problem_dir = joinpath(ROOT, "dataset", "problems_exp2"),
         )
     elseif exp == "exp3"
         return (
-            steps_file = joinpath(ROOT, "scripts", "experiments", "experiment_outputs", "test_comparison.json"),
-            inference_file = joinpath(ROOT, "data", "inference", "inference_data_exp3.jld2"),
+            steps_file = joinpath(ROOT, "model_outputs", "experiments", "exp3", "steps_dict.json"),
+            inference_file = joinpath(ROOT, "inference", "inference_data_exp3.jld2"),
             problem_dir = joinpath(ROOT, "dataset", "problems_exp3"),
         )
     elseif exp == "exp4"
         return (
-            steps_file = joinpath(ROOT, "scripts", "experiments", "experiment_outputs", "steps_dict_exp4_020126_2.json"),
-            inference_file = joinpath(ROOT, "data", "inference", "inference_exp4_020126_1.jld2"),
+            steps_file = joinpath(ROOT, "model_outputs", "experiments", "exp4", "steps_dict.json"),
+            inference_file = joinpath(ROOT, "inference", "inference_exp4_020126_1.jld2"),
             problem_dir = joinpath(ROOT, "dataset", "problems_exp4_013026"),
         )
     else
@@ -1925,7 +1925,12 @@ function main()
         "per_case" => costs,
     )
 
-    output_file = get(opts, "output-file", joinpath(dirname(steps_file), "reconstructed_costs_$(exp).json"))
+    output_file = get(
+        opts,
+        "output-file",
+        joinpath(ROOT, "model_outputs", "reconstructed_costs", "$(exp)_$(model_label).json"),
+    )
+    mkpath(dirname(output_file))
     open(output_file, "w") do io
         JSON.print(io, out, 2)
     end

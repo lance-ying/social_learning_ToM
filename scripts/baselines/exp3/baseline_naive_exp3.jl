@@ -97,7 +97,7 @@ experiment_id = "exp3"
 model_label = "naive_observer"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_$experiment_id")
-OUTPUT_DIR = joinpath(@__DIR__, "..", "outputs", experiment_id)
+OUTPUT_DIR = joinpath(@__DIR__, "..", "..", "..", "model_outputs", "baselines", experiment_id)
 mkpath(OUTPUT_DIR)
 
 function write_json_to_paths(paths, payload; indent::Int=4)

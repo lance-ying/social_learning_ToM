@@ -58,7 +58,7 @@ def human_costs_path(repo_root: Path, exp: str) -> Path:
 
 
 def model_dir(repo_root: Path) -> Path:
-    default_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs"
+    default_dir = repo_root / "model_outputs" / "reconstructed_costs"
     if default_dir.exists():
         return default_dir
     return repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"

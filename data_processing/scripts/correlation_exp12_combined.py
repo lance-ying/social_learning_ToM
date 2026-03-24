@@ -22,7 +22,7 @@ def baseline_step_path(exp: str, model: str) -> Path:
     return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
 
 # ── Load Exp1 ──────────────────────────────────────────────────────────────
-with open(workspace_root / 'scripts/experiments/outputs/exp1/steps_dict.json') as f:
+with open(workspace_root / 'model_outputs/experiments/exp1/steps_dict.json') as f:
     model_exp1 = json.load(f)
 with open(baseline_step_path('exp1', 'naive_observer')) as f:
     naive_exp1 = json.load(f)
@@ -36,7 +36,7 @@ exec((data_processing_dir / 'results/current/results_dict_exp1_50.py').read_text
 human_exp1 = results_dict.copy()
 
 # ── Load Exp2 ──────────────────────────────────────────────────────────────
-with open(workspace_root / 'scripts/experiments/outputs/exp2/steps_dict.json') as f:
+with open(workspace_root / 'model_outputs/experiments/exp2/steps_dict.json') as f:
     model_exp2 = json.load(f)
 with open(baseline_step_path('exp2', 'naive_observer')) as f:
     naive_exp2 = json.load(f)

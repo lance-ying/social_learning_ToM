@@ -18,8 +18,9 @@ output_prefix = "steps_dict_exp4_031726_2"
 
 #==============================================================================#
 
-OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
-CANONICAL_OUTPUT_DIR = joinpath(@__DIR__, "outputs", "exp4")
+REPO_ROOT = normpath(joinpath(@__DIR__, "..", ".."))
+OUTPUT_DIR = joinpath(REPO_ROOT, "model_outputs", "experiments", "exp4")
+CANONICAL_OUTPUT_DIR = OUTPUT_DIR
 mkpath(CANONICAL_OUTPUT_DIR)
 
 println("=== Running Experiment $experiment_id ===")

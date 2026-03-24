@@ -96,7 +96,7 @@ def add_row(exp, agent, model, x, y):
 # ══════════════════════════════════════════════════════════════════════════
 print("\n── Exp1 ──────────────────────────────────────────────────────────────")
 
-with open(workspace_root / "scripts/experiments/outputs/exp1/steps_dict.json") as f:
+with open(workspace_root / "model_outputs/experiments/exp1/steps_dict.json") as f:
     steps_dict_exp1 = json.load(f)
 with open(baseline_step_path("exp1", "naive_observer")) as f:
     naive_exp1 = json.load(f)
@@ -138,7 +138,7 @@ for label, d, tfm in [
 # ══════════════════════════════════════════════════════════════════════════
 print("\n── Exp2 ──────────────────────────────────────────────────────────────")
 
-with open(workspace_root / "scripts/experiments/outputs/exp2/steps_dict.json") as f:
+with open(workspace_root / "model_outputs/experiments/exp2/steps_dict.json") as f:
     steps_dict_exp2 = json.load(f)
 with open(baseline_step_path("exp2", "naive_observer")) as f:
     naive_exp2 = json.load(f)
@@ -262,7 +262,7 @@ def collect_multi_agent(pred_dict, human_stats, agent):
 # ── Exp3 ───────────────────────────────────────────────────────────────────
 print("\n── Exp3 ──────────────────────────────────────────────────────────────")
 
-with open(workspace_root / "scripts/experiments/outputs/exp3/steps_dict.json") as f:
+with open(workspace_root / "model_outputs/experiments/exp3/steps_dict.json") as f:
     model_exp3 = json.load(f)
 with open(baseline_step_path("exp3", "naive_observer")) as f:
     naive_exp3 = json.load(f)
@@ -287,7 +287,7 @@ for agent in ("agent2", "agent3"):
 # ── Exp4 ───────────────────────────────────────────────────────────────────
 print("\n── Exp4 ──────────────────────────────────────────────────────────────")
 
-with open(workspace_root / "scripts/experiments/outputs/exp4/steps_dict.json") as f:
+with open(workspace_root / "model_outputs/experiments/exp4/steps_dict.json") as f:
     model_exp4 = json.load(f)
 with open(baseline_step_path("exp4", "naive_observer")) as f:
     naive_exp4 = json.load(f)

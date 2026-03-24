@@ -48,12 +48,11 @@ end
 
 # Define directory paths
 experiment_id = "exp3"
+REPO_ROOT = normpath(joinpath(@__DIR__, "..", ".."))
 
-PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_$experiment_id")
-LEGACY_OUTPUT_DIR = joinpath(@__DIR__, "experiment_outputs")
-CANONICAL_OUTPUT_DIR = joinpath(@__DIR__, "outputs", experiment_id)
-mkpath(LEGACY_OUTPUT_DIR)
-mkpath(CANONICAL_OUTPUT_DIR)
+PROBLEM_DIR = joinpath(REPO_ROOT, "dataset", "problems_$experiment_id")
+OUTPUT_DIR = joinpath(REPO_ROOT, "model_outputs", "experiments", experiment_id)
+mkpath(OUTPUT_DIR)
 
 function write_json_to_paths(paths, payload; indent::Int=4)
     for path in paths
@@ -71,7 +70,7 @@ steps_dict = Dict()
 replay_trace_dict = Dict()
 
 # Load inference data for both agents (agent2=X, agent3=Y)
-data = load(joinpath(@__DIR__, "..", "..", "data", "inference", "inference_data_exp3.jld2"))
+data = load(joinpath(@__DIR__, "..", "..", "inference", "inference_data_exp3.jld2"))
 goal_probs_conditioned_dict = data["goal"]
 state_probs_conditioned_dict = data["state"]
 possible_worlds = data["worlds"]
@@ -625,17 +624,11 @@ println("Fastest map: $(round(minimum(values(map_times)), digits=2))s")
 println("Slowest map: $(round(maximum(values(map_times)), digits=2))s")
 
 
-output_filename = "step_dict_3_031625.json"
-legacy_output_path = joinpath(LEGACY_OUTPUT_DIR, output_filename)
-canonical_output_path = joinpath(CANONICAL_OUTPUT_DIR, "steps_dict.json")
-write_json_to_paths((legacy_output_path, canonical_output_path), steps_dict)
+steps_path = joinpath(OUTPUT_DIR, "steps_dict.json")
+write_json_to_paths((steps_path,), steps_dict)
 
-println("\nResults saved to: $canonical_output_path")
-println("Legacy compatibility copy: $legacy_output_path")
+println("\nResults saved to: $steps_path")
 
-replay_trace_filename = replace(output_filename, "step_dict" => "replay_trace")
-legacy_replay_trace_path = joinpath(LEGACY_OUTPUT_DIR, replay_trace_filename)
-canonical_replay_trace_path = joinpath(CANONICAL_OUTPUT_DIR, "replay_trace.json")
-write_json_to_paths((legacy_replay_trace_path, canonical_replay_trace_path), replay_trace_dict)
-println("Replay trace saved to: $canonical_replay_trace_path")
-println("Legacy compatibility copy: $legacy_replay_trace_path")
+replay_trace_path = joinpath(OUTPUT_DIR, "replay_trace.json")
+write_json_to_paths((replay_trace_path,), replay_trace_dict)
+println("Replay trace saved to: $replay_trace_path")

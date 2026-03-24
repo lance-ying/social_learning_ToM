@@ -101,7 +101,7 @@ experiment_id = "exp1"
 model_label = "social_mentalizing"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_$experiment_id")
-OUTPUT_DIR = joinpath(@__DIR__, "..", "outputs", experiment_id)
+OUTPUT_DIR = joinpath(@__DIR__, "..", "..", "..", "model_outputs", "baselines", experiment_id)
 mkpath(OUTPUT_DIR)
 
 function write_json_to_paths(paths, payload; indent::Int=4)
@@ -116,9 +116,9 @@ end
 steps_dict = Dict()
 replay_trace_dict = Dict()
 
-goal_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "goal")
-state_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "state")
-possible_worlds = load(joinpath(@__DIR__, "..", "..", "..", "data", "inference", "inference_data_$experiment_id.jld2"), "worlds")
+goal_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "..", "inference", "inference_data_$experiment_id.jld2"), "goal")
+state_probs_conditioned_dict = load(joinpath(@__DIR__, "..", "..", "..", "inference", "inference_data_$experiment_id.jld2"), "state")
+possible_worlds = load(joinpath(@__DIR__, "..", "..", "..", "inference", "inference_data_$experiment_id.jld2"), "worlds")
 
 # Debug: Print available maps in inference data
 println("Maps in inference data: ", sort(collect(keys(goal_probs_conditioned_dict))))
