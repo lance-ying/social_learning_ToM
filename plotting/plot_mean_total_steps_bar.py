@@ -7,17 +7,12 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from common import (
-    EXPERIMENT_COLORS,
+    EXPERIMENT_LABELS,
     EXPERIMENTS,
     MODEL_PANELS,
-    TOTAL_STEPS_BAR_SERIES,
-    TOTAL_STEPS_BAR_TICKS,
     common_total_step_keys,
     make_output_path,
 )
-
-
-BAR_WIDTH = 0.15
 
 
 def parse_args() -> argparse.Namespace:
@@ -34,55 +29,55 @@ def main() -> int:
 
         output_file = Path(args.output_file)
 
-    fig, ax = plt.subplots(figsize=(10, 7))
-    x = np.arange(len(TOTAL_STEPS_BAR_SERIES))
-
-    means_by_series = []
-    sds_by_series = []
-
     matched_by_exp = {exp: common_total_step_keys(exp) for exp in EXPERIMENTS}
+    fig, axes = plt.subplots(1, 4, figsize=(24, 6), sharey=True)
+    x = np.arange(len(MODEL_PANELS) + 1)
 
-    for _series_label, series_key in TOTAL_STEPS_BAR_SERIES:
-        series_means = []
-        series_sds = []
-        for exp in EXPERIMENTS:
-            model_predictions, human_stats = matched_by_exp[exp]
-            if series_key == "human":
-                values = [human_stats[level]["mean"] for level in human_stats]
-            else:
-                values = [model_predictions[series_key][level]["total_steps"] for level in model_predictions[series_key]]
-            series_means.append(float(np.mean(values)) if values else 0.0)
-            series_sds.append(float(np.std(values, ddof=1)) if len(values) > 1 else 0.0)
-        means_by_series.append(series_means)
-        sds_by_series.append(series_sds)
+    tick_labels = [
+        "Human",
+        "Rational\nMentalizing",
+        "Social\nMentalizing",
+        "Rational Non-\nMentalizing",
+        "Naive\nPlanner",
+        "Naive\nObserver",
+    ]
+    bar_colors = ["#888888", "#4c78a8", "#72b7b2", "#e39c37", "#6aa84f", "#c95f5f"]
 
-    for exp_idx, exp in enumerate(EXPERIMENTS):
-        offset = (exp_idx - (len(EXPERIMENTS) - 1) / 2) * BAR_WIDTH
-        means = [series_means[exp_idx] for series_means in means_by_series]
-        sds = [series_sds[exp_idx] for series_sds in sds_by_series]
+    for ax, exp in zip(axes, EXPERIMENTS):
+        model_predictions, human_stats = matched_by_exp[exp]
+        human_values = [human_stats[level]["mean"] for level in human_stats]
+        human_mean = float(np.mean(human_values)) if human_values else 0.0
+        human_sd = float(np.std(human_values, ddof=1)) if len(human_values) > 1 else 0.0
+
+        means = [human_mean]
+        sds = [human_sd]
+        for _label, model_name in MODEL_PANELS:
+            values = [model_predictions[model_name][level]["total_steps"] for level in model_predictions[model_name]]
+            means.append(float(np.mean(values)) if values else 0.0)
+            sds.append(float(np.std(values, ddof=1)) if len(values) > 1 else 0.0)
+
         ax.bar(
-            x + offset,
+            x,
             means,
-            width=BAR_WIDTH,
-            label=exp.replace("exp", "Experiment "),
-            color=EXPERIMENT_COLORS[exp],
+            width=0.72,
+            color=bar_colors,
             alpha=0.9,
             edgecolor="none",
             yerr=sds,
             capsize=4,
             ecolor="#333333",
         )
+        ax.set_title(EXPERIMENT_LABELS[exp], fontsize=16)
+        ax.set_xticks(x)
+        ax.set_xticklabels(tick_labels, fontsize=11)
+        ax.spines["top"].set_visible(False)
+        ax.spines["right"].set_visible(False)
+        ax.tick_params(axis="y", labelsize=11)
 
-    ax.set_xticks(x)
-    ax.set_xticklabels(TOTAL_STEPS_BAR_TICKS, fontsize=12)
-    ax.set_ylabel("Mean Total Steps", fontsize=14)
-    ax.set_title("Mean Total Steps Across Experiments", fontsize=16)
-    ax.spines["top"].set_visible(False)
-    ax.spines["right"].set_visible(False)
-    ax.tick_params(axis="y", labelsize=12)
-    ax.legend(frameon=False, fontsize=11)
+    axes[0].set_ylabel("Mean Total Steps", fontsize=14)
 
-    plt.tight_layout()
+    fig.suptitle("Mean Total Steps by Experiment", fontsize=20, y=0.98)
+    plt.tight_layout(rect=(0, 0, 1, 0.96))
     output_file.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_file, dpi=300, bbox_inches="tight")
     print(f"Saved -> {output_file}")

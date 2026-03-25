@@ -40,7 +40,7 @@ def main() -> int:
 
         output_file = Path(args.output_file)
 
-    fig, axes = plt.subplots(len(ROW_CONFIGS), len(MODEL_PANELS), figsize=(20, 24))
+    fig, axes = plt.subplots(len(ROW_CONFIGS), len(MODEL_PANELS), figsize=(5 * len(MODEL_PANELS), 24))
 
     for row_idx, (exp, observe_metric, row_label) in enumerate(ROW_CONFIGS):
         for col_idx, (ax, (panel_label, model_name)) in enumerate(zip(axes[row_idx], MODEL_PANELS)):

@@ -35,7 +35,7 @@ def main() -> int:
 
         output_file = Path(args.output_file)
 
-    fig, axes = plt.subplots(1, 4, figsize=(20, 6))
+    fig, axes = plt.subplots(1, len(MODEL_PANELS), figsize=(5 * len(MODEL_PANELS), 6))
     fig.suptitle("Observation Steps Pooled Across Experiments", fontsize=28, color="#1a1a1a", y=0.99)
 
     panel_data = []

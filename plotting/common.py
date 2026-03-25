@@ -44,15 +44,8 @@ MODEL_PANELS = [
     ("Rational Mentalizing\n(Full Model)", "full_model"),
     ("Social Mentalizing", "social_mentalizing"),
     ("Rational Non-Mentalizing", "rational_non_mentalizing"),
+    ("Naive Planner", "agent1_naive_planner"),
     ("Naive Observer", "naive_observer"),
-]
-TOTAL_STEPS_BAR_SERIES = [("Human", "human"), *MODEL_PANELS]
-TOTAL_STEPS_BAR_TICKS = [
-    "Human",
-    "Rational\nMentalizing",
-    "Social\nMentalizing",
-    "Rational Non-\nMentalizing",
-    "Naive\nObserver",
 ]
 NON_TASK_LEVELS = {"comprehension_check", "experiment"}
 EXP34_OBSERVE_SKIP_LEVELS = {"s111_1"}
@@ -90,6 +83,15 @@ def human_level_to_model(exp: str, level: str) -> str:
     if match:
         return f"{match.group(1)}_scenario{match.group(2)}"
     return level
+
+
+def human_total_level_to_model(exp: str, level: str) -> str:
+    if exp == "exp1":
+        normalized = level.removeprefix("mod_")
+        if normalized.endswith("_1"):
+            return normalized[:-2]
+        return normalized
+    return human_level_to_model(exp, level)
 
 
 def should_skip_observe_level(exp: str, level: str) -> bool:
@@ -194,7 +196,7 @@ def aggregate_human_total_steps(exp: str) -> dict[str, dict[str, float]]:
         for level, counts in parse_participant_csv(path).items():
             if level in NON_TASK_LEVELS:
                 continue
-            model_level = human_level_to_model(exp, level)
+            model_level = human_total_level_to_model(exp, level)
             per_level_values[model_level].append(float(counts["total_steps"]))
 
     return {
@@ -243,16 +245,40 @@ def aggregate_human_observes(exp: str) -> dict[str, dict[str, float]]:
 def load_model_observe_predictions(exp: str, model_name: str) -> dict:
     if model_name == "full_model":
         return load_json(REPO_ROOT / "model_outputs" / "experiments" / exp / "steps_dict.json")
+    if model_name == "agent1_naive_planner":
+        return load_json(REPO_ROOT / "model_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json")["per_case"]
     return load_json(REPO_ROOT / "model_outputs" / "baselines" / exp / f"step_dict_{model_name}.json")
 
 
 def load_model_total_steps_predictions(exp: str, model_name: str) -> dict[str, dict]:
-    return load_json(REPO_ROOT / "model_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json")["per_case"]
+    per_case = load_json(REPO_ROOT / "model_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json")["per_case"]
+    if exp == "exp1":
+        return {
+            (level[:-2] if level.endswith("_1") else level): value
+            for level, value in per_case.items()
+        }
+    return per_case
 
 
 def observe_model_scalar(exp: str, model_value, observe_metric: str) -> float:
-    if exp in {"exp1", "exp2"}:
+    if isinstance(model_value, (int, float)):
         return float(model_value)
+
+    if "observe_steps" in model_value:
+        if observe_metric == "combined":
+            return float(model_value["observe_steps"])
+
+        events = model_value.get("observation_events", [])
+        if observe_metric == "agent2":
+            return float(sum(1 for event in events if event.get("observed_agent") == "agent2"))
+        if observe_metric == "agent3":
+            return float(sum(1 for event in events if event.get("observed_agent") == "agent3"))
+        return float(model_value["observe_steps"])
+
+    if exp in {"exp1", "exp2"}:
+        if "t" in model_value:
+            return float(model_value["t"])
+        return float(model_value.get("observations_count", 0.0))
 
     if observe_metric == "agent2":
         return float(model_value.get("agent2_count", 0.0))
