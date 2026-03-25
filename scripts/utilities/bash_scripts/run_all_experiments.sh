@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
+JULIA_BIN="${JULIA_BIN:-julia +1.11.9}"
 BOOTSTRAP_ENV="${BOOTSTRAP_ENV:-1}"
 RUN_ID="${RUN_ID:-$(date +%Y%m%d_%H%M%S)}"
 ORGANIZED_OUTPUT_ROOT="${ORGANIZED_OUTPUT_ROOT:-scripts/organized_outputs}"
@@ -42,7 +43,7 @@ done
 
 if [[ "$BOOTSTRAP_ENV" == "1" ]]; then
   echo "==> bootstrapping Julia environment"
-  julia --project=. -e 'using Pkg; Pkg.instantiate()'
+  bash -lc "$JULIA_BIN --project=. -e 'using Pkg; Pkg.instantiate()'"
 fi
 
 mkdir -p "$RUN_OUTPUT_DIR"
@@ -64,7 +65,7 @@ run_experiment() {
 
   echo "==> ${label}"
   echo "    script: ${script_path}"
-  julia --project=. "$script_path"
+  bash -lc "$JULIA_BIN --project=. \"$script_path\""
 }
 
 run_experiment "exp1 / full experiment" "scripts/experiments/run_experiment_exp1.jl"

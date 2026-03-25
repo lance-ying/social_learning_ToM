@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
 cd "$ROOT_DIR"
 
+JULIA_BIN="${JULIA_BIN:-julia +1.11.9}"
 EXP=""
 MODEL_LABEL=""
 STEPS_FILE=""
@@ -172,25 +173,10 @@ fi
 
 if [[ "$JOBS" -eq 1 ]]; then
   cmd=(
-    julia --project=. scripts/utilities/reconstruct_model_costs.jl
-    --exp "$EXP"
-    --model "$MODEL_LABEL"
-    --steps-file "$STEPS_FILE"
-    "${REPLAY_TRACE_ARGS[@]}"
-    --inference-file "$INFERENCE_FILE"
-    --restrict-to-human-levels
-    --human-costs-file "$HUMAN_COSTS_FILE"
-    --problem-dir "$PROBLEM_DIR"
-    --move-cost "$MOVE_COST"
-    --interact-cost "$INTERACT_COST"
-    --observe-cost "$OBSERVE_COST"
-    --posterior-candidate-rule "$POSTERIOR_CANDIDATE_RULE"
-    --posterior-mass-threshold "$POSTERIOR_MASS_THRESHOLD"
-    --posterior-prob-threshold "$POSTERIOR_PROB_THRESHOLD"
-    --output-file "$OUTPUT_FILE"
+    bash -lc "$JULIA_BIN --project=. scripts/utilities/reconstruct_model_costs.jl --exp \"$EXP\" --model \"$MODEL_LABEL\" --steps-file \"$STEPS_FILE\" ${REPLAY_TRACE_FILE:+--replay-trace-file \"$REPLAY_TRACE_FILE\"} --inference-file \"$INFERENCE_FILE\" --restrict-to-human-levels --human-costs-file \"$HUMAN_COSTS_FILE\" --problem-dir \"$PROBLEM_DIR\" --move-cost \"$MOVE_COST\" --interact-cost \"$INTERACT_COST\" --observe-cost \"$OBSERVE_COST\" --posterior-candidate-rule \"$POSTERIOR_CANDIDATE_RULE\" --posterior-mass-threshold \"$POSTERIOR_MASS_THRESHOLD\" --posterior-prob-threshold \"$POSTERIOR_PROB_THRESHOLD\" --output-file \"$OUTPUT_FILE\""
   )
   if [[ ${#EXP4_DISABLE_ARGS[@]} -gt 0 ]]; then
-    cmd+=("${EXP4_DISABLE_ARGS[@]}")
+    cmd[0]+=" ${EXP4_DISABLE_ARGS[*]}"
   fi
   exec "${cmd[@]}"
 fi
@@ -284,25 +270,10 @@ for shard_file in "${SHARD_FILES[@]}"; do
   ) &
   logger_pids+=("$!")
   shard_cmd=(
-    julia --project=. scripts/utilities/reconstruct_model_costs.jl
-    --exp "$EXP"
-    --model "$MODEL_LABEL"
-    --steps-file "$shard_file"
-    "${REPLAY_TRACE_ARGS[@]}"
-    --inference-file "$INFERENCE_FILE"
-    --restrict-to-human-levels
-    --human-costs-file "$HUMAN_COSTS_FILE"
-    --problem-dir "$PROBLEM_DIR"
-    --move-cost "$MOVE_COST"
-    --interact-cost "$INTERACT_COST"
-    --observe-cost "$OBSERVE_COST"
-    --posterior-candidate-rule "$POSTERIOR_CANDIDATE_RULE"
-    --posterior-mass-threshold "$POSTERIOR_MASS_THRESHOLD"
-    --posterior-prob-threshold "$POSTERIOR_PROB_THRESHOLD"
-    --output-file "$shard_output"
+    bash -lc "$JULIA_BIN --project=. scripts/utilities/reconstruct_model_costs.jl --exp \"$EXP\" --model \"$MODEL_LABEL\" --steps-file \"$shard_file\" ${REPLAY_TRACE_FILE:+--replay-trace-file \"$REPLAY_TRACE_FILE\"} --inference-file \"$INFERENCE_FILE\" --restrict-to-human-levels --human-costs-file \"$HUMAN_COSTS_FILE\" --problem-dir \"$PROBLEM_DIR\" --move-cost \"$MOVE_COST\" --interact-cost \"$INTERACT_COST\" --observe-cost \"$OBSERVE_COST\" --posterior-candidate-rule \"$POSTERIOR_CANDIDATE_RULE\" --posterior-mass-threshold \"$POSTERIOR_MASS_THRESHOLD\" --posterior-prob-threshold \"$POSTERIOR_PROB_THRESHOLD\" --output-file \"$shard_output\""
   )
   if [[ ${#EXP4_DISABLE_ARGS[@]} -gt 0 ]]; then
-    shard_cmd+=("${EXP4_DISABLE_ARGS[@]}")
+    shard_cmd[0]+=" ${EXP4_DISABLE_ARGS[*]}"
   fi
   "${shard_cmd[@]}" >"$shard_pipe" 2>&1 &
   pids+=("$!")

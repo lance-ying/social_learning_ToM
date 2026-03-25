@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
+JULIA_BIN="${JULIA_BIN:-julia +1.11.9}"
 OUTPUT_DIR="${OUTPUT_DIR:-model_outputs/reconstructed_costs_replay}"
 BOOTSTRAP_ENV="${BOOTSTRAP_ENV:-1}"
 MOVE_COST="${MOVE_COST:-3}"
@@ -148,7 +149,7 @@ mkdir -p "$OUTPUT_DIR"
 
 if [[ "$BOOTSTRAP_ENV" == "1" ]]; then
   echo "==> bootstrapping Julia environment"
-  julia --project=. -e 'using Pkg; Pkg.instantiate()'
+  bash -lc "$JULIA_BIN --project=. -e 'using Pkg; Pkg.instantiate()'"
 fi
 
 run_reconstruct() {
@@ -202,25 +203,10 @@ run_reconstruct() {
     "${shard_cmd[@]}"
   else
     local -a reconstruct_cmd=(
-      julia --project=. scripts/utilities/reconstruct_model_costs.jl
-      --exp "$exp"
-      --model "$label"
-      --steps-file "$steps_file"
-      "${replay_trace_args[@]}"
-      --inference-file "$inference_file"
-      --restrict-to-human-levels
-      --human-costs-file "$human_costs_file"
-      --problem-dir "$problem_dir"
-      --move-cost "$MOVE_COST"
-      --interact-cost "$INTERACT_COST"
-      --observe-cost "$OBSERVE_COST"
-      --posterior-candidate-rule "$POSTERIOR_CANDIDATE_RULE"
-      --posterior-mass-threshold "$POSTERIOR_MASS_THRESHOLD"
-      --posterior-prob-threshold "$POSTERIOR_PROB_THRESHOLD"
-      --output-file "$output_file"
+      bash -lc "$JULIA_BIN --project=. scripts/utilities/reconstruct_model_costs.jl --exp \"$exp\" --model \"$label\" --steps-file \"$steps_file\" ${replay_trace_file:+--replay-trace-file \"$replay_trace_file\"} --inference-file \"$inference_file\" --restrict-to-human-levels --human-costs-file \"$human_costs_file\" --problem-dir \"$problem_dir\" --move-cost \"$MOVE_COST\" --interact-cost \"$INTERACT_COST\" --observe-cost \"$OBSERVE_COST\" --posterior-candidate-rule \"$POSTERIOR_CANDIDATE_RULE\" --posterior-mass-threshold \"$POSTERIOR_MASS_THRESHOLD\" --posterior-prob-threshold \"$POSTERIOR_PROB_THRESHOLD\" --output-file \"$output_file\""
     )
     if [[ ${#exp4_disable_args[@]} -gt 0 ]]; then
-      reconstruct_cmd+=("${exp4_disable_args[@]}")
+      reconstruct_cmd[0]+=" ${exp4_disable_args[*]}"
     fi
     "${reconstruct_cmd[@]}"
   fi

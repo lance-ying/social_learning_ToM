@@ -4,6 +4,7 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../../.." && pwd)"
 cd "$ROOT_DIR"
 
+JULIA_BIN="${JULIA_BIN:-julia +1.11.9}"
 BOOTSTRAP_ENV="${BOOTSTRAP_ENV:-1}"
 RUN_EXPERIMENTS=1
 RUN_BASELINES=1
@@ -74,25 +75,25 @@ done
 
 if [[ "$BOOTSTRAP_ENV" == "1" ]]; then
   echo "==> bootstrapping Julia environment"
-  julia --project=. -e 'using Pkg; Pkg.instantiate()'
+  bash -lc "$JULIA_BIN --project=. -e 'using Pkg; Pkg.instantiate()'"
 fi
 
 if [[ "$RUN_EXPERIMENTS" == "1" ]]; then
   echo "==> running experiments"
-  bash scripts/utilities/bash_scripts/run_all_experiments.sh --no-bootstrap
+  JULIA_BIN="$JULIA_BIN" bash scripts/utilities/bash_scripts/run_all_experiments.sh --no-bootstrap
 fi
 
 if [[ "$RUN_BASELINES" == "1" ]]; then
   echo "==> running baselines"
-  bash scripts/utilities/bash_scripts/run_all_baselines.sh --no-bootstrap
+  JULIA_BIN="$JULIA_BIN" bash scripts/utilities/bash_scripts/run_all_baselines.sh --no-bootstrap
 fi
 
 if [[ "$RUN_RECONSTRUCT" == "1" ]]; then
   echo "==> running reconstruction"
   if [[ ${#RECONSTRUCT_ARGS[@]} -gt 0 ]]; then
-    bash scripts/utilities/bash_scripts/run_reconstruct_all.sh --no-bootstrap "${RECONSTRUCT_ARGS[@]}"
+    JULIA_BIN="$JULIA_BIN" bash scripts/utilities/bash_scripts/run_reconstruct_all.sh --no-bootstrap "${RECONSTRUCT_ARGS[@]}"
   else
-    bash scripts/utilities/bash_scripts/run_reconstruct_all.sh --no-bootstrap
+    JULIA_BIN="$JULIA_BIN" bash scripts/utilities/bash_scripts/run_reconstruct_all.sh --no-bootstrap
   fi
 fi
 
