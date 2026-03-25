@@ -50,6 +50,7 @@ MODEL_PANELS = [
 NON_TASK_LEVELS = {"comprehension_check", "experiment"}
 EXP34_OBSERVE_SKIP_LEVELS = {"s111_1"}
 EXP34_OBSERVE_SKIP_PREFIXES = ("sm111_", "sm112_")
+TUTORIAL_LEVEL_PREFIXES = ("s111", "s112", "sm111", "sm112", "mod_s111", "mod_s112")
 LEVEL_RE = re.compile(r"^Level:\s*(.+?)\s*$", re.IGNORECASE)
 EXP34_LEVEL_RE = re.compile(r"^(sm\d+)_(\d+)$")
 
@@ -102,6 +103,11 @@ def should_skip_observe_level(exp: str, level: str) -> bool:
     return False
 
 
+def is_tutorial_level(level: str) -> bool:
+    return level.startswith(TUTORIAL_LEVEL_PREFIXES)
+
+
+@lru_cache(maxsize=None)
 def parse_participant_csv(path: Path) -> dict[str, dict[str, float]]:
     per_level: dict[str, dict[str, float]] = {}
     current_level: str | None = None
@@ -137,6 +143,7 @@ def parse_participant_csv(path: Path) -> dict[str, dict[str, float]]:
                         "agent2_count": 0.0,
                         "agent3_count": 0.0,
                         "activation_count": 0.0,
+                        "steps_remaining": np.nan,
                     },
                 )
                 per_level[current_level]["activation_count"] += 1.0
@@ -158,6 +165,7 @@ def parse_participant_csv(path: Path) -> dict[str, dict[str, float]]:
                     "agent2_count": 0.0,
                     "agent3_count": 0.0,
                     "activation_count": 0.0,
+                    "steps_remaining": np.nan,
                 },
             )
 
@@ -184,15 +192,60 @@ def parse_participant_csv(path: Path) -> dict[str, dict[str, float]]:
                     interaction_type = row[interaction_type_idx].strip().lower()
                 if interaction_type != "comprehension_check":
                     stats["total_steps"] += 1.0
+                continue
+
+            if event_type == "LEVEL_COMPLETE":
+                steps_remaining_idx = header_map.get("steps remaining")
+                if steps_remaining_idx is not None and len(row) > steps_remaining_idx:
+                    raw_value = row[steps_remaining_idx].strip()
+                    if raw_value:
+                        try:
+                            stats["steps_remaining"] = float(raw_value)
+                        except ValueError:
+                            pass
 
     return per_level
 
 
 @lru_cache(maxsize=None)
-def aggregate_human_total_steps(exp: str) -> dict[str, dict[str, float]]:
-    per_level_values: dict[str, list[float]] = defaultdict(list)
+def participant_quality_scores(exp: str) -> dict[Path, float]:
+    scores: dict[Path, float] = {}
     csv_dir = DATA_PROCESSED_DIR / exp
     for path in sorted(csv_dir.glob("*.csv")):
+        total_score = 0.0
+        for level, counts in parse_participant_csv(path).items():
+            if level in NON_TASK_LEVELS or is_tutorial_level(level):
+                continue
+            steps_remaining = counts.get("steps_remaining", np.nan)
+            if np.isnan(steps_remaining):
+                continue
+            total_score += float(steps_remaining)
+        scores[path] = total_score
+    return scores
+
+
+@lru_cache(maxsize=None)
+def participant_quality_threshold(exp: str) -> float:
+    scores = list(participant_quality_scores(exp).values())
+    if not scores:
+        return float("-inf")
+    q1 = float(np.percentile(scores, 25))
+    q3 = float(np.percentile(scores, 75))
+    iqr = q3 - q1
+    return q1 - 1.5 * iqr
+
+
+@lru_cache(maxsize=None)
+def filtered_participant_paths(exp: str) -> tuple[Path, ...]:
+    scores = participant_quality_scores(exp)
+    threshold = participant_quality_threshold(exp)
+    return tuple(sorted(path for path, score in scores.items() if score >= threshold))
+
+
+@lru_cache(maxsize=None)
+def aggregate_human_total_steps(exp: str) -> dict[str, dict[str, float]]:
+    per_level_values: dict[str, list[float]] = defaultdict(list)
+    for path in filtered_participant_paths(exp):
         for level, counts in parse_participant_csv(path).items():
             if level in NON_TASK_LEVELS:
                 continue
@@ -202,6 +255,7 @@ def aggregate_human_total_steps(exp: str) -> dict[str, dict[str, float]]:
     return {
         level: {
             "mean": float(np.mean(values)),
+            "median": float(np.median(values)),
             "sd": sample_sd(values),
             "n": len(values),
         }
@@ -215,8 +269,7 @@ def aggregate_human_observes(exp: str) -> dict[str, dict[str, float]]:
     agent2_values: dict[str, list[float]] = defaultdict(list)
     agent3_values: dict[str, list[float]] = defaultdict(list)
 
-    csv_dir = DATA_PROCESSED_DIR / exp
-    for path in sorted(csv_dir.glob("*.csv")):
+    for path in filtered_participant_paths(exp):
         for level, counts in parse_participant_csv(path).items():
             if should_skip_observe_level(exp, level):
                 continue

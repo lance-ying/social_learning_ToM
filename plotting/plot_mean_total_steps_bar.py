@@ -6,13 +6,7 @@ import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 
-from common import (
-    EXPERIMENT_LABELS,
-    EXPERIMENTS,
-    MODEL_PANELS,
-    common_total_step_keys,
-    make_output_path,
-)
+from common import EXPERIMENT_LABELS, EXPERIMENTS, MODEL_PANELS, common_total_step_keys, make_output_path
 
 
 def parse_args() -> argparse.Namespace:
@@ -30,54 +24,78 @@ def main() -> int:
         output_file = Path(args.output_file)
 
     matched_by_exp = {exp: common_total_step_keys(exp) for exp in EXPERIMENTS}
-    fig, axes = plt.subplots(1, 4, figsize=(24, 6), sharey=True)
-    x = np.arange(len(MODEL_PANELS) + 1)
+    fig, axes = plt.subplots(1, 4, figsize=(24, 7), sharey=True)
 
-    tick_labels = [
-        "Human",
-        "Rational\nMentalizing",
-        "Social\nMentalizing",
-        "Rational Non-\nMentalizing",
-        "Naive\nPlanner",
-        "Naive\nObserver",
+    violin_series = [
+        ("Human", "human"),
+        ("Rat. Ment.", "full_model"),
+        ("Soc. Ment.", "social_mentalizing"),
+        ("Rat. Non-M.", "rational_non_mentalizing"),
+        ("Naive", "naive_observer"),
+        ("Non-Obs. Plan.", "agent1_naive_planner"),
     ]
-    bar_colors = ["#888888", "#4c78a8", "#72b7b2", "#e39c37", "#6aa84f", "#c95f5f"]
+    x = np.arange(len(violin_series))
+
+    fill_colors = ["#888888", "#4c78a8", "#72b7b2", "#e39c37", "#c95f5f", "#6aa84f"]
 
     for ax, exp in zip(axes, EXPERIMENTS):
         model_predictions, human_stats = matched_by_exp[exp]
-        human_values = [human_stats[level]["mean"] for level in human_stats]
-        human_mean = float(np.mean(human_values)) if human_values else 0.0
-        human_sd = float(np.std(human_values, ddof=1)) if len(human_values) > 1 else 0.0
+        human_values = [human_stats[level]["median"] for level in human_stats]
 
-        means = [human_mean]
-        sds = [human_sd]
+        series_values = [human_values]
         for _label, model_name in MODEL_PANELS:
             values = [model_predictions[model_name][level]["total_steps"] for level in model_predictions[model_name]]
-            means.append(float(np.mean(values)) if values else 0.0)
-            sds.append(float(np.std(values, ddof=1)) if len(values) > 1 else 0.0)
+            if model_name == "agent1_naive_planner":
+                planner_values = values
+            elif model_name == "naive_observer":
+                naive_observer_values = values
+            elif model_name == "full_model":
+                full_model_values = values
+            elif model_name == "social_mentalizing":
+                social_values = values
+            elif model_name == "rational_non_mentalizing":
+                rational_nonmental_values = values
 
-        ax.bar(
-            x,
-            means,
-            width=0.72,
-            color=bar_colors,
-            alpha=0.9,
-            edgecolor="none",
-            yerr=sds,
-            capsize=4,
-            ecolor="#333333",
+        series_values.extend(
+            [
+                full_model_values,
+                social_values,
+                rational_nonmental_values,
+                naive_observer_values,
+                planner_values,
+            ]
         )
-        ax.set_title(EXPERIMENT_LABELS[exp], fontsize=16)
+
+        violin = ax.violinplot(
+            series_values,
+            positions=x,
+            widths=0.82,
+            showmeans=False,
+            showmedians=True,
+            showextrema=False,
+        )
+        for body, color in zip(violin["bodies"], fill_colors):
+            body.set_facecolor(color)
+            body.set_edgecolor("#333333")
+            body.set_alpha(0.8)
+
+        violin["cmedians"].set_color("#222222")
+        violin["cmedians"].set_linewidth(1.8)
+
+        means = [float(np.mean(values)) if values else 0.0 for values in series_values]
+        ax.scatter(x, means, color="#111111", s=18, zorder=3)
+
+        ax.set_title(EXPERIMENT_LABELS[exp], fontsize=18)
         ax.set_xticks(x)
-        ax.set_xticklabels(tick_labels, fontsize=11)
+        ax.set_xticklabels([label for label, _model_name in violin_series], fontsize=13, rotation=25, ha="right")
+        ax.set_xlabel("Model", fontsize=15)
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
-        ax.tick_params(axis="y", labelsize=11)
+        ax.tick_params(axis="y", labelsize=13)
 
-    axes[0].set_ylabel("Mean Total Steps", fontsize=14)
+    axes[0].set_ylabel("Total Steps", fontsize=16)
 
-    fig.suptitle("Mean Total Steps by Experiment", fontsize=20, y=0.98)
-    plt.tight_layout(rect=(0, 0, 1, 0.96))
+    plt.tight_layout()
     output_file.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_file, dpi=300, bbox_inches="tight")
     print(f"Saved -> {output_file}")

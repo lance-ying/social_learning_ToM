@@ -18,6 +18,8 @@ from common import (
     pooled_limits,
 )
 
+OBSERVE_PANELS = [panel for panel in MODEL_PANELS if panel[1] != "agent1_naive_planner"]
+
 
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser(
@@ -35,11 +37,10 @@ def main() -> int:
 
         output_file = Path(args.output_file)
 
-    fig, axes = plt.subplots(1, len(MODEL_PANELS), figsize=(5 * len(MODEL_PANELS), 6))
-    fig.suptitle("Observation Steps Pooled Across Experiments", fontsize=28, color="#1a1a1a", y=0.99)
+    fig, axes = plt.subplots(1, len(OBSERVE_PANELS), figsize=(5 * len(OBSERVE_PANELS), 6))
 
     panel_data = []
-    for _label, model_name in MODEL_PANELS:
+    for _label, model_name in OBSERVE_PANELS:
         by_exp = []
         for exp in EXPERIMENTS:
             x, y, _sd, _keys = collect_observe_pairs(exp, model_name, observe_metric="combined")
@@ -48,7 +49,7 @@ def main() -> int:
 
     lo, hi = pooled_limits(panel_data)
 
-    for idx, (ax, (label, _model_name), by_exp) in enumerate(zip(axes, MODEL_PANELS, panel_data)):
+    for idx, (ax, (label, _model_name), by_exp) in enumerate(zip(axes, OBSERVE_PANELS, panel_data)):
         apply_reference_style(ax)
 
         pooled_x = []
@@ -75,9 +76,16 @@ def main() -> int:
         ax.set_aspect("equal", adjustable="box")
 
         if pooled_x:
-            annotate_stats(ax, np.concatenate(pooled_x), np.concatenate(pooled_y))
+            pooled_x_arr = np.concatenate(pooled_x)
+            pooled_y_arr = np.concatenate(pooled_y)
+            annotate_stats(ax, pooled_x_arr, pooled_y_arr)
+            if len(pooled_x_arr) >= 2:
+                slope, intercept = np.polyfit(pooled_x_arr, pooled_y_arr, 1)
+                fit_x = np.array([lo, hi], dtype=float)
+                fit_y = slope * fit_x + intercept
+                ax.plot(fit_x, fit_y, color="#e15759", linewidth=1.8, zorder=2)
 
-        ax.set_xlabel(f"{label}\nModel Observation Steps", fontsize=20, color="#1a1a1a")
+        ax.set_xlabel(label, fontsize=20, color="#1a1a1a")
         if idx == 0:
             ax.set_ylabel("Human Observation Steps", fontsize=22, color="#1a1a1a")
         else:
@@ -85,9 +93,18 @@ def main() -> int:
 
     handles, labels = axes[-1].get_legend_handles_labels()
     if handles:
-        axes[-1].legend(handles, labels, frameon=False, fontsize=11, loc="lower right")
+        fig.legend(
+            handles,
+            labels,
+            frameon=False,
+            fontsize=16,
+            markerscale=1.8,
+            loc="lower center",
+            ncol=len(EXPERIMENTS),
+            bbox_to_anchor=(0.5, -0.02),
+        )
 
-    plt.tight_layout(w_pad=2.5, rect=(0, 0, 1, 0.96))
+    plt.tight_layout(w_pad=2.5, rect=(0, 0.08, 1, 1))
     output_file.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_file, dpi=300, bbox_inches="tight")
     print(f"Saved -> {output_file}")
