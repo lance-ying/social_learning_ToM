@@ -9,6 +9,7 @@ Scripts:
 - `plot_mean_total_steps_bar.py`: grouped mean total-steps bar plot
 - `plot_total_steps_mega.py`: total-steps mega plot across experiments 1 to 4
 - `plot_observes_mega.py`: observation-step mega plot with separate exp4 agent 2 and agent 3 rows
+- `create_custom_stimuli_plot_pngs.py`: custom-stimuli bar/point plots for selected experiment-level timestamps
 - `run_all.py`: runs all five plots
 
 Usage:
@@ -18,3 +19,11 @@ uv run plotting/run_all.py
 ```
 
 Outputs are written to `plotting/outputs/`.
+
+Custom stimuli plot usage:
+
+```bash
+uv run plotting/create_custom_stimuli_plot_pngs.py
+```
+
+The custom stimuli selection lives in `plotting/custom_stimuli_timestamps.json`.
