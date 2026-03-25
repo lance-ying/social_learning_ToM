@@ -19,12 +19,29 @@ SCRIPTS_DIR = REPO_ROOT / "data_processing" / "scripts"
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from correlation_4panel_style import (  # noqa: E402
-    apply_reference_style,
-    bootstrap_ccc_ci,
-    bootstrap_r_ci,
-    plot_points_errorbars_and_fit,
-)
+
+def apply_reference_style(*args, **kwargs):
+    from correlation_4panel_style import apply_reference_style as _apply_reference_style
+
+    return _apply_reference_style(*args, **kwargs)
+
+
+def bootstrap_ccc_ci(*args, **kwargs):
+    from correlation_4panel_style import bootstrap_ccc_ci as _bootstrap_ccc_ci
+
+    return _bootstrap_ccc_ci(*args, **kwargs)
+
+
+def bootstrap_r_ci(*args, **kwargs):
+    from correlation_4panel_style import bootstrap_r_ci as _bootstrap_r_ci
+
+    return _bootstrap_r_ci(*args, **kwargs)
+
+
+def plot_points_errorbars_and_fit(*args, **kwargs):
+    from correlation_4panel_style import plot_points_errorbars_and_fit as _plot_points_errorbars_and_fit
+
+    return _plot_points_errorbars_and_fit(*args, **kwargs)
 
 
 EXPERIMENTS = ["exp1", "exp2", "exp3", "exp4"]

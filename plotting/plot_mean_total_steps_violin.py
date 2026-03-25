@@ -10,14 +10,14 @@ from common import EXPERIMENT_LABELS, EXPERIMENTS, MODEL_PANELS, common_total_st
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Create the mean total-steps grouped bar plot.")
+    parser = argparse.ArgumentParser(description="Create the mean total-steps violin plot.")
     parser.add_argument("--output-file", help="Optional output path.")
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    output_file = make_output_path("mean_total_steps_bar_plot_exp1234.png")
+    output_file = make_output_path("mean_total_steps_violin_plot_exp1234.png")
     if args.output_file:
         from pathlib import Path
 
@@ -80,20 +80,20 @@ def main() -> int:
             body.set_alpha(0.8)
 
         violin["cmedians"].set_color("#222222")
-        violin["cmedians"].set_linewidth(1.8)
+        violin["cmedians"].set_linewidth(2.2)
 
         means = [float(np.mean(values)) if values else 0.0 for values in series_values]
-        ax.scatter(x, means, color="#111111", s=18, zorder=3)
+        ax.scatter(x, means, color="#111111", s=30, zorder=3)
 
-        ax.set_title(EXPERIMENT_LABELS[exp], fontsize=18)
+        ax.set_title(EXPERIMENT_LABELS[exp], fontsize=22)
         ax.set_xticks(x)
-        ax.set_xticklabels([label for label, _model_name in violin_series], fontsize=13, rotation=25, ha="right")
-        ax.set_xlabel("Model", fontsize=15)
+        ax.set_xticklabels([label for label, _model_name in violin_series], fontsize=16, rotation=25, ha="right")
+        ax.set_xlabel("")
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)
-        ax.tick_params(axis="y", labelsize=13)
+        ax.tick_params(axis="y", labelsize=16)
 
-    axes[0].set_ylabel("Total Steps", fontsize=16)
+    axes[0].set_ylabel("Mean Total Steps", fontsize=20)
 
     plt.tight_layout()
     output_file.parent.mkdir(parents=True, exist_ok=True)

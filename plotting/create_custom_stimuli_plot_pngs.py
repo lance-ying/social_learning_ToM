@@ -22,6 +22,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
+from common import filtered_participant_paths, parse_participant_csv
+
 BG = "#ffffff"
 BOX = "#707070"
 SERIES_A1 = "#de6b8a"
@@ -171,15 +173,16 @@ def _parse_multi_agent_csv(path: Path) -> dict:
 def _build_human_stats_exp12(csv_dir: Path) -> dict:
     per_level_means = defaultdict(list)
 
-    for csv_path in sorted(csv_dir.glob("*.csv")):
-        file_data = _parse_single_agent_csv(csv_path)
+    exp = csv_dir.name
+    for csv_path in filtered_participant_paths(exp):
+        file_data = parse_participant_csv(csv_path)
         for level, counts in file_data.items():
             if level in SKIP_LEVELS or any(level.startswith(pfx) for pfx in SKIP_PREFIXES):
                 continue
-            activations = counts["activation_count"]
+            activations = float(counts.get("activation_count", 0.0))
             if activations <= 0:
                 continue
-            per_level_means[level].append(counts["observe_count"] / activations)
+            per_level_means[level].append(float(counts.get("observe_count", 0.0)) / activations)
 
     out = {}
     for level, values in per_level_means.items():
@@ -195,17 +198,18 @@ def _build_human_stats_exp34(csv_dir: Path) -> dict:
     per_level_agent2 = defaultdict(list)
     per_level_agent3 = defaultdict(list)
 
-    for csv_path in sorted(csv_dir.glob("*.csv")):
-        file_data = _parse_multi_agent_csv(csv_path)
+    exp = csv_dir.name
+    for csv_path in filtered_participant_paths(exp):
+        file_data = parse_participant_csv(csv_path)
         for level, counts in file_data.items():
             if level in SKIP_LEVELS or any(level.startswith(pfx) for pfx in SKIP_PREFIXES):
                 continue
             mapped = _map_level_name(level)
-            activations = counts["activation_count"]
+            activations = float(counts.get("activation_count", 0.0))
             if activations <= 0:
                 continue
-            per_level_agent2[mapped].append(counts["agent2_count"] / activations)
-            per_level_agent3[mapped].append(counts["agent3_count"] / activations)
+            per_level_agent2[mapped].append(float(counts.get("agent2_count", 0.0)) / activations)
+            per_level_agent3[mapped].append(float(counts.get("agent3_count", 0.0)) / activations)
 
     out = {}
     for level in set(per_level_agent2) | set(per_level_agent3):
