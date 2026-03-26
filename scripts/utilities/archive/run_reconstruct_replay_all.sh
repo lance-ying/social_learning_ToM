@@ -17,14 +17,17 @@ EXPERIMENTS="exp1,exp2,exp3,exp4"
 PARALLEL_MULTIAGENT_JOBS="${PARALLEL_MULTIAGENT_JOBS:-1}"
 DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING="${DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING:-0}"
 declare -a SELECTED_MODELS=()
+VARIANT_BASELINES_ONLY=0
 
 usage() {
   cat <<'EOF'
 Usage:
-  bash scripts/utilities/run_reconstruct_replay_all.sh [--experiments exp1,exp2,...] [--exp3-4] [--exp4] [--model <full_model|social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_until_novice_wizard|rational_non_mentalizing_novice_full_expert_until_novice_wizard|naive_observer_expert_until_novice_wizard|naive_observer_novice_full_expert_until_novice_wizard>[,...]] [--parallel-multiagent-jobs N] [--disable-exp4-interaction-outcome-pruning] [--no-bootstrap]
+  bash scripts/utilities/run_reconstruct_replay_all.sh [--experiments exp1,exp2,...] [--exp3] [--exp3-4] [--exp4] [--variant-baselines-only] [--model <full_model|social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_until_novice_wizard|rational_non_mentalizing_novice_full_expert_until_novice_wizard|naive_observer_expert_until_novice_wizard|naive_observer_novice_full_expert_until_novice_wizard>[,...]] [--parallel-multiagent-jobs N] [--disable-exp4-interaction-outcome-pruning] [--no-bootstrap]
 
 Examples:
   bash scripts/utilities/run_reconstruct_replay_all.sh
+  bash scripts/utilities/run_reconstruct_replay_all.sh --exp3
+  bash scripts/utilities/run_reconstruct_replay_all.sh --exp3 --variant-baselines-only
   bash scripts/utilities/run_reconstruct_replay_all.sh --exp3-4
   bash scripts/utilities/run_reconstruct_replay_all.sh --exp4
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp3,exp4
@@ -57,8 +60,16 @@ while [[ $# -gt 0 ]]; do
       EXPERIMENTS="exp3,exp4"
       shift
       ;;
+    --exp3)
+      EXPERIMENTS="exp3"
+      shift
+      ;;
     --exp4)
       EXPERIMENTS="exp4"
+      shift
+      ;;
+    --variant-baselines-only)
+      VARIANT_BASELINES_ONLY=1
       shift
       ;;
     --model)
@@ -109,6 +120,11 @@ while [[ $# -gt 0 ]]; do
       ;;
   esac
 done
+
+if [[ "$VARIANT_BASELINES_ONLY" == "1" && ${#SELECTED_MODELS[@]:-0} -gt 0 ]]; then
+  echo "Do not combine --variant-baselines-only with --model." >&2
+  exit 1
+fi
 
 # Exp1
 EXP1_MODEL_STEPS="${EXP1_MODEL_STEPS:-model_outputs/experiments/exp1/steps_dict.json}"
@@ -276,6 +292,25 @@ has_selected_model() {
   return 1
 }
 
+is_variant_model_for_exp() {
+  local exp="$1"
+  local label="$2"
+  case "$exp:$label" in
+    exp3:social_mentalizing_until_one_converges)
+      return 0
+      ;;
+    exp4:rational_non_mentalizing|\
+    exp4:rational_non_mentalizing_expert_until_novice_wizard|\
+    exp4:rational_non_mentalizing_novice_full_expert_until_novice_wizard|\
+    exp4:naive_observer|\
+    exp4:naive_observer_expert_until_novice_wizard|\
+    exp4:naive_observer_novice_full_expert_until_novice_wizard)
+      return 0
+      ;;
+  esac
+  return 1
+}
+
 maybe_run_reconstruct() {
   local exp="$1"
   local label="$2"
@@ -284,6 +319,9 @@ maybe_run_reconstruct() {
   local inference_file="$5"
   local problem_dir="$6"
   local human_costs_file="$7"
+  if [[ "$VARIANT_BASELINES_ONLY" == "1" ]]; then
+    is_variant_model_for_exp "$exp" "$label" || return 0
+  fi
   has_selected_model "$label" || return 0
   run_reconstruct "$exp" "$label" "$steps_file" "$replay_trace_file" "$inference_file" "$problem_dir" "$human_costs_file"
 }
@@ -293,7 +331,11 @@ echo "Action costs: move=$MOVE_COST interact=$INTERACT_COST observe=$OBSERVE_COS
 echo "Posterior candidate rule: $POSTERIOR_CANDIDATE_RULE (mass threshold=$POSTERIOR_MASS_THRESHOLD, prob threshold=$POSTERIOR_PROB_THRESHOLD)"
 echo "Experiments: $EXPERIMENTS"
 if [[ ${#SELECTED_MODELS[@]:-0} -eq 0 ]]; then
-  echo "Models: all"
+  if [[ "$VARIANT_BASELINES_ONLY" == "1" ]]; then
+    echo "Models: experiment-specific variant baselines only"
+  else
+    echo "Models: all"
+  fi
 else
   echo "Models: ${SELECTED_MODELS[*]}"
 fi
