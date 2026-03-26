@@ -16,11 +16,12 @@ POSTERIOR_PROB_THRESHOLD="${POSTERIOR_PROB_THRESHOLD:-0.1}"
 EXPERIMENTS="exp1,exp2,exp3,exp4"
 PARALLEL_MULTIAGENT_JOBS="${PARALLEL_MULTIAGENT_JOBS:-1}"
 DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING="${DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING:-0}"
+declare -a SELECTED_MODELS=()
 
 usage() {
   cat <<'EOF'
 Usage:
-  bash scripts/utilities/run_reconstruct_replay_all.sh [--experiments exp1,exp2,...] [--exp3-4] [--exp4] [--parallel-multiagent-jobs N] [--disable-exp4-interaction-outcome-pruning] [--no-bootstrap]
+  bash scripts/utilities/run_reconstruct_replay_all.sh [--experiments exp1,exp2,...] [--exp3-4] [--exp4] [--model <full_model|social_mentalizing|rational_non_mentalizing|naive_observer|agent1_naive_planner>[,...]] [--parallel-multiagent-jobs N] [--disable-exp4-interaction-outcome-pruning] [--no-bootstrap]
 
 Examples:
   bash scripts/utilities/run_reconstruct_replay_all.sh
@@ -31,6 +32,8 @@ Examples:
   bash scripts/utilities/run_reconstruct_replay_all.sh --exp3-4 --parallel-multiagent-jobs 4
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp1,exp2 --parallel-multiagent-jobs 4
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp4 --disable-exp4-interaction-outcome-pruning
+  bash scripts/utilities/run_reconstruct_replay_all.sh --exp4 --model agent1_naive_planner
+  bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp3,exp4 --model naive_observer,rational_non_mentalizing
 
 Environment overrides:
   POSTERIOR_CANDIDATE_RULE=prob_threshold|top_mass|positive_support
@@ -56,6 +59,27 @@ while [[ $# -gt 0 ]]; do
     --exp4)
       EXPERIMENTS="exp4"
       shift
+      ;;
+    --model)
+      if [[ $# -lt 2 ]]; then
+        echo "Missing value for --model" >&2
+        exit 1
+      fi
+      IFS=',' read -r -a parsed_models <<< "$2"
+      for model in "${parsed_models[@]}"; do
+        model="${model//[[:space:]]/}"
+        [[ -z "$model" ]] && continue
+        case "$model" in
+          full_model|social_mentalizing|rational_non_mentalizing|naive_observer|agent1_naive_planner)
+            SELECTED_MODELS+=("$model")
+            ;;
+          *)
+            echo "Unknown model for --model: $model" >&2
+            exit 1
+            ;;
+        esac
+      done
+      shift 2
       ;;
     --parallel-multiagent-jobs)
       if [[ $# -lt 2 ]]; then
@@ -225,43 +249,74 @@ has_experiment() {
   return 1
 }
 
+has_selected_model() {
+  local target="$1"
+  local model
+  if [[ ${#SELECTED_MODELS[@]:-0} -eq 0 ]]; then
+    return 0
+  fi
+  for model in "${SELECTED_MODELS[@]}"; do
+    if [[ "$model" == "$target" ]]; then
+      return 0
+    fi
+  done
+  return 1
+}
+
+maybe_run_reconstruct() {
+  local exp="$1"
+  local label="$2"
+  local steps_file="$3"
+  local replay_trace_file="$4"
+  local inference_file="$5"
+  local problem_dir="$6"
+  local human_costs_file="$7"
+  has_selected_model "$label" || return 0
+  run_reconstruct "$exp" "$label" "$steps_file" "$replay_trace_file" "$inference_file" "$problem_dir" "$human_costs_file"
+}
+
 echo "Output directory: $OUTPUT_DIR"
 echo "Action costs: move=$MOVE_COST interact=$INTERACT_COST observe=$OBSERVE_COST"
 echo "Posterior candidate rule: $POSTERIOR_CANDIDATE_RULE (mass threshold=$POSTERIOR_MASS_THRESHOLD, prob threshold=$POSTERIOR_PROB_THRESHOLD)"
 echo "Experiments: $EXPERIMENTS"
+if [[ ${#SELECTED_MODELS[@]:-0} -eq 0 ]]; then
+  echo "Models: all"
+else
+  echo "Models: ${SELECTED_MODELS[*]}"
+fi
 echo "Parallel multi-agent jobs: $PARALLEL_MULTIAGENT_JOBS"
 echo "Disable exp4 interaction-outcome pruning: $DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING"
 
 if has_experiment exp1; then
-  run_reconstruct exp1 full_model "$EXP1_MODEL_STEPS" "$EXP1_MODEL_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
-  run_reconstruct exp1 social_mentalizing "$EXP1_MENTALIZE_STEPS" "$EXP1_MENTALIZE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
-  run_reconstruct exp1 rational_non_mentalizing "$EXP1_NONMENTALIZE_STEPS" "$EXP1_NONMENTALIZE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
-  run_reconstruct exp1 naive_observer "$EXP1_NAIVE_STEPS" "$EXP1_NAIVE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
-  run_reconstruct exp1 agent1_naive_planner "$EXP1_AGENT1_NAIVE_STEPS" "$EXP1_AGENT1_NAIVE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
+  maybe_run_reconstruct exp1 full_model "$EXP1_MODEL_STEPS" "$EXP1_MODEL_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
+  maybe_run_reconstruct exp1 social_mentalizing "$EXP1_MENTALIZE_STEPS" "$EXP1_MENTALIZE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
+  maybe_run_reconstruct exp1 rational_non_mentalizing "$EXP1_NONMENTALIZE_STEPS" "$EXP1_NONMENTALIZE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
+  maybe_run_reconstruct exp1 naive_observer "$EXP1_NAIVE_STEPS" "$EXP1_NAIVE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
+  maybe_run_reconstruct exp1 agent1_naive_planner "$EXP1_AGENT1_NAIVE_STEPS" "$EXP1_AGENT1_NAIVE_REPLAY_TRACE" "$EXP1_INFERENCE" "$EXP1_PROBLEM_DIR" "$EXP1_HUMAN_COSTS"
 fi
 
 if has_experiment exp2; then
-  run_reconstruct exp2 full_model "$EXP2_MODEL_STEPS" "$EXP2_MODEL_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
-  run_reconstruct exp2 social_mentalizing "$EXP2_MENTALIZE_STEPS" "$EXP2_MENTALIZE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
-  run_reconstruct exp2 rational_non_mentalizing "$EXP2_NONMENTALIZE_STEPS" "$EXP2_NONMENTALIZE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
-  run_reconstruct exp2 naive_observer "$EXP2_NAIVE_STEPS" "$EXP2_NAIVE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
-  run_reconstruct exp2 agent1_naive_planner "$EXP2_AGENT1_NAIVE_STEPS" "$EXP2_AGENT1_NAIVE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
+  maybe_run_reconstruct exp2 full_model "$EXP2_MODEL_STEPS" "$EXP2_MODEL_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
+  maybe_run_reconstruct exp2 social_mentalizing "$EXP2_MENTALIZE_STEPS" "$EXP2_MENTALIZE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
+  maybe_run_reconstruct exp2 rational_non_mentalizing "$EXP2_NONMENTALIZE_STEPS" "$EXP2_NONMENTALIZE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
+  maybe_run_reconstruct exp2 naive_observer "$EXP2_NAIVE_STEPS" "$EXP2_NAIVE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
+  maybe_run_reconstruct exp2 agent1_naive_planner "$EXP2_AGENT1_NAIVE_STEPS" "$EXP2_AGENT1_NAIVE_REPLAY_TRACE" "$EXP2_INFERENCE" "$EXP2_PROBLEM_DIR" "$EXP2_HUMAN_COSTS"
 fi
 
 if has_experiment exp3; then
-  run_reconstruct exp3 full_model "$EXP3_MODEL_STEPS" "$EXP3_MODEL_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
-  run_reconstruct exp3 social_mentalizing "$EXP3_MENTALIZE_STEPS" "$EXP3_MENTALIZE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
-  run_reconstruct exp3 rational_non_mentalizing "$EXP3_NONMENTALIZE_STEPS" "$EXP3_NONMENTALIZE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
-  run_reconstruct exp3 naive_observer "$EXP3_NAIVE_STEPS" "$EXP3_NAIVE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
-  run_reconstruct exp3 agent1_naive_planner "$EXP3_AGENT1_NAIVE_STEPS" "$EXP3_AGENT1_NAIVE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
+  maybe_run_reconstruct exp3 full_model "$EXP3_MODEL_STEPS" "$EXP3_MODEL_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
+  maybe_run_reconstruct exp3 social_mentalizing "$EXP3_MENTALIZE_STEPS" "$EXP3_MENTALIZE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
+  maybe_run_reconstruct exp3 rational_non_mentalizing "$EXP3_NONMENTALIZE_STEPS" "$EXP3_NONMENTALIZE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
+  maybe_run_reconstruct exp3 naive_observer "$EXP3_NAIVE_STEPS" "$EXP3_NAIVE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
+  maybe_run_reconstruct exp3 agent1_naive_planner "$EXP3_AGENT1_NAIVE_STEPS" "$EXP3_AGENT1_NAIVE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
 fi
 
 if has_experiment exp4; then
-  run_reconstruct exp4 full_model "$EXP4_MODEL_STEPS" "$EXP4_MODEL_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
-  run_reconstruct exp4 social_mentalizing "$EXP4_MENTALIZE_STEPS" "$EXP4_MENTALIZE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
-  run_reconstruct exp4 rational_non_mentalizing "$EXP4_NONMENTALIZE_STEPS" "$EXP4_NONMENTALIZE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
-  run_reconstruct exp4 naive_observer "$EXP4_NAIVE_STEPS" "$EXP4_NAIVE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
-  run_reconstruct exp4 agent1_naive_planner "$EXP4_AGENT1_NAIVE_STEPS" "$EXP4_AGENT1_NAIVE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 full_model "$EXP4_MODEL_STEPS" "$EXP4_MODEL_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 social_mentalizing "$EXP4_MENTALIZE_STEPS" "$EXP4_MENTALIZE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 rational_non_mentalizing "$EXP4_NONMENTALIZE_STEPS" "$EXP4_NONMENTALIZE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 naive_observer "$EXP4_NAIVE_STEPS" "$EXP4_NAIVE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 agent1_naive_planner "$EXP4_AGENT1_NAIVE_STEPS" "$EXP4_AGENT1_NAIVE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
 fi
 
 echo "Done."

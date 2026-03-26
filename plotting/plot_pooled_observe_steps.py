@@ -10,15 +10,13 @@ from common import (
     EXPERIMENT_COLORS,
     EXPERIMENT_LABELS,
     EXPERIMENTS,
-    MODEL_PANELS,
+    OBSERVE_MODEL_PANELS,
     annotate_stats,
     apply_reference_style,
     collect_observe_pairs,
     make_output_path,
     pooled_limits,
 )
-
-OBSERVE_PANELS = [panel for panel in MODEL_PANELS if panel[1] != "agent1_naive_planner"]
 
 
 def parse_args() -> argparse.Namespace:
@@ -37,10 +35,10 @@ def main() -> int:
 
         output_file = Path(args.output_file)
 
-    fig, axes = plt.subplots(1, len(OBSERVE_PANELS), figsize=(5 * len(OBSERVE_PANELS), 6))
+    fig, axes = plt.subplots(1, len(OBSERVE_MODEL_PANELS), figsize=(5 * len(OBSERVE_MODEL_PANELS), 6))
 
     panel_data = []
-    for _label, model_name in OBSERVE_PANELS:
+    for _label, model_name in OBSERVE_MODEL_PANELS:
         by_exp = []
         for exp in EXPERIMENTS:
             x, y, _sd, _keys = collect_observe_pairs(exp, model_name, observe_metric="combined")
@@ -49,7 +47,7 @@ def main() -> int:
 
     lo, hi = pooled_limits(panel_data)
 
-    for idx, (ax, (label, _model_name), by_exp) in enumerate(zip(axes, OBSERVE_PANELS, panel_data)):
+    for idx, (ax, (label, _model_name), by_exp) in enumerate(zip(axes, OBSERVE_MODEL_PANELS, panel_data)):
         apply_reference_style(ax)
 
         pooled_x = []

@@ -470,6 +470,21 @@ function resolve_replay_observations(entry, model_label::String)
     return observations, observation_events, t, source, warnings
 end
 
+function sanitize_observations_for_model(observations, observation_events, t, source, warnings, model_label::String)
+    if !uses_agent1_naive_replay(model_label)
+        return observations, observation_events, t, source, warnings
+    end
+
+    sanitized_warnings = copy(warnings)
+    if !isempty(observations) || t > 0
+        push!(
+            sanitized_warnings,
+            "Ignored $(length(observations)) recorded observations (t=$t) for non-observing planner reconstruction.",
+        )
+    end
+    return String[], Any[], 0, "ignored_for_nonobserving_planner", sanitized_warnings
+end
+
 function build_single_context(map_id, problem_dir)
     domain = load_domain(joinpath(ROOT, "dataset", "domain.pddl"))
     problem = load_problem(joinpath(problem_dir, "$(map_id).pddl"))
@@ -806,10 +821,10 @@ function get_cached_plan!(domain, state::State, goal, cache_scope)
     return plan
 end
 
-function get_cached_naive_plan!(domain, state::State, goal, cache_scope)
+function get_cached_naive_plan!(domain, state::State, goal, cache_scope; wizard_selection_mode::Symbol=:manhattan)
     goal_key = PDDL.write_pddl(goal)
     state_key = dynamic_state_signature(state)
-    cache_key = (cache_scope, :naive, goal_key, state_key)
+    cache_key = (cache_scope, :naive, wizard_selection_mode, goal_key, state_key)
 
     lock(REPLAY_PLAN_CACHE_LOCK) do
         if haskey(REPLAY_PLAN_CACHE, cache_key)
@@ -820,7 +835,7 @@ function get_cached_naive_plan!(domain, state::State, goal, cache_scope)
     end
 
     blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
-    planner = NaivePlanner(blue_wizards, :agent1, AStarPlanner(GoalManhattan()), domain)
+    planner = NaivePlanner(blue_wizards, :agent1, AStarPlanner(GoalManhattan()), domain, wizard_selection_mode)
     plan = collect(planner(domain, state, goal))
     lock(REPLAY_PLAN_CACHE_LOCK) do
         REPLAY_PLAN_CACHE[cache_key] = copy(plan)
@@ -838,7 +853,7 @@ function classify_action(act::Term)
     end
 end
 
-function replay_case(domain, state, goal, initial_states, observation_trace, action_cost; cache_scope=nothing, case_label="")
+function replay_case(domain, state, goal, initial_states, observation_trace, action_cost; cache_scope=nothing, case_label="", use_interaction_outcome_pruning=true)
     true_state = copy(state)
     hypotheses = [copy(s) for s in initial_states]
     observations = [string(x) for x in observation_trace]
@@ -1021,7 +1036,7 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
             push!(warnings, "Pruned $pruned_hypotheses latent-state hypotheses because $(PDDL.write_pddl(action)) was not applicable.")
         end
 
-        if action.name == :interact
+        if action.name == :interact && use_interaction_outcome_pruning
             agent_sym = Symbol(string(action.args[1]))
             true_outcome = interaction_outcome_local(true_state_before, true_state, agent_sym, action)
             consistent_hypotheses = Any[]
@@ -1080,29 +1095,131 @@ function replay_case(domain, state, goal, initial_states, observation_trace, act
     )
 end
 
-function replay_case_naive_like(domain, state, goal, observation_trace, action_cost; cache_scope=nothing, case_label="")
+function replay_case_naive_like(domain, state, goal, observation_trace, action_cost; cache_scope=nothing, case_label="", wizard_selection_mode::Symbol=:manhattan)
     true_state = copy(state)
     observations = [string(x) for x in observation_trace]
     observe_steps = length(observations)
     observe_cost = action_cost[:observe] * observe_steps
     replay_start_time = time()
+    planning_time_total = 0.0
 
-    initial_plan_start = time()
-    plan = get_cached_naive_plan!(domain, true_state, goal, cache_scope)
-    initial_plan_time = time() - initial_plan_start
+    blue_wizards = [w for w in PDDL.get_objects(true_state, :wizard) if true_state[pddl"(iscolor $w blue)"]]
+    agent_name = :agent1
+    agent_const = Const(agent_name)
+    fallback_planner = (d, s, g) -> get_cached_plan!(d, s, g, (cache_scope, :naive_online))
+    blue_keys = [k for k in PDDL.get_objects(true_state, :key) if true_state[pddl"(iscolor $k blue)"]]
+    blue_key = isempty(blue_keys) ? nothing : blue_keys[1]
+    visited_wizards = Set{Const}()
+    for wizard in blue_wizards
+        if true_state[Compound(:visited, [agent_const, wizard])]
+            push!(visited_wizards, wizard)
+        end
+    end
 
-    executed_terms = copy(plan)
-    executed_actions = [PDDL.write_pddl(action) for action in executed_terms]
+    executed_terms = Term[]
+    executed_actions = String[]
     planning_action_counts = Dict("move" => 0, "interact" => 0, "observe" => 0)
-    for action in executed_terms
+    warnings = String[]
+
+    function execute_action!(action::Term)
+        push!(executed_terms, action)
+        push!(executed_actions, PDDL.write_pddl(action))
         planning_action_counts[classify_action(action)] += 1
+        true_state = PDDL.execute(domain, true_state, action)
+        return true_state
+    end
+
+    function timed_cached_plan(state_for_plan, goal_for_plan)
+        start_time = time()
+        plan = fallback_planner(domain, state_for_plan, goal_for_plan)
+        planning_time_total += time() - start_time
+        return copy(plan)
+    end
+
+    while !PDDL.satisfy(domain, true_state, goal)
+        if blue_key === nothing || true_state[pddl"(has $agent_name $blue_key)"]
+            plan_to_goal = timed_cached_plan(true_state, goal)
+            if isempty(plan_to_goal) && !PDDL.satisfy(domain, true_state, goal)
+                push!(warnings, "Naive replay could not find a goal-reaching plan.")
+                break
+            end
+            goal_plan_failed = false
+            for action in plan_to_goal
+                if !PDDL.available(domain, true_state, action)
+                    push!(warnings, "Naive replay goal plan became unavailable in the executed state.")
+                    goal_plan_failed = true
+                    break
+                end
+                true_state = execute_action!(action)
+            end
+            goal_plan_failed && break
+            continue
+        end
+
+        plan_optimal = timed_cached_plan(true_state, goal)
+        needs_blue_wizard = any(x -> x.name == :interact && x.args[end] in blue_wizards, plan_optimal)
+        if !needs_blue_wizard || isempty(blue_wizards)
+            if isempty(plan_optimal)
+                push!(warnings, "Naive replay could not find an optimal fallback plan.")
+                break
+            end
+            fallback_failed = false
+            for action in plan_optimal
+                if !PDDL.available(domain, true_state, action)
+                    push!(warnings, "Naive replay fallback plan became unavailable in the executed state.")
+                    fallback_failed = true
+                    break
+                end
+                true_state = execute_action!(action)
+            end
+            fallback_failed && break
+            continue
+        end
+
+        segment_start = time()
+        closest_wizard, plan_to_wizard, is_adjacent = choose_next_wizard_naive(
+            domain,
+            true_state,
+            blue_wizards,
+            visited_wizards,
+            agent_name,
+            fallback_planner,
+            wizard_selection_mode,
+        )
+        planning_time_total += time() - segment_start
+
+        if closest_wizard === nothing
+            push!(warnings, "Naive replay exhausted blue-wizard candidates before reaching the goal.")
+            break
+        end
+
+        if !is_adjacent
+            move_failed = false
+            for action in plan_to_wizard
+                if !PDDL.available(domain, true_state, action)
+                    push!(warnings, "Naive replay movement plan toward $(string(closest_wizard)) became unavailable in the executed state.")
+                    move_failed = true
+                    break
+                end
+                true_state = execute_action!(action)
+            end
+            move_failed && break
+        end
+
+        interact_action = PDDL.parse_pddl("(interact $agent_name $closest_wizard)")
+        if !PDDL.available(domain, true_state, interact_action)
+            push!(warnings, "Naive replay reached $(string(closest_wizard)) but could not interact with it.")
+            break
+        end
+        true_state = execute_action!(interact_action)
+        push!(visited_wizards, closest_wizard)
     end
 
     planning_steps = length(executed_actions)
     planning_cost = calculate_plan_cost(executed_terms, action_cost)
     total_steps = observe_steps + planning_steps
     replay_elapsed = time() - replay_start_time
-    replay_nonplanning_time = max(replay_elapsed - initial_plan_time, 0.0)
+    replay_nonplanning_time = max(replay_elapsed - planning_time_total, 0.0)
 
     return Dict(
         "observe_steps" => observe_steps,
@@ -1113,11 +1230,11 @@ function replay_case_naive_like(domain, state, goal, observation_trace, action_c
         "total_cost" => observe_cost + planning_cost,
         "executed_actions" => executed_actions,
         "planning_action_counts" => planning_action_counts,
-        "initial_plan_time" => initial_plan_time,
+        "initial_plan_time" => planning_time_total,
         "replan_time_total" => 0.0,
         "replay_nonplanning_time" => replay_nonplanning_time,
         "replay_elapsed" => replay_elapsed,
-        "warnings" => String[],
+        "warnings" => warnings,
     )
 end
 
@@ -1149,7 +1266,81 @@ function resolve_direct_evidence_candidates(state::State, candidate_names; had_d
     return selected, warnings
 end
 
-function replay_case_candidate_search(domain, state, goal, candidate_names, observation_trace, action_cost; cache_scope=nothing, case_label="", had_direct_evidence::Bool=false)
+function shortest_plan_to_wizard_adjacency(
+    domain,
+    state,
+    wizard::Const,
+    agent_name::Symbol,
+    planner,
+)
+    wizard_loc = get_obj_loc(state, wizard)
+    agent_loc = get_obj_loc(state, Const(agent_name))
+    agent_adjacent = (abs(agent_loc[1] - wizard_loc[1]) + abs(agent_loc[2] - wizard_loc[2]) == 1)
+    agent_adjacent && return true, Term[]
+
+    best_plan = nothing
+    for (dx, dy) in ((0, -1), (0, 1), (-1, 0), (1, 0))
+        adj_pos = (wizard_loc[1] + dx, wizard_loc[2] + dy)
+        adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
+        try
+            plan = collect(planner(domain, state, adj_goal))
+            isempty(plan) && continue
+            if best_plan === nothing || length(plan) < length(best_plan)
+                best_plan = plan
+            end
+        catch
+            continue
+        end
+    end
+
+    best_plan === nothing && return false, Term[]
+    return true, best_plan
+end
+
+function choose_shortest_reachable_wizard(
+    domain,
+    state,
+    candidate_wizards,
+    visited_wizards,
+    agent_name::Symbol,
+    planner,
+)
+    chosen_wizard = nothing
+    chosen_plan = Term[]
+    unreachable_wizard = nothing
+    chosen_length = typemax(Int)
+
+    for wizard in candidate_wizards
+        wizard in visited_wizards && continue
+        reachable, plan = shortest_plan_to_wizard_adjacency(domain, state, wizard, agent_name, planner)
+        if !reachable
+            unreachable_wizard === nothing && (unreachable_wizard = wizard)
+            continue
+        end
+        plan_length = length(plan)
+        if chosen_wizard === nothing || plan_length < chosen_length ||
+           (plan_length == chosen_length && string(wizard) < string(chosen_wizard))
+            chosen_wizard = wizard
+            chosen_plan = plan
+            chosen_length = plan_length
+        end
+    end
+
+    return chosen_wizard, chosen_plan, unreachable_wizard
+end
+
+function replay_case_candidate_search(
+    domain,
+    state,
+    goal,
+    candidate_names,
+    observation_trace,
+    action_cost;
+    cache_scope=nothing,
+    case_label="",
+    had_direct_evidence::Bool=false,
+    require_exhaustive_search_before_goal::Bool=false,
+)
     current_state = copy(state)
     observations = [string(x) for x in observation_trace]
     observe_steps = length(observations)
@@ -1198,7 +1389,10 @@ function replay_case_candidate_search(domain, state, goal, candidate_names, obse
     end
 
     while !PDDL.satisfy(domain, current_state, goal)
-        if blue_key !== nothing && current_state[pddl"(has $agent_name $blue_key)"]
+        exhaustive_search_complete = length(visited_wizards) >= length(all_blue_wizards)
+        if blue_key !== nothing &&
+           current_state[pddl"(has $agent_name $blue_key)"] &&
+           (!require_exhaustive_search_before_goal || exhaustive_search_complete)
             plan_to_goal = timed_cached_plan(current_state, goal)
             if isempty(plan_to_goal)
                 push!(warnings, "Candidate-search planner could not find a goal-reaching plan after obtaining the blue key.")
@@ -1217,24 +1411,21 @@ function replay_case_candidate_search(domain, state, goal, candidate_names, obse
             continue
         end
 
-        agent_loc = get_obj_loc(current_state, agent_const)
-        closest_wizard = nothing
-        closest_wizard_loc = nothing
-        min_dist = typemax(Int)
-        for wizard in candidate_wizards
-            if wizard in visited_wizards
-                continue
-            end
-            wizard_loc = get_obj_loc(current_state, wizard)
-            dist = sum(abs.(agent_loc .- wizard_loc))
-            if dist < min_dist
-                min_dist = dist
-                closest_wizard = wizard
-                closest_wizard_loc = wizard_loc
-            end
-        end
+        closest_wizard, plan_to_wizard, unreachable_wizard = choose_shortest_reachable_wizard(
+            domain,
+            current_state,
+            candidate_wizards,
+            visited_wizards,
+            agent_name,
+            fallback_planner,
+        )
 
         if closest_wizard === nothing
+            if unreachable_wizard !== nothing
+                push!(visited_wizards, unreachable_wizard)
+                push!(warnings, "Candidate-search planner could not reach $(string(unreachable_wizard)); removed it and continued.")
+                continue
+            end
             if !broadened_beyond_direct_evidence && length(candidate_wizards) < length(all_blue_wizards)
                 candidate_wizards = all_blue_wizards
                 broadened_beyond_direct_evidence = true
@@ -1246,13 +1437,6 @@ function replay_case_candidate_search(domain, state, goal, candidate_names, obse
             end
             push!(warnings, "Candidate-search planner exhausted all candidate wizards before reaching the goal.")
             break
-        end
-
-        plan_to_wizard = plan_to_wizard_location_naive(domain, current_state, closest_wizard_loc, agent_name, fallback_planner)
-        if isempty(plan_to_wizard) && min_dist != 1
-            push!(visited_wizards, closest_wizard)
-            push!(warnings, "Candidate-search planner could not reach $(string(closest_wizard)); removed it and continued.")
-            continue
         end
 
         move_plan_failed = false
@@ -1482,13 +1666,22 @@ function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cos
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
     reduced_cache = Dict{String, Any}()
+    total_cases = length(steps_dict)
+    case_idx = 0
     use_reduced_agent1_planning = true
+    agent1_naive_only = uses_agent1_naive_replay(model_label)
 
     for (map_key, step_entry) in steps_dict
+        case_idx += 1
+        case_start_time = time()
         entry = merge_step_and_replay_entry(step_entry, get(replay_trace_dict, string(map_key), nothing))
         observations, observation_events, t, observation_source, observation_warnings = resolve_replay_observations(entry, model_label)
+        observations, observation_events, t, observation_source, observation_warnings = sanitize_observations_for_model(
+            observations, observation_events, t, observation_source, observation_warnings, model_label
+        )
+        println("[$case_idx/$total_cases] starting $map_key (t=$(t), obs_len=$(length(observations)))")
         map_id = normalize_exp1_map_key(map_key)
-        if !haskey(cache, map_id)
+        if !agent1_naive_only && !haskey(cache, map_id)
             cache[map_id] = build_single_context(map_id, problem_dir)
         end
         if use_reduced_agent1_planning && !haskey(reduced_cache, map_id)
@@ -1496,8 +1689,8 @@ function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cos
         end
 
         clear_planner_cache!()
-        ctx = cache[map_id]
-        replay_ctx = use_reduced_agent1_planning ? reduced_cache[map_id] : ctx
+        ctx = agent1_naive_only ? nothing : cache[map_id]
+        replay_ctx = use_reduced_agent1_planning || agent1_naive_only ? reduced_cache[map_id] : ctx
         candidate_names = String[]
         warnings = copy(observation_warnings)
         if is_mentalizing_model(model_label)
@@ -1535,6 +1728,7 @@ function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cos
             replay = replay_case_naive_like(
                 replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, observations, action_cost;
                 cache_scope=("exp1", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+                wizard_selection_mode=:candidate_search,
             )
         else
             replay = replay_case(
@@ -1559,6 +1753,25 @@ function reconstruct_exp1(steps_dict, replay_trace_dict, problem_dir, action_cos
             ),
             replay,
         )
+        case_elapsed = time() - case_start_time
+        plan_cache_stats = get_replay_plan_cache_stats()
+        posterior_cache_stats = get_posterior_filter_cache_stats()
+        plan_hits = plan_cache_stats["hits"]
+        plan_misses = plan_cache_stats["misses"]
+        posterior_hits = posterior_cache_stats["hits"]
+        posterior_misses = posterior_cache_stats["misses"]
+        initial_plan_time = Float64(out[map_key]["initial_plan_time"])
+        replan_time_total = Float64(out[map_key]["replan_time_total"])
+        replay_nonplanning_time = Float64(out[map_key]["replay_nonplanning_time"])
+        println(
+            "[$case_idx/$total_cases] $map_key completed in $(round(case_elapsed, digits=2))s " *
+            "(filter=0.0s, " *
+            "initial_plan=$(round(initial_plan_time, digits=2))s, " *
+            "replans=$(round(replan_time_total, digits=2))s, " *
+            "other_replay=$(round(replay_nonplanning_time, digits=2))s, " *
+            "plan cache: $(plan_hits)/$(plan_misses) hits/misses, " *
+            "posterior cache: $(posterior_hits)/$(posterior_misses) hits/misses)"
+        )
     end
 
     return out
@@ -1568,13 +1781,22 @@ function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cos
     out = Dict{String, Any}()
     cache = Dict{String, Any}()
     reduced_cache = Dict{String, Any}()
+    total_cases = length(steps_dict)
+    case_idx = 0
     use_reduced_agent1_planning = true
+    agent1_naive_only = uses_agent1_naive_replay(model_label)
 
     for (map_key, step_entry) in steps_dict
+        case_idx += 1
+        case_start_time = time()
         entry = merge_step_and_replay_entry(step_entry, get(replay_trace_dict, string(map_key), nothing))
         observations, observation_events, t, observation_source, observation_warnings = resolve_replay_observations(entry, model_label)
+        observations, observation_events, t, observation_source, observation_warnings = sanitize_observations_for_model(
+            observations, observation_events, t, observation_source, observation_warnings, model_label
+        )
+        println("[$case_idx/$total_cases] starting $map_key (t=$(t), obs_len=$(length(observations)))")
         map_id = split(map_key, "_")[1]
-        if !haskey(cache, map_id)
+        if !agent1_naive_only && !haskey(cache, map_id)
             cache[map_id] = build_single_context(map_id, problem_dir)
         end
         if use_reduced_agent1_planning && !haskey(reduced_cache, map_id)
@@ -1582,8 +1804,8 @@ function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cos
         end
 
         clear_planner_cache!()
-        ctx = cache[map_id]
-        replay_ctx = use_reduced_agent1_planning ? reduced_cache[map_id] : ctx
+        ctx = agent1_naive_only ? nothing : cache[map_id]
+        replay_ctx = use_reduced_agent1_planning || agent1_naive_only ? reduced_cache[map_id] : ctx
         candidate_names = String[]
         warnings = copy(observation_warnings)
         if is_mentalizing_model(model_label)
@@ -1621,6 +1843,7 @@ function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cos
             replay = replay_case_naive_like(
                 replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, observations, action_cost;
                 cache_scope=("exp2", map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+                wizard_selection_mode=:candidate_search,
             )
         else
             replay = replay_case(
@@ -1645,6 +1868,25 @@ function reconstruct_exp2(steps_dict, replay_trace_dict, problem_dir, action_cos
             ),
             replay,
         )
+        case_elapsed = time() - case_start_time
+        plan_cache_stats = get_replay_plan_cache_stats()
+        posterior_cache_stats = get_posterior_filter_cache_stats()
+        plan_hits = plan_cache_stats["hits"]
+        plan_misses = plan_cache_stats["misses"]
+        posterior_hits = posterior_cache_stats["hits"]
+        posterior_misses = posterior_cache_stats["misses"]
+        initial_plan_time = Float64(out[map_key]["initial_plan_time"])
+        replan_time_total = Float64(out[map_key]["replan_time_total"])
+        replay_nonplanning_time = Float64(out[map_key]["replay_nonplanning_time"])
+        println(
+            "[$case_idx/$total_cases] $map_key completed in $(round(case_elapsed, digits=2))s " *
+            "(filter=0.0s, " *
+            "initial_plan=$(round(initial_plan_time, digits=2))s, " *
+            "replans=$(round(replan_time_total, digits=2))s, " *
+            "other_replay=$(round(replay_nonplanning_time, digits=2))s, " *
+            "plan cache: $(plan_hits)/$(plan_misses) hits/misses, " *
+            "posterior cache: $(posterior_hits)/$(posterior_misses) hits/misses)"
+        )
     end
 
     return out
@@ -1657,6 +1899,7 @@ function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, ac
     total_cases = length(steps_dict)
     case_idx = 0
     use_reduced_agent1_planning = true
+    agent1_naive_only = uses_agent1_naive_replay(model_label)
 
     for (map_key, step_entry) in steps_dict
         case_idx += 1
@@ -1664,13 +1907,16 @@ function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, ac
         map_id, _ = parse_map_scenario_key(map_key)
         entry = merge_step_and_replay_entry(step_entry, get(replay_trace_dict, string(map_key), nothing))
         observations, observation_events, t, observation_source, observation_warnings = resolve_replay_observations(entry, model_label)
+        observations, observation_events, t, observation_source, observation_warnings = sanitize_observations_for_model(
+            observations, observation_events, t, observation_source, observation_warnings, model_label
+        )
         println("[$case_idx/$total_cases] starting $map_key (t=$(t), obs_len=$(length(observations)))")
 
         if isempty(observations) && t > 0 && uses_latent_hypothesis_replay(model_label)
             error("Missing ordered observations for $map_key; cannot replay without a sequence.")
         end
 
-        if !haskey(cache, map_id)
+        if !agent1_naive_only && !haskey(cache, map_id)
             cache[map_id] = build_multi_context(map_id, problem_dir)
         end
         if use_reduced_agent1_planning && !haskey(reduced_cache, map_id)
@@ -1678,8 +1924,8 @@ function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, ac
         end
 
         clear_planner_cache!()
-        ctx = cache[map_id]
-        replay_ctx = use_reduced_agent1_planning ? reduced_cache[map_id] : ctx
+        ctx = agent1_naive_only ? nothing : cache[map_id]
+        replay_ctx = use_reduced_agent1_planning || agent1_naive_only ? reduced_cache[map_id] : ctx
         candidate_names = String[]
         warnings = copy(observation_warnings)
         posterior_filter_start = time()
@@ -1703,7 +1949,8 @@ function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, ac
                 case_label=map_key,
             )
         elseif uses_direct_evidence_candidates(model_label)
-            if exp4_metadata_style && disable_exp4_interaction_outcome_pruning
+            disable_outcome_pruning = exp4_metadata_style && disable_exp4_interaction_outcome_pruning
+            if disable_outcome_pruning
                 candidate_names = String[]
                 direct_warnings = ["Exp4 interaction-outcome pruning disabled for direct-evidence reconstruction; searched all blue wizard candidates."]
                 had_direct_evidence = false
@@ -1723,12 +1970,14 @@ function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, ac
                 replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
                 cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
                 case_label=map_key,
+                use_interaction_outcome_pruning=!disable_outcome_pruning,
             )
         elseif uses_agent1_naive_replay(model_label)
             replay = replay_case_naive_like(
                 replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, observations, action_cost;
                 cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
                 case_label=map_key,
+                wizard_selection_mode=:candidate_search,
             )
         else
             replay = replay_case(

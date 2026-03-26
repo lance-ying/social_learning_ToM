@@ -6,7 +6,7 @@ import argparse
 import matplotlib.pyplot as plt
 
 from common import (
-    MODEL_PANELS,
+    OBSERVE_MODEL_PANELS,
     annotate_stats,
     apply_reference_style,
     collect_observe_pairs,
@@ -19,6 +19,8 @@ ROW_CONFIGS = [
     ("exp1", "combined", "Experiment 1"),
     ("exp2", "combined", "Experiment 2"),
     ("exp3", "combined", "Experiment 3\ncombined"),
+    ("exp3", "agent2", "Experiment 3\nagent 2"),
+    ("exp3", "agent3", "Experiment 3\nagent 3"),
     ("exp4", "agent2", "Experiment 4\nagent 2"),
     ("exp4", "agent3", "Experiment 4\nagent 3"),
 ]
@@ -40,10 +42,14 @@ def main() -> int:
 
         output_file = Path(args.output_file)
 
-    fig, axes = plt.subplots(len(ROW_CONFIGS), len(MODEL_PANELS), figsize=(5 * len(MODEL_PANELS), 24))
+    fig, axes = plt.subplots(
+        len(ROW_CONFIGS),
+        len(OBSERVE_MODEL_PANELS),
+        figsize=(5 * len(OBSERVE_MODEL_PANELS), 4.8 * len(ROW_CONFIGS)),
+    )
 
     for row_idx, (exp, observe_metric, row_label) in enumerate(ROW_CONFIGS):
-        for col_idx, (ax, (panel_label, model_name)) in enumerate(zip(axes[row_idx], MODEL_PANELS)):
+        for col_idx, (ax, (panel_label, model_name)) in enumerate(zip(axes[row_idx], OBSERVE_MODEL_PANELS)):
             x, y, sd, _keys = collect_observe_pairs(exp, model_name, observe_metric=observe_metric)
             apply_reference_style(ax)
 

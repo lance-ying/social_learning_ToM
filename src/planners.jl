@@ -15,11 +15,16 @@ struct NaivePlanner <: SymbolicPlanners.Planner
     agent_name::Symbol
     fallback_planner::Any  # AStarPlanner instance
     domain::Any  # Store domain for dynamic action computation
+    wizard_selection_mode::Symbol
 end
 
 # Constructor without domain (for backward compatibility)
 NaivePlanner(blue_wizards::Vector{Const}, agent_name::Symbol, fallback_planner::Any) =
-    NaivePlanner(blue_wizards, agent_name, fallback_planner, nothing)
+    NaivePlanner(blue_wizards, agent_name, fallback_planner, nothing, :manhattan)
+
+# Constructor with domain and default selection mode (for backward compatibility)
+NaivePlanner(blue_wizards::Vector{Const}, agent_name::Symbol, fallback_planner::Any, domain::Any) =
+    NaivePlanner(blue_wizards, agent_name, fallback_planner, domain, :manhattan)
 
 """
     NaivePlannerSolution
@@ -65,7 +70,8 @@ Base.copy(sol::NaivePlannerSolution) = NaivePlannerSolution(
 # - So we should skip that wizard and find the next closest
 function compute_naive_action(
     domain::Domain, state::State, spec::Any,
-    blue_wizards::Vector{Const}, agent_name::Symbol, fallback_planner::Any
+    blue_wizards::Vector{Const}, agent_name::Symbol, fallback_planner::Any,
+    wizard_selection_mode::Symbol
 )
     # Find blue key
     blue_keys = [k for k in PDDL.get_objects(state, :key) if state[pddl"(iscolor $k blue)"]]
@@ -90,7 +96,6 @@ function compute_naive_action(
         return isempty(plan_optimal) ? missing : plan_optimal[1]
     end
     
-    agent_loc = get_obj_loc(state, Const(agent_name))
     agent_const = Const(agent_name)
 
     # Find wizards that have been visited using the (visited ?a ?w) predicate
@@ -101,51 +106,20 @@ function compute_naive_action(
         end
     end
     
-    # Find closest UNVISITED wizard
-    closest_wizard = nothing
-    closest_wizard_loc = nothing
-    min_dist = Inf
-    
-    for wizard in blue_wizards
-        if wizard in visited_wizards
-            continue  # Skip visited wizards
-        end
-        wizard_loc = get_obj_loc(state, wizard)
-        dist = sum(abs.(agent_loc .- wizard_loc))
-        if dist < min_dist
-            min_dist = dist
-            closest_wizard = wizard
-            closest_wizard_loc = wizard_loc
-        end
-    end
+    closest_wizard, plan_to_wizard, is_adjacent = choose_next_wizard_naive(
+        domain, state, blue_wizards, visited_wizards, agent_name, fallback_planner, wizard_selection_mode
+    )
     
     if closest_wizard === nothing
         # All wizards visited - shouldn't happen, fall back to optimal
         return isempty(plan_optimal) ? missing : plan_optimal[1]
     end
     
-    # Check if we're adjacent to the target wizard (must be exactly distance 1)
-    is_adjacent = min_dist == 1
-
     if is_adjacent
         # Interact with the wizard
         return PDDL.parse_pddl("(interact $agent_name $closest_wizard)")
     else
-        # Move toward the wizard - return on first successful path (fast)
-        for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]
-            adj_pos = (closest_wizard_loc[1] + dx, closest_wizard_loc[2] + dy)
-            adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
-            try
-                plan_to_adj = collect(fallback_planner(domain, state, adj_goal))
-                if !isempty(plan_to_adj)
-                    return plan_to_adj[1]  # Return immediately on first success
-                end
-            catch
-                continue
-            end
-        end
-
-        return missing
+        return isempty(plan_to_wizard) ? missing : plan_to_wizard[1]
     end
 end
 
@@ -164,7 +138,8 @@ function SymbolicPlanners.get_action(sol::NaivePlannerSolution, state::State)
     if sol.domain !== nothing
         return compute_naive_action(
             sol.domain, state, sol.spec,
-            sol.planner.blue_wizards, sol.planner.agent_name, sol.planner.fallback_planner
+            sol.planner.blue_wizards, sol.planner.agent_name, sol.planner.fallback_planner,
+            sol.planner.wizard_selection_mode
         )
     end
 
@@ -287,12 +262,94 @@ function plan_to_wizard_location_naive(
     return Term[]
 end
 
+function shortest_plan_to_wizard_location_naive(
+    domain::Domain, state::State, wizard_loc::Tuple{Int,Int},
+    agent_name::Symbol, planner
+)
+    agent_loc = get_obj_loc(state, Const(agent_name))
+    agent_adjacent = (abs(agent_loc[1] - wizard_loc[1]) + abs(agent_loc[2] - wizard_loc[2]) == 1)
+    agent_adjacent && return true, Term[]
+
+    best_plan = nothing
+    for (dx, dy) in [(0, -1), (0, 1), (-1, 0), (1, 0)]
+        adj_pos = (wizard_loc[1] + dx, wizard_loc[2] + dy)
+        adj_goal = PDDL.parse_pddl("(and (= (xloc $agent_name) $(adj_pos[1])) (= (yloc $agent_name) $(adj_pos[2])))")
+        try
+            plan = collect(planner(domain, state, adj_goal))
+            isempty(plan) && continue
+            if best_plan === nothing || length(plan) < length(best_plan)
+                best_plan = plan
+            end
+        catch
+            continue
+        end
+    end
+
+    best_plan === nothing && return false, Term[]
+    return true, best_plan
+end
+
+function choose_next_wizard_naive(
+    domain::Domain, state::State, blue_wizards::Vector{Const}, visited_wizards::Set{Const},
+    agent_name::Symbol, fallback_planner::Any, wizard_selection_mode::Symbol
+)
+    if wizard_selection_mode == :candidate_search
+        closest_wizard = nothing
+        chosen_plan = Term[]
+        chosen_length = typemax(Int)
+        for wizard in blue_wizards
+            wizard in visited_wizards && continue
+            wizard_loc = get_obj_loc(state, wizard)
+            reachable, plan = shortest_plan_to_wizard_location_naive(domain, state, wizard_loc, agent_name, fallback_planner)
+            reachable || continue
+            plan_length = length(plan)
+            if closest_wizard === nothing || plan_length < chosen_length ||
+               (plan_length == chosen_length && string(wizard) < string(closest_wizard))
+                closest_wizard = wizard
+                chosen_plan = plan
+                chosen_length = plan_length
+            end
+        end
+        return closest_wizard, chosen_plan, closest_wizard !== nothing && chosen_length == 0
+    elseif wizard_selection_mode == :manhattan
+        agent_loc = get_obj_loc(state, Const(agent_name))
+        closest_wizard = nothing
+        closest_wizard_loc = nothing
+        min_dist = Inf
+
+        for wizard in blue_wizards
+            wizard in visited_wizards && continue
+            wizard_loc = get_obj_loc(state, wizard)
+            dist = sum(abs.(agent_loc .- wizard_loc))
+            if dist < min_dist
+                min_dist = dist
+                closest_wizard = wizard
+                closest_wizard_loc = wizard_loc
+            end
+        end
+
+        if closest_wizard === nothing
+            return nothing, Term[], false
+        end
+
+        if min_dist == 1
+            return closest_wizard, Term[], true
+        end
+
+        plan_to_wizard = plan_to_wizard_location_naive(domain, state, closest_wizard_loc, agent_name, fallback_planner)
+        return closest_wizard, plan_to_wizard, false
+    end
+
+    error("Unsupported NaivePlanner wizard_selection_mode: $wizard_selection_mode")
+end
+
 """
 Generate full naive plan for trajectory generation (used for ground truth).
 """
 function generate_naive_plan(
     domain::Domain, state::State, goal::Any, 
-    blue_wizards::Vector{Const}, agent_name::Symbol, fallback_planner::Any
+    blue_wizards::Vector{Const}, agent_name::Symbol, fallback_planner::Any,
+    wizard_selection_mode::Symbol=:manhattan
 )
     plan_optimal = collect(fallback_planner(domain, state, goal))
     needs_wizards = any(x -> x.name == :interact && x.args[end] in blue_wizards, plan_optimal)
@@ -317,29 +374,14 @@ function generate_naive_plan(
         end
 
         while !current_state[pddl"(has $agent_name $blue_key)"] && length(visited_wizards) < length(blue_wizards)
-            agent_loc = get_obj_loc(current_state, Const(agent_name))
-            closest_wizard = nothing
-            closest_wizard_loc = nothing
-            min_dist = Inf
-            
-            for wizard in blue_wizards
-                if wizard in visited_wizards
-                    continue
-                end
-                wizard_loc = get_obj_loc(current_state, wizard)
-                dist = sum(abs.(agent_loc .- wizard_loc))
-                if dist < min_dist
-                    min_dist = dist
-                    closest_wizard = wizard
-                    closest_wizard_loc = wizard_loc
-                end
-            end
+            closest_wizard, plan_to_wizard, _ = choose_next_wizard_naive(
+                domain, current_state, blue_wizards, visited_wizards, agent_name, fallback_planner, wizard_selection_mode
+            )
             
             if closest_wizard === nothing
                 break
             end
             
-            plan_to_wizard = plan_to_wizard_location_naive(domain, current_state, closest_wizard_loc, agent_name, fallback_planner)
             append!(full_naive_plan, plan_to_wizard)
             
             for action in plan_to_wizard
@@ -372,7 +414,7 @@ Execute the naive planner - returns a solution that can compute actions dynamica
 function (planner::NaivePlanner)(domain::Domain, state::State, goal)
     plan = generate_naive_plan(
         domain, state, goal,
-        planner.blue_wizards, planner.agent_name, planner.fallback_planner
+        planner.blue_wizards, planner.agent_name, planner.fallback_planner, planner.wizard_selection_mode
     )
 
     # Build trajectory and hash cache for O(1) action lookup
@@ -403,7 +445,7 @@ function SymbolicPlanners.refine!(
 )
     new_plan = generate_naive_plan(
         domain, state, spec,
-        planner.blue_wizards, planner.agent_name, planner.fallback_planner
+        planner.blue_wizards, planner.agent_name, planner.fallback_planner, planner.wizard_selection_mode
     )
 
     empty!(sol.plan)
@@ -432,4 +474,3 @@ function SymbolicPlanners.refine!(
 
     return sol
 end
-

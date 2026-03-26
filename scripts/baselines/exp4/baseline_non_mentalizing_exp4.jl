@@ -98,58 +98,6 @@ function observation_stop_horizon(plan)
     return length(plan)
 end
 
-function first_blue_wizard_interaction_horizon(plan, blue_wizards)
-    for (idx, action) in enumerate(plan)
-        if action.name == :interact && action.args[end] in blue_wizards
-            return idx
-        end
-    end
-    return length(plan)
-end
-
-function allocate_aggregated_observations(total_observations::Int, plan_agent2, plan_agent3)
-    target_agent2 = total_observations ÷ 2
-    target_agent3 = total_observations - target_agent2
-    available_agent2 = length(plan_agent2)
-    available_agent3 = length(plan_agent3)
-
-    agent2_count = min(target_agent2, available_agent2)
-    agent3_count = min(target_agent3, available_agent3)
-    remaining = total_observations - agent2_count - agent3_count
-
-    while remaining > 0
-        if agent2_count < available_agent2
-            agent2_count += 1
-            remaining -= 1
-            remaining == 0 && break
-        end
-        if agent3_count < available_agent3
-            agent3_count += 1
-            remaining -= 1
-            remaining == 0 && break
-        end
-        if agent2_count >= available_agent2 && agent3_count >= available_agent3
-            error("Insufficient observed plan length to allocate $total_observations observations")
-        end
-    end
-
-    observations = String[]
-    a2_remaining = agent2_count
-    a3_remaining = agent3_count
-    while a2_remaining > 0 || a3_remaining > 0
-        if a2_remaining > 0
-            push!(observations, "agent2")
-            a2_remaining -= 1
-        end
-        if a3_remaining > 0
-            push!(observations, "agent3")
-            a3_remaining -= 1
-        end
-    end
-
-    return observations, agent2_count, agent3_count
-end
-
 function materialize_interleaved_observation_trace(map_key::String, observations, plan_agent2, plan_agent3, domain_agent2, state_agent2, domain_agent3, state_agent3)
     trace = Any[]
     events = Any[]
@@ -184,6 +132,47 @@ function materialize_interleaved_observation_trace(map_key::String, observations
     return trace, events
 end
 
+"""
+Run cost comparison on an agent1-only planning sub-problem.
+Returns (should_observe::Bool, T::Int).
+"""
+function agent_cost_comparison(domain_render, domain_path, problem_dir, map_id,
+                                observed_plan, action_cost)
+    domain_sub = load_domain(domain_path)
+    txt_path = joinpath(problem_dir, "$(map_id).txt")
+    ascii_content = read(txt_path, String)
+
+    temp_path = joinpath(problem_dir, ".temp_agent1_$(map_id).txt")
+    if !isfile(temp_path)
+        filtered_ascii = filter_ascii_agents(ascii_content, :agent1)
+        write(temp_path, filtered_ascii)
+    end
+    problem_sub = load_ascii_problem(temp_path)
+    state_sub = initstate(domain_sub, problem_sub)
+    state_render_sub = copy(state_sub)
+
+    blue_wizards = [w for w in PDDL.get_objects(state_sub, :wizard) if state_sub[pddl"(iscolor $w blue)"]]
+
+    if isempty(blue_wizards)
+        return (false, 0)
+    end
+
+    new_state = copy(state_render_sub)
+
+    Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem_sub.goal, blue_wizards, action_cost)
+
+    planner = AStarPlanner(GoalManhattan())
+    plan = collect(planner(domain_sub, state_sub, problem_sub.goal))
+
+    Q_observe = calculate_plan_cost(plan, action_cost)
+
+    T = observation_stop_horizon(observed_plan)
+
+    Q_observe = Q_observe + action_cost[:observe] * T
+
+    return (Q_observe < Q_not_observe, T)
+end
+
 domain_path = joinpath(@__DIR__, "..", "..", "..", "dataset", "domain.pddl")
 
 for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d+", x[1]).match))
@@ -191,23 +180,6 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
     println("\nProcessing map: $map_id")
 
     clear_planner_cache!()
-
-    domain = load_domain(domain_path)
-    problem = load_ascii_problem(joinpath(PROBLEM_DIR, "$(map_id).txt"))
-    state = initstate(domain, problem)
-    state_render = copy(state)
-    domain, state = PDDL.compiled(domain, problem)
-    blue_wizards = [w for w in PDDL.get_objects(state, :wizard) if state[pddl"(iscolor $w blue)"]]
-
-    new_state = copy(state_render)
-    Q_not_observe = estimate_self_exploration_cost(domain_render, new_state, problem.goal, blue_wizards, action_cost)
-
-    planner = AStarPlanner(GoalManhattan())
-    plan_main = collect(planner(domain, state, problem.goal))
-    Q_observe = calculate_plan_cost(plan_main, action_cost)
-    T = first_blue_wizard_interaction_horizon(plan_main, blue_wizards)
-    Q_observe = Q_observe + action_cost[:observe] * T
-    should_observe = Q_observe < Q_not_observe
 
     domain_agent2 = load_domain(domain_path)
     domain_agent3 = load_domain(domain_path)
@@ -234,6 +206,7 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
     domain_agent3, state_agent3 = PDDL.compiled(domain_agent3, problem_agent3)
     goals_agent3, _ = initialize_goals(state_agent3, :agent3)
 
+    planner = AStarPlanner(GoalManhattan())
     for scenario in 1:2
         map_key = "$(map_id)_scenario$(scenario)"
         agent2_goal_info = agent_goals["agent2"][scenario]
@@ -251,35 +224,50 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
             generate_naive_plan(domain_agent3, state_agent3, goals_agent3[agent3_gem], blue_wizards_agent3, :agent3, planner) :
             collect(planner(domain_agent3, state_agent3, goals_agent3[agent3_gem]))
 
-        if should_observe
-            observations, agent2_count, agent3_count = allocate_aggregated_observations(
-                T, observed_plan_agent2, observed_plan_agent3
-            )
-        else
-            observations = String[]
-            agent2_count = 0
-            agent3_count = 0
+        should_observe_agent2, T_agent2 = agent_cost_comparison(
+            domain_render, domain_path, PROBLEM_DIR, map_id, observed_plan_agent2, action_cost)
+        should_observe_agent3, T_agent3 = agent_cost_comparison(
+            domain_render, domain_path, PROBLEM_DIR, map_id, observed_plan_agent3, action_cost)
+
+        agent2_count = should_observe_agent2 ? T_agent2 : 0
+        agent3_count = should_observe_agent3 ? T_agent3 : 0
+        T = agent2_count + agent3_count
+
+        observations = String[]
+        a2_remaining = agent2_count
+        a3_remaining = agent3_count
+        while a2_remaining > 0 || a3_remaining > 0
+            if a2_remaining > 0
+                push!(observations, "agent2")
+                a2_remaining -= 1
+            end
+            if a3_remaining > 0
+                push!(observations, "agent3")
+                a3_remaining -= 1
+            end
         end
 
         steps_dict[map_key] = Dict(
             "observations" => observations,
             "agent2_count" => agent2_count,
             "agent3_count" => agent3_count,
-            "t" => agent2_count + agent3_count
+            "t" => T
         )
         observation_trace, observation_events = materialize_interleaved_observation_trace(
             map_key, observations, observed_plan_agent2, observed_plan_agent3,
             domain_agent2, state_agent2, domain_agent3, state_agent3
         )
         replay_trace_dict[map_key] = Dict(
-            "t" => agent2_count + agent3_count,
+            "t" => T,
             "observations" => observation_trace,
             "observation_events" => observation_events,
             "agent2_count" => agent2_count,
             "agent3_count" => agent3_count,
-            "should_observe" => should_observe,
-            "aggregated_t_if_observed" => T,
-            "stop_reason" => "aggregated_cost_comparison",
+            "agent2_should_observe" => should_observe_agent2,
+            "agent3_should_observe" => should_observe_agent3,
+            "agent2_t_if_observed" => T_agent2,
+            "agent3_t_if_observed" => T_agent3,
+            "stop_reason" => "cost_comparison",
         )
         next!(progress)
     end

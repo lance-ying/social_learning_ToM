@@ -64,6 +64,7 @@ MODEL_PANELS = [
     ("Naive Planner", "agent1_naive_planner"),
     ("Naive Observer", "naive_observer"),
 ]
+OBSERVE_MODEL_PANELS = [panel for panel in MODEL_PANELS if panel[1] != "agent1_naive_planner"]
 NON_TASK_LEVELS = {"comprehension_check", "experiment"}
 EXP34_OBSERVE_SKIP_LEVELS = {"s111_1"}
 EXP34_OBSERVE_SKIP_PREFIXES = ("sm111_", "sm112_")
@@ -281,6 +282,21 @@ def aggregate_human_total_steps(exp: str) -> dict[str, dict[str, float]]:
 
 
 @lru_cache(maxsize=None)
+def aggregate_human_total_cost(exp: str) -> dict[str, dict[str, float]]:
+    raw = load_json(REPO_ROOT / "data_processing" / "outputs" / "human_costs" / f"{exp}_human_costs.json")
+    per_case = raw.get("per_case", {})
+    return {
+        human_total_level_to_model(exp, level): {
+            "mean": float(stats["total_cost_mean"]),
+            "median": float(stats["total_cost_median"]),
+            "sd": float(stats["total_cost_sd"]),
+            "n": int(stats["n_participants"]),
+        }
+        for level, stats in per_case.items()
+    }
+
+
+@lru_cache(maxsize=None)
 def aggregate_human_observes(exp: str) -> dict[str, dict[str, float]]:
     combined_values: dict[str, list[float]] = defaultdict(list)
     agent2_values: dict[str, list[float]] = defaultdict(list)
@@ -401,6 +417,31 @@ def collect_total_steps_pairs(exp: str, model_name: str) -> tuple[np.ndarray, np
         if level not in human_stats or "total_steps" not in model_value:
             continue
         model_vals.append(float(model_value["total_steps"]))
+        human_means.append(float(human_stats[level]["mean"]))
+        human_sds.append(float(human_stats[level]["sd"]))
+        keys.append(level)
+
+    return (
+        np.asarray(model_vals, dtype=float),
+        np.asarray(human_means, dtype=float),
+        np.asarray(human_sds, dtype=float),
+        keys,
+    )
+
+
+def collect_total_cost_pairs(exp: str, model_name: str) -> tuple[np.ndarray, np.ndarray, np.ndarray, list[str]]:
+    model_predictions = load_model_total_steps_predictions(exp, model_name)
+    human_stats = aggregate_human_total_cost(exp)
+
+    model_vals = []
+    human_means = []
+    human_sds = []
+    keys = []
+
+    for level, model_value in model_predictions.items():
+        if level not in human_stats or "total_cost" not in model_value:
+            continue
+        model_vals.append(float(model_value["total_cost"]))
         human_means.append(float(human_stats[level]["mean"]))
         human_sds.append(float(human_stats[level]["sd"]))
         keys.append(level)
