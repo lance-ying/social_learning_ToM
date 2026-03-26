@@ -10,12 +10,12 @@ from common import (
     EXPERIMENT_COLORS,
     EXPERIMENT_LABELS,
     EXPERIMENTS,
-    OBSERVE_MODEL_PANELS,
     annotate_stats,
     apply_reference_style,
     collect_observe_pairs,
     make_output_path,
     pooled_limits,
+    resolve_model_panels,
 )
 
 
@@ -24,6 +24,10 @@ def parse_args() -> argparse.Namespace:
         description="Create pooled model-vs-human observation-step scatterplots for experiments 1-4."
     )
     parser.add_argument("--output-file", help="Optional output path.")
+    parser.add_argument(
+        "--models",
+        help="Optional comma-separated model list. Defaults to the standard observe-model panels.",
+    )
     return parser.parse_args()
 
 
@@ -35,10 +39,14 @@ def main() -> int:
 
         output_file = Path(args.output_file)
 
-    fig, axes = plt.subplots(1, len(OBSERVE_MODEL_PANELS), figsize=(5 * len(OBSERVE_MODEL_PANELS), 6))
+    model_names = [item.strip() for item in args.models.split(",") if item.strip()] if args.models else None
+    observe_model_panels = resolve_model_panels(model_names, observe_only=True)
+
+    fig, axes = plt.subplots(1, len(observe_model_panels), figsize=(5 * len(observe_model_panels), 6), squeeze=False)
+    axes = axes[0]
 
     panel_data = []
-    for _label, model_name in OBSERVE_MODEL_PANELS:
+    for _label, model_name in observe_model_panels:
         by_exp = []
         for exp in EXPERIMENTS:
             x, y, _sd, _keys = collect_observe_pairs(exp, model_name, observe_metric="combined")
@@ -47,7 +55,7 @@ def main() -> int:
 
     lo, hi = pooled_limits(panel_data)
 
-    for idx, (ax, (label, _model_name), by_exp) in enumerate(zip(axes, OBSERVE_MODEL_PANELS, panel_data)):
+    for idx, (ax, (label, _model_name), by_exp) in enumerate(zip(axes, observe_model_panels, panel_data)):
         apply_reference_style(ax)
 
         pooled_x = []

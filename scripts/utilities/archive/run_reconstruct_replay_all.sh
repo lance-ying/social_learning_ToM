@@ -21,7 +21,7 @@ declare -a SELECTED_MODELS=()
 usage() {
   cat <<'EOF'
 Usage:
-  bash scripts/utilities/run_reconstruct_replay_all.sh [--experiments exp1,exp2,...] [--exp3-4] [--exp4] [--model <full_model|social_mentalizing|rational_non_mentalizing|naive_observer|agent1_naive_planner>[,...]] [--parallel-multiagent-jobs N] [--disable-exp4-interaction-outcome-pruning] [--no-bootstrap]
+  bash scripts/utilities/run_reconstruct_replay_all.sh [--experiments exp1,exp2,...] [--exp3-4] [--exp4] [--model <full_model|social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_until_novice_wizard|rational_non_mentalizing_novice_full_expert_until_novice_wizard|naive_observer_expert_until_novice_wizard|naive_observer_novice_full_expert_until_novice_wizard>[,...]] [--parallel-multiagent-jobs N] [--disable-exp4-interaction-outcome-pruning] [--no-bootstrap]
 
 Examples:
   bash scripts/utilities/run_reconstruct_replay_all.sh
@@ -34,6 +34,7 @@ Examples:
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp4 --disable-exp4-interaction-outcome-pruning
   bash scripts/utilities/run_reconstruct_replay_all.sh --exp4 --model agent1_naive_planner
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp3,exp4 --model naive_observer,rational_non_mentalizing
+  bash scripts/utilities/run_reconstruct_replay_all.sh --exp4 --model rational_non_mentalizing_expert_until_novice_wizard
 
 Environment overrides:
   POSTERIOR_CANDIDATE_RULE=prob_threshold|top_mass|positive_support
@@ -70,7 +71,7 @@ while [[ $# -gt 0 ]]; do
         model="${model//[[:space:]]/}"
         [[ -z "$model" ]] && continue
         case "$model" in
-          full_model|social_mentalizing|rational_non_mentalizing|naive_observer|agent1_naive_planner)
+          full_model|social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_until_novice_wizard|rational_non_mentalizing_novice_full_expert_until_novice_wizard|naive_observer_expert_until_novice_wizard|naive_observer_novice_full_expert_until_novice_wizard)
             SELECTED_MODELS+=("$model")
             ;;
           *)
@@ -144,6 +145,8 @@ EXP3_MODEL_STEPS="${EXP3_MODEL_STEPS:-model_outputs/experiments/exp3/steps_dict.
 EXP3_MODEL_REPLAY_TRACE="${EXP3_MODEL_REPLAY_TRACE:-model_outputs/experiments/exp3/replay_trace.json}"
 EXP3_MENTALIZE_STEPS="${EXP3_MENTALIZE_STEPS:-model_outputs/baselines/exp3/step_dict_social_mentalizing.json}"
 EXP3_MENTALIZE_REPLAY_TRACE="${EXP3_MENTALIZE_REPLAY_TRACE:-model_outputs/baselines/exp3/replay_trace_social_mentalizing.json}"
+EXP3_MENTALIZE_UNTIL_ONE_CONVERGES_STEPS="${EXP3_MENTALIZE_UNTIL_ONE_CONVERGES_STEPS:-model_outputs/baselines/exp3/step_dict_social_mentalizing_until_one_converges.json}"
+EXP3_MENTALIZE_UNTIL_ONE_CONVERGES_REPLAY_TRACE="${EXP3_MENTALIZE_UNTIL_ONE_CONVERGES_REPLAY_TRACE:-model_outputs/baselines/exp3/replay_trace_social_mentalizing_until_one_converges.json}"
 EXP3_NONMENTALIZE_STEPS="${EXP3_NONMENTALIZE_STEPS:-model_outputs/baselines/exp3/step_dict_rational_non_mentalizing.json}"
 EXP3_NONMENTALIZE_REPLAY_TRACE="${EXP3_NONMENTALIZE_REPLAY_TRACE:-model_outputs/baselines/exp3/replay_trace_rational_non_mentalizing.json}"
 EXP3_NAIVE_STEPS="${EXP3_NAIVE_STEPS:-model_outputs/baselines/exp3/step_dict_naive_observer.json}"
@@ -159,10 +162,20 @@ EXP4_MODEL_STEPS="${EXP4_MODEL_STEPS:-model_outputs/experiments/exp4/steps_dict.
 EXP4_MODEL_REPLAY_TRACE="${EXP4_MODEL_REPLAY_TRACE:-model_outputs/experiments/exp4/replay_trace.json}"
 EXP4_MENTALIZE_STEPS="${EXP4_MENTALIZE_STEPS:-model_outputs/baselines/exp4/step_dict_social_mentalizing.json}"
 EXP4_MENTALIZE_REPLAY_TRACE="${EXP4_MENTALIZE_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_social_mentalizing.json}"
+EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_STEPS="${EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_STEPS:-model_outputs/baselines/exp4/step_dict_social_mentalizing_until_one_converges.json}"
+EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_REPLAY_TRACE="${EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_social_mentalizing_until_one_converges.json}"
 EXP4_NONMENTALIZE_STEPS="${EXP4_NONMENTALIZE_STEPS:-model_outputs/baselines/exp4/step_dict_rational_non_mentalizing.json}"
 EXP4_NONMENTALIZE_REPLAY_TRACE="${EXP4_NONMENTALIZE_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing.json}"
+EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_rational_non_mentalizing_expert_until_novice_wizard.json}"
+EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing_expert_until_novice_wizard.json}"
+EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_rational_non_mentalizing_novice_full_expert_until_novice_wizard.json}"
+EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing_novice_full_expert_until_novice_wizard.json}"
 EXP4_NAIVE_STEPS="${EXP4_NAIVE_STEPS:-model_outputs/baselines/exp4/step_dict_naive_observer.json}"
 EXP4_NAIVE_REPLAY_TRACE="${EXP4_NAIVE_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_naive_observer.json}"
+EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_naive_observer_expert_until_novice_wizard.json}"
+EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_naive_observer_expert_until_novice_wizard.json}"
+EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_naive_observer_novice_full_expert_until_novice_wizard.json}"
+EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_naive_observer_novice_full_expert_until_novice_wizard.json}"
 EXP4_AGENT1_NAIVE_STEPS="${EXP4_AGENT1_NAIVE_STEPS:-$EXP4_NAIVE_STEPS}"
 EXP4_AGENT1_NAIVE_REPLAY_TRACE="${EXP4_AGENT1_NAIVE_REPLAY_TRACE:-$EXP4_NAIVE_REPLAY_TRACE}"
 EXP4_INFERENCE="${EXP4_INFERENCE:-inference/inference_exp4_020126_1.jld2}"
@@ -198,7 +211,7 @@ run_reconstruct() {
     replay_trace_args=(--replay-trace-file "$replay_trace_file")
   fi
   local -a exp4_disable_args=()
-  if [[ "$exp" == "exp4" && "$label" != "full_model" && "$label" != "social_mentalizing" && "$DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING" == "1" ]]; then
+  if [[ "$exp" == "exp4" && "$label" != "full_model" && "$label" != "social_mentalizing" && "$label" != "social_mentalizing_until_one_converges" && "$DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING" == "1" ]]; then
     exp4_disable_args=(--disable-exp4-interaction-outcome-pruning)
   fi
 
@@ -306,6 +319,7 @@ fi
 if has_experiment exp3; then
   maybe_run_reconstruct exp3 full_model "$EXP3_MODEL_STEPS" "$EXP3_MODEL_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
   maybe_run_reconstruct exp3 social_mentalizing "$EXP3_MENTALIZE_STEPS" "$EXP3_MENTALIZE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
+  maybe_run_reconstruct exp3 social_mentalizing_until_one_converges "$EXP3_MENTALIZE_UNTIL_ONE_CONVERGES_STEPS" "$EXP3_MENTALIZE_UNTIL_ONE_CONVERGES_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
   maybe_run_reconstruct exp3 rational_non_mentalizing "$EXP3_NONMENTALIZE_STEPS" "$EXP3_NONMENTALIZE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
   maybe_run_reconstruct exp3 naive_observer "$EXP3_NAIVE_STEPS" "$EXP3_NAIVE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
   maybe_run_reconstruct exp3 agent1_naive_planner "$EXP3_AGENT1_NAIVE_STEPS" "$EXP3_AGENT1_NAIVE_REPLAY_TRACE" "$EXP3_INFERENCE" "$EXP3_PROBLEM_DIR" "$EXP3_HUMAN_COSTS"
@@ -314,8 +328,13 @@ fi
 if has_experiment exp4; then
   maybe_run_reconstruct exp4 full_model "$EXP4_MODEL_STEPS" "$EXP4_MODEL_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
   maybe_run_reconstruct exp4 social_mentalizing "$EXP4_MENTALIZE_STEPS" "$EXP4_MENTALIZE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 social_mentalizing_until_one_converges "$EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_STEPS" "$EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
   maybe_run_reconstruct exp4 rational_non_mentalizing "$EXP4_NONMENTALIZE_STEPS" "$EXP4_NONMENTALIZE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 rational_non_mentalizing_expert_until_novice_wizard "$EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 rational_non_mentalizing_novice_full_expert_until_novice_wizard "$EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
   maybe_run_reconstruct exp4 naive_observer "$EXP4_NAIVE_STEPS" "$EXP4_NAIVE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 naive_observer_expert_until_novice_wizard "$EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 naive_observer_novice_full_expert_until_novice_wizard "$EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
   maybe_run_reconstruct exp4 agent1_naive_planner "$EXP4_AGENT1_NAIVE_STEPS" "$EXP4_AGENT1_NAIVE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
 fi
 

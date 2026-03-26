@@ -14,6 +14,7 @@ from common import (
     human_total_level_to_model,
     is_tutorial_level,
     load_json,
+    model_supported_in_exp,
     parse_participant_csv,
     should_skip_observe_level,
 )
@@ -22,9 +23,14 @@ from common import (
 MODEL_SPECS = [
     ("FM", "full_model"),
     ("SM", "social_mentalizing"),
+    ("SM Until 1 Converges", "social_mentalizing_until_one_converges"),
     ("RNM", "rational_non_mentalizing"),
+    ("RNM Expert->Novice Wiz", "rational_non_mentalizing_expert_until_novice_wizard"),
+    ("RNM Novice Full + Expert->Novice Wiz", "rational_non_mentalizing_novice_full_expert_until_novice_wizard"),
     ("Non-Obs", "agent1_naive_planner"),
     ("Naive", "naive_observer"),
+    ("Naive Expert->Novice Wiz", "naive_observer_expert_until_novice_wizard"),
+    ("Naive Novice Full + Expert->Novice Wiz", "naive_observer_novice_full_expert_until_novice_wizard"),
 ]
 SUPPORTED_EXPERIMENTS = ("exp1", "exp2", "exp3", "exp4")
 
@@ -136,7 +142,12 @@ def load_human_total_step_medians(exp: str) -> dict[str, float]:
     out: dict[str, float] = {}
     candidate_levels = set()
     for model_name in [model_name for _label, model_name in MODEL_SPECS]:
-        candidate_levels.update(load_json(step_dict_path(exp, model_name)).keys())
+        if not model_supported_in_exp(exp, model_name):
+            continue
+        path = step_dict_path(exp, model_name)
+        if not path.is_file():
+            continue
+        candidate_levels.update(load_json(path).keys())
     for level in candidate_levels:
         human_key = resolve_human_key(exp, level, human_per_case)
         if human_key is None:
@@ -372,6 +383,8 @@ def main() -> None:
         exp_dir = output_root / exp
         exp_dir.mkdir(parents=True, exist_ok=True)
         for model_label, model_name in models:
+            if not model_supported_in_exp(exp, model_name):
+                continue
             table = build_table(exp, model_label, model_name)
             output_stem = "non_obs" if model_name == "agent1_naive_planner" else model_name
             out_path = exp_dir / f"{output_stem}_step_table.txt"

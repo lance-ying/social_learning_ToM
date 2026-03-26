@@ -6,12 +6,12 @@ import argparse
 import matplotlib.pyplot as plt
 
 from common import (
-    OBSERVE_MODEL_PANELS,
     annotate_stats,
     apply_reference_style,
     collect_observe_pairs,
     make_output_path,
     plot_points_errorbars_and_fit,
+    resolve_model_panels,
 )
 
 
@@ -31,6 +31,10 @@ def parse_args() -> argparse.Namespace:
         description="Create the observation-step mega plot across experiments 1-4."
     )
     parser.add_argument("--output-file", help="Optional output path.")
+    parser.add_argument(
+        "--models",
+        help="Optional comma-separated model list. Defaults to the standard observe-model panels.",
+    )
     return parser.parse_args()
 
 
@@ -42,14 +46,18 @@ def main() -> int:
 
         output_file = Path(args.output_file)
 
+    model_names = [item.strip() for item in args.models.split(",") if item.strip()] if args.models else None
+    observe_model_panels = resolve_model_panels(model_names, observe_only=True)
+
     fig, axes = plt.subplots(
         len(ROW_CONFIGS),
-        len(OBSERVE_MODEL_PANELS),
-        figsize=(5 * len(OBSERVE_MODEL_PANELS), 4.8 * len(ROW_CONFIGS)),
+        len(observe_model_panels),
+        figsize=(5 * len(observe_model_panels), 4.8 * len(ROW_CONFIGS)),
+        squeeze=False,
     )
 
     for row_idx, (exp, observe_metric, row_label) in enumerate(ROW_CONFIGS):
-        for col_idx, (ax, (panel_label, model_name)) in enumerate(zip(axes[row_idx], OBSERVE_MODEL_PANELS)):
+        for col_idx, (ax, (panel_label, model_name)) in enumerate(zip(axes[row_idx], observe_model_panels)):
             x, y, sd, _keys = collect_observe_pairs(exp, model_name, observe_metric=observe_metric)
             apply_reference_style(ax)
 

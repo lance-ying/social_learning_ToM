@@ -15,15 +15,8 @@ from common import (
     collect_total_cost_pairs,
     make_output_path,
     pooled_limits,
+    resolve_model_panels,
 )
-
-TOTAL_COST_PANELS = [
-    ("Rational Mentalizing\n(Full Model)", "full_model"),
-    ("Social Mentalizing", "social_mentalizing"),
-    ("Rational Non-Mentalizing", "rational_non_mentalizing"),
-    ("Naive Observer", "naive_observer"),
-    ("Non-Observer Planner", "agent1_naive_planner"),
-]
 
 
 def parse_args() -> argparse.Namespace:
@@ -31,6 +24,10 @@ def parse_args() -> argparse.Namespace:
         description="Create pooled model-vs-human total-cost scatterplots for experiments 1-4."
     )
     parser.add_argument("--output-file", help="Optional output path.")
+    parser.add_argument(
+        "--models",
+        help="Optional comma-separated model list. Defaults to the standard total-cost panels.",
+    )
     return parser.parse_args()
 
 
@@ -42,10 +39,14 @@ def main() -> int:
 
         output_file = Path(args.output_file)
 
-    fig, axes = plt.subplots(1, len(TOTAL_COST_PANELS), figsize=(5 * len(TOTAL_COST_PANELS), 6))
+    model_names = [item.strip() for item in args.models.split(",") if item.strip()] if args.models else None
+    total_cost_panels = resolve_model_panels(model_names)
+
+    fig, axes = plt.subplots(1, len(total_cost_panels), figsize=(5 * len(total_cost_panels), 6), squeeze=False)
+    axes = axes[0]
 
     panel_data = []
-    for _label, model_name in TOTAL_COST_PANELS:
+    for _label, model_name in total_cost_panels:
         by_exp = []
         for exp in EXPERIMENTS:
             x, y, _sd, _keys = collect_total_cost_pairs(exp, model_name)
@@ -54,7 +55,7 @@ def main() -> int:
 
     lo, hi = pooled_limits(panel_data)
 
-    for idx, (ax, (label, _model_name), by_exp) in enumerate(zip(axes, TOTAL_COST_PANELS, panel_data)):
+    for idx, (ax, (label, _model_name), by_exp) in enumerate(zip(axes, total_cost_panels, panel_data)):
         apply_reference_style(ax)
 
         pooled_x = []

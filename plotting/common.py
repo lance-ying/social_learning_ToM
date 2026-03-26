@@ -65,6 +65,28 @@ MODEL_PANELS = [
     ("Naive Observer", "naive_observer"),
 ]
 OBSERVE_MODEL_PANELS = [panel for panel in MODEL_PANELS if panel[1] != "agent1_naive_planner"]
+EXTRA_MODEL_PANELS = [
+    ("Social Mentalizing\nUntil One Converges", "social_mentalizing_until_one_converges"),
+    ("RNM Expert Until\nNovice Wizard", "rational_non_mentalizing_expert_until_novice_wizard"),
+    (
+        "RNM Novice Full + Expert\nUntil Novice Wizard",
+        "rational_non_mentalizing_novice_full_expert_until_novice_wizard",
+    ),
+    ("Naive Expert Until\nNovice Wizard", "naive_observer_expert_until_novice_wizard"),
+    (
+        "Naive Novice Full + Expert\nUntil Novice Wizard",
+        "naive_observer_novice_full_expert_until_novice_wizard",
+    ),
+]
+ALL_MODEL_PANELS = MODEL_PANELS + EXTRA_MODEL_PANELS
+ALL_OBSERVE_MODEL_PANELS = [panel for panel in ALL_MODEL_PANELS if panel[1] != "agent1_naive_planner"]
+EXP34_ONLY_MODELS = {"social_mentalizing_until_one_converges"}
+EXP4_ONLY_MODELS = {
+    "rational_non_mentalizing_expert_until_novice_wizard",
+    "rational_non_mentalizing_novice_full_expert_until_novice_wizard",
+    "naive_observer_expert_until_novice_wizard",
+    "naive_observer_novice_full_expert_until_novice_wizard",
+}
 NON_TASK_LEVELS = {"comprehension_check", "experiment"}
 EXP34_OBSERVE_SKIP_LEVELS = {"s111_1"}
 EXP34_OBSERVE_SKIP_PREFIXES = ("sm111_", "sm112_")
@@ -76,6 +98,30 @@ EXP34_LEVEL_RE = re.compile(r"^(sm\d+)_(\d+)$")
 def load_json(path: Path) -> dict:
     with open(path, "r", encoding="utf-8") as f:
         return json.load(f)
+
+
+def resolve_model_panels(model_names: list[str] | None = None, *, observe_only: bool = False) -> list[tuple[str, str]]:
+    default_panels = OBSERVE_MODEL_PANELS if observe_only else MODEL_PANELS
+    supported_panels = ALL_OBSERVE_MODEL_PANELS if observe_only else ALL_MODEL_PANELS
+    if model_names is None:
+        return list(default_panels)
+
+    panel_by_model = {model_name: label for label, model_name in supported_panels}
+    resolved = []
+    for model_name in model_names:
+        if model_name not in panel_by_model:
+            supported = ", ".join(name for _label, name in supported_panels)
+            raise ValueError(f"Unsupported model: {model_name}. Supported: {supported}.")
+        resolved.append((panel_by_model[model_name], model_name))
+    return resolved
+
+
+def model_supported_in_exp(exp: str, model_name: str) -> bool:
+    if model_name in EXP4_ONLY_MODELS:
+        return exp == "exp4"
+    if model_name in EXP34_ONLY_MODELS:
+        return exp in {"exp3", "exp4"}
+    return True
 
 
 def make_output_path(filename: str) -> Path:
@@ -329,6 +375,8 @@ def aggregate_human_observes(exp: str) -> dict[str, dict[str, float]]:
 
 
 def load_model_observe_predictions(exp: str, model_name: str) -> dict:
+    if not model_supported_in_exp(exp, model_name):
+        return {}
     if model_name == "full_model":
         return load_json(REPO_ROOT / "model_outputs" / "experiments" / exp / "steps_dict.json")
     if model_name == "agent1_naive_planner":
@@ -337,6 +385,8 @@ def load_model_observe_predictions(exp: str, model_name: str) -> dict:
 
 
 def load_model_total_steps_predictions(exp: str, model_name: str) -> dict[str, dict]:
+    if not model_supported_in_exp(exp, model_name):
+        return {}
     per_case = load_json(REPO_ROOT / "model_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json")["per_case"]
     if exp == "exp1":
         return {

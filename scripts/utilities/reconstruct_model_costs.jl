@@ -100,7 +100,7 @@ function usage()
         Usage:
           julia scripts/utilities/reconstruct_model_costs.jl \\
             --exp exp1|exp2|exp3|exp3_debug|exp4|exp4_wrapper \\
-            [--model full_model|social_mentalizing|rational_non_mentalizing|naive_observer|agent1_naive_planner] \\
+            [--model <model_label>] \\
             --steps-file <path/to/steps_dict.json> \\
             [--replay-trace-file <path/to/replay_trace.json>] \\
             [--disable-exp4-interaction-outcome-pruning] \\
@@ -274,6 +274,12 @@ function resolve_model_label(opts::Dict{String, String}, steps_file::String)
         return lowercase(opts["model"])
     end
     file_label = lowercase(basename(steps_file))
+    if file_label == "steps_dict.json"
+        return "full_model"
+    end
+    if startswith(file_label, "step_dict_") && endswith(file_label, ".json")
+        return file_label[length("step_dict_") + 1:end - length(".json")]
+    end
     if occursin("agent1_naive", file_label)
         return "agent1_naive_planner"
     end
@@ -335,10 +341,10 @@ function filter_steps_dict_to_human_cases(
     return filtered, sort!(unique!(matched_human_keys))
 end
 
-is_mentalizing_model(model_label::String) = model_label in ("full_model", "social_mentalizing")
+is_mentalizing_model(model_label::String) = model_label == "full_model" || startswith(model_label, "social_mentalizing")
 uses_agent1_naive_replay(model_label::String) = model_label == "agent1_naive_planner"
 uses_latent_hypothesis_replay(model_label::String) = is_mentalizing_model(model_label)
-uses_direct_evidence_candidates(model_label::String) = model_label in ("rational_non_mentalizing", "naive_observer")
+uses_direct_evidence_candidates(model_label::String) = startswith(model_label, "rational_non_mentalizing") || startswith(model_label, "naive_observer")
 
 function initial_replay_hypotheses(initial_states, model_label::String)
     if uses_latent_hypothesis_replay(model_label) || uses_direct_evidence_candidates(model_label)

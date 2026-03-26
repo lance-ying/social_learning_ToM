@@ -1,0 +1,1236 @@
+{
+    "sm411_scenario1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 1,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 1,
+        "agent2_t_if_observed": 1
+    },
+    "sm541_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm611_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm341_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm421_scenario1": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm531_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm611_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm543_scenario2": {
+        "observations": [],
+        "agent3_count": 0,
+        "agent2_should_observe": false,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 0,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [],
+        "agent2_count": 0,
+        "agent2_t_if_observed": 18
+    },
+    "sm311_scenario1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 1,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 1,
+        "agent2_t_if_observed": 1
+    },
+    "sm321_scenario1": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm351_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm361_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm361_scenario1": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm421_scenario2": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm531_scenario2": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm331_scenario1": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm543_scenario1": {
+        "observations": [],
+        "agent3_count": 0,
+        "agent2_should_observe": false,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 0,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [],
+        "agent2_count": 0,
+        "agent2_t_if_observed": 14
+    },
+    "sm432_scenario1": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm331_scenario2": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm371_scenario1": {
+        "observations": [],
+        "agent3_count": 0,
+        "agent2_should_observe": false,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 0,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [],
+        "agent2_count": 0,
+        "agent2_t_if_observed": 12
+    },
+    "sm321_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm612_scenario2": {
+        "observations": [
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(down agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm221_scenario1": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 1,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 1,
+        "agent2_t_if_observed": 1
+    },
+    "sm431_scenario1": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm221_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 1,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 1,
+        "agent2_t_if_observed": 1
+    },
+    "sm612_scenario1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm432_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard4)",
+                "interaction_outcome": "blue_amulet_absent",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard4)",
+                "observation_index": 2,
+                "interaction_outcome": "blue_amulet_absent",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm511_scenario1": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 1,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 1,
+        "agent2_t_if_observed": 1
+    },
+    "sm521_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm371_scenario2": {
+        "observations": [],
+        "agent3_count": 0,
+        "agent2_should_observe": false,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 0,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [],
+        "agent2_count": 0,
+        "agent2_t_if_observed": 18
+    },
+    "sm431_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm341_scenario2": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm211_scenario2": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 1,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 1,
+        "agent2_t_if_observed": 1
+    },
+    "sm311_scenario2": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 1,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 1,
+        "agent2_t_if_observed": 1
+    },
+    "sm521_scenario1": {
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm511_scenario2": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 1,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 1,
+        "agent2_t_if_observed": 1
+    },
+    "sm541_scenario2": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm211_scenario1": {
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 1,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 1,
+        "agent2_t_if_observed": 1
+    },
+    "sm351_scenario2": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 2,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 2,
+        "agent2_t_if_observed": 2
+    },
+    "sm411_scenario2": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "agent3_count": 0,
+        "agent2_should_observe": true,
+        "stop_reason": "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+        "t": 1,
+        "agent3_should_observe": false,
+        "agent3_t_if_observed": 0,
+        "observation_events": [
+            {
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            }
+        ],
+        "agent2_count": 1,
+        "agent2_t_if_observed": 1
+    }
+}

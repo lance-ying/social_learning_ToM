@@ -6,12 +6,12 @@ import argparse
 import matplotlib.pyplot as plt
 
 from common import (
-    MODEL_PANELS,
     annotate_stats,
     apply_reference_style,
     collect_total_steps_pairs,
     make_output_path,
     plot_points_errorbars_and_fit,
+    resolve_model_panels,
 )
 
 
@@ -28,6 +28,10 @@ def parse_args() -> argparse.Namespace:
         description="Create the total-steps mega plot across experiments 1-4."
     )
     parser.add_argument("--output-file", help="Optional output path.")
+    parser.add_argument(
+        "--models",
+        help="Optional comma-separated model list. Defaults to the standard total-step panels.",
+    )
     return parser.parse_args()
 
 
@@ -39,10 +43,13 @@ def main() -> int:
 
         output_file = Path(args.output_file)
 
-    fig, axes = plt.subplots(len(ROW_CONFIGS), len(MODEL_PANELS), figsize=(5 * len(MODEL_PANELS), 19))
+    model_names = [item.strip() for item in args.models.split(",") if item.strip()] if args.models else None
+    model_panels = resolve_model_panels(model_names)
+
+    fig, axes = plt.subplots(len(ROW_CONFIGS), len(model_panels), figsize=(5 * len(model_panels), 19), squeeze=False)
 
     for row_idx, (exp, row_label) in enumerate(ROW_CONFIGS):
-        for col_idx, (ax, (panel_label, model_name)) in enumerate(zip(axes[row_idx], MODEL_PANELS)):
+        for col_idx, (ax, (panel_label, model_name)) in enumerate(zip(axes[row_idx], model_panels)):
             x, y, sd, _keys = collect_total_steps_pairs(exp, model_name)
             apply_reference_style(ax)
 

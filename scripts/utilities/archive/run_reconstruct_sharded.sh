@@ -167,7 +167,7 @@ if [[ -n "$REPLAY_TRACE_FILE" ]]; then
 fi
 
 declare -a EXP4_DISABLE_ARGS=()
-if [[ "$EXP" == "exp4" && "$MODEL_LABEL" != "full_model" && "$MODEL_LABEL" != "social_mentalizing" && "$DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING" == "1" ]]; then
+if [[ "$EXP" == "exp4" && "$MODEL_LABEL" != "full_model" && "$MODEL_LABEL" != "social_mentalizing" && "$MODEL_LABEL" != "social_mentalizing_until_one_converges" && "$DISABLE_EXP4_INTERACTION_OUTCOME_PRUNING" == "1" ]]; then
   EXP4_DISABLE_ARGS=(--disable-exp4-interaction-outcome-pruning)
 fi
 
