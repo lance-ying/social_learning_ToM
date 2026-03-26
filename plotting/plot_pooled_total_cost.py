@@ -41,6 +41,23 @@ def main() -> int:
 
     model_names = [item.strip() for item in args.models.split(",") if item.strip()] if args.models else None
     total_cost_panels = resolve_model_panels(model_names)
+    if model_names is None:
+        total_cost_panels = list(total_cost_panels)
+        social_idx = next((i for i, (_label, model_name) in enumerate(total_cost_panels) if model_name == "social_mentalizing"), None)
+        insert_at = social_idx + 1 if social_idx is not None else len(total_cost_panels)
+        total_cost_panels[insert_at:insert_at] = [
+            ("Social Mentalizing\nUntil One Converges", "social_mentalizing_until_one_converges"),
+            ("RNM Expert Only\nUntil Expert Wizard", "rational_non_mentalizing_expert_only_until_expert_wizard"),
+            (
+                "RNM Novice Full + Expert\nUntil Expert Wizard",
+                "rational_non_mentalizing_novice_full_expert_until_expert_wizard",
+            ),
+            ("Naive Expert Only\nUntil Expert Wizard", "naive_observer_expert_only_until_expert_wizard"),
+            (
+                "Naive Novice Full + Expert\nUntil Expert Wizard",
+                "naive_observer_novice_full_expert_until_expert_wizard",
+            ),
+        ]
 
     fig, axes = plt.subplots(1, len(total_cost_panels), figsize=(5 * len(total_cost_panels), 6), squeeze=False)
     axes = axes[0]

@@ -191,55 +191,21 @@ function materialize_interleaved_observation_trace(
 end
 
 """
-Find when an agent's state distributions stop being informative.
-Returns the timestep T at which the observer's beliefs can no longer be
-distinguished from the conditioned future distributions (i.e., further
-observation of this agent won't help resolve uncertainty).
-
-If divergence is never detected (observations remain informative throughout),
-returns the max available timestep.
+Find when an observed agent converges to a single blue-wizard candidate that
+is relevant to agent1's own goal. Returns the first timestep where the
+posterior support over blue wizards has size <= 1. If that never happens,
+returns the maximum available timestep.
 """
-function find_informativeness_horizon(
-    goal_probs, state_probs,
-    state_probs_conditioned_dict_agent, goal_probs_conditioned_dict_agent,
-    map_id, scenario, gem_id, s_id,
-    goals, initial_states
-)
-    max_t = size(goal_probs, 2) - 1
+function find_relevant_wizard_convergence_horizon(state_probs)
+    max_t = size(state_probs, 2) - 1
 
     for t in 1:max_t
-        curr_state_dist = state_probs[:, t]
-        flag = true
-
-        for g in 1:length(goals)
-            if goal_probs[g, t+1] > 0.1
-                for s in 1:length(initial_states)
-                    if state_probs[s, t+1] > 0.1
-                        max_t_available = size(state_probs_conditioned_dict_agent[map_id][scenario][g][s], 2)
-                        for val in t:max_t_available
-                            if eval_state_dist(curr_state_dist, state_probs_conditioned_dict_agent[map_id][scenario][g][s][:, val])
-                                flag = false
-                                break
-                            end
-                        end
-                    end
-                    if !flag
-                        break
-                    end
-                end
-            end
-            if !flag
-                break
-            end
-        end
-
-        if flag
+        candidate_count = count(prob -> prob > 0.1, state_probs[:, t + 1])
+        if candidate_count <= 1
             return t
         end
     end
 
-    # If we never found divergence, observations remain informative
-    # throughout the entire horizon -> return max timestep
     return max_t
 end
 
@@ -363,20 +329,9 @@ for (map_id, agent_goals) in metadata
         goal_probs_agent3 = goal_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
         state_probs_agent3 = state_probs_conditioned_dict["agent3"][map_id][scenario][agent3_gem][s_id_agent3]
 
-        #--- Find informativeness horizon independently for each agent ---#
-        T_agent2 = find_informativeness_horizon(
-            goal_probs_agent2, state_probs_agent2,
-            state_probs_conditioned_dict["agent2"], goal_probs_conditioned_dict["agent2"],
-            map_id, scenario, agent2_gem, s_id_agent2,
-            goals_agent2, initial_states_agent2
-        )
-
-        T_agent3 = find_informativeness_horizon(
-            goal_probs_agent3, state_probs_agent3,
-            state_probs_conditioned_dict["agent3"], goal_probs_conditioned_dict["agent3"],
-            map_id, scenario, agent3_gem, s_id_agent3,
-            goals_agent3, initial_states_agent3
-        )
+        #--- Find relevant-wizard convergence horizon independently for each agent ---#
+        T_agent2 = find_relevant_wizard_convergence_horizon(state_probs_agent2)
+        T_agent3 = find_relevant_wizard_convergence_horizon(state_probs_agent3)
 
         agent2_horizon = realized_observation_horizon(T_agent2, observed_plan_agent2)
         agent3_horizon = realized_observation_horizon(T_agent3, observed_plan_agent3)
@@ -405,7 +360,7 @@ for (map_id, agent_goals) in metadata
             "agent3_count" => agent3_count,
             "initial_candidates" => serialize_wizards(blue_wizards),
             "final_candidates" => final_candidates,
-            "stop_reason" => "first_agent_state_divergence",
+            "stop_reason" => "first_relevant_wizard_convergence",
         )
 
         scenario_elapsed = time() - scenario_start_time

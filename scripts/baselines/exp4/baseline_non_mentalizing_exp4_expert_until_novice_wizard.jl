@@ -20,7 +20,7 @@ include(joinpath(@__DIR__, "..", "..", "..", "src", "planners.jl"))
 experiment_id = "exp4_013026"  # Problem directory: problems_exp4_013026
 inference_file = "inference_exp4_020126_1.jld2"  # Configurable inference file (not used in non-mentalizing)
 output_experiment_id = "exp4"
-model_label = "rational_non_mentalizing_expert_until_novice_wizard"
+model_label = "rational_non_mentalizing_expert_only_until_expert_wizard"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_$experiment_id")
 OUTPUT_DIR = joinpath(@__DIR__, "..", "..", "..", "model_outputs", "baselines", output_experiment_id)
@@ -229,13 +229,14 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
             collect(planner(domain_agent3, state_agent3, goals_agent3[agent3_gem]))
 
         # In exp4_013026, agent2 is always the expert (actual) agent and agent3 is the novice.
-        novice_stop_horizon = observation_stop_horizon(observed_plan_agent3)
-        should_observe_agent2, T_agent2 = agent_cost_comparison(
-            domain_render, domain_path, PROBLEM_DIR, map_id, observed_plan_agent2, action_cost, novice_stop_horizon)
+        # Observe only the expert, and stop when the expert reaches its first wizard interaction.
+        expert_stop_horizon = observation_stop_horizon(observed_plan_agent2)
+        should_observe_agent2 = true
+        T_agent2 = realized_observation_horizon(expert_stop_horizon, observed_plan_agent2)
         should_observe_agent3 = false
         T_agent3 = 0
 
-        agent2_count = should_observe_agent2 ? T_agent2 : 0
+        agent2_count = T_agent2
         agent3_count = 0
         T = agent2_count + agent3_count
 
@@ -273,7 +274,7 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
             "agent3_should_observe" => should_observe_agent3,
             "agent2_t_if_observed" => T_agent2,
             "agent3_t_if_observed" => T_agent3,
-            "stop_reason" => "expert_only_until_novice_first_wizard_interaction_cost_comparison",
+            "stop_reason" => "expert_only_until_expert_first_wizard_interaction_cost_comparison",
         )
         next!(progress)
     end
@@ -289,11 +290,11 @@ println("Total time: $(round(total_elapsed, digits=2))s")
 println("Average per map: $(round(mean(collect(Float64, values(map_times))), digits=2))s")
 
 # Save results
-output_filename = "step_dict_rnm_expert_until_novice_wizard_exp4.json"
+output_filename = "step_dict_rnm_expert_only_until_expert_wizard_exp4.json"
 canonical_output_path = joinpath(OUTPUT_DIR, "step_dict_$(model_label).json")
 write_json_to_paths((canonical_output_path,), steps_dict)
 
-replay_trace_filename = "replay_trace_rnm_expert_until_novice_wizard_exp4.json"
+replay_trace_filename = "replay_trace_rnm_expert_only_until_expert_wizard_exp4.json"
 canonical_replay_trace_path = joinpath(OUTPUT_DIR, "replay_trace_$(model_label).json")
 write_json_to_paths((canonical_replay_trace_path,), replay_trace_dict)
 

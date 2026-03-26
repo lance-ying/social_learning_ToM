@@ -22,7 +22,7 @@ VARIANT_BASELINES_ONLY=0
 usage() {
   cat <<'EOF'
 Usage:
-  bash scripts/utilities/run_reconstruct_replay_all.sh [--experiments exp1,exp2,...] [--exp3] [--exp3-4] [--exp4] [--variant-baselines-only] [--model <full_model|social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_until_novice_wizard|rational_non_mentalizing_novice_full_expert_until_novice_wizard|naive_observer_expert_until_novice_wizard|naive_observer_novice_full_expert_until_novice_wizard>[,...]] [--parallel-multiagent-jobs N] [--disable-exp4-interaction-outcome-pruning] [--no-bootstrap]
+  bash scripts/utilities/run_reconstruct_replay_all.sh [--experiments exp1,exp2,...] [--exp3] [--exp3-4] [--exp4] [--variant-baselines-only] [--model <full_model|social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_only_until_expert_wizard|rational_non_mentalizing_novice_full_expert_until_expert_wizard|naive_observer_expert_only_until_expert_wizard|naive_observer_novice_full_expert_until_expert_wizard>[,...]] [--parallel-multiagent-jobs N] [--disable-exp4-interaction-outcome-pruning] [--no-bootstrap]
 
 Examples:
   bash scripts/utilities/run_reconstruct_replay_all.sh
@@ -37,7 +37,7 @@ Examples:
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp4 --disable-exp4-interaction-outcome-pruning
   bash scripts/utilities/run_reconstruct_replay_all.sh --exp4 --model agent1_naive_planner
   bash scripts/utilities/run_reconstruct_replay_all.sh --experiments exp3,exp4 --model naive_observer,rational_non_mentalizing
-  bash scripts/utilities/run_reconstruct_replay_all.sh --exp4 --model rational_non_mentalizing_expert_until_novice_wizard
+  bash scripts/utilities/run_reconstruct_replay_all.sh --exp4 --model rational_non_mentalizing_expert_only_until_expert_wizard
 
 Environment overrides:
   POSTERIOR_CANDIDATE_RULE=prob_threshold|top_mass|positive_support
@@ -82,7 +82,7 @@ while [[ $# -gt 0 ]]; do
         model="${model//[[:space:]]/}"
         [[ -z "$model" ]] && continue
         case "$model" in
-          full_model|social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_until_novice_wizard|rational_non_mentalizing_novice_full_expert_until_novice_wizard|naive_observer_expert_until_novice_wizard|naive_observer_novice_full_expert_until_novice_wizard)
+          full_model|social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_only_until_expert_wizard|rational_non_mentalizing_novice_full_expert_until_expert_wizard|naive_observer_expert_only_until_expert_wizard|naive_observer_novice_full_expert_until_expert_wizard)
             SELECTED_MODELS+=("$model")
             ;;
           *)
@@ -182,16 +182,16 @@ EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_STEPS="${EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_S
 EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_REPLAY_TRACE="${EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_social_mentalizing_until_one_converges.json}"
 EXP4_NONMENTALIZE_STEPS="${EXP4_NONMENTALIZE_STEPS:-model_outputs/baselines/exp4/step_dict_rational_non_mentalizing.json}"
 EXP4_NONMENTALIZE_REPLAY_TRACE="${EXP4_NONMENTALIZE_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing.json}"
-EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_rational_non_mentalizing_expert_until_novice_wizard.json}"
-EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing_expert_until_novice_wizard.json}"
-EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_rational_non_mentalizing_novice_full_expert_until_novice_wizard.json}"
-EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing_novice_full_expert_until_novice_wizard.json}"
+EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_rational_non_mentalizing_expert_only_until_expert_wizard.json}"
+EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing_expert_only_until_expert_wizard.json}"
+EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_rational_non_mentalizing_novice_full_expert_until_expert_wizard.json}"
+EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing_novice_full_expert_until_expert_wizard.json}"
 EXP4_NAIVE_STEPS="${EXP4_NAIVE_STEPS:-model_outputs/baselines/exp4/step_dict_naive_observer.json}"
 EXP4_NAIVE_REPLAY_TRACE="${EXP4_NAIVE_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_naive_observer.json}"
-EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_naive_observer_expert_until_novice_wizard.json}"
-EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_naive_observer_expert_until_novice_wizard.json}"
-EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_naive_observer_novice_full_expert_until_novice_wizard.json}"
-EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_naive_observer_novice_full_expert_until_novice_wizard.json}"
+EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_naive_observer_expert_only_until_expert_wizard.json}"
+EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_naive_observer_expert_only_until_expert_wizard.json}"
+EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS="${EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS:-model_outputs/baselines/exp4/step_dict_naive_observer_novice_full_expert_until_expert_wizard.json}"
+EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE="${EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE:-model_outputs/baselines/exp4/replay_trace_naive_observer_novice_full_expert_until_expert_wizard.json}"
 EXP4_AGENT1_NAIVE_STEPS="${EXP4_AGENT1_NAIVE_STEPS:-$EXP4_NAIVE_STEPS}"
 EXP4_AGENT1_NAIVE_REPLAY_TRACE="${EXP4_AGENT1_NAIVE_REPLAY_TRACE:-$EXP4_NAIVE_REPLAY_TRACE}"
 EXP4_INFERENCE="${EXP4_INFERENCE:-inference/inference_exp4_020126_1.jld2}"
@@ -300,11 +300,11 @@ is_variant_model_for_exp() {
       return 0
       ;;
     exp4:rational_non_mentalizing|\
-    exp4:rational_non_mentalizing_expert_until_novice_wizard|\
-    exp4:rational_non_mentalizing_novice_full_expert_until_novice_wizard|\
+    exp4:rational_non_mentalizing_expert_only_until_expert_wizard|\
+    exp4:rational_non_mentalizing_novice_full_expert_until_expert_wizard|\
     exp4:naive_observer|\
-    exp4:naive_observer_expert_until_novice_wizard|\
-    exp4:naive_observer_novice_full_expert_until_novice_wizard)
+    exp4:naive_observer_expert_only_until_expert_wizard|\
+    exp4:naive_observer_novice_full_expert_until_expert_wizard)
       return 0
       ;;
   esac
@@ -372,11 +372,11 @@ if has_experiment exp4; then
   maybe_run_reconstruct exp4 social_mentalizing "$EXP4_MENTALIZE_STEPS" "$EXP4_MENTALIZE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
   maybe_run_reconstruct exp4 social_mentalizing_until_one_converges "$EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_STEPS" "$EXP4_MENTALIZE_UNTIL_ONE_CONVERGES_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
   maybe_run_reconstruct exp4 rational_non_mentalizing "$EXP4_NONMENTALIZE_STEPS" "$EXP4_NONMENTALIZE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
-  maybe_run_reconstruct exp4 rational_non_mentalizing_expert_until_novice_wizard "$EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
-  maybe_run_reconstruct exp4 rational_non_mentalizing_novice_full_expert_until_novice_wizard "$EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 rational_non_mentalizing_expert_only_until_expert_wizard "$EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NONMENTALIZE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 rational_non_mentalizing_novice_full_expert_until_expert_wizard "$EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NONMENTALIZE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
   maybe_run_reconstruct exp4 naive_observer "$EXP4_NAIVE_STEPS" "$EXP4_NAIVE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
-  maybe_run_reconstruct exp4 naive_observer_expert_until_novice_wizard "$EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
-  maybe_run_reconstruct exp4 naive_observer_novice_full_expert_until_novice_wizard "$EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 naive_observer_expert_only_until_expert_wizard "$EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NAIVE_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
+  maybe_run_reconstruct exp4 naive_observer_novice_full_expert_until_expert_wizard "$EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_STEPS" "$EXP4_NAIVE_NOVICE_FULL_EXPERT_UNTIL_NOVICE_WIZARD_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
   maybe_run_reconstruct exp4 agent1_naive_planner "$EXP4_AGENT1_NAIVE_STEPS" "$EXP4_AGENT1_NAIVE_REPLAY_TRACE" "$EXP4_INFERENCE" "$EXP4_PROBLEM_DIR" "$EXP4_HUMAN_COSTS"
 fi
 

@@ -25,12 +25,12 @@ MODEL_SPECS = [
     ("SM", "social_mentalizing"),
     ("SM Until 1 Converges", "social_mentalizing_until_one_converges"),
     ("RNM", "rational_non_mentalizing"),
-    ("RNM Expert->Novice Wiz", "rational_non_mentalizing_expert_until_novice_wizard"),
-    ("RNM Novice Full + Expert->Novice Wiz", "rational_non_mentalizing_novice_full_expert_until_novice_wizard"),
+    ("RNM Expert Only->Expert Wiz", "rational_non_mentalizing_expert_only_until_expert_wizard"),
+    ("RNM Novice Full + Expert->Expert Wiz", "rational_non_mentalizing_novice_full_expert_until_expert_wizard"),
     ("Non-Obs", "agent1_naive_planner"),
     ("Naive", "naive_observer"),
-    ("Naive Expert->Novice Wiz", "naive_observer_expert_until_novice_wizard"),
-    ("Naive Novice Full + Expert->Novice Wiz", "naive_observer_novice_full_expert_until_novice_wizard"),
+    ("Naive Expert Only->Expert Wiz", "naive_observer_expert_only_until_expert_wizard"),
+    ("Naive Novice Full + Expert->Expert Wiz", "naive_observer_novice_full_expert_until_expert_wizard"),
 ]
 SUPPORTED_EXPERIMENTS = ("exp1", "exp2", "exp3", "exp4")
 

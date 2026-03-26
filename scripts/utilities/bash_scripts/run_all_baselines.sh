@@ -16,7 +16,7 @@ MODEL_FILTER_SET=0
 usage() {
   cat <<'EOF'
 Usage:
-  bash scripts/utilities/run_all_baselines.sh [--no-bootstrap] [--exp <exp1|exp2|exp3|exp4>] [--exp34] [--exp4-variants] [--model <social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_until_novice_wizard|rational_non_mentalizing_novice_full_expert_until_novice_wizard|naive_observer_expert_until_novice_wizard|naive_observer_novice_full_expert_until_novice_wizard>[,...]]
+  bash scripts/utilities/run_all_baselines.sh [--no-bootstrap] [--exp <exp1|exp2|exp3|exp4>] [--exp34] [--exp4-variants] [--model <social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_only_until_expert_wizard|rational_non_mentalizing_novice_full_expert_until_expert_wizard|naive_observer_expert_only_until_expert_wizard|naive_observer_novice_full_expert_until_expert_wizard>[,...]]
 
 Runs the 12 active baseline generators:
   - exp1: mentalize, non_mentalizing, naive
@@ -28,7 +28,7 @@ Notes:
   - agent1_naive_planner has no standalone baseline generator.
   - Selecting --model agent1_naive_planner runs only the naive_observer baseline,
     which provides the replay-trace inputs used by agent1_naive_planner reconstruction.
-  - The four `*_novice_wizard` variants are available only for `exp4`.
+  - The four expert/novice observation-schedule variants are available only for `exp4`.
   - `--exp4-variants` is a shortcut for running exactly those four exp4 variants.
   - --model may be passed multiple times or as a comma-separated list.
 EOF
@@ -69,7 +69,7 @@ should_run_baseline_model() {
 
 is_valid_model() {
   case "$1" in
-    social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_until_novice_wizard|rational_non_mentalizing_novice_full_expert_until_novice_wizard|naive_observer_expert_until_novice_wizard|naive_observer_novice_full_expert_until_novice_wizard)
+    social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_only_until_expert_wizard|rational_non_mentalizing_novice_full_expert_until_expert_wizard|naive_observer_expert_only_until_expert_wizard|naive_observer_novice_full_expert_until_expert_wizard)
       return 0
       ;;
   esac
@@ -119,10 +119,10 @@ while [[ $# -gt 0 ]]; do
     --exp4-variants)
       SELECTED_EXPERIMENTS=("exp4")
       SELECTED_MODELS=(
-        "rational_non_mentalizing_expert_until_novice_wizard"
-        "rational_non_mentalizing_novice_full_expert_until_novice_wizard"
-        "naive_observer_expert_until_novice_wizard"
-        "naive_observer_novice_full_expert_until_novice_wizard"
+        "rational_non_mentalizing_expert_only_until_expert_wizard"
+        "rational_non_mentalizing_novice_full_expert_until_expert_wizard"
+        "naive_observer_expert_only_until_expert_wizard"
+        "naive_observer_novice_full_expert_until_expert_wizard"
       )
       MODEL_FILTER_SET=1
       shift
@@ -266,30 +266,30 @@ if has_experiment "exp4"; then
     copy_output "model_outputs/baselines/exp4/step_dict_rational_non_mentalizing.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing/steps_dict.json"
     copy_output "model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing/replay_trace.json"
   fi
-  if should_run_baseline_model "rational_non_mentalizing_expert_until_novice_wizard"; then
-    run_baseline_in_dir "exp4 / rational_non_mentalizing_expert_until_novice_wizard" "scripts/baselines/exp4" "baseline_non_mentalizing_exp4_expert_until_novice_wizard.jl"
-    copy_output "model_outputs/baselines/exp4/step_dict_rational_non_mentalizing_expert_until_novice_wizard.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing_expert_until_novice_wizard/steps_dict.json"
-    copy_output "model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing_expert_until_novice_wizard.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing_expert_until_novice_wizard/replay_trace.json"
+  if should_run_baseline_model "rational_non_mentalizing_expert_only_until_expert_wizard"; then
+    run_baseline_in_dir "exp4 / rational_non_mentalizing_expert_only_until_expert_wizard" "scripts/baselines/exp4" "baseline_non_mentalizing_exp4_expert_until_novice_wizard.jl"
+    copy_output "model_outputs/baselines/exp4/step_dict_rational_non_mentalizing_expert_only_until_expert_wizard.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing_expert_only_until_expert_wizard/steps_dict.json"
+    copy_output "model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing_expert_only_until_expert_wizard.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing_expert_only_until_expert_wizard/replay_trace.json"
   fi
-  if should_run_baseline_model "rational_non_mentalizing_novice_full_expert_until_novice_wizard"; then
-    run_baseline_in_dir "exp4 / rational_non_mentalizing_novice_full_expert_until_novice_wizard" "scripts/baselines/exp4" "baseline_non_mentalizing_exp4_novice_full_expert_until_novice_wizard.jl"
-    copy_output "model_outputs/baselines/exp4/step_dict_rational_non_mentalizing_novice_full_expert_until_novice_wizard.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing_novice_full_expert_until_novice_wizard/steps_dict.json"
-    copy_output "model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing_novice_full_expert_until_novice_wizard.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing_novice_full_expert_until_novice_wizard/replay_trace.json"
+  if should_run_baseline_model "rational_non_mentalizing_novice_full_expert_until_expert_wizard"; then
+    run_baseline_in_dir "exp4 / rational_non_mentalizing_novice_full_expert_until_expert_wizard" "scripts/baselines/exp4" "baseline_non_mentalizing_exp4_novice_full_expert_until_novice_wizard.jl"
+    copy_output "model_outputs/baselines/exp4/step_dict_rational_non_mentalizing_novice_full_expert_until_expert_wizard.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing_novice_full_expert_until_expert_wizard/steps_dict.json"
+    copy_output "model_outputs/baselines/exp4/replay_trace_rational_non_mentalizing_novice_full_expert_until_expert_wizard.json" "$RUN_OUTPUT_DIR/exp4/rational_non_mentalizing_novice_full_expert_until_expert_wizard/replay_trace.json"
   fi
   if should_run_baseline_model "naive_observer"; then
     run_baseline_in_dir "exp4 / naive_observer" "scripts/baselines/exp4" "baseline_naive_exp4.jl"
     copy_output "model_outputs/baselines/exp4/step_dict_naive_observer.json" "$RUN_OUTPUT_DIR/exp4/naive_observer/steps_dict.json"
     copy_output "model_outputs/baselines/exp4/replay_trace_naive_observer.json" "$RUN_OUTPUT_DIR/exp4/naive_observer/replay_trace.json"
   fi
-  if should_run_baseline_model "naive_observer_expert_until_novice_wizard"; then
-    run_baseline_in_dir "exp4 / naive_observer_expert_until_novice_wizard" "scripts/baselines/exp4" "baseline_naive_exp4_expert_until_novice_wizard.jl"
-    copy_output "model_outputs/baselines/exp4/step_dict_naive_observer_expert_until_novice_wizard.json" "$RUN_OUTPUT_DIR/exp4/naive_observer_expert_until_novice_wizard/steps_dict.json"
-    copy_output "model_outputs/baselines/exp4/replay_trace_naive_observer_expert_until_novice_wizard.json" "$RUN_OUTPUT_DIR/exp4/naive_observer_expert_until_novice_wizard/replay_trace.json"
+  if should_run_baseline_model "naive_observer_expert_only_until_expert_wizard"; then
+    run_baseline_in_dir "exp4 / naive_observer_expert_only_until_expert_wizard" "scripts/baselines/exp4" "baseline_naive_exp4_expert_until_novice_wizard.jl"
+    copy_output "model_outputs/baselines/exp4/step_dict_naive_observer_expert_only_until_expert_wizard.json" "$RUN_OUTPUT_DIR/exp4/naive_observer_expert_only_until_expert_wizard/steps_dict.json"
+    copy_output "model_outputs/baselines/exp4/replay_trace_naive_observer_expert_only_until_expert_wizard.json" "$RUN_OUTPUT_DIR/exp4/naive_observer_expert_only_until_expert_wizard/replay_trace.json"
   fi
-  if should_run_baseline_model "naive_observer_novice_full_expert_until_novice_wizard"; then
-    run_baseline_in_dir "exp4 / naive_observer_novice_full_expert_until_novice_wizard" "scripts/baselines/exp4" "baseline_naive_exp4_novice_full_expert_until_novice_wizard.jl"
-    copy_output "model_outputs/baselines/exp4/step_dict_naive_observer_novice_full_expert_until_novice_wizard.json" "$RUN_OUTPUT_DIR/exp4/naive_observer_novice_full_expert_until_novice_wizard/steps_dict.json"
-    copy_output "model_outputs/baselines/exp4/replay_trace_naive_observer_novice_full_expert_until_novice_wizard.json" "$RUN_OUTPUT_DIR/exp4/naive_observer_novice_full_expert_until_novice_wizard/replay_trace.json"
+  if should_run_baseline_model "naive_observer_novice_full_expert_until_expert_wizard"; then
+    run_baseline_in_dir "exp4 / naive_observer_novice_full_expert_until_expert_wizard" "scripts/baselines/exp4" "baseline_naive_exp4_novice_full_expert_until_novice_wizard.jl"
+    copy_output "model_outputs/baselines/exp4/step_dict_naive_observer_novice_full_expert_until_expert_wizard.json" "$RUN_OUTPUT_DIR/exp4/naive_observer_novice_full_expert_until_expert_wizard/steps_dict.json"
+    copy_output "model_outputs/baselines/exp4/replay_trace_naive_observer_novice_full_expert_until_expert_wizard.json" "$RUN_OUTPUT_DIR/exp4/naive_observer_novice_full_expert_until_expert_wizard/replay_trace.json"
   fi
 fi
 

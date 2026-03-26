@@ -6,7 +6,7 @@ import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 
-from common import EXPERIMENT_LABELS, EXPERIMENTS, MODEL_PANELS, common_total_step_keys, make_output_path
+from common import EXPERIMENT_LABELS, EXPERIMENTS, common_total_step_keys, make_output_path
 
 
 def parse_args() -> argparse.Namespace:
@@ -24,47 +24,48 @@ def main() -> int:
         output_file = Path(args.output_file)
 
     matched_by_exp = {exp: common_total_step_keys(exp) for exp in EXPERIMENTS}
-    fig, axes = plt.subplots(1, 4, figsize=(24, 7), sharey=True)
+    fig, axes = plt.subplots(1, 4, figsize=(28, 7), sharey=True)
 
     violin_series = [
         ("Human", "human"),
         ("Rat. Ment.", "full_model"),
         ("Soc. Ment.", "social_mentalizing"),
+        ("Soc. Ment.\nU1C", "social_mentalizing_until_one_converges"),
         ("Rat. Non-M.", "rational_non_mentalizing"),
+        ("RNM Expert\nOnly", "rational_non_mentalizing_expert_only_until_expert_wizard"),
+        ("RNM Novice\nFull + Exp.", "rational_non_mentalizing_novice_full_expert_until_expert_wizard"),
         ("Naive", "naive_observer"),
+        ("Naive Expert\nOnly", "naive_observer_expert_only_until_expert_wizard"),
+        ("Naive Novice\nFull + Exp.", "naive_observer_novice_full_expert_until_expert_wizard"),
         ("Non-Obs. Plan.", "agent1_naive_planner"),
     ]
     x = np.arange(len(violin_series))
 
-    fill_colors = ["#888888", "#4c78a8", "#72b7b2", "#e39c37", "#c95f5f", "#6aa84f"]
+    fill_colors = [
+        "#888888",
+        "#4c78a8",
+        "#72b7b2",
+        "#9ad1cc",
+        "#e39c37",
+        "#f0b870",
+        "#d8891e",
+        "#c95f5f",
+        "#e6a5a5",
+        "#b64747",
+        "#6aa84f",
+    ]
 
     for ax, exp in zip(axes, EXPERIMENTS):
         model_predictions, human_stats = matched_by_exp[exp]
         human_values = [human_stats[level]["median"] for level in human_stats]
 
         series_values = [human_values]
-        for _label, model_name in MODEL_PANELS:
-            values = [model_predictions[model_name][level]["total_steps"] for level in model_predictions[model_name]]
-            if model_name == "agent1_naive_planner":
-                planner_values = values
-            elif model_name == "naive_observer":
-                naive_observer_values = values
-            elif model_name == "full_model":
-                full_model_values = values
-            elif model_name == "social_mentalizing":
-                social_values = values
-            elif model_name == "rational_non_mentalizing":
-                rational_nonmental_values = values
-
-        series_values.extend(
-            [
-                full_model_values,
-                social_values,
-                rational_nonmental_values,
-                naive_observer_values,
-                planner_values,
-            ]
-        )
+        for _label, model_name in violin_series[1:]:
+            model_dict = model_predictions.get(model_name, {})
+            values = [model_dict[level]["total_steps"] for level in model_dict]
+            if not values:
+                values = [np.nan, np.nan]
+            series_values.append(values)
 
         violin = ax.violinplot(
             series_values,

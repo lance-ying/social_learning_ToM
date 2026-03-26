@@ -1,0 +1,41 @@
+Baseline Glossary
+
+social_mentalizing
+- Observes other agents and updates which blue wizard is plausible from their behavior.
+- Uses social observation to narrow the hidden blue-wizard possibilities before agent1 plans.
+
+social_mentalizing_until_one_converges
+- Same idea as social_mentalizing, but stops observing once one observed agent has converged to a single relevant blue-wizard candidate.
+- In exp1 and exp2, plotting aliases this to social_mentalizing because the variant does not exist there.
+
+rational_non_mentalizing
+- Observes other agents but does not run a full social-mentalizing posterior model.
+- In exp4 reconstruction, observed wizard choices are used to prioritize agent1's own greedy wizard search rather than latent-world replay.
+
+naive_observer
+- Watches other agents with a simple observation policy, then agent1 follows a simple self-search policy.
+- In exp4 reconstruction, observed wizard choices are used to prioritize greedy search order.
+
+agent1_naive_planner
+- Non-observing planner.
+- Agent1 ignores social observations and greedily searches blue wizards itself until it gets the blue amulet, then heads to the goal.
+
+rational_non_mentalizing_expert_only_until_expert_wizard
+- Exp4 variant.
+- Observes only the expert agent until the expert reaches its first wizard interaction.
+- In reconstruction, agent1 tries the expert's observed wizard first, then greedy-searches the remaining blue wizards.
+
+rational_non_mentalizing_novice_full_expert_until_expert_wizard
+- Exp4 variant.
+- Observes the full novice trajectory and observes the expert until the expert reaches its first wizard interaction.
+- In reconstruction, agent1 tries the expert's observed wizard first, then the novice's last observed wizard, then greedy-searches the remaining blue wizards.
+
+naive_observer_expert_only_until_expert_wizard
+- Exp4 variant.
+- Same observation schedule as the rational variant above, but paired with the naive observer family.
+- In reconstruction, agent1 tries the expert's observed wizard first, then greedy-searches the remaining blue wizards.
+
+naive_observer_novice_full_expert_until_expert_wizard
+- Exp4 variant.
+- Same observation schedule as the rational variant above, but paired with the naive observer family.
+- In reconstruction, agent1 tries the expert's observed wizard first, then the novice's last observed wizard, then greedy-searches the remaining blue wizards.

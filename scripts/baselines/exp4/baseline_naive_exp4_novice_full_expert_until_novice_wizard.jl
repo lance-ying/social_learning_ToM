@@ -99,7 +99,7 @@ end
 experiment_id = "exp4"  # Problem directory: problems_exp4
 inference_file = "inference_exp4_020126_1.jld2"  # Configurable inference file (not used in naive)
 output_experiment_id = "exp4"
-model_label = "naive_observer_novice_full_expert_until_novice_wizard"
+model_label = "naive_observer_novice_full_expert_until_expert_wizard"
 
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "..", "dataset", "problems_exp4_013026")
 OUTPUT_DIR = joinpath(@__DIR__, "..", "..", "..", "model_outputs", "baselines", output_experiment_id)
@@ -182,8 +182,9 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
             collect(planner(domain_agent3, state_agent3, goals_agent3[agent3_gem]))
 
         # In exp4_013026, agent2 is always the expert (actual) agent and agent3 is the novice.
-        novice_stop_horizon = observation_stop_horizon(observed_plan_agent3)
-        agent2_count = realized_observation_horizon(novice_stop_horizon, observed_plan_agent2)
+        # Observe the novice for its full trajectory, and observe the expert only until its first wizard interaction.
+        expert_stop_horizon = observation_stop_horizon(observed_plan_agent2)
+        agent2_count = realized_observation_horizon(expert_stop_horizon, observed_plan_agent2)
         agent3_count = length(observed_plan_agent3)
         T = agent2_count + agent3_count
 
@@ -217,7 +218,7 @@ for (map_id, agent_goals) in sort(collect(metadata), by=x->parse(Int, match(r"\d
             "observation_events" => observation_events,
             "agent2_count" => agent2_count,
             "agent3_count" => agent3_count,
-            "stop_reason" => "novice_full_expert_until_novice_first_wizard_interaction",
+            "stop_reason" => "novice_full_expert_until_expert_first_wizard_interaction",
         )
         next!(progress)
     end
@@ -233,11 +234,11 @@ println("Total time: $(round(total_elapsed, digits=2))s")
 println("Average per map: $(round(mean(values(map_times)), digits=2))s")
 
 # Save results
-output_filename = "step_dict_naive_novice_full_expert_until_novice_wizard_exp4.json"
+output_filename = "step_dict_naive_novice_full_expert_until_expert_wizard_exp4.json"
 canonical_output_path = joinpath(OUTPUT_DIR, "step_dict_$(model_label).json")
 write_json_to_paths((canonical_output_path,), steps_dict)
 
-replay_trace_filename = "replay_trace_naive_novice_full_expert_until_novice_wizard_exp4.json"
+replay_trace_filename = "replay_trace_naive_novice_full_expert_until_expert_wizard_exp4.json"
 canonical_replay_trace_path = joinpath(OUTPUT_DIR, "replay_trace_$(model_label).json")
 write_json_to_paths((canonical_replay_trace_path,), replay_trace_dict)
 

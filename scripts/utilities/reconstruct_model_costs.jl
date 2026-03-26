@@ -491,6 +491,90 @@ function sanitize_observations_for_model(observations, observation_events, t, so
     return String[], Any[], 0, "ignored_for_nonobserving_planner", sanitized_warnings
 end
 
+function parse_observed_interaction(event)
+    action_str = get(event, "action", "")
+    isempty(action_str) && return nothing
+    action = PDDL.parse_pddl(action_str)
+    if !(action isa Term) || action.name != :interact
+        return nothing
+    end
+    return (
+        observed_agent=string(get(event, "observed_agent", "")),
+        wizard_name=string(action.args[end]),
+    )
+end
+
+function should_apply_exp4_direct_evidence_notification_policy(model_label::String)
+    return uses_direct_evidence_candidates(model_label)
+end
+
+function is_exp4_novice_full_direct_evidence_model(model_label::String)
+    return endswith(model_label, "_novice_full_expert_until_expert_wizard")
+end
+
+function sanitize_exp4_direct_evidence_events(observation_events, model_label::String; disable_notifications::Bool=false)
+    copied_events = [copy(event) for event in observation_events]
+    warnings = String[]
+
+    if !should_apply_exp4_direct_evidence_notification_policy(model_label)
+        return copied_events, warnings
+    end
+
+    agent3_last_interaction_idx = 0
+    if is_exp4_novice_full_direct_evidence_model(model_label) && !disable_notifications
+        for (idx, event) in enumerate(copied_events)
+            interaction = parse_observed_interaction(event)
+            if interaction !== nothing && interaction.observed_agent == "agent3"
+                agent3_last_interaction_idx = idx
+            end
+        end
+    end
+
+    preserved_outcome_count = 0
+    stripped_outcome_count = 0
+    for (idx, event) in enumerate(copied_events)
+        interaction = parse_observed_interaction(event)
+        outcome = lowercase(strip(string(get(event, "interaction_outcome", "none"))))
+        if interaction === nothing || outcome == "none" || isempty(outcome)
+            continue
+        end
+
+        keep_outcome = false
+        if !disable_notifications
+            if interaction.observed_agent == "agent2"
+                keep_outcome = true
+            elseif interaction.observed_agent == "agent3" && idx == agent3_last_interaction_idx
+                keep_outcome = true
+            end
+        end
+
+        if keep_outcome
+            preserved_outcome_count += 1
+        else
+            event["interaction_outcome"] = "none"
+            stripped_outcome_count += 1
+        end
+    end
+
+    if disable_notifications
+        push!(warnings, "Exp4 observed-agent interaction outcomes were disabled for direct-evidence reconstruction.")
+    elseif stripped_outcome_count > 0
+        if is_exp4_novice_full_direct_evidence_model(model_label)
+            push!(warnings, "Exp4 direct-evidence reconstruction kept expert interaction outcomes and only the last novice interaction outcome; stripped $stripped_outcome_count earlier/irrelevant observed outcomes.")
+        else
+            push!(warnings, "Exp4 direct-evidence reconstruction kept only expert interaction outcomes; stripped $stripped_outcome_count novice observed outcomes.")
+        end
+    elseif preserved_outcome_count > 0
+        if is_exp4_novice_full_direct_evidence_model(model_label)
+            push!(warnings, "Exp4 direct-evidence reconstruction used expert interaction outcomes plus the last novice interaction outcome.")
+        else
+            push!(warnings, "Exp4 direct-evidence reconstruction used expert interaction outcomes only.")
+        end
+    end
+
+    return copied_events, warnings
+end
+
 function build_single_context(map_id, problem_dir)
     domain = load_domain(joinpath(ROOT, "dataset", "domain.pddl"))
     problem = load_problem(joinpath(problem_dir, "$(map_id).pddl"))
@@ -1346,6 +1430,7 @@ function replay_case_candidate_search(
     case_label="",
     had_direct_evidence::Bool=false,
     require_exhaustive_search_before_goal::Bool=false,
+    priority_candidate_names=String[],
 )
     current_state = copy(state)
     observations = [string(x) for x in observation_trace]
@@ -1361,6 +1446,13 @@ function replay_case_candidate_search(
         wizard for wizard in sort!(collect(PDDL.get_objects(current_state, :wizard)), by=x -> string(x))
         if current_state[pddl"(iscolor $wizard blue)"]
     ]
+    wizard_by_name = Dict(string(wizard) => wizard for wizard in all_blue_wizards)
+    priority_wizards = Const[]
+    for wizard_name in priority_candidate_names
+        wizard = get(wizard_by_name, string(wizard_name), nothing)
+        wizard === nothing && continue
+        wizard in priority_wizards || push!(priority_wizards, wizard)
+    end
     broadened_beyond_direct_evidence = false
 
     fallback_planner = (d, s, g) -> get_cached_plan!(d, s, g, (cache_scope, :candidate_search))
@@ -1417,14 +1509,40 @@ function replay_case_candidate_search(
             continue
         end
 
-        closest_wizard, plan_to_wizard, unreachable_wizard = choose_shortest_reachable_wizard(
-            domain,
-            current_state,
-            candidate_wizards,
-            visited_wizards,
-            agent_name,
-            fallback_planner,
-        )
+        priority_wizard = nothing
+        for wizard in priority_wizards
+            if !(wizard in visited_wizards)
+                priority_wizard = wizard
+                break
+            end
+        end
+
+        if priority_wizard !== nothing
+            reachable, plan_to_wizard = shortest_plan_to_wizard_adjacency(
+                domain,
+                current_state,
+                priority_wizard,
+                agent_name,
+                fallback_planner,
+            )
+            if reachable
+                closest_wizard = priority_wizard
+                unreachable_wizard = nothing
+            else
+                closest_wizard = nothing
+                plan_to_wizard = Term[]
+                unreachable_wizard = priority_wizard
+            end
+        else
+            closest_wizard, plan_to_wizard, unreachable_wizard = choose_shortest_reachable_wizard(
+                domain,
+                current_state,
+                candidate_wizards,
+                visited_wizards,
+                agent_name,
+                fallback_planner,
+            )
+        end
 
         if closest_wizard === nothing
             if unreachable_wizard !== nothing
@@ -1548,6 +1666,57 @@ function direct_evidence_candidate_names(belief_names, observation_events)
 
     sort!(candidate_names)
     return candidate_names, warnings, true
+end
+
+function observed_wizard_priority_names_exp4(observation_events, model_label::String)
+    interaction_order = String[]
+    seen_interactions = Set{String}()
+    expert_first = nothing
+    novice_last = nothing
+
+    for event in observation_events
+        interaction = parse_observed_interaction(event)
+        interaction === nothing && continue
+        wizard_name = interaction.wizard_name
+        if !(wizard_name in seen_interactions)
+            push!(interaction_order, wizard_name)
+            push!(seen_interactions, wizard_name)
+        end
+        if interaction.observed_agent == "agent2" && expert_first === nothing
+            expert_first = wizard_name
+        elseif interaction.observed_agent == "agent3"
+            novice_last = wizard_name
+        end
+    end
+
+    priority_names = String[]
+    seen_priority = Set{String}()
+    function maybe_push_priority(name)
+        name === nothing && return
+        name in seen_priority && return
+        push!(priority_names, name)
+        push!(seen_priority, name)
+    end
+
+    maybe_push_priority(expert_first)
+    if is_exp4_novice_full_direct_evidence_model(model_label)
+        maybe_push_priority(novice_last)
+    else
+        for wizard_name in interaction_order
+            maybe_push_priority(wizard_name)
+        end
+    end
+
+    warnings = String[]
+    if isempty(priority_names)
+        push!(warnings, "Exp4 direct-evidence reconstruction observed no wizard interactions; used greedy self-search over all blue wizards.")
+    elseif is_exp4_novice_full_direct_evidence_model(model_label)
+        push!(warnings, "Exp4 direct-evidence reconstruction uses observed wizard-choice ordering: expert first, then the novice's last observed wizard, then greedy self-search.")
+    else
+        push!(warnings, "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.")
+    end
+
+    return priority_names, warnings
 end
 
 function replay_trace_candidate_names(entry, belief_names)
@@ -1955,29 +2124,33 @@ function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, ac
                 case_label=map_key,
             )
         elseif uses_direct_evidence_candidates(model_label)
-            disable_outcome_pruning = exp4_metadata_style && disable_exp4_interaction_outcome_pruning
-            if disable_outcome_pruning
-                candidate_names = String[]
-                direct_warnings = ["Exp4 interaction-outcome pruning disabled for direct-evidence reconstruction; searched all blue wizard candidates."]
-                had_direct_evidence = false
+            if exp4_metadata_style
+                candidate_names, direct_warnings = observed_wizard_priority_names_exp4(observation_events, model_label)
+                warnings = vcat(warnings, direct_warnings)
+                replay = replay_case_candidate_search(
+                    replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, String[], observations, action_cost;
+                    cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+                    case_label=map_key,
+                    priority_candidate_names=candidate_names,
+                )
             else
                 candidate_names, direct_warnings, had_direct_evidence = direct_evidence_candidate_names(replay_ctx.belief_names, observation_events)
+                warnings = vcat(warnings, direct_warnings)
+                hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
+                hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
+                    replay_ctx.initial_states, replay_ctx.belief_names, candidate_names
+                )
+                warnings = vcat(warnings, projection_warnings)
+                if had_direct_evidence && isempty(candidate_names)
+                    push!(warnings, "Direct-evidence update ruled out all named candidates; replay kept all latent hypotheses rather than true-state candidate search.")
+                end
+                replay = replay_case(
+                    replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
+                    cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
+                    case_label=map_key,
+                    use_interaction_outcome_pruning=true,
+                )
             end
-            warnings = vcat(warnings, direct_warnings)
-            hypothesis_states = initial_replay_hypotheses(replay_ctx.initial_states, model_label)
-            hypothesis_states, projection_warnings = select_hypotheses_by_belief_names(
-                replay_ctx.initial_states, replay_ctx.belief_names, candidate_names
-            )
-            warnings = vcat(warnings, projection_warnings)
-            if had_direct_evidence && isempty(candidate_names)
-                push!(warnings, "Direct-evidence update ruled out all named candidates; replay kept all latent hypotheses rather than true-state candidate search.")
-            end
-            replay = replay_case(
-                replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, hypothesis_states, observations, action_cost;
-                cache_scope=((exp4_metadata_style ? "exp4" : "exp3"), map_id, model_label, use_reduced_agent1_planning ? "agent1_reduced" : "full_world"),
-                case_label=map_key,
-                use_interaction_outcome_pruning=!disable_outcome_pruning,
-            )
         elseif uses_agent1_naive_replay(model_label)
             replay = replay_case_naive_like(
                 replay_ctx.domain, replay_ctx.state, replay_ctx.problem.goal, observations, action_cost;
@@ -2007,7 +2180,7 @@ function reconstruct_exp3_or_exp4(steps_dict, replay_trace_dict, problem_dir, ac
                 "observation_source" => observation_source,
                 "observation_trace" => observations,
                 "observation_events" => observation_events,
-                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? "direct_observation_evidence" : (uses_agent1_naive_replay(model_label) ? "agent1_naive_planner" : "no_mentalizing_update")),
+                "model_update_mode" => is_mentalizing_model(model_label) ? "mentalizing_posterior" : (uses_direct_evidence_candidates(model_label) ? (exp4_metadata_style ? "direct_observation_priority_search" : "direct_observation_evidence") : (uses_agent1_naive_replay(model_label) ? "agent1_naive_planner" : "no_mentalizing_update")),
                 "planning_world" => use_reduced_agent1_planning ? "agent1_reduced_ascii" : "full_multi_agent_ascii",
                 "posterior_candidates" => candidate_names,
                 "posterior_filter_time" => posterior_filter_time,

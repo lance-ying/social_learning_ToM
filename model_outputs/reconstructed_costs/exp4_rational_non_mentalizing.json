@@ -12,20 +12,20 @@
   "steps_file": "model_outputs/baselines/exp4/step_dict_rational_non_mentalizing.json",
   "reconstruction_mode": "model_faithful_replay",
   "replay_plan_cache_stats": {
-    "hits": 26,
-    "hit_rate": 0.2765957446808511,
-    "misses": 68,
-    "entries": 68
+    "hits": 73,
+    "hit_rate": 0.15208333333333332,
+    "misses": 407,
+    "entries": 407
   },
   "summary": {
     "mean_observe_steps": 9.75,
     "n_cases": 40,
-    "mean_planning_steps": 35.85,
-    "mean_total_steps": 45.6,
+    "mean_planning_steps": 37.95,
+    "mean_total_steps": 47.7,
     "mean_observe_cost": 9.75,
-    "mean_total_cost": 120.4,
+    "mean_total_cost": 127.5,
     "cases_with_warnings": 40,
-    "mean_planning_cost": 110.65
+    "mean_planning_cost": 117.75
   },
   "exp": "exp4",
   "human_level_filter": {
@@ -86,13 +86,12 @@
     "sm411_scenario1": {
       "observe_cost": 7.0,
       "t_recorded": 7,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2",
-        "wizard3",
-        "wizard4"
+        "wizard5",
+        "wizard1"
       ],
-      "replay_elapsed": 2.5259439945220947,
+      "replay_elapsed": 25.584146976470947,
       "t_replayed": 7,
       "observations_count": 7,
       "observation_source": "sequence",
@@ -141,8 +140,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 3.3758161067962646,
-      "total_steps": 56,
+      "posterior_filter_time": 25.983967065811157,
+      "total_steps": 63,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -153,7 +152,7 @@
         "agent2"
       ],
       "observe_steps": 7,
-      "replan_time_total": 0.14523696899414062,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(down agent1)",
@@ -169,6 +168,13 @@
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
         "(up agent1)",
         "(interact agent1 wizard2)",
         "(down agent1)",
@@ -206,31 +212,30 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 49,
+      "planning_steps": 56,
       "planning_action_counts": {
         "observe": 0,
-        "move": 46,
-        "interact": 3
+        "move": 52,
+        "interact": 4
       },
-      "planning_cost": 153.0,
-      "replay_nonplanning_time": 0.1608419418334961,
-      "total_cost": 160.0,
-      "initial_plan_time": 2.219865083694458,
+      "planning_cost": 176.0,
+      "replay_nonplanning_time": 25.480690002441406,
+      "total_cost": 183.0,
+      "initial_plan_time": 0.10345697402954102,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 3 blue wizards.",
-        "Projected hypotheses into reduced planning world with 3 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm541_scenario1": {
       "observe_cost": 10.0,
       "t_recorded": 10,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1"
+        "wizard1",
+        "wizard2"
       ],
-      "replay_elapsed": 0.139509916305542,
+      "replay_elapsed": 4.044654130935669,
       "t_replayed": 10,
       "observations_count": 10,
       "observation_source": "sequence",
@@ -297,7 +302,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.14208507537841797,
+      "posterior_filter_time": 4.045586109161377,
       "total_steps": 42,
       "observation_trace": [
         "agent2",
@@ -355,22 +360,23 @@
         "interact": 1
       },
       "planning_cost": 98.0,
-      "replay_nonplanning_time": 0.008252859115600586,
+      "replay_nonplanning_time": 3.958855152130127,
       "total_cost": 108.0,
-      "initial_plan_time": 0.1312570571899414,
+      "initial_plan_time": 0.08579897880554199,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm611_scenario1": {
       "observe_cost": 9.0,
       "t_recorded": 9,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2"
+        "wizard2",
+        "wizard1"
       ],
-      "replay_elapsed": 0.09920787811279297,
+      "replay_elapsed": 1.8205299377441406,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -431,7 +437,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.10005998611450195,
+      "posterior_filter_time": 1.821349859237671,
       "total_steps": 37,
       "observation_trace": [
         "agent2",
@@ -484,23 +490,23 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.013948917388916016,
+      "replay_nonplanning_time": 1.744408130645752,
       "total_cost": 95.0,
-      "initial_plan_time": 0.08525896072387695,
+      "initial_plan_time": 0.07612180709838867,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm341_scenario1": {
       "observe_cost": 5.0,
       "t_recorded": 5,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1",
-        "wizard4"
+        "wizard2",
+        "wizard3"
       ],
-      "replay_elapsed": 0.13424396514892578,
+      "replay_elapsed": 7.818696022033691,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -537,8 +543,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.1347520351409912,
-      "total_steps": 44,
+      "posterior_filter_time": 7.819197177886963,
+      "total_steps": 36,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -547,7 +553,7 @@
         "agent2"
       ],
       "observe_steps": 5,
-      "replan_time_total": 0.048487186431884766,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(right agent1)",
@@ -557,19 +563,11 @@
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
-        "(right agent1)",
-        "(right agent1)",
-        "(right agent1)",
+        "(left agent1)",
+        "(left agent1)",
         "(up agent1)",
-        "(up agent1)",
-        "(interact agent1 wizard1)",
+        "(interact agent1 wizard3)",
         "(down agent1)",
-        "(down agent1)",
-        "(left agent1)",
-        "(left agent1)",
-        "(left agent1)",
-        "(left agent1)",
-        "(left agent1)",
         "(down agent1)",
         "(down agent1)",
         "(interact agent1 wizard4)",
@@ -590,30 +588,30 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 39,
+      "planning_steps": 31,
       "planning_action_counts": {
         "observe": 0,
-        "move": 37,
+        "move": 29,
         "interact": 2
       },
-      "planning_cost": 121.0,
-      "replay_nonplanning_time": 0.010524749755859375,
-      "total_cost": 126.0,
-      "initial_plan_time": 0.07523202896118164,
+      "planning_cost": 97.0,
+      "replay_nonplanning_time": 7.8122239112854,
+      "total_cost": 102.0,
+      "initial_plan_time": 0.006472110748291016,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
-        "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm421_scenario1": {
       "observe_cost": 20.0,
       "t_recorded": 20,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1"
+        "wizard1",
+        "wizard4"
       ],
-      "replay_elapsed": 0.2305128574371338,
+      "replay_elapsed": 3.864927053451538,
       "t_replayed": 20,
       "observations_count": 20,
       "observation_source": "sequence",
@@ -740,7 +738,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.23231101036071777,
+      "posterior_filter_time": 3.86667799949646,
       "total_steps": 68,
       "observation_trace": [
         "agent2",
@@ -824,22 +822,23 @@
         "interact": 1
       },
       "planning_cost": 146.0,
-      "replay_nonplanning_time": 0.011036872863769531,
+      "replay_nonplanning_time": 3.7925572395324707,
       "total_cost": 166.0,
-      "initial_plan_time": 0.21947598457336426,
+      "initial_plan_time": 0.07236981391906738,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm531_scenario1": {
       "observe_cost": 6.0,
       "t_recorded": 6,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2"
+        "wizard2",
+        "wizard1"
       ],
-      "replay_elapsed": 0.024326086044311523,
+      "replay_elapsed": 1.634397029876709,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -882,7 +881,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.0249330997467041,
+      "posterior_filter_time": 1.6349639892578125,
       "total_steps": 34,
       "observation_trace": [
         "agent2",
@@ -932,22 +931,23 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.007130146026611328,
+      "replay_nonplanning_time": 1.628674030303955,
       "total_cost": 92.0,
-      "initial_plan_time": 0.017195940017700195,
+      "initial_plan_time": 0.005722999572753906,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm611_scenario2": {
       "observe_cost": 6.0,
       "t_recorded": 6,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2"
+        "wizard3",
+        "wizard1"
       ],
-      "replay_elapsed": 0.04014301300048828,
+      "replay_elapsed": 2.530419111251831,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -990,8 +990,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.04079699516296387,
-      "total_steps": 34,
+      "posterior_filter_time": 2.5310609340667725,
+      "total_steps": 49,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -1015,6 +1015,21 @@
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(up agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(down agent1)",
         "(left agent1)",
         "(left agent1)",
         "(left agent1)",
@@ -1033,37 +1048,37 @@
         "(up agent1)",
         "(pickup agent1 gem1)"
       ],
-      "planning_steps": 28,
+      "planning_steps": 43,
       "planning_action_counts": {
         "observe": 0,
-        "move": 27,
-        "interact": 1
+        "move": 41,
+        "interact": 2
       },
-      "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.006687164306640625,
-      "total_cost": 92.0,
-      "initial_plan_time": 0.033455848693847656,
+      "planning_cost": 133.0,
+      "replay_nonplanning_time": 2.5268971920013428,
+      "total_cost": 139.0,
+      "initial_plan_time": 0.0035219192504882812,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm543_scenario2": {
       "observe_cost": 0.0,
       "t_recorded": 0,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [],
-      "replay_elapsed": 0.058274030685424805,
+      "replay_elapsed": 4.395371198654175,
       "t_replayed": 0,
       "observations_count": 0,
       "observation_source": "sequence",
       "reconstruction_mode": "model_faithful_replay",
       "observation_events": [],
-      "posterior_filter_time": 0.17762112617492676,
+      "posterior_filter_time": 4.476852178573608,
       "total_steps": 19,
       "observation_trace": [],
       "observe_steps": 0,
-      "replan_time_total": 0.011018991470336914,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -1093,22 +1108,23 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 0.004667043685913086,
+      "replay_nonplanning_time": 4.389408349990845,
       "total_cost": 61.0,
-      "initial_plan_time": 0.042587995529174805,
+      "initial_plan_time": 0.005962848663330078,
       "warnings": [
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction observed no wizard interactions; used greedy self-search over all blue wizards.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm311_scenario1": {
       "observe_cost": 7.0,
       "t_recorded": 7,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2",
-        "wizard3"
+        "wizard4",
+        "wizard1"
       ],
-      "replay_elapsed": 0.1737358570098877,
+      "replay_elapsed": 6.5851731300354,
       "t_replayed": 7,
       "observations_count": 7,
       "observation_source": "sequence",
@@ -1157,8 +1173,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.17441701889038086,
-      "total_steps": 51,
+      "posterior_filter_time": 6.585835933685303,
+      "total_steps": 58,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -1169,7 +1185,7 @@
         "agent2"
       ],
       "observe_steps": 7,
-      "replan_time_total": 0.039999961853027344,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -1183,6 +1199,13 @@
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
         "(up agent1)",
         "(interact agent1 wizard2)",
         "(down agent1)",
@@ -1217,31 +1240,29 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 44,
+      "planning_steps": 51,
       "planning_action_counts": {
         "observe": 0,
-        "move": 42,
-        "interact": 2
+        "move": 48,
+        "interact": 3
       },
-      "planning_cost": 136.0,
-      "replay_nonplanning_time": 0.016880035400390625,
-      "total_cost": 143.0,
-      "initial_plan_time": 0.11685585975646973,
+      "planning_cost": 159.0,
+      "replay_nonplanning_time": 6.5771942138671875,
+      "total_cost": 166.0,
+      "initial_plan_time": 0.00797891616821289,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
-        "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm321_scenario1": {
       "observe_cost": 2.0,
       "t_recorded": 2,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1",
-        "wizard2"
+        "wizard3"
       ],
-      "replay_elapsed": 0.22131896018981934,
+      "replay_elapsed": 3.9814250469207764,
       "t_replayed": 2,
       "observations_count": 2,
       "observation_source": "sequence",
@@ -1260,14 +1281,14 @@
           "observed_agent": "agent3"
         }
       ],
-      "posterior_filter_time": 0.22156000137329102,
-      "total_steps": 50,
+      "posterior_filter_time": 3.9816579818725586,
+      "total_steps": 53,
       "observation_trace": [
         "agent3",
         "agent3"
       ],
       "observe_steps": 2,
-      "replan_time_total": 0.04334521293640137,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(right agent1)",
@@ -1275,6 +1296,9 @@
         "(right agent1)",
         "(right agent1)",
         "(right agent1)",
+        "(right agent1)",
+        "(interact agent1 wizard3)",
+        "(left agent1)",
         "(up agent1)",
         "(up agent1)",
         "(right agent1)",
@@ -1319,31 +1343,30 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 48,
+      "planning_steps": 51,
       "planning_action_counts": {
         "observe": 0,
-        "move": 46,
-        "interact": 2
+        "move": 48,
+        "interact": 3
       },
-      "planning_cost": 148.0,
-      "replay_nonplanning_time": 0.01174473762512207,
-      "total_cost": 150.0,
-      "initial_plan_time": 0.1662290096282959,
+      "planning_cost": 159.0,
+      "replay_nonplanning_time": 3.9031410217285156,
+      "total_cost": 161.0,
+      "initial_plan_time": 0.07828402519226074,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
-        "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm351_scenario1": {
       "observe_cost": 12.0,
       "t_recorded": 12,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2",
-        "wizard3"
+        "wizard4",
+        "wizard1"
       ],
-      "replay_elapsed": 0.21680283546447754,
+      "replay_elapsed": 8.25147294998169,
       "t_replayed": 12,
       "observations_count": 12,
       "observation_source": "sequence",
@@ -1422,8 +1445,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.21805095672607422,
-      "total_steps": 53,
+      "posterior_filter_time": 8.252665042877197,
+      "total_steps": 56,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -1439,7 +1462,7 @@
         "agent2"
       ],
       "observe_steps": 12,
-      "replan_time_total": 0.043126821517944336,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -1455,6 +1478,9 @@
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
         "(right agent1)",
         "(right agent1)",
         "(up agent1)",
@@ -1484,30 +1510,30 @@
         "(right agent1)",
         "(pickup agent1 gem3)"
       ],
-      "planning_steps": 41,
+      "planning_steps": 44,
       "planning_action_counts": {
         "observe": 0,
-        "move": 39,
-        "interact": 2
+        "move": 41,
+        "interact": 3
       },
-      "planning_cost": 127.0,
-      "replay_nonplanning_time": 0.012233972549438477,
-      "total_cost": 139.0,
-      "initial_plan_time": 0.16144204139709473,
+      "planning_cost": 138.0,
+      "replay_nonplanning_time": 8.217652797698975,
+      "total_cost": 150.0,
+      "initial_plan_time": 0.033820152282714844,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
-        "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm361_scenario2": {
       "observe_cost": 9.0,
       "t_recorded": 9,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard3"
+        "wizard3",
+        "wizard2"
       ],
-      "replay_elapsed": 0.044036865234375,
+      "replay_elapsed": 4.2613019943237305,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -1568,7 +1594,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.04487800598144531,
+      "posterior_filter_time": 4.262128114700317,
       "total_steps": 35,
       "observation_trace": [
         "agent2",
@@ -1619,23 +1645,22 @@
         "interact": 1
       },
       "planning_cost": 80.0,
-      "replay_nonplanning_time": 0.006337642669677734,
+      "replay_nonplanning_time": 4.255185842514038,
       "total_cost": 89.0,
-      "initial_plan_time": 0.037699222564697266,
+      "initial_plan_time": 0.006116151809692383,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm361_scenario1": {
       "observe_cost": 12.0,
       "t_recorded": 12,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1",
-        "wizard3"
+        "wizard2"
       ],
-      "replay_elapsed": 0.19565701484680176,
+      "replay_elapsed": 8.594765901565552,
       "t_replayed": 12,
       "observations_count": 12,
       "observation_source": "sequence",
@@ -1714,8 +1739,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.1968250274658203,
-      "total_steps": 38,
+      "posterior_filter_time": 8.595863819122314,
+      "total_steps": 43,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -1741,6 +1766,11 @@
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(right agent1)",
         "(right agent1)",
         "(up agent1)",
         "(interact agent1 wizard3)",
@@ -1761,32 +1791,29 @@
         "(right agent1)",
         "(pickup agent1 gem3)"
       ],
-      "planning_steps": 26,
+      "planning_steps": 31,
       "planning_action_counts": {
         "observe": 0,
-        "move": 25,
-        "interact": 1
+        "move": 29,
+        "interact": 2
       },
-      "planning_cost": 80.0,
-      "replay_nonplanning_time": 0.006955146789550781,
-      "total_cost": 92.0,
-      "initial_plan_time": 0.18870186805725098,
+      "planning_cost": 97.0,
+      "replay_nonplanning_time": 8.569534063339233,
+      "total_cost": 109.0,
+      "initial_plan_time": 0.02523183822631836,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
-        "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_present)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm421_scenario2": {
       "observe_cost": 14.0,
       "t_recorded": 14,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1",
-        "wizard2",
-        "wizard3"
+        "wizard4"
       ],
-      "replay_elapsed": 0.37865209579467773,
+      "replay_elapsed": 11.735408067703247,
       "t_replayed": 14,
       "observations_count": 14,
       "observation_source": "sequence",
@@ -1877,8 +1904,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.38004112243652344,
-      "total_steps": 68,
+      "posterior_filter_time": 11.736745834350586,
+      "total_steps": 71,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -1896,7 +1923,7 @@
         "agent2"
       ],
       "observe_steps": 14,
-      "replan_time_total": 0.1297459602355957,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(right agent1)",
@@ -1907,6 +1934,9 @@
         "(right agent1)",
         "(right agent1)",
         "(right agent1)",
+        "(right agent1)",
+        "(interact agent1 wizard4)",
+        "(left agent1)",
         "(up agent1)",
         "(up agent1)",
         "(right agent1)",
@@ -1954,31 +1984,30 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 54,
+      "planning_steps": 57,
       "planning_action_counts": {
         "observe": 0,
-        "move": 51,
-        "interact": 3
+        "move": 53,
+        "interact": 4
       },
-      "planning_cost": 168.0,
-      "replay_nonplanning_time": 0.019213199615478516,
-      "total_cost": 182.0,
-      "initial_plan_time": 0.22969293594360352,
+      "planning_cost": 179.0,
+      "replay_nonplanning_time": 11.697221279144287,
+      "total_cost": 193.0,
+      "initial_plan_time": 0.03818678855895996,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 3 blue wizards.",
-        "Projected hypotheses into reduced planning world with 3 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm531_scenario2": {
       "observe_cost": 6.0,
       "t_recorded": 6,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2"
+        "wizard3",
+        "wizard1"
       ],
-      "replay_elapsed": 0.028210878372192383,
+      "replay_elapsed": 2.4450950622558594,
       "t_replayed": 6,
       "observations_count": 6,
       "observation_source": "sequence",
@@ -2021,8 +2050,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.028876066207885742,
-      "total_steps": 34,
+      "posterior_filter_time": 2.4457509517669678,
+      "total_steps": 45,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -2048,6 +2077,17 @@
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
         "(up agent1)",
         "(interact agent1 wizard2)",
         "(down agent1)",
@@ -2064,29 +2104,30 @@
         "(right agent1)",
         "(pickup agent1 gem1)"
       ],
-      "planning_steps": 28,
+      "planning_steps": 39,
       "planning_action_counts": {
         "observe": 0,
-        "move": 27,
-        "interact": 1
+        "move": 37,
+        "interact": 2
       },
-      "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.007069826126098633,
-      "total_cost": 92.0,
-      "initial_plan_time": 0.02114105224609375,
+      "planning_cost": 121.0,
+      "replay_nonplanning_time": 2.439023017883301,
+      "total_cost": 127.0,
+      "initial_plan_time": 0.006072044372558594,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm331_scenario1": {
       "observe_cost": 5.0,
       "t_recorded": 5,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
+        "wizard4",
         "wizard3"
       ],
-      "replay_elapsed": 0.027763843536376953,
+      "replay_elapsed": 3.5114009380340576,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -2123,7 +2164,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.028263092041015625,
+      "posterior_filter_time": 3.511929988861084,
       "total_steps": 29,
       "observation_trace": [
         "agent2",
@@ -2168,30 +2209,30 @@
         "interact": 1
       },
       "planning_cost": 74.0,
-      "replay_nonplanning_time": 0.006075859069824219,
+      "replay_nonplanning_time": 3.507201910018921,
       "total_cost": 79.0,
-      "initial_plan_time": 0.021687984466552734,
+      "initial_plan_time": 0.004199028015136719,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm543_scenario1": {
       "observe_cost": 0.0,
       "t_recorded": 0,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [],
-      "replay_elapsed": 0.07541298866271973,
+      "replay_elapsed": 4.594580888748169,
       "t_replayed": 0,
       "observations_count": 0,
       "observation_source": "sequence",
       "reconstruction_mode": "model_faithful_replay",
       "observation_events": [],
-      "posterior_filter_time": 0.07547616958618164,
+      "posterior_filter_time": 4.594619035720825,
       "total_steps": 19,
       "observation_trace": [],
       "observe_steps": 0,
-      "replan_time_total": 0.011568069458007812,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -2221,21 +2262,23 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 0.004782915115356445,
+      "replay_nonplanning_time": 4.570436000823975,
       "total_cost": 61.0,
-      "initial_plan_time": 0.05906200408935547,
+      "initial_plan_time": 0.024144887924194336,
       "warnings": [
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction observed no wizard interactions; used greedy self-search over all blue wizards.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm432_scenario1": {
       "observe_cost": 21.0,
       "t_recorded": 21,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard3"
+        "wizard3",
+        "wizard1"
       ],
-      "replay_elapsed": 0.07895302772521973,
+      "replay_elapsed": 3.2362101078033447,
       "t_replayed": 21,
       "observations_count": 21,
       "observation_source": "sequence",
@@ -2368,7 +2411,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.08087706565856934,
+      "posterior_filter_time": 3.2381751537323,
       "total_steps": 59,
       "observation_trace": [
         "agent2",
@@ -2443,22 +2486,22 @@
         "interact": 1
       },
       "planning_cost": 116.0,
-      "replay_nonplanning_time": 0.009840011596679688,
+      "replay_nonplanning_time": 3.2214481830596924,
       "total_cost": 137.0,
-      "initial_plan_time": 0.06911301612854004,
+      "initial_plan_time": 0.014761924743652344,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm331_scenario2": {
       "observe_cost": 16.0,
       "t_recorded": 16,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
         "wizard3"
       ],
-      "replay_elapsed": 0.03255796432495117,
+      "replay_elapsed": 3.4760360717773438,
       "t_replayed": 16,
       "observations_count": 16,
       "observation_source": "sequence",
@@ -2561,7 +2604,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.03412914276123047,
+      "posterior_filter_time": 3.477626085281372,
       "total_steps": 40,
       "observation_trace": [
         "agent2",
@@ -2617,30 +2660,30 @@
         "interact": 1
       },
       "planning_cost": 74.0,
-      "replay_nonplanning_time": 0.006125926971435547,
+      "replay_nonplanning_time": 3.4718101024627686,
       "total_cost": 90.0,
-      "initial_plan_time": 0.026432037353515625,
+      "initial_plan_time": 0.004225969314575195,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm371_scenario1": {
       "observe_cost": 0.0,
       "t_recorded": 0,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [],
-      "replay_elapsed": 0.08488011360168457,
+      "replay_elapsed": 2.262346029281616,
       "t_replayed": 0,
       "observations_count": 0,
       "observation_source": "sequence",
       "reconstruction_mode": "model_faithful_replay",
       "observation_events": [],
-      "posterior_filter_time": 0.08492207527160645,
+      "posterior_filter_time": 2.2623748779296875,
       "total_steps": 19,
       "observation_trace": [],
       "observe_steps": 0,
-      "replan_time_total": 0.006704807281494141,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(up agent1)",
@@ -2670,22 +2713,22 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 0.0039632320404052734,
+      "replay_nonplanning_time": 2.195452928543091,
       "total_cost": 61.0,
-      "initial_plan_time": 0.07421207427978516,
+      "initial_plan_time": 0.06689310073852539,
       "warnings": [
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction observed no wizard interactions; used greedy self-search over all blue wizards.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm321_scenario2": {
       "observe_cost": 5.0,
       "t_recorded": 5,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1",
-        "wizard2"
+        "wizard3"
       ],
-      "replay_elapsed": 0.16743707656860352,
+      "replay_elapsed": 3.862715005874634,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -2722,8 +2765,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.1763319969177246,
-      "total_steps": 53,
+      "posterior_filter_time": 3.8632779121398926,
+      "total_steps": 56,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -2732,7 +2775,7 @@
         "agent2"
       ],
       "observe_steps": 5,
-      "replan_time_total": 0.03665304183959961,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(right agent1)",
@@ -2740,6 +2783,9 @@
         "(right agent1)",
         "(right agent1)",
         "(right agent1)",
+        "(right agent1)",
+        "(interact agent1 wizard3)",
+        "(left agent1)",
         "(up agent1)",
         "(up agent1)",
         "(right agent1)",
@@ -2784,31 +2830,30 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 48,
+      "planning_steps": 51,
       "planning_action_counts": {
         "observe": 0,
-        "move": 46,
-        "interact": 2
+        "move": 48,
+        "interact": 3
       },
-      "planning_cost": 148.0,
-      "replay_nonplanning_time": 0.017547130584716797,
-      "total_cost": 153.0,
-      "initial_plan_time": 0.11323690414428711,
+      "planning_cost": 159.0,
+      "replay_nonplanning_time": 3.8384950160980225,
+      "total_cost": 164.0,
+      "initial_plan_time": 0.024219989776611328,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
-        "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm612_scenario2": {
       "observe_cost": 13.0,
       "t_recorded": 13,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1",
-        "wizard3"
+        "wizard4",
+        "wizard2"
       ],
-      "replay_elapsed": 0.09580397605895996,
+      "replay_elapsed": 7.577715873718262,
       "t_replayed": 13,
       "observations_count": 13,
       "observation_source": "sequence",
@@ -2893,8 +2938,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.09701180458068848,
-      "total_steps": 51,
+      "posterior_filter_time": 7.578896999359131,
+      "total_steps": 58,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -2911,7 +2956,7 @@
         "agent2"
       ],
       "observe_steps": 13,
-      "replan_time_total": 0.024811983108520508,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -2926,6 +2971,13 @@
         "(up agent1)",
         "(right agent1)",
         "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard2)",
+        "(down agent1)",
+        "(left agent1)",
+        "(left agent1)",
         "(up agent1)",
         "(interact agent1 wizard1)",
         "(down agent1)",
@@ -2953,30 +3005,30 @@
         "(left agent1)",
         "(pickup agent1 gem1)"
       ],
-      "planning_steps": 38,
+      "planning_steps": 45,
       "planning_action_counts": {
         "observe": 0,
-        "move": 36,
-        "interact": 2
+        "move": 42,
+        "interact": 3
       },
-      "planning_cost": 118.0,
-      "replay_nonplanning_time": 0.010750055313110352,
-      "total_cost": 131.0,
-      "initial_plan_time": 0.0602419376373291,
+      "planning_cost": 141.0,
+      "replay_nonplanning_time": 7.572089910507202,
+      "total_cost": 154.0,
+      "initial_plan_time": 0.00562596321105957,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
-        "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm221_scenario1": {
       "observe_cost": 20.0,
       "t_recorded": 20,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1"
+        "wizard1",
+        "wizard2"
       ],
-      "replay_elapsed": 0.036775827407836914,
+      "replay_elapsed": 1.834934949874878,
       "t_replayed": 20,
       "observations_count": 20,
       "observation_source": "sequence",
@@ -3103,7 +3155,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.03855705261230469,
+      "posterior_filter_time": 1.836690902709961,
       "total_steps": 46,
       "observation_trace": [
         "agent2",
@@ -3165,22 +3217,23 @@
         "interact": 1
       },
       "planning_cost": 80.0,
-      "replay_nonplanning_time": 0.006443977355957031,
+      "replay_nonplanning_time": 1.8304927349090576,
       "total_cost": 100.0,
-      "initial_plan_time": 0.030331850051879883,
+      "initial_plan_time": 0.0044422149658203125,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm431_scenario1": {
       "observe_cost": 11.0,
       "t_recorded": 11,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard3"
+        "wizard3",
+        "wizard1"
       ],
-      "replay_elapsed": 0.10153889656066895,
+      "replay_elapsed": 3.257154941558838,
       "t_replayed": 11,
       "observations_count": 11,
       "observation_source": "sequence",
@@ -3253,7 +3306,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.10254597663879395,
+      "posterior_filter_time": 3.2581560611724854,
       "total_steps": 48,
       "observation_trace": [
         "agent2",
@@ -3317,22 +3370,23 @@
         "interact": 1
       },
       "planning_cost": 113.0,
-      "replay_nonplanning_time": 0.009686946868896484,
+      "replay_nonplanning_time": 3.24208402633667,
       "total_cost": 124.0,
-      "initial_plan_time": 0.09185194969177246,
+      "initial_plan_time": 0.015070915222167969,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm221_scenario2": {
       "observe_cost": 5.0,
       "t_recorded": 5,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1"
+        "wizard3",
+        "wizard2"
       ],
-      "replay_elapsed": 0.033416032791137695,
+      "replay_elapsed": 2.6673550605773926,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -3369,8 +3423,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.033982038497924805,
-      "total_steps": 31,
+      "posterior_filter_time": 2.667879104614258,
+      "total_steps": 40,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -3384,6 +3438,15 @@
       "executed_actions": [
         "(right agent1)",
         "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(right agent1)",
+        "(interact agent1 wizard2)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(left agent1)",
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
@@ -3409,29 +3472,30 @@
         "(up agent1)",
         "(pickup agent1 gem1)"
       ],
-      "planning_steps": 26,
+      "planning_steps": 35,
       "planning_action_counts": {
         "observe": 0,
-        "move": 25,
-        "interact": 1
+        "move": 33,
+        "interact": 2
       },
-      "planning_cost": 80.0,
-      "replay_nonplanning_time": 0.006455183029174805,
-      "total_cost": 85.0,
-      "initial_plan_time": 0.02696084976196289,
+      "planning_cost": 109.0,
+      "replay_nonplanning_time": 2.6630022525787354,
+      "total_cost": 114.0,
+      "initial_plan_time": 0.0043528079986572266,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm612_scenario1": {
       "observe_cost": 9.0,
       "t_recorded": 9,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard3"
+        "wizard3",
+        "wizard2"
       ],
-      "replay_elapsed": 0.038429975509643555,
+      "replay_elapsed": 3.413663864135742,
       "t_replayed": 9,
       "observations_count": 9,
       "observation_source": "sequence",
@@ -3492,7 +3556,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.03937196731567383,
+      "posterior_filter_time": 3.414536952972412,
       "total_steps": 40,
       "observation_trace": [
         "agent2",
@@ -3548,23 +3612,23 @@
         "interact": 1
       },
       "planning_cost": 95.0,
-      "replay_nonplanning_time": 0.008109092712402344,
+      "replay_nonplanning_time": 3.407949924468994,
       "total_cost": 104.0,
-      "initial_plan_time": 0.03032088279724121,
+      "initial_plan_time": 0.005713939666748047,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm432_scenario2": {
       "observe_cost": 4.0,
       "t_recorded": 4,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2",
-        "wizard3"
+        "wizard4",
+        "wizard1"
       ],
-      "replay_elapsed": 0.1583859920501709,
+      "replay_elapsed": 7.435052871704102,
       "t_replayed": 4,
       "observations_count": 4,
       "observation_source": "sequence",
@@ -3595,8 +3659,8 @@
           "observed_agent": "agent3"
         }
       ],
-      "posterior_filter_time": 0.15888500213623047,
-      "total_steps": 45,
+      "posterior_filter_time": 7.435525894165039,
+      "total_steps": 48,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -3604,7 +3668,7 @@
         "agent3"
       ],
       "observe_steps": 4,
-      "replan_time_total": 0.030342817306518555,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -3619,6 +3683,9 @@
         "(left agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
         "(right agent1)",
         "(right agent1)",
         "(up agent1)",
@@ -3649,33 +3716,30 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 41,
+      "planning_steps": 44,
       "planning_action_counts": {
         "observe": 0,
-        "move": 39,
-        "interact": 2
+        "move": 41,
+        "interact": 3
       },
-      "planning_cost": 127.0,
-      "replay_nonplanning_time": 0.01201319694519043,
-      "total_cost": 131.0,
-      "initial_plan_time": 0.11602997779846191,
+      "planning_cost": 138.0,
+      "replay_nonplanning_time": 7.425984859466553,
+      "total_cost": 142.0,
+      "initial_plan_time": 0.009068012237548828,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
-        "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm511_scenario1": {
       "observe_cost": 3.0,
       "t_recorded": 3,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2",
-        "wizard3",
-        "wizard4",
-        "wizard5"
+        "wizard6",
+        "wizard1"
       ],
-      "replay_elapsed": 0.843768835067749,
+      "replay_elapsed": 64.07948398590088,
       "t_replayed": 3,
       "observations_count": 3,
       "observation_source": "sequence",
@@ -3700,15 +3764,15 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.8441340923309326,
-      "total_steps": 50,
+      "posterior_filter_time": 64.07980298995972,
+      "total_steps": 57,
       "observation_trace": [
         "agent2",
         "agent3",
         "agent2"
       ],
       "observe_steps": 3,
-      "replan_time_total": 0.3001670837402344,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -3722,6 +3786,13 @@
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
         "(right agent1)",
         "(up agent1)",
         "(interact agent1 wizard2)",
@@ -3759,32 +3830,30 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 47,
+      "planning_steps": 54,
       "planning_action_counts": {
         "observe": 0,
-        "move": 44,
-        "interact": 3
+        "move": 50,
+        "interact": 4
       },
-      "planning_cost": 147.0,
-      "replay_nonplanning_time": 0.018561840057373047,
-      "total_cost": 150.0,
-      "initial_plan_time": 0.5250399112701416,
+      "planning_cost": 170.0,
+      "replay_nonplanning_time": 63.97285079956055,
+      "total_cost": 173.0,
+      "initial_plan_time": 0.10663318634033203,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 4 blue wizards.",
-        "Projected hypotheses into reduced planning world with 4 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_present)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm521_scenario2": {
       "observe_cost": 20.0,
       "t_recorded": 20,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1"
+        "wizard1",
+        "wizard5"
       ],
-      "replay_elapsed": 0.3885769844055176,
+      "replay_elapsed": 8.584353923797607,
       "t_replayed": 20,
       "observations_count": 20,
       "observation_source": "sequence",
@@ -3911,7 +3980,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.39034008979797363,
+      "posterior_filter_time": 8.58614706993103,
       "total_steps": 68,
       "observation_trace": [
         "agent2",
@@ -3995,30 +4064,30 @@
         "interact": 1
       },
       "planning_cost": 146.0,
-      "replay_nonplanning_time": 0.020237207412719727,
+      "replay_nonplanning_time": 8.498974084854126,
       "total_cost": 166.0,
-      "initial_plan_time": 0.36833977699279785,
+      "initial_plan_time": 0.08537983894348145,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm371_scenario2": {
       "observe_cost": 0.0,
       "t_recorded": 0,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [],
-      "replay_elapsed": 0.03922104835510254,
+      "replay_elapsed": 2.149793863296509,
       "t_replayed": 0,
       "observations_count": 0,
       "observation_source": "sequence",
       "reconstruction_mode": "model_faithful_replay",
       "observation_events": [],
-      "posterior_filter_time": 0.03926801681518555,
+      "posterior_filter_time": 2.1498239040374756,
       "total_steps": 19,
       "observation_trace": [],
       "observe_steps": 0,
-      "replan_time_total": 0.006752967834472656,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(up agent1)",
@@ -4048,22 +4117,23 @@
         "interact": 2
       },
       "planning_cost": 61.0,
-      "replay_nonplanning_time": 0.003977060317993164,
+      "replay_nonplanning_time": 2.1328747272491455,
       "total_cost": 61.0,
-      "initial_plan_time": 0.02849102020263672,
+      "initial_plan_time": 0.01691913604736328,
       "warnings": [
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction observed no wizard interactions; used greedy self-search over all blue wizards.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm431_scenario2": {
       "observe_cost": 14.0,
       "t_recorded": 14,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2",
-        "wizard3"
+        "wizard4",
+        "wizard1"
       ],
-      "replay_elapsed": 0.19212794303894043,
+      "replay_elapsed": 7.528088092803955,
       "t_replayed": 14,
       "observations_count": 14,
       "observation_source": "sequence",
@@ -4154,8 +4224,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.19350719451904297,
-      "total_steps": 54,
+      "posterior_filter_time": 7.529410123825073,
+      "total_steps": 57,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -4173,7 +4243,7 @@
         "agent2"
       ],
       "observe_steps": 14,
-      "replan_time_total": 0.02683401107788086,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(left agent1)",
@@ -4187,6 +4257,9 @@
         "(left agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
         "(right agent1)",
         "(right agent1)",
         "(up agent1)",
@@ -4217,30 +4290,30 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 40,
+      "planning_steps": 43,
       "planning_action_counts": {
         "observe": 0,
-        "move": 38,
-        "interact": 2
+        "move": 40,
+        "interact": 3
       },
-      "planning_cost": 124.0,
-      "replay_nonplanning_time": 0.019476890563964844,
-      "total_cost": 138.0,
-      "initial_plan_time": 0.14581704139709473,
+      "planning_cost": 135.0,
+      "replay_nonplanning_time": 7.5190510749816895,
+      "total_cost": 149.0,
+      "initial_plan_time": 0.009037017822265625,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
-        "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm341_scenario2": {
       "observe_cost": 12.0,
       "t_recorded": 12,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard4"
+        "wizard4",
+        "wizard3"
       ],
-      "replay_elapsed": 0.045832157135009766,
+      "replay_elapsed": 3.98921799659729,
       "t_replayed": 12,
       "observations_count": 12,
       "observation_source": "sequence",
@@ -4319,7 +4392,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.04702401161193848,
+      "posterior_filter_time": 3.990377902984619,
       "total_steps": 40,
       "observation_trace": [
         "agent2",
@@ -4375,22 +4448,23 @@
         "interact": 1
       },
       "planning_cost": 86.0,
-      "replay_nonplanning_time": 0.006963968276977539,
+      "replay_nonplanning_time": 3.9828171730041504,
       "total_cost": 98.0,
-      "initial_plan_time": 0.03886818885803223,
+      "initial_plan_time": 0.0064008235931396484,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm211_scenario2": {
       "observe_cost": 23.0,
       "t_recorded": 23,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2"
+        "wizard2",
+        "wizard1"
       ],
-      "replay_elapsed": 0.05462813377380371,
+      "replay_elapsed": 1.4226951599121094,
       "t_replayed": 23,
       "observations_count": 23,
       "observation_source": "sequence",
@@ -4535,7 +4609,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.056636810302734375,
+      "posterior_filter_time": 1.4247448444366455,
       "total_steps": 65,
       "observation_trace": [
         "agent2",
@@ -4616,22 +4690,23 @@
         "interact": 1
       },
       "planning_cost": 128.0,
-      "replay_nonplanning_time": 0.010503053665161133,
+      "replay_nonplanning_time": 1.4153680801391602,
       "total_cost": 151.0,
-      "initial_plan_time": 0.04412508010864258,
+      "initial_plan_time": 0.007327079772949219,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm311_scenario2": {
       "observe_cost": 13.0,
       "t_recorded": 13,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard3"
+        "wizard3",
+        "wizard1"
       ],
-      "replay_elapsed": 0.10787487030029297,
+      "replay_elapsed": 3.012726068496704,
       "t_replayed": 13,
       "observations_count": 13,
       "observation_source": "sequence",
@@ -4716,7 +4791,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.10915803909301758,
+      "posterior_filter_time": 3.013978958129883,
       "total_steps": 54,
       "observation_trace": [
         "agent2",
@@ -4786,25 +4861,22 @@
         "interact": 1
       },
       "planning_cost": 125.0,
-      "replay_nonplanning_time": 0.01644301414489746,
+      "replay_nonplanning_time": 3.004728078842163,
       "total_cost": 138.0,
-      "initial_plan_time": 0.09143185615539551,
+      "initial_plan_time": 0.007997989654541016,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm521_scenario1": {
       "observe_cost": 14.0,
       "t_recorded": 14,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1",
-        "wizard2",
-        "wizard3",
-        "wizard4"
+        "wizard5"
       ],
-      "replay_elapsed": 0.7989640235900879,
+      "replay_elapsed": 33.89478611946106,
       "t_replayed": 14,
       "observations_count": 14,
       "observation_source": "sequence",
@@ -4895,8 +4967,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.8003849983215332,
-      "total_steps": 71,
+      "posterior_filter_time": 33.89610505104065,
+      "total_steps": 74,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -4914,7 +4986,7 @@
         "agent2"
       ],
       "observe_steps": 14,
-      "replan_time_total": 0.3419477939605713,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(right agent1)",
@@ -4925,6 +4997,9 @@
         "(right agent1)",
         "(right agent1)",
         "(right agent1)",
+        "(right agent1)",
+        "(interact agent1 wizard5)",
+        "(left agent1)",
         "(up agent1)",
         "(up agent1)",
         "(right agent1)",
@@ -4975,32 +5050,30 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 57,
+      "planning_steps": 60,
       "planning_action_counts": {
         "observe": 0,
-        "move": 53,
-        "interact": 4
+        "move": 55,
+        "interact": 5
       },
-      "planning_cost": 179.0,
-      "replay_nonplanning_time": 0.017299413681030273,
-      "total_cost": 193.0,
-      "initial_plan_time": 0.43971681594848633,
+      "planning_cost": 190.0,
+      "replay_nonplanning_time": 33.865002155303955,
+      "total_cost": 204.0,
+      "initial_plan_time": 0.029783964157104492,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 4 blue wizards.",
-        "Projected hypotheses into reduced planning world with 4 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent).",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm511_scenario2": {
       "observe_cost": 15.0,
       "t_recorded": 15,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard4"
+        "wizard4",
+        "wizard1"
       ],
-      "replay_elapsed": 0.20152807235717773,
+      "replay_elapsed": 16.11694097518921,
       "t_replayed": 15,
       "observations_count": 15,
       "observation_source": "sequence",
@@ -5097,7 +5170,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.20313096046447754,
+      "posterior_filter_time": 16.118580102920532,
       "total_steps": 56,
       "observation_trace": [
         "agent2",
@@ -5169,23 +5242,23 @@
         "interact": 1
       },
       "planning_cost": 125.0,
-      "replay_nonplanning_time": 0.01911306381225586,
+      "replay_nonplanning_time": 16.08304476737976,
       "total_cost": 140.0,
-      "initial_plan_time": 0.18241500854492188,
+      "initial_plan_time": 0.03389620780944824,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm541_scenario2": {
       "observe_cost": 7.0,
       "t_recorded": 7,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard1",
-        "wizard3"
+        "wizard4",
+        "wizard2"
       ],
-      "replay_elapsed": 0.12511992454528809,
+      "replay_elapsed": 8.020993947982788,
       "t_replayed": 7,
       "observations_count": 7,
       "observation_source": "sequence",
@@ -5234,8 +5307,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.12587904930114746,
-      "total_steps": 46,
+      "posterior_filter_time": 8.021735906600952,
+      "total_steps": 42,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -5246,7 +5319,7 @@
         "agent2"
       ],
       "observe_steps": 7,
-      "replan_time_total": 0.022381067276000977,
+      "replan_time_total": 0.0,
       "planning_world": "agent1_reduced_ascii",
       "executed_actions": [
         "(down agent1)",
@@ -5263,14 +5336,10 @@
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
-        "(right agent1)",
-        "(right agent1)",
+        "(left agent1)",
         "(up agent1)",
-        "(interact agent1 wizard3)",
+        "(interact agent1 wizard2)",
         "(down agent1)",
-        "(left agent1)",
-        "(left agent1)",
-        "(left agent1)",
         "(left agent1)",
         "(left agent1)",
         "(up agent1)",
@@ -5289,30 +5358,30 @@
         "(left agent1)",
         "(pickup agent1 gem1)"
       ],
-      "planning_steps": 39,
+      "planning_steps": 35,
       "planning_action_counts": {
         "observe": 0,
-        "move": 37,
+        "move": 33,
         "interact": 2
       },
-      "planning_cost": 121.0,
-      "replay_nonplanning_time": 0.010632753372192383,
-      "total_cost": 128.0,
-      "initial_plan_time": 0.09210610389709473,
+      "planning_cost": 109.0,
+      "replay_nonplanning_time": 8.005184888839722,
+      "total_cost": 116.0,
+      "initial_plan_time": 0.015809059143066406,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 2 blue wizards.",
-        "Projected hypotheses into reduced planning world with 2 candidate states.",
-        "Pruned 1 latent-state hypotheses after interaction evidence (blue_amulet_absent)."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm411_scenario2": {
       "observe_cost": 13.0,
       "t_recorded": 13,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard4"
+        "wizard4",
+        "wizard1"
       ],
-      "replay_elapsed": 0.21739983558654785,
+      "replay_elapsed": 7.272196054458618,
       "t_replayed": 13,
       "observations_count": 13,
       "observation_source": "sequence",
@@ -5397,7 +5466,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.2187209129333496,
+      "posterior_filter_time": 7.273535966873169,
       "total_steps": 56,
       "observation_trace": [
         "agent2",
@@ -5469,22 +5538,23 @@
         "interact": 1
       },
       "planning_cost": 131.0,
-      "replay_nonplanning_time": 0.011733770370483398,
+      "replay_nonplanning_time": 7.241281986236572,
       "total_cost": 144.0,
-      "initial_plan_time": 0.20566606521606445,
+      "initial_plan_time": 0.0309140682220459,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm351_scenario2": {
       "observe_cost": 17.0,
       "t_recorded": 17,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard3"
+        "wizard3",
+        "wizard1"
       ],
-      "replay_elapsed": 0.17210888862609863,
+      "replay_elapsed": 3.8528239727020264,
       "t_replayed": 17,
       "observations_count": 17,
       "observation_source": "sequence",
@@ -5593,7 +5663,7 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.17365217208862305,
+      "posterior_filter_time": 3.85432505607605,
       "total_steps": 55,
       "observation_trace": [
         "agent2",
@@ -5664,22 +5734,23 @@
         "interact": 1
       },
       "planning_cost": 116.0,
-      "replay_nonplanning_time": 0.010196924209594727,
+      "replay_nonplanning_time": 3.7624220848083496,
       "total_cost": 133.0,
-      "initial_plan_time": 0.1619119644165039,
+      "initial_plan_time": 0.09040188789367676,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     },
     "sm211_scenario1": {
       "observe_cost": 5.0,
       "t_recorded": 5,
-      "model_update_mode": "direct_observation_evidence",
+      "model_update_mode": "direct_observation_priority_search",
       "posterior_candidates": [
-        "wizard2"
+        "wizard3",
+        "wizard1"
       ],
-      "replay_elapsed": 0.05651497840881348,
+      "replay_elapsed": 2.1443660259246826,
       "t_replayed": 5,
       "observations_count": 5,
       "observation_source": "sequence",
@@ -5716,8 +5787,8 @@
           "observed_agent": "agent2"
         }
       ],
-      "posterior_filter_time": 0.05710101127624512,
-      "total_steps": 47,
+      "posterior_filter_time": 2.1449038982391357,
+      "total_steps": 54,
       "observation_trace": [
         "agent2",
         "agent3",
@@ -5741,6 +5812,13 @@
         "(up agent1)",
         "(up agent1)",
         "(up agent1)",
+        "(left agent1)",
+        "(left agent1)",
+        "(up agent1)",
+        "(interact agent1 wizard1)",
+        "(down agent1)",
+        "(right agent1)",
+        "(right agent1)",
         "(right agent1)",
         "(right agent1)",
         "(right agent1)",
@@ -5772,19 +5850,19 @@
         "(down agent1)",
         "(pickup agent1 gem2)"
       ],
-      "planning_steps": 42,
+      "planning_steps": 49,
       "planning_action_counts": {
         "observe": 0,
-        "move": 41,
-        "interact": 1
+        "move": 47,
+        "interact": 2
       },
-      "planning_cost": 128.0,
-      "replay_nonplanning_time": 0.011121988296508789,
-      "total_cost": 133.0,
-      "initial_plan_time": 0.04539299011230469,
+      "planning_cost": 151.0,
+      "replay_nonplanning_time": 2.12703800201416,
+      "total_cost": 156.0,
+      "initial_plan_time": 0.01732802391052246,
       "warnings": [
-        "Direct-evidence interaction outcomes reduced candidates to 1 blue wizards.",
-        "Projected hypotheses into reduced planning world with 1 candidate states."
+        "Exp4 direct-evidence reconstruction uses the expert's observed wizard choice first, then greedy self-search over remaining candidates.",
+        "No direct-evidence wizard update was available; searched all blue wizard candidates."
       ]
     }
   },

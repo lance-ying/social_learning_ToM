@@ -67,26 +67,21 @@ MODEL_PANELS = [
 OBSERVE_MODEL_PANELS = [panel for panel in MODEL_PANELS if panel[1] != "agent1_naive_planner"]
 EXTRA_MODEL_PANELS = [
     ("Social Mentalizing\nUntil One Converges", "social_mentalizing_until_one_converges"),
-    ("RNM Expert Until\nNovice Wizard", "rational_non_mentalizing_expert_until_novice_wizard"),
+    ("RNM Expert Only\nUntil Expert Wizard", "rational_non_mentalizing_expert_only_until_expert_wizard"),
     (
-        "RNM Novice Full + Expert\nUntil Novice Wizard",
-        "rational_non_mentalizing_novice_full_expert_until_novice_wizard",
+        "RNM Novice Full + Expert\nUntil Expert Wizard",
+        "rational_non_mentalizing_novice_full_expert_until_expert_wizard",
     ),
-    ("Naive Expert Until\nNovice Wizard", "naive_observer_expert_until_novice_wizard"),
+    ("Naive Expert Only\nUntil Expert Wizard", "naive_observer_expert_only_until_expert_wizard"),
     (
-        "Naive Novice Full + Expert\nUntil Novice Wizard",
-        "naive_observer_novice_full_expert_until_novice_wizard",
+        "Naive Novice Full + Expert\nUntil Expert Wizard",
+        "naive_observer_novice_full_expert_until_expert_wizard",
     ),
 ]
 ALL_MODEL_PANELS = MODEL_PANELS + EXTRA_MODEL_PANELS
 ALL_OBSERVE_MODEL_PANELS = [panel for panel in ALL_MODEL_PANELS if panel[1] != "agent1_naive_planner"]
-EXP34_ONLY_MODELS = {"social_mentalizing_until_one_converges"}
-EXP4_ONLY_MODELS = {
-    "rational_non_mentalizing_expert_until_novice_wizard",
-    "rational_non_mentalizing_novice_full_expert_until_novice_wizard",
-    "naive_observer_expert_until_novice_wizard",
-    "naive_observer_novice_full_expert_until_novice_wizard",
-}
+EXP34_ONLY_MODELS = set()
+EXP4_ONLY_MODELS = set()
 NON_TASK_LEVELS = {"comprehension_check", "experiment"}
 EXP34_OBSERVE_SKIP_LEVELS = {"s111_1"}
 EXP34_OBSERVE_SKIP_PREFIXES = ("sm111_", "sm112_")
@@ -122,6 +117,22 @@ def model_supported_in_exp(exp: str, model_name: str) -> bool:
     if model_name in EXP34_ONLY_MODELS:
         return exp in {"exp3", "exp4"}
     return True
+
+
+def effective_model_name(exp: str, model_name: str) -> str:
+    if model_name == "social_mentalizing_until_one_converges" and exp in {"exp1", "exp2"}:
+        return "social_mentalizing"
+    if model_name in {
+        "rational_non_mentalizing_expert_only_until_expert_wizard",
+        "rational_non_mentalizing_novice_full_expert_until_expert_wizard",
+    } and exp in {"exp1", "exp2", "exp3"}:
+        return "rational_non_mentalizing"
+    if model_name in {
+        "naive_observer_expert_only_until_expert_wizard",
+        "naive_observer_novice_full_expert_until_expert_wizard",
+    } and exp in {"exp1", "exp2", "exp3"}:
+        return "naive_observer"
+    return model_name
 
 
 def make_output_path(filename: str) -> Path:
@@ -377,17 +388,25 @@ def aggregate_human_observes(exp: str) -> dict[str, dict[str, float]]:
 def load_model_observe_predictions(exp: str, model_name: str) -> dict:
     if not model_supported_in_exp(exp, model_name):
         return {}
+    model_name = effective_model_name(exp, model_name)
     if model_name == "full_model":
-        return load_json(REPO_ROOT / "model_outputs" / "experiments" / exp / "steps_dict.json")
+        path = REPO_ROOT / "model_outputs" / "experiments" / exp / "steps_dict.json"
+        return load_json(path) if path.exists() else {}
     if model_name == "agent1_naive_planner":
-        return load_json(REPO_ROOT / "model_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json")["per_case"]
-    return load_json(REPO_ROOT / "model_outputs" / "baselines" / exp / f"step_dict_{model_name}.json")
+        path = REPO_ROOT / "model_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json"
+        return load_json(path)["per_case"] if path.exists() else {}
+    path = REPO_ROOT / "model_outputs" / "baselines" / exp / f"step_dict_{model_name}.json"
+    return load_json(path) if path.exists() else {}
 
 
 def load_model_total_steps_predictions(exp: str, model_name: str) -> dict[str, dict]:
     if not model_supported_in_exp(exp, model_name):
         return {}
-    per_case = load_json(REPO_ROOT / "model_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json")["per_case"]
+    model_name = effective_model_name(exp, model_name)
+    path = REPO_ROOT / "model_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json"
+    if not path.exists():
+        return {}
+    per_case = load_json(path)["per_case"]
     if exp == "exp1":
         return {
             (level[:-2] if level.endswith("_1") else level): value
@@ -508,11 +527,14 @@ def common_total_step_keys(exp: str) -> tuple[dict[str, dict[str, float]], dict[
     human_stats = aggregate_human_total_steps(exp)
     model_predictions = {
         model_name: load_model_total_steps_predictions(exp, model_name)
-        for _label, model_name in MODEL_PANELS
+        for _label, model_name in ALL_MODEL_PANELS
+        if model_supported_in_exp(exp, model_name)
     }
 
     common_keys = set(human_stats)
     for model_name, model_dict in model_predictions.items():
+        if not model_dict:
+            continue
         common_keys &= {level for level, value in model_dict.items() if "total_steps" in value}
 
     common_keys = sorted(common_keys)
