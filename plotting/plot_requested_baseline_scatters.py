@@ -8,6 +8,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from common import (
+    EXPERIMENT_LABELS,
     annotate_stats,
     apply_reference_style,
     collect_observe_pairs,
@@ -52,18 +53,19 @@ def parse_args() -> argparse.Namespace:
 
 def metric_spec(metric: str):
     if metric == "observe":
-        return collect_observe_pairs, "Human Observation Steps", "Model Observation Steps", "exp4_variant_observes.png", "exp3_social_mentalizing_u1c_observes.png"
+        return collect_observe_pairs, "Human Observation Steps", "Observations", "exp4_variant_observes.png", "exp3_social_mentalizing_u1c_observes.png"
     if metric == "total_steps":
-        return collect_total_steps_pairs, "Human Total Steps", "Model Total Steps", "exp4_variant_total_steps.png", "exp3_social_mentalizing_u1c_total_steps.png"
+        return collect_total_steps_pairs, "Human Total Steps", "Total Steps", "exp4_variant_total_steps.png", "exp3_social_mentalizing_u1c_total_steps.png"
     if metric == "total_cost":
-        return collect_total_cost_pairs, "Human Total Cost", "Model Total Cost", "exp4_variant_total_cost.png", "exp3_social_mentalizing_u1c_total_cost.png"
+        return collect_total_cost_pairs, "Human Total Cost", "Total Cost", "exp4_variant_total_cost.png", "exp3_social_mentalizing_u1c_total_cost.png"
     raise ValueError(metric)
 
 
 def plot_single_experiment(exp: str, panels: list[tuple[str, str]], metric: str, output_path: Path) -> None:
-    collector, y_label, x_suffix, _exp4_name, _exp3_name = metric_spec(metric)
+    collector, y_label, metric_title, _exp4_name, _exp3_name = metric_spec(metric)
     fig, axes = plt.subplots(1, len(panels), figsize=(5 * len(panels), 6), squeeze=False)
     axes = axes[0]
+    fig.suptitle(f"{EXPERIMENT_LABELS[exp]} - {metric_title}", fontsize=24, color="#1a1a1a", y=1.02)
 
     for idx, (ax, (panel_label, model_name)) in enumerate(zip(axes, panels)):
         if metric == "observe":
@@ -87,13 +89,13 @@ def plot_single_experiment(exp: str, panels: list[tuple[str, str]], metric: str,
             plot_points_errorbars_and_fit(ax, x, y, sd)
             annotate_stats(ax, x, y, fontsize=16)
 
-        ax.set_xlabel(f"{panel_label}\n{x_suffix}", fontsize=20, color="#1a1a1a")
+        ax.set_xlabel(panel_label, fontsize=20, color="#1a1a1a")
         if idx == 0:
             ax.set_ylabel(y_label, fontsize=22, color="#1a1a1a")
         else:
             ax.set_ylabel("")
 
-    plt.tight_layout(w_pad=2.5)
+    plt.tight_layout(rect=(0, 0, 1, 0.95), w_pad=2.5)
     output_path.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_path, dpi=300, bbox_inches="tight")
     print(f"Saved -> {output_path}")

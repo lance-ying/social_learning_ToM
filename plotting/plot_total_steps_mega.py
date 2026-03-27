@@ -6,8 +6,9 @@ import argparse
 import matplotlib.pyplot as plt
 
 from common import (
-    annotate_stats,
     apply_reference_style,
+    bootstrap_ccc_ci,
+    bootstrap_r_ci,
     collect_total_steps_pairs,
     make_output_path,
     plot_points_errorbars_and_fit,
@@ -16,11 +17,45 @@ from common import (
 
 
 ROW_CONFIGS = [
-    ("exp1", "Experiment 1"),
-    ("exp2", "Experiment 2"),
-    ("exp3", "Experiment 3"),
-    ("exp4", "Experiment 4"),
+    {"exp": "exp1", "group_label": "Experiment 1\nHuman Total Steps", "row_label": ""},
+    {"exp": "exp2", "group_label": "Experiment 2\nHuman Total Steps", "row_label": ""},
+    {"exp": "exp3", "group_label": "Experiment 3\nHuman Total Steps", "row_label": ""},
+    {"exp": "exp4", "group_label": "Experiment 4\nHuman Total Steps", "row_label": ""},
 ]
+
+
+def annotate_total_stats(ax, x, y, fontsize: int = 16) -> None:
+    if len(x) < 3:
+        return
+    r, ci_low, ci_high = bootstrap_r_ci(x, y, n_resamples=1000)
+    ccc, _ccc_low, _ccc_high = bootstrap_ccc_ci(x, y, n_resamples=1000)
+    ax.text(
+        0.05,
+        0.90,
+        f"r = {r:.2f} [{ci_low:.2f}, {ci_high:.2f}]\nCCC = {ccc:.2f}",
+        transform=ax.transAxes,
+        ha="left",
+        va="top",
+        fontsize=fontsize,
+        color="#1a1a1a",
+    )
+
+
+def add_group_labels(fig: plt.Figure, axes) -> None:
+    for row_idx, config in enumerate(ROW_CONFIGS):
+        top = axes[row_idx, 0].get_position().y1
+        bottom = axes[row_idx, 0].get_position().y0
+        y = (top + bottom) / 2
+        fig.text(
+            0.048,
+            y,
+            config["group_label"],
+            rotation=90,
+            va="center",
+            ha="center",
+            fontsize=18,
+            color="#1a1a1a",
+        )
 
 
 def parse_args() -> argparse.Namespace:
@@ -45,10 +80,19 @@ def main() -> int:
 
     model_names = [item.strip() for item in args.models.split(",") if item.strip()] if args.models else None
     model_panels = resolve_model_panels(model_names)
+    if model_names is None:
+        model_panels = [panel for panel in model_panels if panel[1] != "agent1_naive_planner"]
 
-    fig, axes = plt.subplots(len(ROW_CONFIGS), len(model_panels), figsize=(5 * len(model_panels), 19), squeeze=False)
+    fig, axes = plt.subplots(
+        len(ROW_CONFIGS),
+        len(model_panels),
+        figsize=(5 * len(model_panels), 4.6 * len(ROW_CONFIGS)),
+        squeeze=False,
+    )
 
-    for row_idx, (exp, row_label) in enumerate(ROW_CONFIGS):
+    for row_idx, config in enumerate(ROW_CONFIGS):
+        exp = config["exp"]
+        row_label = config["row_label"]
         for col_idx, (ax, (panel_label, model_name)) in enumerate(zip(axes[row_idx], model_panels)):
             x, y, sd, _keys = collect_total_steps_pairs(exp, model_name)
             apply_reference_style(ax)
@@ -66,19 +110,20 @@ def main() -> int:
                 )
             else:
                 plot_points_errorbars_and_fit(ax, x, y, sd)
-                annotate_stats(ax, x, y, fontsize=16)
+                annotate_total_stats(ax, x, y, fontsize=16)
 
             if row_idx == len(ROW_CONFIGS) - 1:
-                ax.set_xlabel(f"{panel_label}\nModel Total Steps", fontsize=20, color="#1a1a1a")
+                ax.set_xlabel(panel_label, fontsize=20, color="#1a1a1a")
             else:
                 ax.set_xlabel("")
 
             if col_idx == 0:
-                ax.set_ylabel(f"{row_label}\nHuman Total Steps", fontsize=18, color="#1a1a1a")
+                ax.set_ylabel(row_label, fontsize=16, color="#1a1a1a", labelpad=2)
             else:
                 ax.set_ylabel("")
 
-    plt.tight_layout(w_pad=2.5, h_pad=3.5)
+    plt.tight_layout(rect=(0.082, 0.03, 1.0, 1.0), w_pad=2.5, h_pad=1.6)
+    add_group_labels(fig, axes)
     output_file.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_file, dpi=300, bbox_inches="tight")
     print(f"Saved -> {output_file}")
