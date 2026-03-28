@@ -16,7 +16,7 @@ MODEL_FILTER_SET=0
 usage() {
   cat <<'EOF'
 Usage:
-  bash scripts/utilities/run_all_baselines.sh [--no-bootstrap] [--exp <exp1|exp2|exp3|exp4>] [--exp34] [--exp4-variants] [--model <social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_only_until_expert_wizard|rational_non_mentalizing_novice_full_expert_until_expert_wizard|naive_observer_expert_only_until_expert_wizard|naive_observer_novice_full_expert_until_expert_wizard>[,...]]
+  bash scripts/utilities/run_all_baselines.sh [--no-bootstrap] [--exp <exp1|exp2|exp3|exp4>[,...]] [--exp34] [--exp4-variants] [--model <social_mentalizing|social_mentalizing_until_one_converges|rational_non_mentalizing|naive_observer|agent1_naive_planner|rational_non_mentalizing_expert_only_until_expert_wizard|rational_non_mentalizing_novice_full_expert_until_expert_wizard|naive_observer_expert_only_until_expert_wizard|naive_observer_novice_full_expert_until_expert_wizard>[,...]]
 
 Runs the 12 active baseline generators:
   - exp1: mentalize, non_mentalizing, naive
@@ -30,6 +30,7 @@ Notes:
     which provides the replay-trace inputs used by agent1_naive_planner reconstruction.
   - The four expert/novice observation-schedule variants are available only for `exp4`.
   - `--exp4-variants` is a shortcut for running exactly those four exp4 variants.
+  - `--exp` may be passed multiple times or as a comma-separated list.
   - --model may be passed multiple times or as a comma-separated list.
 EOF
 }
@@ -88,6 +89,22 @@ append_selected_model() {
   fi
 }
 
+append_selected_experiment() {
+  local candidate="$1"
+  case "$candidate" in
+    exp1|exp2|exp3|exp4)
+      ;;
+    *)
+      echo "Unknown experiment: $candidate" >&2
+      usage >&2
+      exit 1
+      ;;
+  esac
+  if ! has_experiment "$candidate"; then
+    SELECTED_EXPERIMENTS+=("$candidate")
+  fi
+}
+
 while [[ $# -gt 0 ]]; do
   case "$1" in
     --no-bootstrap)
@@ -100,16 +117,18 @@ while [[ $# -gt 0 ]]; do
         usage >&2
         exit 1
       fi
-      case "$2" in
-        exp1|exp2|exp3|exp4)
-          SELECTED_EXPERIMENTS=("$2")
-          ;;
-        *)
-          echo "Unknown experiment: $2" >&2
-          usage >&2
-          exit 1
-          ;;
-      esac
+      IFS=',' read -r -a requested_experiments <<< "$2"
+      if [[ ${#requested_experiments[@]} -eq 0 ]]; then
+        echo "Missing value for --exp" >&2
+        usage >&2
+        exit 1
+      fi
+      if [[ ${#SELECTED_EXPERIMENTS[@]} -eq 4 ]]; then
+        SELECTED_EXPERIMENTS=()
+      fi
+      for requested_experiment in "${requested_experiments[@]}"; do
+        append_selected_experiment "$requested_experiment"
+      done
       shift 2
       ;;
     --exp34)

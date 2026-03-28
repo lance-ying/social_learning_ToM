@@ -132,10 +132,8 @@ for (map_id, v) in metadata
         ascii_content = read(txt_path, String)
         domain_agent1 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
         temp_path_agent1 = joinpath(PROBLEM_DIR, ".temp_agent1_$(map_id).txt")
-        if !isfile(temp_path_agent1)
-            filtered_ascii_agent1 = filter_ascii_agents(ascii_content, :agent1)
-            write(temp_path_agent1, filtered_ascii_agent1)
-        end
+        filtered_ascii_agent1 = filter_ascii_agents(ascii_content, :agent1)
+        write(temp_path_agent1, filtered_ascii_agent1)
         problem_agent1 = load_ascii_problem(temp_path_agent1)
         state_agent1 = initstate(domain_agent1, problem_agent1)
         state_render_agent1 = copy(state_agent1)
@@ -143,10 +141,8 @@ for (map_id, v) in metadata
 
         domain_agent2 = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
         temp_path_agent2 = joinpath(PROBLEM_DIR, ".temp_agent2_$(map_id).txt")
-        if !isfile(temp_path_agent2)
-            filtered_ascii_agent2 = filter_ascii_agents(ascii_content, :agent2)
-            write(temp_path_agent2, filtered_ascii_agent2)
-        end
+        filtered_ascii_agent2 = filter_ascii_agents(ascii_content, :agent2)
+        write(temp_path_agent2, filtered_ascii_agent2)
         problem_agent2 = load_ascii_problem(temp_path_agent2)
         state_agent2 = initstate(domain_agent2, problem_agent2)
         domain_agent2, state_agent2 = PDDL.compiled(domain_agent2, problem_agent2)

@@ -13,11 +13,9 @@ include(joinpath(@__DIR__, "..", "..", "src", "utils.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "heuristics.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "beliefs.jl"))
 include(joinpath(@__DIR__, "..", "..", "src", "render.jl"))
-include(joinpath(@__DIR__, "..", "..", "src", "ascii.jl"))
 
 # Define directory paths
 PROBLEM_DIR = joinpath(@__DIR__, "..", "..", "dataset", "problems_exp2")
-OUTPUT_PATH = joinpath(@__DIR__, "..", "..", "inference", "inference_data_exp2.jld2")
 
 # #--- Initial Setup ---#
 
@@ -32,52 +30,31 @@ possible_worlds = Dict()
 
 # possible_worlds_render = Dict()
 
-problem_files = filter(f -> endswith(f, ".pddl") && !occursin("plan", f), readdir(PROBLEM_DIR))
+problem_files = filter(f -> endswith(f, ".pddl") && !occursin("plan", f), readdir(joinpath(@__DIR__, "..", "..", "dataset", "problems_exp2")))
 
 
 metadata_path = joinpath(PROBLEM_DIR, "metadata.json")
 metadata = JSON.parsefile(metadata_path)
 
-function filter_ascii_agents(ascii_content::String, keep_agent::Symbol)
-    agent_chars = Dict(:agent1 => 'M', :agent2 => 'X', :agent3 => 'Y')
-    filtered = ascii_content
-    for (agent_sym, char) in agent_chars
-        if agent_sym != keep_agent
-            filtered = replace(filtered, char => '.')
-        end
-    end
-    return filtered
-end
-
 for (map_id, v) in metadata
     for (i, goal_str) in enumerate(v)
+        if (occursin("442", map_id))
+            continue
+        end
         filename = "$(map_id)_$(i)_plan.pddl"
         goal = PDDL.parse_pddl("(has agent2 gem$(goal_str))")
         println(filename, ": ", goal)
 
 
-        if !haskey(goal_probs_conditioned_dict, map_id)
-            goal_probs_conditioned_dict[map_id] = Dict()
-            state_probs_conditioned_dict[map_id] = Dict()
-        end
+        goal_probs_conditioned_dict[map_id] = Dict()
+        state_probs_conditioned_dict[map_id] = Dict()
 
         # Load domain
         domain = load_domain(joinpath(@__DIR__, "..", "..", "dataset", "domain.pddl"))
 
-        # Load problem with only agent2 present, matching inference_multi.jl.
-        problem_path = joinpath(PROBLEM_DIR, "$map_id.pddl")
-        txt_path = joinpath(PROBLEM_DIR, "$map_id.txt")
-        if isfile(txt_path)
-            ascii_content = read(txt_path, String)
-            temp_path = joinpath(PROBLEM_DIR, ".temp_agent2_$(map_id).txt")
-            filtered_ascii = filter_ascii_agents(ascii_content, :agent2)
-            write(temp_path, filtered_ascii)
-            problem = load_ascii_problem(temp_path)
-        elseif isfile(problem_path)
-            problem = load_problem(problem_path)
-        else
-            error("No problem file found for $map_id")
-        end
+        # Load problem
+
+        problem = load_problem(joinpath(PROBLEM_DIR, "$map_id.pddl"))
 
         # Load plan
         # plan, _, splitpoints = load_plan(joinpath(PLAN_DIR, "$(p_id).pddl"))
@@ -175,7 +152,12 @@ for (map_id, v) in metadata
             for i in 1:length(initial_states)
                 state = initial_states[i]
                 planner = AStarPlanner(GoalManhattan())
-                plan = planner(domain, state, goals[g])
+                # plan =planner(domain, state, goals[g])
+                plan = @pddl(
+                    "(left agent2)",
+                    "(left agent2)",
+                    "(up agent2)",
+                    "(left agent2)")
 
                 println(plan)
 
@@ -227,4 +209,5 @@ end
 
 data = Dict("goal" => goal_probs_conditioned_dict, "state" => state_probs_conditioned_dict, "worlds" => possible_worlds)
 
-save(OUTPUT_PATH, data)
+save("inference_data_exp2.jld2", data)
+

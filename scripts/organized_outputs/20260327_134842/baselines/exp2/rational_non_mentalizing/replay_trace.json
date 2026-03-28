@@ -2067,32 +2067,47 @@
     "s221_1": {
         "observations": [
             {
-                "action": "(up agent2)",
+                "action": "(down agent2)",
                 "interaction_outcome": "none",
                 "agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(down agent2)",
                 "interaction_outcome": "none",
                 "agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(down agent2)",
                 "interaction_outcome": "none",
                 "agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(left agent2)",
                 "interaction_outcome": "none",
                 "agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(left agent2)",
                 "interaction_outcome": "none",
                 "agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
                 "interaction_outcome": "none",
                 "agent": "agent2"
             },
@@ -2132,43 +2147,43 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 81.5,
+        "q_observe": 83.0,
         "stop_reason": "q_observe_better",
-        "t": 13,
+        "t": 16,
         "q_not_observe": 100,
         "observation_events": [
             {
-                "action": "(up agent2)",
+                "action": "(down agent2)",
                 "observation_index": 1,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(down agent2)",
                 "observation_index": 2,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(down agent2)",
                 "observation_index": 3,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(left agent2)",
                 "observation_index": 4,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(left agent2)",
                 "observation_index": 5,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(left agent2)",
                 "observation_index": 6,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
@@ -2198,20 +2213,38 @@
                 "observed_agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(left agent2)",
                 "observation_index": 11,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(up agent2)",
+                "action": "(left agent2)",
                 "observation_index": 12,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(interact agent2 wizard1)",
+                "action": "(left agent2)",
                 "observation_index": 13,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 14,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 15,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard1)",
+                "observation_index": 16,
                 "interaction_outcome": "blue_amulet_present",
                 "observed_agent": "agent2"
             }
@@ -2983,6 +3016,81 @@
                 "agent": "agent2"
             },
             {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
                 "action": "(right agent2)",
                 "interaction_outcome": "none",
                 "agent": "agent2"
@@ -3018,9 +3126,9 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 79.5,
+        "q_observe": 87.0,
         "stop_reason": "q_observe_better",
-        "t": 9,
+        "t": 24,
         "q_not_observe": 100,
         "observation_events": [
             {
@@ -3036,44 +3144,134 @@
                 "observed_agent": "agent2"
             },
             {
-                "action": "(right agent2)",
+                "action": "(down agent2)",
                 "observation_index": 3,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(right agent2)",
+                "action": "(left agent2)",
                 "observation_index": 4,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(right agent2)",
+                "action": "(left agent2)",
                 "observation_index": 5,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(right agent2)",
+                "action": "(left agent2)",
                 "observation_index": 6,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(right agent2)",
+                "action": "(left agent2)",
                 "observation_index": 7,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(right agent2)",
+                "action": "(left agent2)",
                 "observation_index": 8,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             },
             {
-                "action": "(pickup agent2 gem3)",
+                "action": "(left agent2)",
                 "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 11,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 12,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 13,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 14,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 15,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 16,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 17,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 18,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 19,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 20,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 21,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 22,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 23,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(pickup agent2 gem3)",
+                "observation_index": 24,
                 "interaction_outcome": "none",
                 "observed_agent": "agent2"
             }
