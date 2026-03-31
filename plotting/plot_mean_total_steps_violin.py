@@ -6,7 +6,7 @@ import argparse
 import matplotlib.pyplot as plt
 import numpy as np
 
-from common import EXPERIMENT_LABELS, EXPERIMENTS, common_total_step_keys, make_output_path
+from common import EXPERIMENT_LABELS, EXPERIMENTS, common_total_step_keys, make_output_path, preferred_model_name
 
 
 def parse_args() -> argparse.Namespace:
@@ -30,7 +30,6 @@ def main() -> int:
         ("Human", "human"),
         ("Rat. Ment.", "full_model"),
         ("Soc. Ment.", "social_mentalizing"),
-        ("Soc. Ment.\nU1C", "social_mentalizing_until_one_converges"),
         ("Rat. Non-M.", "rational_non_mentalizing"),
         ("RNM Expert\nOnly", "rational_non_mentalizing_expert_only_until_expert_wizard"),
         ("RNM Novice\nFull + Exp.", "rational_non_mentalizing_novice_full_expert_until_expert_wizard"),
@@ -45,7 +44,6 @@ def main() -> int:
         "#888888",
         "#4c78a8",
         "#72b7b2",
-        "#9ad1cc",
         "#e39c37",
         "#f0b870",
         "#d8891e",
@@ -61,7 +59,7 @@ def main() -> int:
 
         series_values = [human_values]
         for _label, model_name in violin_series[1:]:
-            model_dict = model_predictions.get(model_name, {})
+            model_dict = model_predictions.get(preferred_model_name(exp, model_name), {})
             values = [model_dict[level]["total_steps"] for level in model_dict]
             if not values:
                 values = [np.nan, np.nan]

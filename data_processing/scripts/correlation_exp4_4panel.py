@@ -14,6 +14,7 @@ from correlation_4panel_style import (
     bootstrap_r_ci,
     plot_points_errorbars_and_fit,
 )
+from model_name_resolution import baseline_step_path
 
 # ── paths ──────────────────────────────────────────────────────────────────
 script_dir = Path(__file__).parent
@@ -25,11 +26,6 @@ def first_existing(*paths: Path) -> Path:
         if path.exists():
             return path
     raise FileNotFoundError(f"No candidate file exists: {paths}")
-
-
-def baseline_step_path(exp: str, model: str) -> Path:
-    return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
-
 # ── load model / baseline JSONs ───────────────────────────────────────────
 model_json = first_existing(
     workspace_root / 'model_outputs/experiments/exp4/steps_dict.json',
@@ -40,13 +36,13 @@ model_json = first_existing(
 with open(model_json) as f:
     model_dict = json.load(f)
 
-with open(baseline_step_path('exp4', 'naive_observer')) as f:
+with open(baseline_step_path(workspace_root, 'exp4', 'naive_observer')) as f:
     baseline_naive = json.load(f)
 
-with open(baseline_step_path('exp4', 'rational_non_mentalizing')) as f:
+with open(baseline_step_path(workspace_root, 'exp4', 'rational_non_mentalizing')) as f:
     baseline_nonmentalize = json.load(f)
 
-with open(baseline_step_path('exp4', 'social_mentalizing')) as f:
+with open(baseline_step_path(workspace_root, 'exp4', 'social_mentalizing')) as f:
     baseline_mentalize = json.load(f)
 
 # ── parse per-participant agent2/agent3 counts from CSVs ──────────────────

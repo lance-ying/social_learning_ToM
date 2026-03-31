@@ -18,6 +18,7 @@ import numpy as np
 
 from correlation_4panel_style import apply_reference_style, bootstrap_ccc_ci, bootstrap_r_ci
 from grouped_barplot_style import EXPERIMENTS, EXPERIMENT_COLORS, EXPERIMENT_LABELS
+from model_name_resolution import reconstructed_costs_path
 
 
 MODEL_PANELS = [
@@ -80,11 +81,7 @@ def human_candidates(exp: str, model_key: str) -> list[str]:
 
 
 def collect_pairs(repo_root: Path, exp: str, model_name: str, metric: str) -> tuple[np.ndarray, np.ndarray]:
-    model_dir = repo_root / "model_outputs" / "reconstructed_costs"
-    if not model_dir.exists():
-        model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
-
-    model_per_case = load_json(model_dir / f"{exp}_{model_name}.json")["per_case"]
+    model_per_case = load_json(reconstructed_costs_path(repo_root, exp, model_name))["per_case"]
     human_per_case = load_json(human_costs_path(repo_root, exp))["per_case"]
     human_mean_key = f"{metric}_mean"
 

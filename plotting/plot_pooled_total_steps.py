@@ -15,6 +15,7 @@ from common import (
     collect_total_steps_pairs,
     make_output_path,
     pooled_limits,
+    preferred_model_name,
     resolve_model_panels,
 )
 
@@ -43,21 +44,20 @@ def main() -> int:
     total_step_panels = resolve_model_panels(model_names)
     if model_names is None:
         total_step_panels = list(total_step_panels)
-        social_idx = next((i for i, (_label, model_name) in enumerate(total_step_panels) if model_name == "social_mentalizing"), None)
-        insert_at = social_idx + 1 if social_idx is not None else len(total_step_panels)
-        total_step_panels[insert_at:insert_at] = [
-            ("Social Mentalizing\nUntil One Converges", "social_mentalizing_until_one_converges"),
-            ("RNM Expert Only\nUntil Expert Wizard", "rational_non_mentalizing_expert_only_until_expert_wizard"),
-            (
-                "RNM Novice Full + Expert\nUntil Expert Wizard",
-                "rational_non_mentalizing_novice_full_expert_until_expert_wizard",
-            ),
-            ("Naive Expert Only\nUntil Expert Wizard", "naive_observer_expert_only_until_expert_wizard"),
-            (
-                "Naive Novice Full + Expert\nUntil Expert Wizard",
-                "naive_observer_novice_full_expert_until_expert_wizard",
-            ),
-        ]
+        total_step_panels.extend(
+            [
+                ("RNM Expert Only\nUntil Expert Wizard", "rational_non_mentalizing_expert_only_until_expert_wizard"),
+                (
+                    "RNM Novice Full + Expert\nUntil Expert Wizard",
+                    "rational_non_mentalizing_novice_full_expert_until_expert_wizard",
+                ),
+                ("Naive Expert Only\nUntil Expert Wizard", "naive_observer_expert_only_until_expert_wizard"),
+                (
+                    "Naive Novice Full + Expert\nUntil Expert Wizard",
+                    "naive_observer_novice_full_expert_until_expert_wizard",
+                ),
+            ]
+        )
 
     fig, axes = plt.subplots(1, len(total_step_panels), figsize=(5 * len(total_step_panels), 6), squeeze=False)
     axes = axes[0]
@@ -66,7 +66,7 @@ def main() -> int:
     for _label, model_name in total_step_panels:
         by_exp = []
         for exp in EXPERIMENTS:
-            x, y, _sd, _keys = collect_total_steps_pairs(exp, model_name)
+            x, y, _sd, _keys = collect_total_steps_pairs(exp, preferred_model_name(exp, model_name))
             by_exp.append((exp, x, y))
         panel_data.append(by_exp)
 

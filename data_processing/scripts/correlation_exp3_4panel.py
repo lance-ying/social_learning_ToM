@@ -14,27 +14,23 @@ from correlation_4panel_style import (
     bootstrap_r_ci,
     plot_points_errorbars_and_fit,
 )
+from model_name_resolution import baseline_step_path
 
 # ── paths ──────────────────────────────────────────────────────────────────
 script_dir = Path(__file__).parent
 data_processing_dir = script_dir.parent
 workspace_root = data_processing_dir.parent
-
-
-def baseline_step_path(exp: str, model: str) -> Path:
-    return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
-
 # ── load model / baseline JSONs ───────────────────────────────────────────
 with open(workspace_root / 'model_outputs/experiments/exp3/steps_dict.json') as f:
     model_dict = json.load(f)
 
-with open(baseline_step_path('exp3', 'naive_observer')) as f:
+with open(baseline_step_path(workspace_root, 'exp3', 'naive_observer')) as f:
     baseline_naive = json.load(f)
 
-with open(baseline_step_path('exp3', 'rational_non_mentalizing')) as f:
+with open(baseline_step_path(workspace_root, 'exp3', 'rational_non_mentalizing')) as f:
     baseline_nonmentalize = json.load(f)
 
-with open(baseline_step_path('exp3', 'social_mentalizing')) as f:
+with open(baseline_step_path(workspace_root, 'exp3', 'social_mentalizing')) as f:
     baseline_mentalize = json.load(f)
 
 # ── parse per-participant agent2/agent3 counts from CSVs ──────────────────

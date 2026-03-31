@@ -135,6 +135,14 @@ def effective_model_name(exp: str, model_name: str) -> str:
     return model_name
 
 
+def preferred_model_name(exp: str, model_name: str) -> str:
+    if model_name == "social_mentalizing" and exp in {"exp3", "exp4"}:
+        return "social_mentalizing_until_one_converges"
+    if model_name == "social_mentalizing_until_one_converges" and exp in {"exp1", "exp2"}:
+        return "social_mentalizing"
+    return model_name
+
+
 def make_output_path(filename: str) -> Path:
     PLOTS_DIR.mkdir(parents=True, exist_ok=True)
     return PLOTS_DIR / filename

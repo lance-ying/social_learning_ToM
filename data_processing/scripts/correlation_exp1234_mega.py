@@ -23,6 +23,7 @@ from correlation_4panel_style import (
     bootstrap_r_ci,
     plot_points_errorbars_and_fit,
 )
+from model_name_resolution import baseline_step_path
 
 
 script_dir = Path(__file__).parent
@@ -45,12 +46,6 @@ SKIP_PREFIXES = ("sm111_", "sm112_")
 def load_json(path):
     with open(path, "r") as f:
         return json.load(f)
-
-
-def baseline_step_path(exp: str, model: str) -> Path:
-    return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
-
-
 def bootstrap_sd(values, n_boot=1000):
     values = np.asarray(values)
     values = values[~np.isnan(values)]
@@ -225,9 +220,9 @@ def plot_row(ax_row, row_index, row_label, pairs, bottom_row_index):
 
 # Exp1
 model_exp1 = load_json(workspace_root / "model_outputs/experiments/exp1/steps_dict.json")
-naive_exp1 = load_json(baseline_step_path("exp1", "naive_observer"))
-nonmentalize_exp1 = load_json(baseline_step_path("exp1", "rational_non_mentalizing"))
-mentalize_exp1 = load_json(baseline_step_path("exp1", "social_mentalizing"))
+naive_exp1 = load_json(baseline_step_path(workspace_root, "exp1", "naive_observer"))
+nonmentalize_exp1 = load_json(baseline_step_path(workspace_root, "exp1", "rational_non_mentalizing"))
+mentalize_exp1 = load_json(baseline_step_path(workspace_root, "exp1", "social_mentalizing"))
 results_dict = {}
 exec((data_processing_dir / "results/current/results_dict_exp1_50.py").read_text())
 human_exp1 = results_dict.copy()
@@ -244,9 +239,9 @@ pairs_exp1 = {
 
 # Exp2
 model_exp2 = load_json(workspace_root / "model_outputs/experiments/exp2/steps_dict.json")
-naive_exp2 = load_json(baseline_step_path("exp2", "naive_observer"))
-nonmentalize_exp2 = load_json(baseline_step_path("exp2", "rational_non_mentalizing"))
-mentalize_exp2 = load_json(baseline_step_path("exp2", "social_mentalizing"))
+naive_exp2 = load_json(baseline_step_path(workspace_root, "exp2", "naive_observer"))
+nonmentalize_exp2 = load_json(baseline_step_path(workspace_root, "exp2", "rational_non_mentalizing"))
+mentalize_exp2 = load_json(baseline_step_path(workspace_root, "exp2", "social_mentalizing"))
 results_dict = {}
 exec((data_processing_dir / "results/current/results_dict_merged_exp2.py").read_text())
 human_exp2 = results_dict.copy()
@@ -260,9 +255,9 @@ pairs_exp2 = {
 
 # Exp3
 model_exp3 = load_json(workspace_root / "model_outputs/experiments/exp3/steps_dict.json")
-naive_exp3 = load_json(baseline_step_path("exp3", "naive_observer"))
-nonmentalize_exp3 = load_json(baseline_step_path("exp3", "rational_non_mentalizing"))
-mentalize_exp3 = load_json(baseline_step_path("exp3", "social_mentalizing"))
+naive_exp3 = load_json(baseline_step_path(workspace_root, "exp3", "naive_observer"))
+nonmentalize_exp3 = load_json(baseline_step_path(workspace_root, "exp3", "rational_non_mentalizing"))
+mentalize_exp3 = load_json(baseline_step_path(workspace_root, "exp3", "social_mentalizing"))
 human_stats_exp3 = build_multi_agent_human_stats(data_processing_dir / "data_processed/exp3")
 
 pairs_exp3_combined = {
@@ -274,9 +269,9 @@ pairs_exp3_combined = {
 
 # Exp4
 model_exp4 = load_json(workspace_root / "model_outputs/experiments/exp4/steps_dict.json")
-naive_exp4 = load_json(baseline_step_path("exp4", "naive_observer"))
-nonmentalize_exp4 = load_json(baseline_step_path("exp4", "rational_non_mentalizing"))
-mentalize_exp4 = load_json(baseline_step_path("exp4", "social_mentalizing"))
+naive_exp4 = load_json(baseline_step_path(workspace_root, "exp4", "naive_observer"))
+nonmentalize_exp4 = load_json(baseline_step_path(workspace_root, "exp4", "rational_non_mentalizing"))
+mentalize_exp4 = load_json(baseline_step_path(workspace_root, "exp4", "social_mentalizing"))
 human_stats_exp4 = build_multi_agent_human_stats(data_processing_dir / "data_processed/exp4")
 
 pairs_exp4_agent2 = {

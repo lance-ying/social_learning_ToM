@@ -24,6 +24,7 @@ from grouped_barplot_style import (
     apply_axis_style,
     plot_grouped_bars,
 )
+from model_name_resolution import reconstructed_costs_path
 
 
 def parse_args() -> argparse.Namespace:
@@ -79,9 +80,6 @@ def human_candidates(exp: str, label: str, model_key: str) -> list[str]:
 
 
 def common_matched_keys(repo_root: Path, exp: str) -> tuple[dict[str, dict[str, float]], dict]:
-    model_dir = repo_root / "model_outputs" / "reconstructed_costs"
-    if not model_dir.exists():
-        model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
     human_path = human_costs_path(repo_root, exp)
     human_per_case = load_json(human_path)["per_case"]
 
@@ -89,7 +87,7 @@ def common_matched_keys(repo_root: Path, exp: str) -> tuple[dict[str, dict[str, 
     matched_human_keys = []
 
     for _series_label, key in SERIES[1:]:
-        model_path = model_dir / f"{exp}_{key}.json"
+        model_path = reconstructed_costs_path(repo_root, exp, key)
         model_per_case = load_json(model_path)["per_case"]
         aligned = {}
         for model_key, model_value in model_per_case.items():

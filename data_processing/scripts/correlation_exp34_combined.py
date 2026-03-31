@@ -13,33 +13,29 @@ from correlation_4panel_style import (
     bootstrap_r_ci,
     plot_points_errorbars_and_fit,
 )
+from model_name_resolution import baseline_step_path
 
 script_dir = Path(__file__).parent
 data_processing_dir = script_dir.parent
 workspace_root = data_processing_dir.parent
-
-
-def baseline_step_path(exp: str, model: str) -> Path:
-    return workspace_root / "scripts" / "baselines" / "outputs" / exp / f"step_dict_{model}.json"
-
 # ── Load Exp3 model/baseline JSONs ─────────────────────────────────────────
 with open(workspace_root / 'model_outputs/experiments/exp3/steps_dict.json') as f:
     model_exp3 = json.load(f)
-with open(baseline_step_path('exp3', 'naive_observer')) as f:
+with open(baseline_step_path(workspace_root, 'exp3', 'naive_observer')) as f:
     naive_exp3 = json.load(f)
-with open(baseline_step_path('exp3', 'rational_non_mentalizing')) as f:
+with open(baseline_step_path(workspace_root, 'exp3', 'rational_non_mentalizing')) as f:
     nonmentalize_exp3 = json.load(f)
-with open(baseline_step_path('exp3', 'social_mentalizing')) as f:
+with open(baseline_step_path(workspace_root, 'exp3', 'social_mentalizing')) as f:
     mentalize_exp3 = json.load(f)
 
 # ── Load Exp4 model/baseline JSONs ─────────────────────────────────────────
 with open(workspace_root / 'model_outputs/experiments/exp4/steps_dict.json') as f:
     model_exp4 = json.load(f)
-with open(baseline_step_path('exp4', 'naive_observer')) as f:
+with open(baseline_step_path(workspace_root, 'exp4', 'naive_observer')) as f:
     naive_exp4 = json.load(f)
-with open(baseline_step_path('exp4', 'rational_non_mentalizing')) as f:
+with open(baseline_step_path(workspace_root, 'exp4', 'rational_non_mentalizing')) as f:
     nonmentalize_exp4 = json.load(f)
-with open(baseline_step_path('exp4', 'social_mentalizing')) as f:
+with open(baseline_step_path(workspace_root, 'exp4', 'social_mentalizing')) as f:
     mentalize_exp4 = json.load(f)
 
 # ── CSV parsing ────────────────────────────────────────────────────────────

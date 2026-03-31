@@ -32,6 +32,7 @@ from correlation_4panel_style import (
     bootstrap_r_ci,
     plot_points_errorbars_and_fit,
 )
+from model_name_resolution import reconstructed_costs_path
 
 
 LABELS = [
@@ -141,17 +142,14 @@ def collect_pairs(
 def build_row_pairs(
     repo_root: Path, exp: str, metric: str, human_aggregate: str
 ) -> dict[str, tuple[np.ndarray, np.ndarray, np.ndarray, list[str]]]:
-    model_dir = repo_root / "model_outputs" / "reconstructed_costs"
-    if not model_dir.exists():
-        model_dir = repo_root / "scripts" / "experiments" / "experiment_outputs" / "reconstructed_costs_mega_plot"
     human_path = human_costs_path(repo_root, exp)
     human_per_case = load_json(human_path)["per_case"]
 
     model_paths = {
-        LABELS[0]: model_dir / f"{exp}_full_model.json",
-        LABELS[1]: model_dir / f"{exp}_social_mentalizing.json",
-        LABELS[2]: model_dir / f"{exp}_rational_non_mentalizing.json",
-        LABELS[3]: model_dir / f"{exp}_naive_observer.json",
+        LABELS[0]: reconstructed_costs_path(repo_root, exp, "full_model"),
+        LABELS[1]: reconstructed_costs_path(repo_root, exp, "social_mentalizing"),
+        LABELS[2]: reconstructed_costs_path(repo_root, exp, "rational_non_mentalizing"),
+        LABELS[3]: reconstructed_costs_path(repo_root, exp, "naive_observer"),
     }
 
     pairs = {}
