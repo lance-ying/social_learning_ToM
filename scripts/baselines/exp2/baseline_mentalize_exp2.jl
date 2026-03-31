@@ -125,7 +125,7 @@ possible_worlds = load(joinpath(@__DIR__, "..", "..", "..", "inference", "infere
 
 domain_render = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain_render.pddl"))
 
-action_cost = Dict(:move => 2, :interact => 5, :observe => 1)
+action_cost = Dict(:move => 3, :interact => 5, :observe => 1)
 
 # Create progress bar
 total_iterations = sum(length(v) for v in values(metadata))

@@ -125,7 +125,7 @@ println("Maps in inference data: ", sort(collect(keys(goal_probs_conditioned_dic
 
 domain_render = load_domain(joinpath(@__DIR__, "..", "..", "..", "dataset", "domain_render.pddl"))
 
-action_cost = Dict(:move => 2, :interact => 5, :observe => 1)
+action_cost = Dict(:move => 3, :interact => 5, :observe => 1)
 
 # Get all map files
 map_files = filter(f -> endswith(f, ".pddl") && !occursin("_plan", f), readdir(PROBLEM_DIR))

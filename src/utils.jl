@@ -128,7 +128,7 @@ end
 
 
 
-function calculate_plan_cost(plan:: Vector{<:Term}, action_cost::Dict{Symbol, Real})
+function calculate_plan_cost(plan::Vector{<:Term}, action_cost::AbstractDict{Symbol, <:Real})
 
     cost = 0
 
@@ -145,7 +145,13 @@ function calculate_plan_cost(plan:: Vector{<:Term}, action_cost::Dict{Symbol, Re
     
 end
 
-function estimate_self_exploration_cost(domain:: Any, state:: State, agent_goal::Any, wizards::Any, action_cost::Dict{Symbol, Real})
+function estimate_self_exploration_cost(
+    domain::Any,
+    state::State,
+    agent_goal::Any,
+    wizards::Any,
+    action_cost::AbstractDict{Symbol, <:Real},
+)
 
     new_state = copy(state)
 

@@ -42,10 +42,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 97,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 8,
-        "q_not_observe": 111,
         "observation_events": [
             {
                 "action": "(right agent2)",
@@ -155,10 +153,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 78,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 11,
-        "q_not_observe": 149,
         "observation_events": [
             {
                 "action": "(down agent2)",
@@ -311,10 +307,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 176,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 16,
-        "q_not_observe": 195,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -497,10 +491,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 60,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 16,
-        "q_not_observe": 61,
         "observation_events": [
             {
                 "action": "(right agent2)",
@@ -633,10 +625,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 80,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 6,
-        "q_not_observe": 168,
         "observation_events": [
             {
                 "action": "(right agent2)",
@@ -744,10 +734,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 123,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 13,
-        "q_not_observe": 139,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -897,10 +885,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 123,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 13,
-        "q_not_observe": 215,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -1040,10 +1026,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 91,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 11,
-        "q_not_observe": 196,
         "observation_events": [
             {
                 "action": "(down agent2)",
@@ -1114,12 +1098,56 @@
         ]
     },
     "s542": {
-        "observations": [],
-        "q_observe": 119,
-        "stop_reason": "q_not_observe_better",
-        "t": 0,
-        "q_not_observe": 113,
-        "observation_events": []
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard1)",
+                "interaction_outcome": "blue_amulet_present",
+                "agent": "agent2"
+            }
+        ],
+        "stop_reason": "first_blue_wizard_interaction",
+        "t": 4,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard1)",
+                "observation_index": 4,
+                "interaction_outcome": "blue_amulet_present",
+                "observed_agent": "agent2"
+            }
+        ]
     },
     "s362": {
         "observations": [
@@ -1189,10 +1217,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 134,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 13,
-        "q_not_observe": 174,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -1327,10 +1353,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 170,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 10,
-        "q_not_observe": 195,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -1442,10 +1466,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 98,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 9,
-        "q_not_observe": 111,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -1571,10 +1593,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 123,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 13,
-        "q_not_observe": 180,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -1657,12 +1677,56 @@
         ]
     },
     "s342": {
-        "observations": [],
-        "q_observe": 119,
-        "stop_reason": "q_not_observe_better",
-        "t": 0,
-        "q_not_observe": 109,
-        "observation_events": []
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard3)",
+                "interaction_outcome": "blue_amulet_present",
+                "agent": "agent2"
+            }
+        ],
+        "stop_reason": "first_blue_wizard_interaction",
+        "t": 4,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard3)",
+                "observation_index": 4,
+                "interaction_outcome": "blue_amulet_present",
+                "observed_agent": "agent2"
+            }
+        ]
     },
     "s332": {
         "observations": [
@@ -1697,10 +1761,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 80,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 6,
-        "q_not_observe": 91,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -1808,10 +1870,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 123,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 13,
-        "q_not_observe": 162,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -1926,10 +1986,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 101,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 6,
-        "q_not_observe": 176,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -2007,10 +2065,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 93,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 7,
-        "q_not_observe": 113,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -2057,12 +2113,199 @@
         ]
     },
     "s371": {
-        "observations": [],
-        "q_observe": 67,
-        "stop_reason": "q_not_observe_better",
-        "t": 0,
-        "q_not_observe": 61,
-        "observation_events": []
+        "observations": [
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard2)",
+                "interaction_outcome": "blue_amulet_present",
+                "agent": "agent2"
+            }
+        ],
+        "stop_reason": "first_blue_wizard_interaction",
+        "t": 17,
+        "observation_events": [
+            {
+                "action": "(left agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 11,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 12,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 13,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 14,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 15,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(down agent2)",
+                "observation_index": 16,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard2)",
+                "observation_index": 17,
+                "interaction_outcome": "blue_amulet_present",
+                "observed_agent": "agent2"
+            }
+        ]
     },
     "s441": {
         "observations": [
@@ -2102,10 +2345,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 99,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 7,
-        "q_not_observe": 172,
         "observation_events": [
             {
                 "action": "(down agent2)",
@@ -2219,10 +2460,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 123,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 13,
-        "q_not_observe": 196,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -2347,10 +2586,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 106,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 8,
-        "q_not_observe": 109,
         "observation_events": [
             {
                 "action": "(left agent2)",
@@ -2455,10 +2692,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 105,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 10,
-        "q_not_observe": 176,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -2523,12 +2758,177 @@
         ]
     },
     "s544": {
-        "observations": [],
-        "q_observe": 56,
-        "stop_reason": "q_not_observe_better",
-        "t": 0,
-        "q_not_observe": 52,
-        "observation_events": []
+        "observations": [
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard1)",
+                "interaction_outcome": "blue_amulet_present",
+                "agent": "agent2"
+            }
+        ],
+        "stop_reason": "first_blue_wizard_interaction",
+        "t": 15,
+        "observation_events": [
+            {
+                "action": "(right agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "observation_index": 5,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 6,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 7,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 8,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 9,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 10,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 11,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 12,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(left agent2)",
+                "observation_index": 13,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "observation_index": 14,
+                "interaction_outcome": "none",
+                "observed_agent": "agent2"
+            },
+            {
+                "action": "(interact agent2 wizard1)",
+                "observation_index": 15,
+                "interaction_outcome": "blue_amulet_present",
+                "observed_agent": "agent2"
+            }
+        ]
     },
     "s331": {
         "observations": [
@@ -2548,10 +2948,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 77,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 3,
-        "q_not_observe": 91,
         "observation_events": [
             {
                 "action": "(left agent2)",
@@ -2641,10 +3039,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 134,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 13,
-        "q_not_observe": 179,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -2794,10 +3190,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 123,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 13,
-        "q_not_observe": 145,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -2947,10 +3341,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 123,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 13,
-        "q_not_observe": 268,
         "observation_events": [
             {
                 "action": "(up agent2)",
@@ -3060,10 +3452,8 @@
                 "agent": "agent2"
             }
         ],
-        "q_observe": 61,
-        "stop_reason": "q_observe_better",
+        "stop_reason": "first_blue_wizard_interaction",
         "t": 5,
-        "q_not_observe": 161,
         "observation_events": [
             {
                 "action": "(down agent2)",

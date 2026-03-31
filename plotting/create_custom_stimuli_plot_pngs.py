@@ -11,6 +11,7 @@ import argparse
 import csv
 import hashlib
 import json
+import math
 import random
 import re
 import statistics
@@ -71,10 +72,10 @@ def _safe_mean(values: list[float]) -> float:
     return statistics.mean(values) if values else 0.0
 
 
-def _safe_sd(values: list[float]) -> float:
+def _safe_sem(values: list[float]) -> float:
     if len(values) <= 1:
         return 0.0
-    return statistics.stdev(values)
+    return statistics.stdev(values) / math.sqrt(len(values))
 
 
 def _map_level_name(human_level: str) -> str:
@@ -188,7 +189,7 @@ def _build_human_stats_exp12(csv_dir: Path) -> dict:
     for level, values in per_level_means.items():
         out[level] = {
             "mean_observe_per_activation": _safe_mean(values),
-            "raw_sd": _safe_sd(values),
+            "raw_sem": _safe_sem(values),
             "samples": list(values),
         }
     return out
@@ -218,8 +219,8 @@ def _build_human_stats_exp34(csv_dir: Path) -> dict:
         out[level] = {
             "agent2_mean": _safe_mean(a2),
             "agent3_mean": _safe_mean(a3),
-            "agent2_sd": _safe_sd(a2),
-            "agent3_sd": _safe_sd(a3),
+            "agent2_sem": _safe_sem(a2),
+            "agent3_sem": _safe_sem(a3),
             "agent2_samples": list(a2),
             "agent3_samples": list(a3),
         }
@@ -261,12 +262,16 @@ def _build_exp12_data(social_root: Path, exp: str) -> dict:
     out = {}
     for level in levels:
         h = human.get(level, {})
-        human_sd = h.get("raw_sd")
-        if human_sd is None:
-            human_sd = h.get("bootstrap_sd", 0.0)
+        human_sem = h.get("raw_sem")
+        if human_sem is None:
+            samples = h.get("samples") or []
+            if samples:
+                human_sem = _safe_sem([float(v) for v in samples])
+            else:
+                human_sem = 0.0
         out[level] = {
             "human": h.get("mean_observe_per_activation"),
-            "human_sd": human_sd,
+            "human_sem": human_sem,
             "human_samples": h.get("samples"),
             "full": full_map.get(level),
             "social": social_map.get(level),
@@ -282,7 +287,9 @@ def _build_exp34_data(social_root: Path, exp: str) -> dict:
 
     if exp == "exp3":
         full = _load_json(model_root / "experiments/exp3/steps_dict.json")
-        social = _load_json(model_root / "baselines/exp3/step_dict_social_mentalizing.json")
+        social = _load_json(
+            model_root / "baselines/exp3/step_dict_social_mentalizing_until_one_converges.json"
+        )
         nonmental = _load_json(
             model_root / "baselines/exp3/step_dict_rational_non_mentalizing.json"
         )
@@ -290,7 +297,9 @@ def _build_exp34_data(social_root: Path, exp: str) -> dict:
         human = _build_human_stats_exp34(dp_root / "data_processed/exp3")
     elif exp == "exp4":
         full = _load_json(model_root / "experiments/exp4/steps_dict.json")
-        social = _load_json(model_root / "baselines/exp4/step_dict_social_mentalizing.json")
+        social = _load_json(
+            model_root / "baselines/exp4/step_dict_social_mentalizing_until_one_converges.json"
+        )
         nonmental = _load_json(
             model_root / "baselines/exp4/step_dict_rational_non_mentalizing.json"
         )
@@ -316,8 +325,8 @@ def _build_exp34_data(social_root: Path, exp: str) -> dict:
         out[level] = {
             "human_agent2": h.get("agent2_mean"),
             "human_agent3": h.get("agent3_mean"),
-            "human_sd_agent2": h.get("agent2_sd", 0.0),
-            "human_sd_agent3": h.get("agent3_sd", 0.0),
+            "human_sem_agent2": h.get("agent2_sem", 0.0),
+            "human_sem_agent3": h.get("agent3_sem", 0.0),
             "human_samples_agent2": h.get("agent2_samples"),
             "human_samples_agent3": h.get("agent3_samples"),
             "full_agent2": f2,
@@ -533,8 +542,8 @@ def _render_exp12_pair_plot(
 
     h1 = row_left.get("human")
     h2 = row_right.get("human")
-    sd1 = row_left.get("human_sd", 0.0) or 0.0
-    sd2 = row_right.get("human_sd", 0.0) or 0.0
+    sem1 = row_left.get("human_sem", 0.0) or 0.0
+    sem2 = row_right.get("human_sem", 0.0) or 0.0
     samples1 = row_left.get("human_samples")
     samples2 = row_right.get("human_samples")
 
@@ -548,11 +557,11 @@ def _render_exp12_pair_plot(
         ymax = max(ymax, max1, q31, max2, q32)
     else:
         if h1 is not None:
-            ax.errorbar([0 - width / 2], [h1], yerr=[sd1], fmt="none", ecolor="black", capsize=3, linewidth=1.2)
-            ymax = max(ymax, float(h1 + sd1))
+            ax.errorbar([0 - width / 2], [h1], yerr=[sem1], fmt="none", ecolor="black", capsize=3, linewidth=1.2)
+            ymax = max(ymax, float(h1 + sem1))
         if h2 is not None:
-            ax.errorbar([0 + width / 2], [h2], yerr=[sd2], fmt="none", ecolor="black", capsize=3, linewidth=1.2)
-            ymax = max(ymax, float(h2 + sd2))
+            ax.errorbar([0 + width / 2], [h2], yerr=[sem2], fmt="none", ecolor="black", capsize=3, linewidth=1.2)
+            ymax = max(ymax, float(h2 + sem2))
 
     _style_axis(ax)
     ax.set_xticks(xs)
@@ -589,7 +598,7 @@ def _render_exp12_single_plot(
     ymax = 1.0
 
     human = row.get("human")
-    human_sd = row.get("human_sd", 0.0) or 0.0
+    human_sem = row.get("human_sem", 0.0) or 0.0
     human_samples = row.get("human_samples")
 
     for i, val in enumerate(values):
@@ -622,8 +631,8 @@ def _render_exp12_single_plot(
         if human is not None:
             ymax = max(ymax, float(human))
     elif human is not None:
-        ax.errorbar([0], [human], yerr=[human_sd], fmt="none", ecolor="black", capsize=3, linewidth=1.2)
-        ymax = max(ymax, float(human + human_sd))
+        ax.errorbar([0], [human], yerr=[human_sem], fmt="none", ecolor="black", capsize=3, linewidth=1.2)
+        ymax = max(ymax, float(human + human_sem))
 
     _style_axis(ax, "Number of\nObservations" if show_ylabel else None)
     ax.set_xticks(xs)
@@ -653,7 +662,7 @@ def _render_exp34_agent_plot(
             row.get("naive_agent2"),
         ]
         human = row.get("human_agent2")
-        human_sd = row.get("human_sd_agent2", 0.0) or 0.0
+        human_sem = row.get("human_sem_agent2", 0.0) or 0.0
         human_samples = row.get("human_samples_agent2")
         color = AGENT2_BLUE_S1
         agent_label = "Agent 2"
@@ -667,7 +676,7 @@ def _render_exp34_agent_plot(
             row.get("naive_agent3"),
         ]
         human = row.get("human_agent3")
-        human_sd = row.get("human_sd_agent3", 0.0) or 0.0
+        human_sem = row.get("human_sem_agent3", 0.0) or 0.0
         human_samples = row.get("human_samples_agent3")
         color = AGENT3_GREEN_S1
         agent_label = "Agent 3"
@@ -712,8 +721,8 @@ def _render_exp34_agent_plot(
         if human is not None:
             ymax = max(ymax, float(human))
     elif human is not None:
-        ax.errorbar([0], [human], yerr=[human_sd], fmt="none", ecolor="black", capsize=3, linewidth=1.2)
-        ymax = max(ymax, float(human + human_sd))
+        ax.errorbar([0], [human], yerr=[human_sem], fmt="none", ecolor="black", capsize=3, linewidth=1.2)
+        ymax = max(ymax, float(human + human_sem))
 
     _style_axis(ax)
     ax.set_xticks(xs)
@@ -722,17 +731,18 @@ def _render_exp34_agent_plot(
     else:
         ax.set_xticklabels([])
     ax.set_ylim(0, ymax * 1.16 + 0.20)
-    ax.text(
-        0.98,
-        0.98,
-        agent_label,
-        transform=ax.transAxes,
-        ha="right",
-        va="top",
-        fontsize=22,
-        fontweight="bold",
-        color=color,
-    )
+    if plot_style != "bar":
+        ax.text(
+            0.98,
+            0.98,
+            agent_label,
+            transform=ax.transAxes,
+            ha="right",
+            va="top",
+            fontsize=22,
+            fontweight="bold",
+            color=color,
+        )
     fig.subplots_adjust(left=0.18, right=0.99, bottom=0.28, top=0.90)
     fig.savefig(out_path, facecolor=fig.get_facecolor())
     plt.close(fig)
@@ -786,51 +796,25 @@ def _generate_exp12_plots(
     level_data: dict,
     output_dir: Path,
     plot_style: str,
-    split_plots: bool,
 ) -> list[Path]:
     if len(selected) != 2:
         raise ValueError(f"{exp} requires exactly 2 selected items, found {len(selected)}")
     if len(labels) != 2:
         raise ValueError(f"{exp} requires exactly 2 labels, found {len(labels)}")
 
-    if split_plots:
-        outputs: list[Path] = []
-        for idx, ((level, timestamp), panel_letter) in enumerate(zip(selected, labels), start=1):
-            if level not in level_data:
-                raise KeyError(f"missing level data for {level}")
-            out_path = output_dir / f"{exp}_{idx:02d}_{_slug(level)}{_timestamp_suffix(timestamp)}.png"
-            _render_exp12_single_plot(
-                level_data[level],
-                out_path,
-                plot_style,
-                show_ylabel=(exp == "exp1" and idx == 1),
-            )
-            outputs.append(out_path)
-        return outputs
-
-    (left_level, left_ts), (right_level, right_ts) = selected
-    if left_level not in level_data:
-        raise KeyError(f"missing level data for {left_level}")
-    if right_level not in level_data:
-        raise KeyError(f"missing level data for {right_level}")
-
-    out_path = output_dir / (
-        f"{exp}_pair_01_{_slug(left_level)}{_timestamp_suffix(left_ts)}"
-        f"_vs_{_slug(right_level)}{_timestamp_suffix(right_ts)}.png"
-    )
-    left_color = PAIR_BLUE_DARK
-    right_color = PAIR_BLUE_LIGHT
-    _render_exp12_pair_plot(
-        row_left=level_data[left_level],
-        row_right=level_data[right_level],
-        out_path=out_path,
-        plot_style=plot_style,
-        left_label=labels[0],
-        right_label=labels[1],
-        left_color=left_color,
-        right_color=right_color,
-    )
-    return [out_path]
+    outputs: list[Path] = []
+    for idx, ((level, timestamp), _panel_letter) in enumerate(zip(selected, labels), start=1):
+        if level not in level_data:
+            raise KeyError(f"missing level data for {level}")
+        out_path = output_dir / f"{exp}_{idx:02d}_{_slug(level)}{_timestamp_suffix(timestamp)}.png"
+        _render_exp12_single_plot(
+            level_data[level],
+            out_path,
+            plot_style,
+            show_ylabel=(exp == "exp1" and idx == 1),
+        )
+        outputs.append(out_path)
+    return outputs
 
 
 def _generate_exp34_plots(
@@ -893,11 +877,6 @@ def parse_args() -> argparse.Namespace:
         choices=["bar", "point-interval", "human-dots"],
         default="bar",
     )
-    parser.add_argument(
-        "--split-exp12-plots",
-        action="store_true",
-        help="Render exp1/exp2 selected maps as separate PNGs instead of paired plots.",
-    )
     return parser.parse_args()
 
 
@@ -934,7 +913,6 @@ def main() -> None:
                 exp_level_data[exp],
                 output_dir,
                 args.plot_style,
-                args.split_exp12_plots,
             )
         else:
             outputs = _generate_exp34_plots(
