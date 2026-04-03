@@ -4,8 +4,8 @@ This directory contains the new model-vs-human plotting scripts for experiments 
 
 Scripts:
 
-- `plot_pooled_observe_steps.py`: pooled observation-step scatterplot across experiments 1 to 4
-- `plot_pooled_total_steps.py`: pooled total-step scatterplot across experiments 1 to 4
+- `plot_pooled_observe_steps.py`: pooled observation-step scatterplots across experiments 1 to 4
+- `plot_pooled_total_steps.py`: pooled total-step scatterplots across experiments 1 to 4
 - `plot_pooled_total_cost.py`: pooled total-cost scatterplot across experiments 1 to 4
 - `plot_mean_total_steps_violin.py`: grouped mean total-steps violin plot
 - `plot_total_steps_mega.py`: total-steps mega plot across experiments 1 to 4
@@ -19,7 +19,7 @@ Usage:
 uv run plotting/run_all.py
 ```
 
-Outputs are written to `plotting/outputs/`.
+Outputs are written to `plotting/outputs/`. By default, `plot_pooled_total_steps.py` writes both `total_steps_pooled_exp1234.png` and `total_steps_pooled_alternative_models_exp1234.png`. By default, `plot_pooled_observe_steps.py` writes both `observation_steps_model_vs_human_pooled_exp1234.png` and `observation_steps_model_vs_human_pooled_alternative_models_exp1234.png`.
 
 Custom stimuli plot usage:
 

@@ -11,21 +11,31 @@ from common import EXPERIMENT_LABELS, EXPERIMENTS, common_total_step_keys, make_
 
 
 def parse_args() -> argparse.Namespace:
-    parser = argparse.ArgumentParser(description="Create the mean total-steps bar plot with SE.")
+    parser = argparse.ArgumentParser(description="Create the mean total-steps bar plot with human bootstrap CI.")
     parser.add_argument("--output-file", help="Optional output path.")
-    parser.add_argument(
-        "--omit-variations",
-        action="store_true",
-        help="Omit expert-only / novice-full variant models from the bar plot.",
-    )
     return parser.parse_args()
 
 
-def standard_error(values: list[float]) -> float:
-    if len(values) <= 1:
-        return 0.0
+def bootstrap_mean_ci(
+    values: list[float],
+    *,
+    n_resamples: int = 10000,
+    ci: float = 95.0,
+    seed: int = 42,
+) -> tuple[float, float, float]:
     arr = np.asarray(values, dtype=float)
-    return float(np.std(arr, ddof=1) / np.sqrt(len(arr)))
+    if arr.size == 0:
+        return 0.0, 0.0, 0.0
+    mean_val = float(np.mean(arr))
+    if arr.size == 1:
+        return mean_val, mean_val, mean_val
+
+    rng = np.random.default_rng(seed)
+    sample_idx = rng.integers(0, arr.size, size=(n_resamples, arr.size))
+    bootstrap_means = np.mean(arr[sample_idx], axis=1)
+    alpha = (100.0 - ci) / 2.0
+    ci_low, ci_high = np.percentile(bootstrap_means, [alpha, 100.0 - alpha])
+    return mean_val, float(ci_low), float(ci_high)
 
 
 def main() -> int:
@@ -37,28 +47,13 @@ def main() -> int:
     matched_by_exp = {exp: common_total_step_keys(exp) for exp in EXPERIMENTS}
     fig, axes = plt.subplots(1, 4, figsize=(28, 7), sharey=True)
 
-    core_series = [
+    bar_series = [
         ("Human", "human"),
-        ("Rat. Ment.", "full_model"),
-        ("Soc. Ment.", "social_mentalizing"),
-        ("Rat. Non-M.", "rational_non_mentalizing"),
+        ("Full\nModel", "full_model"),
+        ("Mental\nOnly", "social_mentalizing"),
+        ("Rational\nOnly", "rational_non_mentalizing"),
         ("Naive", "naive_observer"),
     ]
-    variation_series = [
-        ("RNM Expert\nOnly", "rational_non_mentalizing_expert_only_until_expert_wizard"),
-        ("RNM Novice\nFull + Exp.", "rational_non_mentalizing_novice_full_expert_until_expert_wizard"),
-        ("Naive Expert\nOnly", "naive_observer_expert_only_until_expert_wizard"),
-        ("Naive Novice\nFull + Exp.", "naive_observer_novice_full_expert_until_expert_wizard"),
-    ]
-    bar_series = list(core_series)
-    if not args.omit_variations:
-        bar_series = (
-            core_series[:4]
-            + variation_series[:2]
-            + [core_series[4]]
-            + variation_series[2:]
-            + [("Non-Obs. Plan.", "agent1_naive_planner")]
-        )
 
     x = np.arange(len(bar_series))
 
@@ -67,12 +62,7 @@ def main() -> int:
         "full_model": "#4c78a8",
         "social_mentalizing": "#72b7b2",
         "rational_non_mentalizing": "#e39c37",
-        "rational_non_mentalizing_expert_only_until_expert_wizard": "#f0b870",
-        "rational_non_mentalizing_novice_full_expert_until_expert_wizard": "#d8891e",
         "naive_observer": "#c95f5f",
-        "naive_observer_expert_only_until_expert_wizard": "#e6a5a5",
-        "naive_observer_novice_full_expert_until_expert_wizard": "#b64747",
-        "agent1_naive_planner": "#6aa84f",
     }
     fill_colors = [
         color_by_model[model_name if model_name != "human" else "human"]
@@ -84,17 +74,15 @@ def main() -> int:
         levels = list(human_stats)
 
         means: list[float] = []
-        ses: list[float] = []
 
         human_values = [float(human_stats[level]["median"]) for level in levels]
-        means.append(float(np.mean(human_values)) if human_values else 0.0)
-        ses.append(standard_error(human_values))
+        human_mean, human_ci_low, human_ci_high = bootstrap_mean_ci(human_values)
+        means.append(human_mean)
 
         for _label, model_name in bar_series[1:]:
             model_dict = model_predictions.get(preferred_model_name(exp, model_name), {})
             values = [float(model_dict[level]["total_steps"]) for level in levels]
             means.append(float(np.mean(values)) if values else 0.0)
-            ses.append(standard_error(values))
 
         ax.bar(
             x,
@@ -105,9 +93,9 @@ def main() -> int:
             linewidth=0.9,
         )
         ax.errorbar(
-            x,
-            means,
-            yerr=ses,
+            [x[0]],
+            [human_mean],
+            yerr=[[human_mean - human_ci_low], [human_ci_high - human_mean]],
             fmt="none",
             ecolor="#111111",
             elinewidth=1.4,
@@ -118,7 +106,7 @@ def main() -> int:
 
         ax.set_title(EXPERIMENT_LABELS[exp], fontsize=22)
         ax.set_xticks(x)
-        ax.set_xticklabels([label for label, _model_name in bar_series], fontsize=16, rotation=25, ha="right")
+        ax.set_xticklabels([label for label, _model_name in bar_series], fontsize=16, rotation=0, ha="center")
         ax.set_xlabel("")
         ax.spines["top"].set_visible(False)
         ax.spines["right"].set_visible(False)

@@ -64,6 +64,13 @@ MODEL_PANELS = [
     ("Naive Planner", "agent1_naive_planner"),
     ("Naive Observer", "naive_observer"),
 ]
+PRIMARY_POOLED_TOTAL_STEP_PANELS = [
+    ("Rational Mentalizing Observer\n(Full Model)", "full_model"),
+    ("Mentalizing Observer\n(No Utility Estimation)", "social_mentalizing"),
+    ("Rational Observer\n(No Mentalizing)", "rational_non_mentalizing"),
+    ("Naive Observer", "naive_observer"),
+]
+PRIMARY_POOLED_OBSERVE_PANELS = list(PRIMARY_POOLED_TOTAL_STEP_PANELS)
 OBSERVE_MODEL_PANELS = [panel for panel in MODEL_PANELS if panel[1] != "agent1_naive_planner"]
 EXTRA_MODEL_PANELS = [
     ("Social Mentalizing\nUntil One Converges", "social_mentalizing_until_one_converges"),
@@ -78,6 +85,11 @@ EXTRA_MODEL_PANELS = [
         "naive_observer_novice_full_expert_until_expert_wizard",
     ),
 ]
+ALTERNATIVE_POOLED_TOTAL_STEP_PANELS = [
+    ("Naive Planner", "agent1_naive_planner"),
+    *EXTRA_MODEL_PANELS,
+]
+ALTERNATIVE_POOLED_OBSERVE_PANELS = list(EXTRA_MODEL_PANELS)
 ALL_MODEL_PANELS = MODEL_PANELS + EXTRA_MODEL_PANELS
 ALL_OBSERVE_MODEL_PANELS = [panel for panel in ALL_MODEL_PANELS if panel[1] != "agent1_naive_planner"]
 EXP34_ONLY_MODELS = set()

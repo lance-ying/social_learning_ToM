@@ -7,9 +7,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from common import (
+    ALTERNATIVE_POOLED_OBSERVE_PANELS,
     EXPERIMENT_COLORS,
     EXPERIMENT_LABELS,
     EXPERIMENTS,
+    PRIMARY_POOLED_OBSERVE_PANELS,
     annotate_stats,
     apply_reference_style,
     collect_observe_pairs,
@@ -27,38 +29,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-file", help="Optional output path.")
     parser.add_argument(
         "--models",
-        help="Optional comma-separated model list. Defaults to the standard observe-model panels.",
+        help="Optional comma-separated model list. Defaults to the primary pooled observe-model panels.",
     )
     return parser.parse_args()
 
 
-def main() -> int:
-    args = parse_args()
-    output_file = make_output_path("observation_steps_model_vs_human_pooled_exp1234.png")
-    if args.output_file:
-        from pathlib import Path
-
-        output_file = Path(args.output_file)
-
-    model_names = [item.strip() for item in args.models.split(",") if item.strip()] if args.models else None
-    observe_model_panels = resolve_model_panels(model_names, observe_only=True)
-    if model_names is None:
-        observe_model_panels = list(observe_model_panels)
-        observe_model_panels.extend(
-            [
-                ("RNM Expert Only\nUntil Expert Wizard", "rational_non_mentalizing_expert_only_until_expert_wizard"),
-                (
-                    "RNM Novice Full + Expert\nUntil Expert Wizard",
-                    "rational_non_mentalizing_novice_full_expert_until_expert_wizard",
-                ),
-                ("Naive Expert Only\nUntil Expert Wizard", "naive_observer_expert_only_until_expert_wizard"),
-                (
-                    "Naive Novice Full + Expert\nUntil Expert Wizard",
-                    "naive_observer_novice_full_expert_until_expert_wizard",
-                ),
-            ]
-        )
-
+def render_plot(observe_model_panels: list[tuple[str, str]], output_file) -> None:
     fig, axes = plt.subplots(1, len(observe_model_panels), figsize=(5 * len(observe_model_panels), 6), squeeze=False)
     axes = axes[0]
 
@@ -136,6 +112,29 @@ def main() -> int:
     plt.savefig(output_file, dpi=300, bbox_inches="tight")
     print(f"Saved -> {output_file}")
     plt.close()
+
+
+def main() -> int:
+    args = parse_args()
+    model_names = [item.strip() for item in args.models.split(",") if item.strip()] if args.models else None
+
+    if args.output_file:
+        from pathlib import Path
+
+        output_file = Path(args.output_file)
+    else:
+        output_file = make_output_path("observation_steps_model_vs_human_pooled_exp1234.png")
+
+    if model_names is not None:
+        render_plot(resolve_model_panels(model_names, observe_only=True), output_file)
+        return 0
+
+    render_plot(list(PRIMARY_POOLED_OBSERVE_PANELS), output_file)
+
+    if args.output_file is None:
+        alternative_output_file = make_output_path("observation_steps_model_vs_human_pooled_alternative_models_exp1234.png")
+        render_plot(list(ALTERNATIVE_POOLED_OBSERVE_PANELS), alternative_output_file)
+
     return 0
 
 

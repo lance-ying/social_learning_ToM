@@ -7,9 +7,11 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 from common import (
+    ALTERNATIVE_POOLED_TOTAL_STEP_PANELS,
     EXPERIMENT_COLORS,
     EXPERIMENT_LABELS,
     EXPERIMENTS,
+    PRIMARY_POOLED_TOTAL_STEP_PANELS,
     annotate_stats,
     apply_reference_style,
     collect_total_steps_pairs,
@@ -27,38 +29,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--output-file", help="Optional output path.")
     parser.add_argument(
         "--models",
-        help="Optional comma-separated model list. Defaults to the standard total-step panels.",
+        help="Optional comma-separated model list. Defaults to the primary pooled total-step panels.",
     )
     return parser.parse_args()
 
 
-def main() -> int:
-    args = parse_args()
-    output_file = make_output_path("total_steps_pooled_exp1234.png")
-    if args.output_file:
-        from pathlib import Path
-
-        output_file = Path(args.output_file)
-
-    model_names = [item.strip() for item in args.models.split(",") if item.strip()] if args.models else None
-    total_step_panels = resolve_model_panels(model_names)
-    if model_names is None:
-        total_step_panels = list(total_step_panels)
-        total_step_panels.extend(
-            [
-                ("RNM Expert Only\nUntil Expert Wizard", "rational_non_mentalizing_expert_only_until_expert_wizard"),
-                (
-                    "RNM Novice Full + Expert\nUntil Expert Wizard",
-                    "rational_non_mentalizing_novice_full_expert_until_expert_wizard",
-                ),
-                ("Naive Expert Only\nUntil Expert Wizard", "naive_observer_expert_only_until_expert_wizard"),
-                (
-                    "Naive Novice Full + Expert\nUntil Expert Wizard",
-                    "naive_observer_novice_full_expert_until_expert_wizard",
-                ),
-            ]
-        )
-
+def render_plot(total_step_panels: list[tuple[str, str]], output_file) -> None:
     fig, axes = plt.subplots(1, len(total_step_panels), figsize=(5 * len(total_step_panels), 6), squeeze=False)
     axes = axes[0]
 
@@ -132,6 +108,29 @@ def main() -> int:
     plt.savefig(output_file, dpi=300, bbox_inches="tight")
     print(f"Saved -> {output_file}")
     plt.close()
+
+
+def main() -> int:
+    args = parse_args()
+    model_names = [item.strip() for item in args.models.split(",") if item.strip()] if args.models else None
+
+    if args.output_file:
+        from pathlib import Path
+
+        output_file = Path(args.output_file)
+    else:
+        output_file = make_output_path("total_steps_pooled_exp1234.png")
+
+    if model_names is not None:
+        render_plot(resolve_model_panels(model_names), output_file)
+        return 0
+
+    render_plot(list(PRIMARY_POOLED_TOTAL_STEP_PANELS), output_file)
+
+    if args.output_file is None:
+        alternative_output_file = make_output_path("total_steps_pooled_alternative_models_exp1234.png")
+        render_plot(list(ALTERNATIVE_POOLED_TOTAL_STEP_PANELS), alternative_output_file)
+
     return 0
 
 
