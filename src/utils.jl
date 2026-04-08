@@ -145,7 +145,7 @@ function calculate_plan_cost(plan::Vector{<:Term}, action_cost::AbstractDict{Sym
     
 end
 
-function estimate_self_exploration_cost(
+function estimate_self_exploration_details(
     domain::Any,
     state::State,
     agent_goal::Any,
@@ -172,60 +172,72 @@ function estimate_self_exploration_cost(
         end
     end
 
-    # Extract wizard locations
-    # print(state[pddl"(iscolor wizard1 blue)"])
-    wizard_locs = [get_obj_loc(new_state, w) for w in wizards if state[pddl"(iscolor $w blue)"]]
+    function best_interaction_plan(agent_x::Int, agent_y::Int, wizard_loc::Tuple{Int, Int})
+        if abs(agent_x - wizard_loc[1]) + abs(agent_y - wizard_loc[2]) == 1
+            return Term[], (agent_x, agent_y)
+        end
 
-    # Compute self-exploration cost
-    cost = 0
+        best_plan = nothing
+        best_pos = nothing
+        best_cost = Inf
+
+        for (dx, dy) in ((0, -1), (0, 1), (-1, 0), (1, 0))
+            adj_x = wizard_loc[1] + dx
+            adj_y = wizard_loc[2] + dy
+            try
+                plan = get_cached_plan(agent_x, agent_y, adj_x, adj_y)
+                isempty(plan) && (agent_x != adj_x || agent_y != adj_y) && continue
+                plan_cost = calculate_plan_cost(plan, action_cost)
+                if plan_cost < best_cost
+                    best_plan = plan
+                    best_pos = (adj_x, adj_y)
+                    best_cost = plan_cost
+                end
+            catch
+                continue
+            end
+        end
+
+        best_plan === nothing && error("No reachable interaction position found for wizard at $wizard_loc")
+        return best_plan, best_pos
+    end
+
+    wizard_targets = [(w, get_obj_loc(new_state, w)) for w in wizards if state[pddl"(iscolor $w blue)"]]
+
     total_cost = 0
+    full_plan_strings = String[]
 
-    # print(wizard_locs)
-
-    for i in 1:length(wizards)
+    for _ in 1:length(wizards)
         cost = Inf
-        # print(wizard_locs)
-        min_distance_loc = wizard_locs[1]
-        
+        min_distance_wizard, min_distance_loc = wizard_targets[1]
+
         agent_x = new_state[pddl"(xloc agent1)"]
         agent_y = new_state[pddl"(yloc agent1)"]
-        
-        for w_loc in wizard_locs
+        min_distance_pos = (agent_x, agent_y)
+        min_distance_plan = Term[]
 
-            x_loc = w_loc[1]
-            y_loc = w_loc[2]
-            plan = get_cached_plan(agent_x, agent_y, x_loc, y_loc)
-
-            # print(collect(plan))
-
+        for (wizard_obj, w_loc) in wizard_targets
+            plan, interact_pos = best_interaction_plan(agent_x, agent_y, w_loc)
             plan_cost = calculate_plan_cost(plan, action_cost)
 
             if plan_cost < cost
                 cost = plan_cost
+                min_distance_wizard = wizard_obj
                 min_distance_loc = w_loc
+                min_distance_pos = interact_pos
+                min_distance_plan = plan
             end
         end
 
-        # print(wizard_locs)
+        wizard_targets = filter!(target -> target[1] != min_distance_wizard, wizard_targets)
 
-        # print(min_distance_loc)
-
-        # if min_distance_loc in wizard_locs
-        wizard_locs = filter!(loc -> ((loc[1] != min_distance_loc[1]) || (loc[2] != min_distance_loc[2])), wizard_locs)
-
+        append!(full_plan_strings, write_pddl.(min_distance_plan))
+        push!(full_plan_strings, "(interact agent1 $(string(min_distance_wizard)))")
         total_cost += cost
         total_cost += action_cost[:interact]
-        # total_cost -= 2*action_cost[:move]
 
-        new_state[pddl"(xloc agent1)"] = min_distance_loc[1]
-        new_state[pddl"(yloc agent1)"] = min_distance_loc[2]
-
-        # print(new_state[pddl"(xloc agent1)"], " ")
-        # print(new_state[pddl"(yloc agent1)"])
-        # print("\n")
-
-        # counter+=1
-        # new_state[]
+        new_state[pddl"(xloc agent1)"] = min_distance_pos[1]
+        new_state[pddl"(yloc agent1)"] = min_distance_pos[2]
     end
 
     goal_loc = get_obj_loc(new_state, agent_goal.args[2])
@@ -235,23 +247,27 @@ function estimate_self_exploration_cost(
 
     agent_x = new_state[pddl"(xloc agent1)"]
     agent_y = new_state[pddl"(yloc agent1)"]
-    
-    plan = get_cached_plan(agent_x, agent_y, x_loc, y_loc)
 
-    # print(collect(plan))
+    final_plan = get_cached_plan(agent_x, agent_y, x_loc, y_loc)
+    append!(full_plan_strings, write_pddl.(final_plan))
 
-    plan_cost = calculate_plan_cost(plan, action_cost)
+    if isempty(final_plan)
+        total_cost += 0
+    else
+        total_cost += calculate_plan_cost(final_plan[1:end-1], action_cost)
+    end
 
-    # print(agent_goal)
-    # final_plan = planner(domain, new_state, agent_goal)
-    # print(collect(final_plan))
-    # print(calculate_plan_cost(collect(final_plan), action_cost))
-    total_cost += plan_cost
-    total_cost -= action_cost[:move] *(2* length(wizards)-1)
+    return (cost = total_cost, plan = full_plan_strings)
+end
 
-
-    return total_cost
-    
+function estimate_self_exploration_cost(
+    domain::Any,
+    state::State,
+    agent_goal::Any,
+    wizards::Any,
+    action_cost::AbstractDict{Symbol, <:Real},
+)
+    return estimate_self_exploration_details(domain, state, agent_goal, wizards, action_cost).cost
 end
 
 function check_equal_state(state1::State, state2::State)

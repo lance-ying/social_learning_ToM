@@ -1,0 +1,1514 @@
+{
+    "s111_2": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "decision_trace": [
+            {
+                "q_observe": 53.0,
+                "action": "(up agent2)",
+                "next_observation_index": 1,
+                "total_probability_mass": 1.0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe_plan": [
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard2)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)"
+                ],
+                "timestep": 0,
+                "decision": "observe",
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "unnormalized_q_observe_sum": 53.0,
+                "interaction_outcome": "none",
+                "hypotheses": [
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 1,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 15.5,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 15.5,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.25,
+                        "observed_steps": 2,
+                        "state_idx": 1,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 2.0,
+                        "weighted_cost_contribution": 10.75,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 3,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 43.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 11.25,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 45.0
+                    }
+                ]
+            },
+            {
+                "q_observe": 53.0,
+                "action": "(up agent2)",
+                "next_observation_index": 2,
+                "total_probability_mass": 1.0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe_plan": [
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard2)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)"
+                ],
+                "timestep": 1,
+                "decision": "observe",
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "unnormalized_q_observe_sum": 53.0,
+                "interaction_outcome": "none",
+                "hypotheses": [
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 1,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 15.5,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 15.5,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.25,
+                        "observed_steps": 2,
+                        "state_idx": 1,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 2.0,
+                        "weighted_cost_contribution": 10.75,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 3,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 43.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 11.25,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 45.0
+                    }
+                ]
+            },
+            {
+                "q_observe": 43.0,
+                "next_observation_index": 3,
+                "total_probability_mass": 0.9317590352669041,
+                "wizard_candidates_before": [
+                    "wizard1"
+                ],
+                "q_not_observe_plan": [
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)"
+                ],
+                "stop_reason": "q_not_observe_better",
+                "timestep": 2,
+                "decision": "stop",
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "q_not_observe": 41,
+                "unnormalized_q_observe_sum": 40.065638516476874,
+                "hypotheses": [
+                    {
+                        "skip_reason": "goal_prob_below_threshold",
+                        "state_idx": 1,
+                        "included_in_q_observe": false,
+                        "goal_prob": 0.03472333744832292,
+                        "state_prob": 0.965276662551677,
+                        "goal_id": 1,
+                        "joint_weight": 0.03351762728477281
+                    },
+                    {
+                        "skip_reason": "goal_prob_below_threshold",
+                        "state_idx": 2,
+                        "included_in_q_observe": false,
+                        "goal_prob": 0.03472333744832292,
+                        "state_prob": 0.03472333744832292,
+                        "goal_id": 1,
+                        "joint_weight": 0.001205710163550105
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.9317590352669041,
+                        "observed_steps": 2,
+                        "state_idx": 1,
+                        "goal_prob": 0.965276662551677,
+                        "state_prob": 0.965276662551677,
+                        "observe_action_cost": 2.0,
+                        "weighted_cost_contribution": 40.065638516476874,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 3,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 43.0
+                    },
+                    {
+                        "skip_reason": "state_prob_below_threshold",
+                        "state_idx": 2,
+                        "included_in_q_observe": false,
+                        "goal_prob": 0.965276662551677,
+                        "state_prob": 0.03472333744832292,
+                        "goal_id": 2,
+                        "joint_weight": 0.03351762728477281
+                    }
+                ]
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 2,
+        "final_candidates": [
+            "wizard1"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_observe": 53.0,
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1"
+                ],
+                "q_observe": 53.0,
+                "action": "(up agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    },
+    "s111_1": {
+        "observations": [
+            {
+                "action": "(up agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            },
+            {
+                "action": "(right agent2)",
+                "interaction_outcome": "none",
+                "agent": "agent2"
+            }
+        ],
+        "decision_trace": [
+            {
+                "q_observe": 53.0,
+                "action": "(up agent2)",
+                "next_observation_index": 1,
+                "total_probability_mass": 1.0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe_plan": [
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard2)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)"
+                ],
+                "timestep": 0,
+                "decision": "observe",
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "unnormalized_q_observe_sum": 53.0,
+                "interaction_outcome": "none",
+                "hypotheses": [
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 1,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 15.5,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 15.5,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.25,
+                        "observed_steps": 2,
+                        "state_idx": 1,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 2.0,
+                        "weighted_cost_contribution": 10.75,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 3,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 43.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 11.25,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 45.0
+                    }
+                ]
+            },
+            {
+                "q_observe": 53.0,
+                "action": "(right agent2)",
+                "next_observation_index": 2,
+                "total_probability_mass": 1.0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe_plan": [
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard2)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)"
+                ],
+                "timestep": 1,
+                "decision": "observe",
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "unnormalized_q_observe_sum": 53.0,
+                "interaction_outcome": "none",
+                "hypotheses": [
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 1,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 15.5,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 15.5,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.25,
+                        "observed_steps": 2,
+                        "state_idx": 1,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 2.0,
+                        "weighted_cost_contribution": 10.75,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 3,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 43.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.25,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.5,
+                        "state_prob": 0.5,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 11.25,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 45.0
+                    }
+                ]
+            },
+            {
+                "q_observe": 56.03691191241386,
+                "action": "(right agent2)",
+                "next_observation_index": 3,
+                "total_probability_mass": 1.0000000000000002,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe_plan": [
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard2)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)"
+                ],
+                "timestep": 2,
+                "decision": "observe",
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "unnormalized_q_observe_sum": 56.03691191241388,
+                "interaction_outcome": "none",
+                "hypotheses": [
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.22355433783434622,
+                        "observed_steps": 4,
+                        "state_idx": 1,
+                        "goal_prob": 0.6626212229865888,
+                        "state_prob": 0.3373787770134113,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 13.860368945729466,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.43906688515224257,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.6626212229865888,
+                        "state_prob": 0.6626212229865888,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 27.222146879439038,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.1138244391790651,
+                        "observed_steps": 2,
+                        "state_idx": 1,
+                        "goal_prob": 0.3373787770134113,
+                        "state_prob": 0.3373787770134113,
+                        "observe_action_cost": 2.0,
+                        "weighted_cost_contribution": 4.894450884699799,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 3,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 43.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.22355433783434622,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.3373787770134113,
+                        "state_prob": 0.6626212229865888,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 10.05994520254558,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 45.0
+                    }
+                ]
+            },
+            {
+                "q_observe": 56.10974455321231,
+                "action": "(right agent2)",
+                "next_observation_index": 4,
+                "total_probability_mass": 1.0,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe_plan": [
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard2)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)"
+                ],
+                "timestep": 3,
+                "decision": "observe",
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "unnormalized_q_observe_sum": 56.10974455321231,
+                "interaction_outcome": "none",
+                "hypotheses": [
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.222247062971385,
+                        "observed_steps": 4,
+                        "state_idx": 1,
+                        "goal_prob": 0.6665921277510285,
+                        "state_prob": 0.3334078722489715,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 13.77931790422587,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.4443450647796435,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.6665921277510285,
+                        "state_prob": 0.6665921277510285,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 27.549394016337896,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.11116080927758651,
+                        "observed_steps": 2,
+                        "state_idx": 1,
+                        "goal_prob": 0.3334078722489715,
+                        "state_prob": 0.3334078722489715,
+                        "observe_action_cost": 2.0,
+                        "weighted_cost_contribution": 4.77991479893622,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 3,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 43.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 41,
+                        "joint_weight": 0.222247062971385,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.3334078722489715,
+                        "state_prob": 0.6665921277510285,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 10.001117833712325,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 2,
+                        "total_hypothesis_cost": 45.0
+                    }
+                ]
+            },
+            {
+                "q_observe": 62.0,
+                "next_observation_index": 5,
+                "total_probability_mass": 0.9909222685626786,
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe_plan": [
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard2)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)",
+                    "(up agent1)",
+                    "(up agent1)",
+                    "(interact agent1 wizard1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(down agent1)",
+                    "(left agent1)",
+                    "(left agent1)"
+                ],
+                "stop_reason": "q_not_observe_better",
+                "timestep": 4,
+                "decision": "stop",
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_not_observe": 58,
+                "unnormalized_q_observe_sum": 61.43718065088608,
+                "hypotheses": [
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.49096648775052726,
+                        "observed_steps": 4,
+                        "state_idx": 1,
+                        "goal_prob": 0.9909222685626786,
+                        "state_prob": 0.49546417849976115,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 30.43992224053269,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "candidate_wizards_after_observing": [
+                            "wizard1",
+                            "wizard2"
+                        ],
+                        "exploration_cost_after_observing": 58,
+                        "joint_weight": 0.4999557808121514,
+                        "observed_steps": 4,
+                        "state_idx": 2,
+                        "goal_prob": 0.9909222685626786,
+                        "state_prob": 0.5045358215002389,
+                        "observe_action_cost": 4.0,
+                        "weighted_cost_contribution": 30.99725841035339,
+                        "included_in_q_observe": true,
+                        "inference_horizon": 5,
+                        "exploration_plan_after_observing": [
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard2)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)",
+                            "(up agent1)",
+                            "(up agent1)",
+                            "(interact agent1 wizard1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(down agent1)",
+                            "(left agent1)",
+                            "(left agent1)"
+                        ],
+                        "goal_id": 1,
+                        "total_hypothesis_cost": 62.0
+                    },
+                    {
+                        "skip_reason": "goal_prob_below_threshold",
+                        "state_idx": 1,
+                        "included_in_q_observe": false,
+                        "goal_prob": 0.00907773143732149,
+                        "state_prob": 0.49546417849976115,
+                        "goal_id": 2,
+                        "joint_weight": 0.004497690749233948
+                    },
+                    {
+                        "skip_reason": "goal_prob_below_threshold",
+                        "state_idx": 2,
+                        "included_in_q_observe": false,
+                        "goal_prob": 0.00907773143732149,
+                        "state_prob": 0.5045358215002389,
+                        "goal_id": 2,
+                        "joint_weight": 0.004580040688087542
+                    }
+                ]
+            }
+        ],
+        "initial_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "stop_reason": "q_not_observe_better",
+        "t": 4,
+        "final_candidates": [
+            "wizard1",
+            "wizard2"
+        ],
+        "observation_events": [
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_observe": 53.0,
+                "action": "(up agent2)",
+                "observation_index": 1,
+                "interaction_outcome": "none",
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_observe": 53.0,
+                "action": "(right agent2)",
+                "observation_index": 2,
+                "interaction_outcome": "none",
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_observe": 56.03691191241386,
+                "action": "(right agent2)",
+                "observation_index": 3,
+                "interaction_outcome": "none",
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            },
+            {
+                "wizard_candidates_after": [
+                    "wizard1",
+                    "wizard2"
+                ],
+                "q_observe": 56.10974455321231,
+                "action": "(right agent2)",
+                "observation_index": 4,
+                "interaction_outcome": "none",
+                "q_not_observe": 58,
+                "observed_agent": "agent2",
+                "wizard_candidates_before": [
+                    "wizard1",
+                    "wizard2"
+                ]
+            }
+        ]
+    }
+}
