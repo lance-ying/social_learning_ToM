@@ -251,11 +251,7 @@ function estimate_self_exploration_details(
     final_plan = get_cached_plan(agent_x, agent_y, x_loc, y_loc)
     append!(full_plan_strings, write_pddl.(final_plan))
 
-    if isempty(final_plan)
-        total_cost += 0
-    else
-        total_cost += calculate_plan_cost(final_plan[1:end-1], action_cost)
-    end
+    total_cost += calculate_plan_cost(final_plan, action_cost)
 
     return (cost = total_cost, plan = full_plan_strings)
 end
