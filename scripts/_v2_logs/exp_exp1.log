@@ -1,0 +1,402 @@
+WARNING: redefinition of constant Main.PLANNER_CACHE. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_HITS. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_MISSES. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.PLANNER_CACHE. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_HITS. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_MISSES. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.PLANNER_CACHE. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_HITS. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_MISSES. This may fail, cause incorrect answers, or produce other errors.
+Dict{Any, Any}()
+s111_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5]Q_observe = 67.0Q_not_observe = 158
+Q_observe = 55.0Q_not_observe = 76
+Q_observe = 55.0Q_not_observe = 53
+t = 2Dict{Any, Any}("s111_1" => 2)
+s112_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5]Q_observe = 55.0Q_not_observe = 146
+Q_observe = 47.00000000000001Q_not_observe = 99
+Q_observe = 31.0Q_not_observe = 29
+t = 2Dict{Any, Any}("s112_1" => 2, "s111_1" => 2)
+s211_1_plan.pddl
+Const[wizard1, wizard2, wizard3]Q_observe = 92.0Q_not_observe = 136
+Q_observe = 92.0Q_not_observe = 136
+Q_observe = 92.0Q_not_observe = 136
+Q_observe = 110.0Q_not_observe = 107
+t = 3Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2)
+s221_1_plan.pddl
+Const[wizard1, wizard2]Q_observe = 87.0Q_not_observe = 142
+Q_observe = 108.0Q_not_observe = 107
+t = 1Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s221_1" => 1)
+s311_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4]Q_observe = 84.66666666666666Q_not_observe = 159
+Q_observe = 84.66666666666666Q_not_observe = 159
+Q_observe = 84.66666666666666Q_not_observe = 159
+Q_observe = 90.0Q_not_observe = 124
+Q_observe = 111.0Q_not_observe = 107
+t = 4Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s311_1" => 4, "s221_1" => 1)
+s321_1_plan.pddl
+Const[wizard1, wizard2, wizard3]Q_observe = 85.33333333333333Q_not_observe = 177
+Q_observe = 95.00000000000001Q_not_observe = 142
+Q_observe = 95.0Q_not_observe = 142
+Q_observe = 109.99999999999999Q_not_observe = 107
+t = 3Dict{Any, Any}("s321_1" => 3, "s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s311_1" => 4, "s221_1" => 1)
+s331_1_plan.pddl
+Const[wizard1, wizard2, wizard3]Q_observe = 69.0Q_not_observe = 88
+Q_observe = 72.0Q_not_observe = 71
+t = 1Dict{Any, Any}("s321_1" => 3, "s112_1" => 2, "s211_1" => 3, "s331_1" => 1, "s111_1" => 2, "s311_1" => 4, "s221_1" => 1)
+s332_1_plan.pddl
+Const[wizard1, wizard2, wizard3]Q_observe = 72.0Q_not_observe = 88
+Q_observe = 72.0Q_not_observe = 88
+Q_observe = 72.0Q_not_observe = 88
+Q_observe = 72.0Q_not_observe = 88
+Q_observe = 75.0Q_not_observe = 71
+t = 4Dict{Any, Any}("s321_1" => 3, "s332_1" => 4, "s112_1" => 2, "s211_1" => 3, "s331_1" => 1, "s111_1" => 2, "s311_1" => 4, "s221_1" => 1)
+s341_1_plan.pddl
+Const[wizard1, wizard2, wizard3]Q_observe = 102.0Q_not_observe = 106
+Q_observe = 102.0Q_not_observe = 106
+Q_observe = 102.0Q_not_observe = 106
+Q_observe = 102.0Q_not_observe = 106
+Q_observe = 102.0Q_not_observe = 106
+Q_observe = 102.0Q_not_observe = 106
+Q_observe = 102.0Q_not_observe = 106
+Q_observe = 102.0Q_not_observe = 95
+t = 7Dict{Any, Any}("s321_1" => 3, "s332_1" => 4, "s112_1" => 2, "s211_1" => 3, "s331_1" => 1, "s341_1" => 7, "s111_1" => 2, "s311_1" => 4, "s221_1" => 1)
+s342_1_plan.pddl
+Const[wizard1, wizard2, wizard3]Q_observe = 98.0Q_not_observe = 106
+Q_observe = 98.0Q_not_observe = 106
+Q_observe = 98.0Q_not_observe = 106
+Q_observe = 98.0Q_not_observe = 95
+t = 3Dict{Any, Any}("s321_1" => 3, "s332_1" => 4, "s112_1" => 2, "s211_1" => 3, "s331_1" => 1, "s341_1" => 7, "s111_1" => 2, "s311_1" => 4, "s342_1" => 3, "s221_1" => 1)
+s351_1_plan.pddl
+Const[wizard1, wizard2, wizard3]┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s351_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s351_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 65.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s351_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s351_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 65.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s351_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s351_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 72.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s351_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s351_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 72.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s351_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s351_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = NaNQ_not_observe = Inf
+t = 4Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s342_1" => 3, "s321_1" => 3, "s341_1" => 7, "s221_1" => 1)
+s352_1_plan.pddl
+Const[wizard1, wizard2, wizard3]┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s352_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s352_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 66.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s352_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s352_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 66.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s352_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s352_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 66.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s352_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s352_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 73.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s352_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s352_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 73.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s352_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s352_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = NaNQ_not_observe = Inf
+t = 5Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s342_1" => 3, "s352_1" => 5, "s321_1" => 3, "s341_1" => 7, "s221_1" => 1)
+s361_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4]t=0Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s361_1" => 0, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s342_1" => 3, "s352_1" => 5, "s321_1" => 3, "s341_1" => 7, "s221_1" => 1)
+s362_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4]Q_observe = 77.0Q_not_observe = 177
+Q_observe = 78.56038889506814Q_not_observe = 177
+Q_observe = 78.56038889506813Q_not_observe = 177
+Q_observe = 82.0Q_not_observe = 130
+Q_observe = 82.0Q_not_observe = 130
+Q_observe = 93.99999999999999Q_not_observe = 89
+t = 5Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s342_1" => 3, "s352_1" => 5, "s321_1" => 3, "s341_1" => 7, "s221_1" => 1)
+s371_1_plan.pddl
+Const[wizard1, wizard2]Q_observe = 63.0Q_not_observe = 58
+t = 0Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s352_1" => 5, "s321_1" => 3, "s341_1" => 7, "s221_1" => 1)
+s411_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5]Q_observe = 87.0Q_not_observe = 176
+Q_observe = 87.0Q_not_observe = 176
+Q_observe = 87.0Q_not_observe = 176
+Q_observe = 90.99999999999999Q_not_observe = 141
+Q_observe = 102.0Q_not_observe = 124
+Q_observe = 102.0Q_not_observe = 124
+Q_observe = 102.0Q_not_observe = 124
+Q_observe = 114.0Q_not_observe = 107
+t = 7Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s341_1" => 7, "s221_1" => 1)
+s421_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4]Q_observe = 88.25Q_not_observe = 212
+Q_observe = 95.33333333333334Q_not_observe = 177
+Q_observe = 95.33333333333334Q_not_observe = 177
+Q_observe = 103.0Q_not_observe = 142
+Q_observe = 102.99999999999999Q_not_observe = 142
+Q_observe = 112.0Q_not_observe = 107
+t = 5Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s421_1" => 5, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s341_1" => 7, "s221_1" => 1)
+s431_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4]Q_observe = 108.33333333333333Q_not_observe = 192
+Q_observe = 116.00000000000001Q_not_observe = 145
+Q_observe = 116.0Q_not_observe = 145
+Q_observe = 131.0Q_not_observe = 128
+t = 3Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s421_1" => 5, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s341_1" => 7, "s221_1" => 1)
+s432_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4]Q_observe = 113.0Q_not_observe = 192
+Q_observe = 113.0Q_not_observe = 192
+Q_observe = 113.0Q_not_observe = 192
+Q_observe = 122.0Q_not_observe = 145
+Q_observe = 122.0Q_not_observe = 145
+Q_observe = 122.0Q_not_observe = 145
+Q_observe = 122.0Q_not_observe = 145
+Q_observe = 122.0Q_not_observe = 145
+Q_observe = 122.00000000000001Q_not_observe = 145
+Q_observe = 137.0Q_not_observe = 128
+t = 9Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s421_1" => 5, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s432_1" => 9, "s341_1" => 7, "s221_1" => 1)
+s441_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5, wizard6]Q_observe = 82.0Q_not_observe = 169
+Q_observe = 93.99999999999999Q_not_observe = 141
+Q_observe = 94.0Q_not_observe = 141
+Q_observe = 89.0Q_not_observe = 100
+Q_observe = 89.0Q_not_observe = 100
+Q_observe = 89.0Q_not_observe = 100
+Q_observe = 95.0Q_not_observe = 89
+t = 6Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s441_1" => 6, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s421_1" => 5, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s432_1" => 9, "s341_1" => 7, "s221_1" => 1)
+s442_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5, wizard6]┌ Warning: skipping infeasible hypothesis (g=1, i=1) for s442_1
+│   exception = No reachable interaction position found for wizard at (9, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s442_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (9, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 83.75Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=1) for s442_1
+│   exception = No reachable interaction position found for wizard at (9, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s442_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (9, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 78.83445925596367Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=1) for s442_1
+│   exception = No reachable interaction position found for wizard at (9, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s442_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (9, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 78.83445925596368Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=1) for s442_1
+│   exception = No reachable interaction position found for wizard at (9, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s442_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (9, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 78.83445925596367Q_not_observe = Inf
+Q_observe = 85.0Q_not_observe = 88
+Q_observe = 85.0Q_not_observe = 88
+Q_observe = 85.00000000000001Q_not_observe = 88
+Q_observe = 85.0Q_not_observe = 88
+Q_observe = 85.0Q_not_observe = 77
+t = 8Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s441_1" => 6, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s421_1" => 5, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s432_1" => 9, "s341_1" => 7, "s442_1" => 8, "s221_1" => 1)
+s511_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5, wizard6]Q_observe = 94.19999999999999Q_not_observe = 193
+Q_observe = 94.19999999999999Q_not_observe = 193
+Q_observe = 94.19999999999999Q_not_observe = 193
+Q_observe = 99.00000000000001Q_not_observe = 158
+Q_observe = 108.66666666666667Q_not_observe = 141
+Q_observe = 108.66666666666666Q_not_observe = 141
+Q_observe = 108.66666666666669Q_not_observe = 141
+Q_observe = 118.0Q_not_observe = 124
+Q_observe = 118.0Q_not_observe = 124
+Q_observe = 118.0Q_not_observe = 124
+Q_observe = 118.0Q_not_observe = 124
+Q_observe = 118.0Q_not_observe = 107
+t = 11Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s441_1" => 6, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s421_1" => 5, "s511_1" => 11, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s432_1" => 9, "s341_1" => 7, "s442_1" => 8, "s221_1" => 1)
+s521_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5]Q_observe = 96.4Q_not_observe = 265
+Q_observe = 103.75Q_not_observe = 230
+Q_observe = 103.75Q_not_observe = 230
+Q_observe = 111.33333333333336Q_not_observe = 195
+Q_observe = 111.33333333333333Q_not_observe = 195
+Q_observe = 120.0Q_not_observe = 160
+Q_observe = 120.0Q_not_observe = 160
+Q_observe = 114.0Q_not_observe = 107
+t = 7Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s441_1" => 6, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s421_1" => 5, "s521_1" => 7, "s511_1" => 11, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s432_1" => 9, "s341_1" => 7, "s442_1" => 8, "s221_1" => 1)
+s531_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5]┌ Warning: skipping infeasible hypothesis (g=1, i=1) for s531_1
+│   exception = No reachable interaction position found for wizard at (1, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s531_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s531_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (1, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 89.5Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=1) for s531_1
+│   exception = No reachable interaction position found for wizard at (1, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s531_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s531_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (1, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 89.5Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=1) for s531_1
+│   exception = No reachable interaction position found for wizard at (1, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s531_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s531_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (1, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 89.5Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s531_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s531_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 89.50000000000001Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s531_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s531_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 89.49999999999999Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s531_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s531_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 100.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s531_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s531_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 100.00000000000001Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s531_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s531_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 100.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s531_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s531_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = NaNQ_not_observe = Inf
+t = 8Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s441_1" => 6, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s421_1" => 5, "s521_1" => 7, "s531_1" => 8, "s511_1" => 11, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s432_1" => 9, "s341_1" => 7, "s442_1" => 8, "s221_1" => 1)
+s532_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5]┌ Warning: skipping infeasible hypothesis (g=1, i=1) for s532_1
+│   exception = No reachable interaction position found for wizard at (1, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s532_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s532_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (1, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 86.0Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s532_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s532_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 96.00000000000001Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s532_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s532_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 96.00000000000001Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s532_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s532_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = 96.00000000000001Q_not_observe = Inf
+┌ Warning: skipping infeasible hypothesis (g=1, i=3) for s532_1
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:299
+┌ Warning: Q_not_observe infeasible for s532_1, treating as Inf
+│   exception = No reachable interaction position found for wizard at (11, 1)
+└ @ Main ~/code/lab/social_learning/social_learning_ToM/scripts/experiments_v2/run_experiment_exp1.jl:315
+Q_observe = NaNQ_not_observe = Inf
+t = 4Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s441_1" => 6, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s532_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s342_1" => 3, "s421_1" => 5, "s521_1" => 7, "s531_1" => 8, "s511_1" => 11, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s432_1" => 9, "s341_1" => 7, "s442_1" => 8, "s221_1" => 1)
+s541_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5]Q_observe = 89.0Q_not_observe = 122
+Q_observe = 89.0Q_not_observe = 122
+Q_observe = 89.0Q_not_observe = 122
+Q_observe = 87.96683990828497Q_not_observe = 122
+Q_observe = 85.50000000000001Q_not_observe = 88
+Q_observe = 88.0Q_not_observe = 83
+t = 5Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s441_1" => 6, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s532_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s541_1" => 5, "s342_1" => 3, "s421_1" => 5, "s521_1" => 7, "s531_1" => 8, "s511_1" => 11, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s432_1" => 9, "s341_1" => 7, "s442_1" => 8, "s221_1" => 1)
+s542_1_plan.pddl
+Const[wizard1, wizard2, wizard3, wizard4, wizard5]Q_observe = 86.0Q_not_observe = 122
+Q_observe = 82.5Q_not_observe = 88
+Q_observe = 85.0Q_not_observe = 83
+t = 2Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s441_1" => 6, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s532_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s541_1" => 5, "s342_1" => 3, "s421_1" => 5, "s521_1" => 7, "s531_1" => 8, "s511_1" => 11, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s432_1" => 9, "s341_1" => 7, "s442_1" => 8, "s542_1" => 2, "s221_1" => 1)
+s543_1_plan.pddl
+Const[wizard1, wizard2, wizard3]Q_observe = 59.0Q_not_observe = 58
+t = 0Dict{Any, Any}("s112_1" => 2, "s211_1" => 3, "s441_1" => 6, "s111_1" => 2, "s362_1" => 5, "s361_1" => 0, "s431_1" => 3, "s351_1" => 4, "s532_1" => 4, "s332_1" => 4, "s331_1" => 1, "s311_1" => 4, "s371_1" => 0, "s541_1" => 5, "s342_1" => 3, "s421_1" => 5, "s521_1" => 7, "s531_1" => 8, "s511_1" => 11, "s352_1" => 5, "s411_1" => 7, "s321_1" => 3, "s432_1" => 9, "s341_1" => 7, "s442_1" => 8, "s542_1" => 2, "s543_1" => 0, "s221_1" => 1)
+s544_1_plan.pddl
+Const[wizard1, wizard2, wizard3]Q_observe = 51.0Q_not_observe = 49
+t = 0Results saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/model_outputs/experiments_v2/exp1/steps_dict.json
+Replay trace saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/model_outputs/experiments_v2/exp1/replay_trace.json

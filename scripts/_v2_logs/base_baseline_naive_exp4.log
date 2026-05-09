@@ -1,0 +1,75 @@
+WARNING: redefinition of constant Main.PLANNER_CACHE. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_HITS. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_MISSES. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.PLANNER_CACHE. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_HITS. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_MISSES. This may fail, cause incorrect answers, or produce other errors.
+
+Processing map: sm211
+Processing naive baseline:   5%|█▎                      |  ETA: 0:02:48[K  Map completed in 8.85s
+
+Processing map: sm221
+Processing naive baseline:   8%|█▊                      |  ETA: 0:02:30[K  Map completed in 3.28s
+
+Processing map: sm311
+  Map completed in 3.26s
+
+Processing map: sm321
+  Map completed in 3.43s
+
+Processing map: sm331
+Processing naive baseline:  22%|█████▍                  |  ETA: 0:01:17[KProcessing naive baseline:  25%|██████                  |  ETA: 0:01:08[K  Map completed in 3.6s
+
+Processing map: sm341
+Processing naive baseline:  28%|██████▋                 |  ETA: 0:01:08[KProcessing naive baseline:  30%|███████▎                |  ETA: 0:01:00[K  Map completed in 3.33s
+
+Processing map: sm351
+Processing naive baseline:  32%|███████▊                |  ETA: 0:01:01[KProcessing naive baseline:  35%|████████▍               |  ETA: 0:00:54[K  Map completed in 3.47s
+
+Processing map: sm361
+Processing naive baseline:  38%|█████████               |  ETA: 0:00:54[KProcessing naive baseline:  40%|█████████▋              |  ETA: 0:00:49[K  Map completed in 3.48s
+
+Processing map: sm371
+Processing naive baseline:  42%|██████████▎             |  ETA: 0:00:48[K  Map completed in 3.08s
+
+Processing map: sm411
+Processing naive baseline:  48%|███████████▍            |  ETA: 0:00:43[KProcessing naive baseline:  50%|████████████            |  ETA: 0:00:39[K  Map completed in 3.52s
+
+Processing map: sm421
+Processing naive baseline:  52%|████████████▋           |  ETA: 0:00:39[KProcessing naive baseline:  55%|█████████████▎          |  ETA: 0:00:35[K  Map completed in 3.82s
+
+Processing map: sm431
+Processing naive baseline:  58%|█████████████▊          |  ETA: 0:00:34[KProcessing naive baseline:  60%|██████████████▍         |  ETA: 0:00:31[K  Map completed in 3.44s
+
+Processing map: sm432
+Processing naive baseline:  62%|███████████████         |  ETA: 0:00:30[KProcessing naive baseline:  65%|███████████████▋        |  ETA: 0:00:27[K  Map completed in 3.56s
+
+Processing map: sm511
+Processing naive baseline:  68%|████████████████▎       |  ETA: 0:00:26[KProcessing naive baseline:  70%|████████████████▊       |  ETA: 0:00:23[K  Map completed in 3.84s
+
+Processing map: sm521
+Processing naive baseline:  72%|█████████████████▍      |  ETA: 0:00:22[KProcessing naive baseline:  75%|██████████████████      |  ETA: 0:00:20[K  Map completed in 4.69s
+
+Processing map: sm531
+Processing naive baseline:  78%|██████████████████▋     |  ETA: 0:00:18[K  Map completed in 3.27s
+
+Processing map: sm541
+Processing naive baseline:  82%|███████████████████▊    |  ETA: 0:00:14[KProcessing naive baseline:  85%|████████████████████▍   |  ETA: 0:00:12[K  Map completed in 3.48s
+
+Processing map: sm543
+Processing naive baseline:  88%|█████████████████████   |  ETA: 0:00:10[KProcessing naive baseline:  90%|█████████████████████▋  |  ETA: 0:00:08[K  Map completed in 3.3s
+
+Processing map: sm611
+Processing naive baseline:  92%|██████████████████████▎ |  ETA: 0:00:06[KProcessing naive baseline:  95%|██████████████████████▊ |  ETA: 0:00:04[K  Map completed in 3.36s
+
+Processing map: sm612
+Processing naive baseline:  98%|███████████████████████▍|  ETA: 0:00:02[KProcessing naive baseline: 100%|████████████████████████| Time: 0:01:15[K
+  Map completed in 3.55s
+
+=== Timing Summary ===
+Total time: 75.71s
+Average per map: 3.78s
+
+=== Experiment Complete ===
+Results saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/baselines_v2/exp4/../../../model_outputs/baselines_v2/exp4/step_dict_naive_observer.json
+Replay trace saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/baselines_v2/exp4/../../../model_outputs/baselines_v2/exp4/replay_trace_naive_observer.json

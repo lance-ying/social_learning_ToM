@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 import re
 import sys
 from collections import defaultdict
@@ -13,6 +14,9 @@ import numpy as np
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DATA_PROCESSED_DIR = REPO_ROOT / "data_processing" / "data_processed"
+_MODEL_SUFFIX = os.environ.get("MODEL_OUTPUTS_SUFFIX", "")
+EXPERIMENTS_SUBDIR = f"experiments{_MODEL_SUFFIX}"
+BASELINES_SUBDIR = f"baselines{_MODEL_SUFFIX}"
 PLOTS_DIR = REPO_ROOT / "plotting" / "outputs"
 SCRIPTS_DIR = REPO_ROOT / "data_processing" / "scripts"
 
@@ -410,12 +414,12 @@ def load_model_observe_predictions(exp: str, model_name: str) -> dict:
         return {}
     model_name = effective_model_name(exp, model_name)
     if model_name == "full_model":
-        path = REPO_ROOT / "model_outputs" / "experiments" / exp / "steps_dict.json"
+        path = REPO_ROOT / "model_outputs" / EXPERIMENTS_SUBDIR / exp / "steps_dict.json"
         return load_json(path) if path.exists() else {}
     if model_name == "agent1_naive_planner":
         path = REPO_ROOT / "model_outputs" / "reconstructed_costs" / f"{exp}_{model_name}.json"
         return load_json(path)["per_case"] if path.exists() else {}
-    path = REPO_ROOT / "model_outputs" / "baselines" / exp / f"step_dict_{model_name}.json"
+    path = REPO_ROOT / "model_outputs" / BASELINES_SUBDIR / exp / f"step_dict_{model_name}.json"
     return load_json(path) if path.exists() else {}
 
 

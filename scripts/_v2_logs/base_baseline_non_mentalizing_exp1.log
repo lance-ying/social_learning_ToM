@@ -1,0 +1,192 @@
+WARNING: redefinition of constant Main.PLANNER_CACHE. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_HITS. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_MISSES. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.PLANNER_CACHE. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_HITS. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_MISSES. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.PLANNER_CACHE. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_HITS. This may fail, cause incorrect answers, or produce other errors.
+WARNING: redefinition of constant Main.CACHE_MISSES. This may fail, cause incorrect answers, or produce other errors.
+
+Processing map: s111
+Const[wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=5
+    Time: 9.28s
+    Cache: 0 hits, 41 misses, 0.0% hit rate
+  Map completed in 9.28s
+
+Processing map: s112
+Const[wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=11
+    Time: 2.38s
+    Cache: 0 hits, 41 misses, 0.0% hit rate
+  Map completed in 2.38s
+Processing non-mentalize baseline:   7%|█▏              |  ETA: 0:02:45[K
+Processing map: s211
+Const[wizard1, wizard2, wizard3]    Result: t=13
+    Time: 1.8s
+    Cache: 0 hits, 13 misses, 0.0% hit rate
+  Map completed in 1.8s
+Processing non-mentalize baseline:  10%|█▋              |  ETA: 0:02:03[K
+Processing map: s221
+Const[wizard1, wizard2]    Result: t=13
+    Time: 1.79s
+    Cache: 0 hits, 13 misses, 0.0% hit rate
+  Map completed in 1.79s
+Processing non-mentalize baseline:  14%|██▎             |  ETA: 0:01:40[K
+Processing map: s311
+Const[wizard1, wizard4, wizard2, wizard3]    Result: t=13
+    Time: 2.06s
+    Cache: 0 hits, 25 misses, 0.0% hit rate
+  Map completed in 2.06s
+Processing non-mentalize baseline:  17%|██▊             |  ETA: 0:01:26[K
+Processing map: s321
+Const[wizard1, wizard2, wizard3]    Result: t=13
+    Time: 1.97s
+    Cache: 1 hits, 24 misses, 4.0% hit rate
+  Map completed in 1.97s
+Processing non-mentalize baseline:  21%|███▎            |  ETA: 0:01:17[K
+Processing map: s331
+Const[wizard1, wizard2, wizard3]    Result: t=3
+    Time: 1.72s
+    Cache: 0 hits, 13 misses, 0.0% hit rate
+  Map completed in 1.72s
+Processing non-mentalize baseline:  24%|███▉            |  ETA: 0:01:08[K
+Processing map: s332
+Const[wizard1, wizard2, wizard3]    Result: t=6
+    Time: 1.72s
+    Cache: 0 hits, 13 misses, 0.0% hit rate
+  Map completed in 1.72s
+Processing non-mentalize baseline:  28%|████▍           |  ETA: 0:01:02[K
+Processing map: s341
+Const[wizard1, wizard2, wizard3]    Result: t=0
+    Time: 1.72s
+    Cache: 0 hits, 13 misses, 0.0% hit rate
+  Map completed in 1.72s
+Processing non-mentalize baseline:  31%|█████           |  ETA: 0:00:56[K
+Processing map: s342
+Const[wizard1, wizard2, wizard3]    Result: t=0
+    Time: 1.8s
+    Cache: 0 hits, 13 misses, 0.0% hit rate
+  Map completed in 1.8s
+Processing non-mentalize baseline:  34%|█████▌          |  ETA: 0:00:51[K
+Processing map: s351
+Const[wizard1, wizard2, wizard3]    Result: t=8
+    Time: 1.93s
+    Cache: 1 hits, 24 misses, 4.0% hit rate
+  Map completed in 1.93s
+Processing non-mentalize baseline:  38%|██████▏         |  ETA: 0:00:47[K
+Processing map: s352
+Const[wizard1, wizard2, wizard3]    Result: t=9
+    Time: 1.94s
+    Cache: 1 hits, 24 misses, 4.0% hit rate
+  Map completed in 1.94s
+Processing non-mentalize baseline:  41%|██████▋         |  ETA: 0:00:44[K
+Processing map: s361
+Const[wizard1, wizard4, wizard2, wizard3]    Result: t=6
+    Time: 2.08s
+    Cache: 0 hits, 25 misses, 0.0% hit rate
+  Map completed in 2.08s
+Processing non-mentalize baseline:  45%|███████▏        |  ETA: 0:00:40[K
+Processing map: s362
+Const[wizard1, wizard4, wizard2, wizard3]    Result: t=13
+    Time: 2.14s
+    Cache: 0 hits, 25 misses, 0.0% hit rate
+  Map completed in 2.14s
+Processing non-mentalize baseline:  48%|███████▊        |  ETA: 0:00:38[K
+Processing map: s371
+Const[wizard1, wizard2]    Result: t=0
+    Time: 1.65s
+    Cache: 0 hits, 13 misses, 0.0% hit rate
+  Map completed in 1.65s
+Processing non-mentalize baseline:  52%|████████▎       |  ETA: 0:00:34[K
+Processing map: s411
+Const[wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=13
+    Time: 2.51s
+    Cache: 0 hits, 41 misses, 0.0% hit rate
+  Map completed in 2.51s
+Processing non-mentalize baseline:  55%|████████▉       |  ETA: 0:00:32[K
+Processing map: s421
+Const[wizard4, wizard1, wizard2, wizard3]    Result: t=13
+    Time: 2.35s
+    Cache: 3 hits, 38 misses, 7.3% hit rate
+  Map completed in 2.35s
+Processing non-mentalize baseline:  59%|█████████▍      |  ETA: 0:00:29[K
+Processing map: s431
+Const[wizard1, wizard4, wizard2, wizard3]    Result: t=10
+    Time: 2.15s
+    Cache: 0 hits, 25 misses, 0.0% hit rate
+  Map completed in 2.15s
+Processing non-mentalize baseline:  62%|█████████▉      |  ETA: 0:00:27[K
+Processing map: s432
+Const[wizard1, wizard4, wizard2, wizard3]    Result: t=16
+    Time: 2.14s
+    Cache: 0 hits, 25 misses, 0.0% hit rate
+  Map completed in 2.14s
+Processing non-mentalize baseline:  66%|██████████▌     |  ETA: 0:00:24[K
+Processing map: s441
+Const[wizard6, wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=7
+    Time: 3.27s
+    Cache: 0 hits, 61 misses, 0.0% hit rate
+  Map completed in 3.27s
+Processing non-mentalize baseline:  69%|███████████     |  ETA: 0:00:22[K
+Processing map: s442
+Const[wizard6, wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=11
+    Time: 3.04s
+    Cache: 0 hits, 61 misses, 0.0% hit rate
+  Map completed in 3.04s
+Processing non-mentalize baseline:  72%|███████████▋    |  ETA: 0:00:20[K
+Processing map: s511
+Const[wizard6, wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=13
+    Time: 2.89s
+    Cache: 0 hits, 61 misses, 0.0% hit rate
+  Map completed in 2.89s
+Processing non-mentalize baseline:  76%|████████████▏   |  ETA: 0:00:18[K
+Processing map: s521
+Const[wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=13
+    Time: 2.83s
+    Cache: 3 hits, 58 misses, 4.9% hit rate
+  Map completed in 2.83s
+Processing non-mentalize baseline:  79%|████████████▊   |  ETA: 0:00:15[K
+Processing map: s531
+Const[wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=10
+    Time: 2.43s
+    Cache: 0 hits, 41 misses, 0.0% hit rate
+  Map completed in 2.43s
+Processing non-mentalize baseline:  83%|█████████████▎  |  ETA: 0:00:13[K
+Processing map: s532
+Const[wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=6
+    Time: 2.44s
+    Cache: 0 hits, 41 misses, 0.0% hit rate
+  Map completed in 2.44s
+Processing non-mentalize baseline:  86%|█████████████▊  |  ETA: 0:00:10[K
+Processing map: s541
+Const[wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=7
+    Time: 2.23s
+    Cache: 0 hits, 41 misses, 0.0% hit rate
+  Map completed in 2.23s
+Processing non-mentalize baseline:  90%|██████████████▍ |  ETA: 0:00:07[K
+Processing map: s542
+Const[wizard1, wizard5, wizard4, wizard2, wizard3]    Result: t=4
+    Time: 2.42s
+    Cache: 0 hits, 41 misses, 0.0% hit rate
+  Map completed in 2.42s
+Processing non-mentalize baseline:  93%|██████████████▉ |  ETA: 0:00:05[K
+Processing map: s543
+Const[wizard1, wizard2, wizard3]    Result: t=0
+    Time: 1.75s
+    Cache: 0 hits, 13 misses, 0.0% hit rate
+  Map completed in 1.76s
+Processing non-mentalize baseline:  97%|███████████████▌|  ETA: 0:00:02[K
+Processing map: s544
+Const[wizard1, wizard2, wizard3]    Result: t=0
+    Time: 1.71s
+    Cache: 1 hits, 12 misses, 7.7% hit rate
+  Map completed in 1.71s
+Processing non-mentalize baseline: 100%|████████████████| Time: 0:01:10[K
+
+=== Timing Summary ===
+Total time: 70.88s
+Average per map: 2.42s
+
+=== Experiment Complete ===
+Results saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/baselines_v2/exp1/../../../model_outputs/baselines_v2/exp1/step_dict_rational_non_mentalizing.json
+Replay trace saved to: /Users/heyodogo/code/lab/social_learning/social_learning_ToM/scripts/baselines_v2/exp1/../../../model_outputs/baselines_v2/exp1/replay_trace_rational_non_mentalizing.json
