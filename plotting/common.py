@@ -72,7 +72,7 @@ PRIMARY_POOLED_TOTAL_STEP_PANELS = [
     ("Rational Mentalizing Observer\n(Full Model)", "full_model"),
     ("Mentalizing Observer\n(No Utility Estimation)", "social_mentalizing"),
     ("Rational Observer\n(No Mentalizing)", "rational_non_mentalizing"),
-    ("Naive Observer", "naive_observer"),
+    ("Naive Observer\n(No Utility or Mentalizing)", "naive_observer"),
 ]
 PRIMARY_POOLED_OBSERVE_PANELS = list(PRIMARY_POOLED_TOTAL_STEP_PANELS)
 OBSERVE_MODEL_PANELS = [panel for panel in MODEL_PANELS if panel[1] != "agent1_naive_planner"]

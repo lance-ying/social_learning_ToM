@@ -84,9 +84,9 @@ def render_plot(total_step_panels: list[tuple[str, str]], output_file) -> None:
                 fit_y = slope * fit_x + intercept
                 ax.plot(fit_x, fit_y, color="#e15759", linewidth=1.8, zorder=2)
 
-        ax.set_xlabel(label, fontsize=20, color="#1a1a1a")
+        ax.set_xlabel(label, fontsize=24, color="#1a1a1a")
         if idx == 0:
-            ax.set_ylabel("Human Total Steps", fontsize=22, color="#1a1a1a")
+            ax.set_ylabel("Human Total Steps", fontsize=24, color="#1a1a1a")
         else:
             ax.set_ylabel("")
 
@@ -96,14 +96,14 @@ def render_plot(total_step_panels: list[tuple[str, str]], output_file) -> None:
             handles,
             labels,
             frameon=False,
-            fontsize=16,
-            markerscale=1.8,
+            fontsize=20,
+            markerscale=2.8,
             loc="lower center",
             ncol=len(EXPERIMENTS),
-            bbox_to_anchor=(0.5, -0.02),
+            bbox_to_anchor=(0.5, -0.07),
         )
 
-    plt.tight_layout(w_pad=2.5, rect=(0, 0.08, 1, 1))
+    plt.tight_layout(w_pad=2.5, rect=(0, 0.12, 1, 1))
     output_file.parent.mkdir(parents=True, exist_ok=True)
     plt.savefig(output_file, dpi=300, bbox_inches="tight")
     print(f"Saved -> {output_file}")

@@ -18,6 +18,7 @@ import argparse
 import csv
 import json
 import math
+import sys
 from collections import defaultdict
 from pathlib import Path
 from statistics import mean, median, stdev
@@ -57,7 +58,26 @@ def parse_args() -> argparse.Namespace:
         action="store_true",
         help="Only include participants whose summed LEVEL_COMPLETE 'Steps Remaining' across included levels is > 0.",
     )
+    parser.add_argument(
+        "--iqr-filter",
+        action="store_true",
+        help=(
+            "Restrict to the IQR-cleaned participant set used by the plotting figures "
+            "(plotting/common.py filtered_participant_paths). Writes a *_iqr_filtered.json by default."
+        ),
+    )
     return parser.parse_args()
+
+
+def iqr_kept_stems(exp: str) -> set[str]:
+    """Participant stems kept by the figures' IQR filter (plotting/common.py)."""
+    repo_root = Path(__file__).resolve().parents[2]
+    plotting_dir = repo_root / "plotting"
+    if str(plotting_dir) not in sys.path:
+        sys.path.insert(0, str(plotting_dir))
+    from common import filtered_participant_paths
+
+    return {path.stem for path in filtered_participant_paths(exp)}
 
 
 def should_skip_level(exp: str, level: str, include_tutorials: bool) -> bool:
@@ -371,10 +391,11 @@ def main() -> int:
     repo_root = Path(__file__).resolve().parents[2]
 
     csv_dir = Path(args.csv_dir) if args.csv_dir else repo_root / "data_processing" / "data_processed" / args.exp
+    default_name = f"{args.exp}_human_costs_iqr_filtered.json" if args.iqr_filter else f"{args.exp}_human_costs.json"
     output_file = (
         Path(args.output_file)
         if args.output_file
-        else repo_root / "data_processing" / "outputs" / "human_costs" / f"{args.exp}_human_costs.json"
+        else repo_root / "data_processing" / "outputs" / "human_costs" / default_name
     )
     output_file.parent.mkdir(parents=True, exist_ok=True)
 
@@ -385,7 +406,16 @@ def main() -> int:
         )
 
     filtered_out_participants: list[str] = []
-    if args.require_positive_total_steps_remaining:
+    if args.iqr_filter:
+        keep = iqr_kept_stems(args.exp)
+        filtered = {}
+        for participant_id, levels in participant_level_costs.items():
+            if participant_id in keep:
+                filtered[participant_id] = levels
+            else:
+                filtered_out_participants.append(participant_id)
+        participant_level_costs = filtered
+    elif args.require_positive_total_steps_remaining:
         filtered = {}
         for participant_id, levels in participant_level_costs.items():
             if participant_total_steps_remaining(levels) > 0:
@@ -411,6 +441,7 @@ def main() -> int:
             "observe": args.observe_cost,
         },
         "participant_filter": {
+            "iqr_filter": args.iqr_filter,
             "require_positive_total_steps_remaining": args.require_positive_total_steps_remaining,
             "participants_kept": len(participant_level_costs),
             "participants_filtered_out": len(filtered_out_participants),
